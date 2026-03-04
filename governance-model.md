@@ -1,0 +1,443 @@
+# AIEOS Governance Model
+
+> **Canonical source.** This is the authoritative version of the AIEOS governance model.
+> All AIEOS kits carry a synchronized copy in `docs/governance-model.md`.
+> When this file changes, all kit copies must be updated to match.
+> Kit copies must never diverge from this file.
+
+This document defines the structural rules, taxonomy, and invariants that govern every kit in the AIEOS system. It is the single source of truth for how kits are built, how artifacts behave, and how kits connect.
+
+Any kit that follows this model is structurally compatible with every other kit in the system.
+
+---
+
+## 1. The Kit Model
+
+A **kit** is a self-contained repository that governs one layer of the organization's operating system. Each kit provides the rules, templates, prompts, and validators needed to produce and verify artifacts within its domain.
+
+Every kit is:
+- **Standalone** — its own repository, versioned independently
+- **Self-documenting** — all rules are in the repo, not in tribal knowledge
+- **AI-native** — designed to be operated by AI assistants under human oversight
+- **Tool-agnostic** — no references to specific vendors in policy files (tool mappings go in bindings)
+
+---
+
+## 2. The Four-File System
+
+Every artifact type within a kit is governed by exactly four files. Each file answers one question.
+
+| File | Question | Responsibility |
+|------|----------|---------------|
+| **Spec** | What are the rules? | Content rules, format requirements, hard gates, quality criteria |
+| **Template** | What is the structure? | Section headings, ordering, placeholders — structure only |
+| **Prompt** | How should the AI behave? | Generation instructions, input requirements, behavioral constraints |
+| **Validator** | How do we judge pass/fail? | Evaluation procedure, hard gate checks, output format |
+
+### Separation of Concerns
+
+- **Specs are the single source of truth.** Hard gates, content rules, and quality criteria are defined in specs. Prompts and validators reference specs — they never inline their own rules.
+- **Templates define structure, not content.** A template contains section headings and placeholders. It does not contain content rules or quality criteria.
+- **Prompts define behavior, not rules.** A prompt tells the AI what to do and what inputs to use. It references the spec for the actual rules.
+- **Validators judge, they do not help.** A validator evaluates what is present against the spec. It does not suggest improvements, redesign artifacts, or expand scope.
+
+### When Files Reference Each Other
+
+```
+Prompt → references → Spec (for content rules to satisfy)
+Prompt → references → Template (for structure to follow)
+Validator → references → Spec (for hard gates to evaluate against)
+```
+
+No other cross-references are permitted. Templates do not reference specs. Validators do not reference prompts.
+
+---
+
+## 3. Repository Structure
+
+Every kit follows this directory layout:
+
+```
+aieos-{layer-name}-kit/
+  docs/
+    principles/      # Organizational policy (input material, not governed artifacts)
+    specs/           # Content rules and quality criteria per artifact type
+    artifacts/       # Templates and intake forms
+    prompts/         # AI generation prompts
+    validators/      # Quality gate definitions
+    playbook.md      # End-to-end process definition for this kit
+    index.md         # Documentation entry point
+    how-to-adapt.md  # Organizational adoption guidance
+    how-to-use-with-ai.md  # AI tool usage guide
+  examples/          # Worked examples demonstrating the full flow
+  tests/             # Test plans and structural verification
+  CLAUDE.md          # AI tool project instructions (Claude Code)
+  README.md          # Repository overview
+```
+
+### Directory Responsibilities
+
+| Directory | Contains | Does Not Contain |
+|-----------|----------|-----------------|
+| `principles/` | Organizational policy documents that feed artifact generation | Artifact specs, hard gates, or validation criteria |
+| `specs/` | Authoritative content rules and hard gates per artifact type | Templates, prompts, or generation logic |
+| `artifacts/` | Structural templates and human intake forms | Content rules or quality criteria |
+| `prompts/` | AI behavior instructions for generation and utility tasks | Inline rules (must reference specs) |
+| `validators/` | Evaluation procedures and judgment criteria | Suggestions, redesign, or scope expansion |
+
+---
+
+## 4. Naming Conventions
+
+### File Naming
+
+| File Type | Pattern | Example |
+|-----------|---------|---------|
+| Spec | `{type}-spec.md` | `prd-spec.md` |
+| Template | `{type}-template.md` | `prd-template.md` |
+| Intake form | `{context}-template.md` | `architecture-context-template.md` |
+| Generation prompt | `{type}-prompt.md` | `prd-prompt.md` |
+| Utility prompt | `{function}-prompt.md` | `codebase-analysis-prompt.md` |
+| Validator | `{type}-validator.md` | `prd-validator.md` |
+| Example artifact | `{nn}-{type}.md` | `01-prd.md` |
+
+### Kit Naming
+
+Kit repositories follow the pattern: `aieos-{layer-name}-kit`
+
+| Layer | Repository Name |
+|-------|----------------|
+| Strategic Direction | `aieos-strategic-direction-kit` |
+| Product Intelligence | `aieos-product-intelligence-kit` |
+| Flow Control | `aieos-flow-control-kit` |
+| Engineering Execution | `aieos-engineering-execution-kit` |
+| Release & Exposure | `aieos-release-exposure-kit` |
+| Reliability & Resilience | `aieos-reliability-resilience-kit` |
+| Insight & Evolution | `aieos-insight-evolution-kit` |
+
+### Artifact ID Format
+
+`{TYPE}-{PROJECT}-{NNN}`
+
+- `TYPE`: Uppercase abbreviation of the artifact type (e.g., `PRD`, `SAD`, `OKR`, `SLO`)
+- `PROJECT`: Short project identifier
+- `NNN`: Sequential number, zero-padded to 3 digits
+
+Example: `PRD-PAYMENTS-001`, `SLO-API-003`
+
+### Project Artifact Directory
+
+Generated artifacts live in the consuming project's repository under `docs/sdlc/`:
+
+```
+my-app/
+  docs/sdlc/
+    00-product-brief.md          ← human input (intake form)
+    01-prd.md                    ← generated, validated, frozen
+    01-prd-validation.json       ← final passing validator result
+    02-acf.md
+    ...
+```
+
+The `00-` prefix groups human inputs before generated artifacts. Numbered prefixes follow artifact flow order.
+
+---
+
+## 5. Validator Output Format
+
+All validators across all kits produce JSON with this schema:
+
+```json
+{
+  "status": "PASS | FAIL",
+  "summary": "<one sentence verdict>",
+  "hard_gates": { "<gate_name>": "PASS | FAIL" },
+  "blocking_issues": [{ "gate": "", "description": "", "location": "" }],
+  "warnings": [{ "description": "", "location": "" }],
+  "completeness_score": "<0-100>"
+}
+```
+
+### Interpretation Rules
+
+- Any hard gate failure means `FAIL` — no exceptions.
+- `blocking_issues` identifies exactly what failed and where.
+- `warnings` are non-blocking observations. They do not affect the status.
+- `completeness_score` is advisory. It does not override hard gate results.
+- Validators evaluate only what is explicitly present. They do not infer, assume, or speculate.
+- Ambiguity in the artifact is a failure condition, not a judgment call.
+
+---
+
+## 6. Artifact Promotion Model
+
+### Promotion Rules
+
+1. Artifacts are **generated**, **validated**, and **frozen** — in that order.
+2. A frozen artifact is immutable. Changes require the re-entry protocol.
+3. Downstream artifacts may not expand scope beyond what upstream artifacts define.
+4. Prerequisite artifacts must be frozen before downstream generation begins.
+5. Generation and validation happen in **separate AI sessions** to prevent self-validation bias.
+
+### Freeze Semantics
+
+A freeze means:
+- The artifact has passed its validator (all hard gates PASS).
+- A human has reviewed and approved it.
+- It is now the authoritative input for downstream artifacts.
+- It may not be modified without triggering impact analysis and re-validation of all downstream artifacts.
+
+### Re-Entry Protocol
+
+When a frozen artifact must change:
+1. Run impact analysis to assess downstream effects.
+2. Modify the artifact.
+3. Re-validate the modified artifact.
+4. Re-validate all affected downstream artifacts.
+5. Obtain human approval at each step.
+
+---
+
+## 7. The Playbook
+
+Every kit has a `playbook.md` that defines:
+- The artifact flow (the non-negotiable order of generation and validation)
+- The inputs and outputs of each step
+- The freeze points
+- The re-entry protocol for that kit's artifacts
+- Any kit-specific iteration or escalation rules
+
+The playbook is the process definition. It is not a tutorial — that's what `how-to-use-with-ai.md` is for.
+
+---
+
+## 8. Principles and Standards
+
+### What Principles Are
+
+Principles are **organizational policy documents** that define how the organization operates within the kit's domain. They are input material for artifact generation — not governed artifacts themselves.
+
+Principles answer: **"What standards does this organization hold?"**
+
+### What Principles Are Not
+
+Principles do not define:
+- What makes an artifact document good (that's what specs do)
+- How AI should behave when generating (that's what prompts do)
+- How to judge pass/fail (that's what validators do)
+
+### Principles Structure
+
+Each kit's `principles/` directory contains domain-relevant policy files. Examples:
+
+| Kit | Principle Files |
+|-----|----------------|
+| Engineering Execution | `code-craftsmanship.md`, `product-craftsmanship.md` |
+| Release & Exposure | `deployment-policy.md`, `progressive-delivery-policy.md` |
+| Reliability & Resilience | `slo-policy.md`, `incident-management-policy.md` |
+
+Principles feed into the kit's context files (ACF, DCF, or kit-specific equivalents), which translate policy into enforceable guardrails.
+
+---
+
+## 9. Intake Forms
+
+### Purpose
+
+Intake forms bridge human intent and AI generation. They structure human thinking into machine-consumable input so the AI has concrete material to work with — not vague intent.
+
+### Design Rules
+
+- Intake forms are **templates with structured questions**, not blank pages.
+- They may be filled by humans directly or pre-filled by analysis prompts (e.g., codebase analysis for brownfield projects).
+- Pre-filled forms must be reviewed and edited by a human before use as generation input.
+- Intake forms live in `docs/artifacts/` alongside the artifact templates they feed.
+
+### Brownfield Support
+
+For kits operating on existing systems (not greenfield), provide:
+1. An **analysis prompt** that examines the current state and produces structured output.
+2. The analysis output maps to the intake form's sections.
+3. The human reviews, corrects, and approves before using as input.
+
+This pattern prevents the AI from generating artifacts based on assumptions about existing systems.
+
+---
+
+## 10. Inter-Kit Interfaces
+
+### Handoff Contracts
+
+When one kit's output becomes another kit's input, the relationship is defined as a **handoff contract**. Each kit's playbook documents:
+
+- **Upstream**: What this kit accepts as input and from which kit.
+- **Downstream**: What this kit produces as output and which kit consumes it.
+
+### Contract Format
+
+A handoff contract specifies:
+- The artifact type being handed off
+- The required state (must be frozen and validated)
+- The specific sections or fields the downstream kit depends on
+- What happens if the upstream artifact changes (re-entry trigger)
+
+### Example: Engineering Execution ↔ Product Intelligence
+
+```
+Product Intelligence Kit
+  Output: Frozen Discovery PRD (validated, approved)
+
+Engineering Execution Kit
+  Input: Frozen PRD (from Product Intelligence Kit or direct human input)
+  Dependency: PRD §1 Problem Statement, §2 Goals, §3 Non-Goals, §10 Acceptance Criteria
+  Re-entry trigger: Any change to PRD goals, scope, or acceptance criteria
+```
+
+### Cross-Kit Consistency
+
+When artifacts from different kits reference each other, consistency must be verified at handoff boundaries. Each kit is responsible for validating that its inputs meet its intake requirements — it does not trust upstream kits blindly.
+
+---
+
+## 11. AI Operating Rules
+
+### Generation Rules
+
+When generating artifacts:
+- Output pure Markdown.
+- Use the template exactly as written — do not add or remove sections.
+- Satisfy all content rules, format requirements, and hard gates defined in the corresponding spec.
+- Do not infer missing information — mark it explicitly.
+- Do not expand scope beyond upstream artifacts.
+- Non-goals are enforceable — do not violate them.
+
+### Validation Rules
+
+When validating artifacts:
+- Evaluate against the hard gates and content rules defined in the corresponding spec.
+- Be strict — ambiguity is a failure condition.
+- Do not redesign or suggest solutions.
+- Evaluate only what is explicitly present.
+- Any hard gate failure means FAIL.
+
+### Session Discipline
+
+- One artifact per session for generation.
+- Separate sessions for generation and validation.
+- Include the full frozen upstream artifacts — do not summarize.
+- Include the spec, prompt, and template for generation sessions.
+- Include the spec and validator for validation sessions.
+
+---
+
+## 12. Tool Bindings
+
+### Policy vs Implementation
+
+Kits define **policy** — the rules, constraints, and quality criteria. When a kit must reference specific tools (Jira, ServiceNow, LaunchDarkly, etc.), the tool-specific details go in a **bindings file**, not in the policy files.
+
+### Bindings Structure
+
+```
+docs/
+  bindings/
+    jira-mapping.md           # Maps kit concepts to Jira fields/workflows
+    servicenow-mapping.md     # Maps kit concepts to ServiceNow
+    launchdarkly-mapping.md   # Maps feature flag policy to LaunchDarkly
+```
+
+When the organization changes tools, only bindings files are updated. Specs, templates, prompts, and validators remain unchanged.
+
+Bindings are not governed artifacts — they have no spec, validator, or prompt. They are reference material maintained by the team responsible for the tooling.
+
+---
+
+## 13. Kit Invariants
+
+The following rules apply to every kit in the AIEOS system. Violating these breaks the system's guarantees.
+
+### Structural Invariants
+
+1. **Four-file completeness** — Every artifact type has exactly four files: spec, template, prompt, validator.
+2. **Specs are the single source of truth** — Prompts and validators reference specs. Rules are never inlined.
+3. **Validators are hard gates** — Ambiguity is failure. Validators do not help, suggest, or redesign.
+4. **Non-goals are enforceable** — Validators block violations. Scope expansion is not permitted.
+
+### Process Invariants
+
+5. **Freeze before promote** — Upstream artifacts must be frozen before downstream generation.
+6. **Separate generation and validation** — Different AI sessions to prevent self-validation bias.
+7. **Human in the loop** — Every freeze requires human approval. AI does not self-approve.
+8. **Impact before re-entry** — Changes to frozen artifacts require impact analysis first.
+
+### Quality Invariants
+
+9. **No silent modification** — Do not change existing constraints without explicit acknowledgment.
+10. **No scope expansion** — Downstream artifacts may not introduce scope that upstream artifacts do not define.
+11. **No inferred information** — If information is missing, mark it explicitly. Do not fill gaps with assumptions.
+
+---
+
+## 14. Adopting This Model
+
+### For a New Kit
+
+1. Create the repository following the naming convention (`aieos-{layer-name}-kit`).
+2. Set up the directory structure from §3.
+3. Write the playbook first — define the artifact flow, freeze points, and inputs/outputs.
+4. For each artifact type, write files in this order: validator → spec → template → prompt. Starting with the validator forces you to define "what does good look like?" before generating anything.
+5. Create intake forms for any artifact that requires human input.
+6. Write a worked example that exercises the full flow.
+7. Run structural integrity checks (four-file completeness, cross-reference verification, naming compliance).
+
+### For an Existing Kit
+
+1. Audit against the structural invariants (§13).
+2. Identify any specs with inline rules in prompts or validators — extract to specs.
+3. Verify naming conventions match §4.
+4. Ensure the playbook documents the full flow including freeze points and re-entry.
+5. Add inter-kit interface documentation if the kit has upstream or downstream dependencies.
+
+### Starting Order
+
+Do not build all kits simultaneously. Start with 2–3 kits that have direct handoff relationships to prove the inter-kit contract model:
+
+1. **Engineering Execution Kit** (proven — this is the reference implementation)
+2. **Product Intelligence Kit** (direct upstream — its outputs become Engineering Execution inputs)
+3. **Release & Exposure Kit** (direct downstream — consumes Engineering Execution outputs)
+
+Extract shared governance to a dedicated repo only when duplication across 3+ kits becomes painful.
+
+---
+
+## 15. Versioning and Evolution
+
+### Kit Versioning
+
+Each kit is versioned independently using semantic versioning:
+- **Major**: Breaking changes to artifact structure, hard gates, or inter-kit contracts.
+- **Minor**: New artifact types, additional hard gates, new intake forms.
+- **Patch**: Clarifications, typo fixes, example updates.
+
+### Governance Model Versioning
+
+This document is versioned as part of the `aieos-spec` repository. The canonical version lives at `aieos-spec/governance-model.md`. All kit copies must remain synchronized with that file.
+
+Current version: `1.0`
+
+### Change Protocol
+
+Changes to the governance model require:
+1. Update `aieos-spec/governance-model.md` first.
+2. Impact analysis across all kits that reference it.
+3. Review by kit maintainers.
+4. Update all kit copies of `docs/governance-model.md` to match exactly.
+5. Migration guidance for breaking changes.
+
+---
+
+## Summary
+
+The AIEOS governance model ensures every kit is structurally consistent, independently operable, and safely connectable. The rules are intentionally rigid where they matter (file taxonomy, validation semantics, promotion model) and intentionally flexible where they should be (domain-specific artifacts, organizational principles, tool bindings).
+
+Adapt the **edges**, not the **core**.

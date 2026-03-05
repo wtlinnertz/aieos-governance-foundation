@@ -39,10 +39,11 @@ Changes to the governance model follow the protocol in `governance-model.md` §1
 
 ## Kit Registry
 
-| Layer | Repository |
-|-------|-----------|
-| Product Intelligence | `aieos-product-intelligence-kit` |
-| Engineering Execution | `aieos-engineering-execution-kit` |
-| Release & Exposure | `aieos-release-exposure-kit` |
+| Layer | Repository | Status |
+|-------|-----------|--------|
+| 2. Product Intelligence | `aieos-product-intelligence-kit` | Built |
+| 4. Engineering Execution | `aieos-engineering-execution-kit` | Built |
+| 5. Release & Exposure | `aieos-release-exposure-kit` | Built |
+| 6. Reliability & Resilience | `aieos-reliability-resilience-kit` | Built |
 
 Additional kits will be registered here as they are built.

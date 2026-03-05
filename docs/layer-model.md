@@ -114,11 +114,11 @@ This layer governs deployment policy, progressive delivery, feature exposure man
 
 This layer governs SLOs, incident management, error budgets, and the operational health of systems in production. It defines what "working correctly" means and what to do when it isn't.
 
-**Kit**: `aieos-reliability-resilience-kit` *(planned)*
+**Kit**: `aieos-reliability-resilience-kit` *(built)*
 
-**Inputs**: Release records, SLO targets, incident signals
+**Inputs**: Frozen Release Record (RR §7 Handoff to Layer 6) from Release & Exposure Kit (Layer 5), completed service reliability intake, incident evidence
 
-**Outputs**: SLO records, incident reports, error budget decisions
+**Outputs**: Frozen Reliability Health Report (RHR) — SLO compliance record, error budget state, incident summary, Layer 7 feed
 
 **Downstream consumer**: Insight & Evolution (Layer 7)
 
@@ -148,8 +148,8 @@ This layer governs the collection and synthesis of signals from production — u
 | 2. Product Intelligence | `aieos-product-intelligence-kit` | Built |
 | 3. Flow Control | `aieos-flow-control-kit` | Planned |
 | 4. Engineering Execution | `aieos-engineering-execution-kit` | Built |
-| 5. Release & Exposure | `aieos-release-exposure-kit` | Planned |
-| 6. Reliability & Resilience | `aieos-reliability-resilience-kit` | Planned |
+| 5. Release & Exposure | `aieos-release-exposure-kit` | Built |
+| 6. Reliability & Resilience | `aieos-reliability-resilience-kit` | Built |
 | 7. Insight & Evolution | `aieos-insight-evolution-kit` | Planned |
 
 ---
@@ -165,9 +165,11 @@ This layer governs the collection and synthesis of signals from production — u
 
 ## Current Build State
 
-As of the initial build, Layers 2 and 4 are operational:
+As of the current build, Layers 2, 4, 5, and 6 are operational:
 
 - **Layer 2 → Layer 4** is the proven inter-kit handoff path. The frozen DPRD from PIK becomes the EEK PRD via a defined acceptance check.
-- The Kit Entry Gate (Layer 4 Step 0) enforces that work arriving at Engineering Execution is classified, prioritized, and path-selected before artifact generation begins.
+- **Layer 4 → Layer 5** handoff: the frozen ORD from EEK becomes the Release & Exposure Kit input via the Release Entry Gate.
+- **Layer 5 → Layer 6** handoff: the frozen Release Record §7 (Handoff to Layer 6) becomes the Reliability & Resilience Kit input via the Service Reliability Entry Gate.
+- The Kit Entry Gate pattern is used at Layers 4, 5, and 6 to enforce upstream verification before artifact generation begins.
 
 Additional layers will be built in handoff order to extend the proven model.

@@ -98,11 +98,11 @@ This layer governs the full execution lifecycle from PRD through production-read
 
 This layer governs deployment policy, progressive delivery, feature exposure management, and release decisions. It translates production-ready artifacts into controlled, observable releases.
 
-**Kit**: `aieos-release-exposure-kit` *(planned)*
+**Kit**: `aieos-release-exposure-kit` *(built)*
 
-**Inputs**: Frozen ORD from Engineering Execution
+**Inputs**: Frozen ORD from Engineering Execution (Layer 4), organizational release policy (Release Context File)
 
-**Outputs**: Release records, exposure decisions, rollback conditions
+**Outputs**: Frozen Release Record (RR) — release evidence, disposition declaration, Layer 6 handoff package
 
 **Downstream consumer**: Reliability & Resilience (Layer 6)
 

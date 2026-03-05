@@ -4,6 +4,10 @@ This document is a compliance reference for building and auditing AIEOS-compatib
 
 A kit passes this standard if every check below is satisfied.
 
+Each check is annotated as:
+- `[auto]` — machine-checkable by `aieos-spec/tests/check-structure.sh`
+- `[ai]` — requires AI or human review; cannot be automated
+
 ---
 
 ## Part 1: Repository Structure
@@ -12,22 +16,22 @@ A kit passes this standard if every check below is satisfied.
 
 Every AIEOS kit must contain:
 
-- [ ] `README.md` — repository overview (purpose, what it produces, how it relates to adjacent kits)
-- [ ] `CLAUDE.md` — AI operating instructions for Claude Code
-- [ ] `docs/playbook.md` — end-to-end process definition
-- [ ] `docs/index.md` — documentation entry point
-- [ ] `docs/how-to-adapt.md` — organizational adoption guidance
-- [ ] `docs/how-to-use-with-ai.md` — artifact-by-artifact AI usage guide
-- [ ] `docs/governance-model.md` — synchronized copy of the canonical governance model
+- [ ] `README.md` — repository overview (purpose, what it produces, how it relates to adjacent kits) `[auto]`
+- [ ] `CLAUDE.md` — AI operating instructions for Claude Code `[auto]`
+- [ ] `docs/playbook.md` — end-to-end process definition `[auto]`
+- [ ] `docs/index.md` — documentation entry point `[auto]`
+- [ ] `docs/how-to-adapt.md` — organizational adoption guidance `[auto]`
+- [ ] `docs/how-to-use-with-ai.md` — artifact-by-artifact AI usage guide `[auto]`
+- [ ] `docs/governance-model.md` — synchronized copy of the canonical governance model `[auto]`
 
 ### Required Directories
 
-- [ ] `docs/specs/` — content rules and quality criteria
-- [ ] `docs/artifacts/` — structural templates and intake forms
-- [ ] `docs/prompts/` — AI behavior instructions
-- [ ] `docs/validators/` — evaluation procedures
-- [ ] `examples/` — at least one worked example demonstrating the full artifact flow
-- [ ] `tests/` — structural integrity checks and/or flow scenario tests
+- [ ] `docs/specs/` — content rules and quality criteria `[auto]`
+- [ ] `docs/artifacts/` — structural templates and intake forms `[auto]`
+- [ ] `docs/prompts/` — AI behavior instructions `[auto]`
+- [ ] `docs/validators/` — evaluation procedures `[auto]`
+- [ ] `examples/` — at least one worked example demonstrating the full artifact flow `[auto]`
+- [ ] `tests/` — structural integrity checks and/or flow scenario tests `[auto]`
 
 ---
 
@@ -37,23 +41,23 @@ For each artifact type the kit produces:
 
 ### Four-File Completeness
 
-- [ ] `docs/specs/{type}-spec.md` exists
-- [ ] `docs/artifacts/{type}-template.md` exists
-- [ ] `docs/prompts/{type}-prompt.md` exists
-- [ ] `docs/validators/{type}-validator.md` exists
+- [ ] `docs/specs/{type}-spec.md` exists `[auto]`
+- [ ] `docs/artifacts/{type}-template.md` exists `[auto]`
+- [ ] `docs/prompts/{type}-prompt.md` exists `[auto]`
+- [ ] `docs/validators/{type}-validator.md` exists `[auto]`
 
 ### Naming Convention
 
-- [ ] File names follow `{type}-{role}.md` pattern with no deviations
-- [ ] No artifact type has more than four governing files (extras must be utility prompts or intake forms, not additional specs/validators)
+- [ ] File names follow `{type}-{role}.md` pattern with no deviations `[auto]`
+- [ ] No artifact type has more than four governing files (extras must be utility prompts or intake forms, not additional specs/validators) `[ai]`
 
 ### Separation of Concerns
 
-- [ ] Spec contains all hard gates and content rules — nothing is defined only in a prompt or validator
-- [ ] Template contains only structure (section headings, placeholders) — no content rules
-- [ ] Prompt references the spec for rules; it does not inline them
-- [ ] Validator references the spec for hard gates; it does not inline them
-- [ ] Validator does not suggest improvements or redesign — it judges only
+- [ ] Spec contains all hard gates and content rules — nothing is defined only in a prompt or validator `[ai]`
+- [ ] Template contains only structure (section headings, placeholders) — no content rules `[ai]`
+- [ ] Prompt references the spec for rules; it does not inline them `[ai]`
+- [ ] Validator references the spec for hard gates; it does not inline them `[ai]`
+- [ ] Validator does not suggest improvements or redesign — it judges only `[ai]`
 
 ---
 
@@ -61,11 +65,11 @@ For each artifact type the kit produces:
 
 Every validator must:
 
-- [ ] Produce JSON output in the standard schema (see `governance-model.md` §5)
-- [ ] Include `status`, `summary`, `hard_gates`, `blocking_issues`, `warnings`, `completeness_score`
-- [ ] Set `status` to `FAIL` if any hard gate fails — no exceptions
-- [ ] List every failing hard gate in `blocking_issues` with description and location
-- [ ] Not produce suggestions, redesigns, or improvement guidance in any output field
+- [ ] Produce JSON output in the standard schema (see `governance-model.md` §5) `[auto]`
+- [ ] Include `status`, `summary`, `hard_gates`, `blocking_issues`, `warnings`, `completeness_score` `[auto]`
+- [ ] Set `status` to `FAIL` if any hard gate fails — no exceptions `[ai]`
+- [ ] List every failing hard gate in `blocking_issues` with description and location `[ai]`
+- [ ] Not produce suggestions, redesigns, or improvement guidance in any output field `[ai]`
 
 ---
 
@@ -73,20 +77,20 @@ Every validator must:
 
 The `docs/playbook.md` must define:
 
-- [ ] The complete artifact flow in the non-negotiable generation order
-- [ ] Inputs and outputs for each step
-- [ ] Freeze points (where human approval is required before proceeding)
-- [ ] Re-entry protocol (what to do when a frozen artifact must change)
-- [ ] Upstream boundary contract (what this kit accepts and from where)
-- [ ] Downstream boundary contract (what this kit produces and who consumes it)
+- [ ] The complete artifact flow in the non-negotiable generation order `[ai]`
+- [ ] Inputs and outputs for each step `[ai]`
+- [ ] Freeze points (where human approval is required before proceeding) `[ai]`
+- [ ] Re-entry protocol (what to do when a frozen artifact must change) `[ai]`
+- [ ] Upstream boundary contract (what this kit accepts and from where) `[ai]`
+- [ ] Downstream boundary contract (what this kit produces and who consumes it) `[ai]`
 
 ---
 
 ## Part 5: Governance Model Sync
 
-- [ ] `docs/governance-model.md` is byte-for-byte identical to `aieos-spec/governance-model.md`
-- [ ] No local modifications to the governance model — all edits go through aieos-spec
-- [ ] CLAUDE.md references aieos-spec as the canonical authority for governance-model.md
+- [ ] `docs/governance-model.md` is byte-for-byte identical to `aieos-spec/governance-model.md` `[auto]`
+- [ ] No local modifications to the governance model — all edits go through aieos-spec `[ai]`
+- [ ] CLAUDE.md references aieos-spec as the canonical authority for governance-model.md `[ai]`
 
 ---
 
@@ -94,15 +98,15 @@ The `docs/playbook.md` must define:
 
 The kit's `CLAUDE.md` must contain:
 
-- [ ] What the kit is (one-paragraph description)
-- [ ] Repository structure overview
-- [ ] Artifact types produced (list with brief descriptions)
-- [ ] Artifact flow (the generation order)
-- [ ] Key rules the AI must follow
-- [ ] Boundary contracts (upstream and downstream)
-- [ ] File naming conventions
-- [ ] Reference to aieos-spec as governance model authority
-- [ ] Commit message style guidance
+- [ ] What the kit is (one-paragraph description) `[ai]`
+- [ ] Repository structure overview `[ai]`
+- [ ] Artifact types produced (list with brief descriptions) `[ai]`
+- [ ] Artifact flow (the generation order) `[ai]`
+- [ ] Key rules the AI must follow `[ai]`
+- [ ] Boundary contracts (upstream and downstream) `[ai]`
+- [ ] File naming conventions `[ai]`
+- [ ] Reference to aieos-spec as governance model authority `[ai]`
+- [ ] Commit message style guidance `[ai]`
 
 ---
 
@@ -110,9 +114,9 @@ The kit's `CLAUDE.md` must contain:
 
 The `tests/` directory must include:
 
-- [ ] A structural integrity check that verifies four-file completeness for all artifact types
-- [ ] A naming convention check
-- [ ] At least one end-to-end flow scenario
+- [ ] A structural integrity check that verifies four-file completeness for all artifact types `[auto]`
+- [ ] A naming convention check `[auto]`
+- [ ] At least one end-to-end flow scenario `[ai]`
 
 ---
 
@@ -130,3 +134,23 @@ To audit an existing kit against this standard:
 8. **Check tests directory** — verify structural and flow tests exist (Part 7)
 
 A kit that fails any check is not AIEOS-compatible. Fix before treating the kit as production-ready.
+
+---
+
+## Running Automated Checks
+
+The script `aieos-spec/tests/check-structure.sh` automates all checks annotated `[auto]` above.
+
+**Usage:**
+```
+./tests/check-structure.sh <kit-root-path>
+```
+
+**Example:**
+```
+./tests/check-structure.sh /path/to/aieos-engineering-execution-kit
+```
+
+The script outputs per-check PASS/FAIL results and exits with a non-zero code if any check fails (CI-compatible).
+
+Checks annotated `[ai]` require AI or human review. Run the script first to eliminate structural issues, then review the `[ai]` checks manually against the audit procedure above.

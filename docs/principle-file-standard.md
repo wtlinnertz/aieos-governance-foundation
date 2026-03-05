@@ -6,6 +6,32 @@ An unstructured principle file is nearly useless as generation input. This stand
 
 ---
 
+## Version Field
+
+Every principle file must carry a version field in its header, before any content sections:
+
+```
+Version: v{N}.{N}
+```
+
+Example: `Version: v1.0`
+
+The version field identifies which revision of the organizational policy was active when artifacts were generated against this file. This allows frozen artifacts to declare the principle version in effect at generation time, enabling accurate retrospective assessment.
+
+New principle files start at `v1.0`. Retrofitted files that are receiving their first version field also start at `v1.0` — the retrofit is not a content change.
+
+### Change Categories
+
+| Category | Version Bump | Definition | Downstream Impact |
+|----------|-------------|------------|-------------------|
+| **Minor** | `v_.1 → v_.2` (patch) | Clarification only; no change to what is required; no new constraints | None — already-generated artifacts remain valid |
+| **Significant** | `v1.0 → v1.1` | New requirement or tightened constraint added | Artifacts generated after the change should be reviewed against updated principles; already-frozen artifacts are grandfathered but should note the principle version active at generation time |
+| **Breaking** | `v1.x → v2.0` | Removal of a requirement or loosening of a constraint | Requires explicit service owner authorization and documented business justification before the change is made |
+
+**When in doubt, use the higher category.** A significant change mistakenly treated as a minor change can propagate outdated policy silently. The cost of a version bump is low; the cost of untracked policy drift is high.
+
+---
+
 ## What Principle Files Are
 
 Principle files answer: **"What standards does this organization hold in this domain?"**
@@ -93,6 +119,9 @@ A poorly written principle file:
 
 Principle files are not governed artifacts — they have no validator or freeze point. But they should be treated as stable organizational policy:
 
-- Changes to principle files can affect all artifacts generated after the change. Significant changes should trigger re-generation review of affected artifacts.
-- If a rule becomes outdated (e.g., a technology is retired), remove it. Stale rules degrade AI generation quality.
+- Changes to principle files can affect all artifacts generated after the change. Classify each change using the change categories above and follow the appropriate downstream impact protocol.
+- Bump the version field with every change, including minor clarifications. This makes the change visible in the Git history and prevents silent drift.
+- If a rule becomes outdated (e.g., a technology is retired), remove it. Stale rules degrade AI generation quality. A removal is a Breaking change (version major bump).
 - If a rule accumulates exceptions, either tighten the rule or document the exception conditions explicitly. Undocumented exceptions rot the file.
+
+In kit playbooks, principle file revision is a named trigger type in the re-entry protocol: a Significant or Breaking change may require re-validation of artifacts generated under the previous version.

@@ -187,6 +187,28 @@ A freeze means:
 - It is now the authoritative input for downstream artifacts.
 - It may not be modified without triggering impact analysis and re-validation of all downstream artifacts.
 
+### Freeze Pending Status
+
+`Freeze Pending` is an optional intermediate status between `Validated` and `Frozen`. An artifact is Freeze Pending when:
+- It has passed all hard gates (all validator gates PASS).
+- A human freeze review is in progress (review scheduled, awaiting approval).
+
+Freeze Pending is opt-in and informational. Downstream teams may choose to begin preparatory work against a Freeze Pending artifact, but must acknowledge the pre-freeze status explicitly. If the freeze review results in a change, any preparatory downstream work must be discarded and restarted from the updated artifact.
+
+Freeze Pending does not substitute for a freeze. An artifact is not authoritative input for downstream generation until it is Frozen.
+
+### Non-Material Amendment
+
+A frozen artifact may be corrected in place without re-validation when **all** of the following criteria are met:
+
+1. The correction does not affect any field evaluated by a hard gate.
+2. The correction does not change scope, decisions, owners, or technical specifications.
+3. The correction does not affect any field referenced by a downstream artifact.
+
+**Procedure:** Make the correction and add an Amendment Log entry to the artifact's Document Control section (date, what changed, materiality criterion cited, authorized by). No re-validation is required.
+
+**If there is any ambiguity** about whether a change is non-material, it is material. The amendment path must not become a workaround for the re-entry protocol. Material changes trigger the Re-Entry Protocol.
+
 ### Re-Entry Protocol
 
 When a frozen artifact must change:
@@ -237,6 +259,10 @@ Each kit's `principles/` directory contains domain-relevant policy files. Exampl
 | Reliability & Resilience | `slo-policy.md`, `incident-management-policy.md` |
 
 Principles feed into the kit's context files (ACF, DCF, or kit-specific equivalents), which translate policy into enforceable guardrails.
+
+### Principle File Versioning
+
+Every principle file must carry a version field in its header. Changes to principle files follow a categorized versioning protocol (minor, significant, breaking) defined in `aieos-spec/docs/principle-file-standard.md`. That document is the authoritative reference for version field format, change categories, and the enforcement mapping requirement.
 
 ---
 

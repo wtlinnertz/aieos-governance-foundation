@@ -144,6 +144,21 @@ Add a row for each ES produced for this initiative. If no ES has been produced y
 
 ---
 
+### §8 Layer 8 — Operational Diagnostics
+
+**Artifact table:**
+
+| Field | Artifact | Status | Notes |
+|-------|----------|--------|-------|
+| DCR ID | DCR | Frozen | Entry gate |
+| INR ID(s) | INR | Frozen | List all INRs |
+| PMR ID(s) | PMR | Frozen | List all PMRs |
+| RB ID(s) | RB | Frozen | Runbooks codified; N/A if none |
+
+Add a row for each DCR engagement (an incident may produce one DCR, one or more INRs, one PMR, and optionally one or more RBs). If no ODK engagement has been initiated for this initiative, write "No ODK engagement initiated."
+
+---
+
 ### §7 Initiative Outcome
 
 | Field | Value |
@@ -167,6 +182,10 @@ Each kit's playbook includes a "Maintaining the Engagement Record" section with 
 | Release & Exposure Kit | Release disposition determined | Add artifact IDs to §4 table. Record release disposition. |
 | Reliability & Resilience Kit | Each Layer 6 artifact frozen | Add artifact IDs to §5 table. Add IR entries as incidents are declared and closed. |
 | Insight & Evolution Kit | ES frozen | Add ES row to §6 table with signal and VH verdict. Update §7 Initiative Outcome. |
+| Operational Diagnostics Kit | DCR frozen | Add DCR ID to §8 table. |
+| Operational Diagnostics Kit | INR frozen | Add INR ID to §8 table. |
+| Operational Diagnostics Kit | PMR frozen | Add PMR ID to §8 table. |
+| Operational Diagnostics Kit | RB frozen | Add RB ID to §8 table (N/A if no runbook produced). |
 
 **On initiative end:** The operator who declares the initiative Deprecated or Abandoned updates §1 Status and §7 Initiative Outcome, and adds the DN ID reference.
 

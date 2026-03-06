@@ -21,10 +21,12 @@ AIEOS organizes an organization's operating system into seven layers. Each layer
 │  6. Reliability & Resilience            │  How do we keep it running?
 ├─────────────────────────────────────────┤
 │  7. Insight & Evolution                 │  What did we learn and what changes?
+├─────────────────────────────────────────┤
+│  8. Operational Diagnostics             │  How do we diagnose and resolve failures?
 └─────────────────────────────────────────┘
 ```
 
-The flow is top-down for value delivery and bottom-up for learning. Layer 7 feeds insight back to Layer 1. The system is a loop, not a pipeline.
+The flow is top-down for value delivery and bottom-up for learning. Layer 7 feeds insight back to Layer 1. The system is a loop, not a pipeline. Layer 8 is a reactive operational track — triggered by production events, not SDLC progression — that feeds findings back into Layers 6, 7, and optionally Layers 2 and 4.
 
 ---
 
@@ -140,6 +142,26 @@ This layer synthesizes operational signals from production into actionable insig
 
 ---
 
+### Layer 8: Operational Diagnostics
+
+**Question**: How do we diagnose and resolve operational failures?
+
+This layer governs structured investigation, hypothesis tracking, and postmortem analysis for production failures. It adds diagnostic depth for SEV1/2 incidents and incidents with organizational learning value. It is a reactive operational track — triggered by production events, not SDLC progression.
+
+**Kit**: `aieos-operational-diagnostics-kit` *(built)*
+
+**Trigger**: SEV1/2 incident declared (required); operator judgment for lower-severity incidents with learning value.
+
+**Inputs**: Frozen Service Reliability Profile (SRP) from Layer 6 (service baseline, SLO targets, known failure modes); past Incident Records from Layer 6 (known failure patterns); frozen Release Record §7 from Layer 5 (recent changes, deployment state); frozen System Architecture Document (SAD) from Layer 4 (service dependencies).
+
+**Outputs**: Frozen Postmortem Record (PMR) — root cause analysis, SLO impact, corrective actions, lessons learned. Optional frozen Runbook (RB) — codified resolution procedure for a known failure class.
+
+**Downstream consumers**: Reliability & Resilience (Layer 6) — next RHR references PMR IDs; PMR corrective actions may trigger SRP revision. Engineering Execution (Layer 4) — PMR corrective actions may become engineering work items. Product Intelligence (Layer 2) — recurring patterns may warrant discovery re-engagement. Insight & Evolution (Layer 7) — PMR data supplements ER §8 for portfolio synthesis.
+
+**Relationship to Layer 6 Incident Records**: RRK Incident Records (IRs) are the lightweight operational record required for every incident at any severity. ODK adds depth for SEV1/2 or incidents with learning value: the Investigation Record (INR) documents how the team diagnosed the failure; the Postmortem Record (PMR) documents what the organization learned. Complementary, not overlapping.
+
+---
+
 ## Kit Registry
 
 | Layer | Kit Repository | Status |
@@ -151,6 +173,7 @@ This layer synthesizes operational signals from production into actionable insig
 | 5. Release & Exposure | `aieos-release-exposure-kit` | Built |
 | 6. Reliability & Resilience | `aieos-reliability-resilience-kit` | Built |
 | 7. Insight & Evolution | `aieos-insight-evolution-kit` | Built |
+| 8. Operational Diagnostics | `aieos-operational-diagnostics-kit` | Built |
 
 ---
 
@@ -175,13 +198,14 @@ The ER spec lives in `aieos-governance-foundation/docs/engagement-record-spec.md
 
 ## Current Build State
 
-As of the current build, Layers 2, 4, 5, 6, and 7 are operational:
+As of the current build, Layers 2, 4, 5, 6, 7, and 8 are operational:
 
 - **Layer 2 → Layer 4** is the proven inter-kit handoff path. The frozen DPRD from PIK becomes the EEK PRD via a defined acceptance check.
 - **Layer 4 → Layer 5** handoff: the frozen ORD from EEK becomes the Release & Exposure Kit input via the Release Entry Gate.
 - **Layer 5 → Layer 6** handoff: the frozen Release Record §7 (Handoff to Layer 6) becomes the Reliability & Resilience Kit input via the Service Reliability Entry Gate.
 - **Layer 6 → Layer 7** handoff: frozen Reliability Health Reports (minimum 2) become the Insight & Evolution Kit input. No entry gate — the ES confirms frozen input status in §1. An optional frozen Value Hypothesis from Layer 2 enables VH outcome assessment.
 - **Layer 7 → Layer 2** feedback: if the Evolution Signal re-entry signal is `re-discover`, the ES §6 discovery question and §7 recommended actions inform a new PIK Discovery Intake. The feedback loop is advisory — a human product owner decides whether to initiate a new discovery engagement.
-- The Kit Entry Gate pattern is used at Layers 4, 5, and 6 to enforce upstream verification before artifact generation begins. Layer 7 uses self-confirming input validation in the ES prompt instead.
+- **Layer 8 (Operational Diagnostics)** is triggered by production events, not SDLC progression. A SEV1/2 incident (or operator judgment for high-learning-value events) triggers DCR → INR → PMR → optional RB. Frozen PMRs feed back into Layers 6, 7, and optionally 2 and 4.
+- The Kit Entry Gate pattern is used at Layers 4, 5, and 6 to enforce upstream verification before artifact generation begins. Layer 7 uses self-confirming input validation in the ES prompt. Layer 8 uses the Diagnostic Context Record (DCR) as its entry gate.
 
-The full seven-layer loop is now operational. Layers 1 and 3 remain planned.
+The full seven-layer SDLC loop is operational. Layer 8 adds a reactive operational track. Layers 1 and 3 remain planned.

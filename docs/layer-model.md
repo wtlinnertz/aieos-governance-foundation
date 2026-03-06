@@ -169,7 +169,7 @@ ERs serve two purposes:
 - **Episodic memory** — a structured index of every artifact ID, outcome, and key decision for one initiative, making the full artifact history queryable without re-reading all documents
 - **Portfolio synthesis input** — ERs are the primary input to Portfolio Evolution Signals (IEK Layer 7), which synthesize cross-initiative patterns and generate improvement proposals for the governing prompt files
 
-The ER spec lives in `aieos-spec/docs/engagement-record-spec.md`. No single kit owns the ER format — it is a system-level standard.
+The ER spec lives in `aieos-governance-foundation/docs/engagement-record-spec.md`. No single kit owns the ER format — it is a system-level standard.
 
 ---
 

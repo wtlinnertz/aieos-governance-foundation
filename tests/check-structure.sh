@@ -3,10 +3,10 @@
 #
 # Usage: ./check-structure.sh <kit-root-path>
 #
-# Checks all [auto]-annotated items from aieos-spec/docs/kit-structure-standard.md.
+# Checks all [auto]-annotated items from aieos-governance-foundation/docs/kit-structure-standard.md.
 # Exits with non-zero code if any check fails (CI-compatible).
 #
-# See aieos-spec/docs/kit-structure-standard.md for full check descriptions.
+# See aieos-governance-foundation/docs/kit-structure-standard.md for full check descriptions.
 
 set -euo pipefail
 
@@ -224,9 +224,9 @@ elif [[ ! -f "$KIT_GM" ]]; then
   fail "[P5-GM] Kit governance-model.md not found at $KIT_GM"
 else
   if diff -q "$CANONICAL_GM" "$KIT_GM" > /dev/null 2>&1; then
-    pass "[P5-GM] docs/governance-model.md is identical to aieos-spec/governance-model.md"
+    pass "[P5-GM] docs/governance-model.md is identical to aieos-governance-foundation/governance-model.md"
   else
-    fail "[P5-GM] docs/governance-model.md differs from aieos-spec/governance-model.md (run: diff $CANONICAL_GM $KIT_GM)"
+    fail "[P5-GM] docs/governance-model.md differs from aieos-governance-foundation/governance-model.md (run: diff $CANONICAL_GM $KIT_GM)"
   fi
 fi
 

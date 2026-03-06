@@ -5,7 +5,7 @@ This document is a compliance reference for building and auditing AIEOS-compatib
 A kit passes this standard if every check below is satisfied.
 
 Each check is annotated as:
-- `[auto]` — machine-checkable by `aieos-spec/tests/check-structure.sh`
+- `[auto]` — machine-checkable by `aieos-governance-foundation/tests/check-structure.sh`
 - `[ai]` — requires AI or human review; cannot be automated
 
 ---
@@ -88,9 +88,9 @@ The `docs/playbook.md` must define:
 
 ## Part 5: Governance Model Sync
 
-- [ ] `docs/governance-model.md` is byte-for-byte identical to `aieos-spec/governance-model.md` `[auto]`
-- [ ] No local modifications to the governance model — all edits go through aieos-spec `[ai]`
-- [ ] CLAUDE.md references aieos-spec as the canonical authority for governance-model.md `[ai]`
+- [ ] `docs/governance-model.md` is byte-for-byte identical to `aieos-governance-foundation/governance-model.md` `[auto]`
+- [ ] No local modifications to the governance model — all edits go through aieos-governance-foundation `[ai]`
+- [ ] CLAUDE.md references aieos-governance-foundation as the canonical authority for governance-model.md `[ai]`
 
 ---
 
@@ -105,7 +105,7 @@ The kit's `CLAUDE.md` must contain:
 - [ ] Key rules the AI must follow `[ai]`
 - [ ] Boundary contracts (upstream and downstream) `[ai]`
 - [ ] File naming conventions `[ai]`
-- [ ] Reference to aieos-spec as governance model authority `[ai]`
+- [ ] Reference to aieos-governance-foundation as governance model authority `[ai]`
 - [ ] Commit message style guidance `[ai]`
 
 ---
@@ -139,7 +139,7 @@ A kit that fails any check is not AIEOS-compatible. Fix before treating the kit 
 
 ## Running Automated Checks
 
-The script `aieos-spec/tests/check-structure.sh` automates all checks annotated `[auto]` above.
+The script `aieos-governance-foundation/tests/check-structure.sh` automates all checks annotated `[auto]` above.
 
 **Usage:**
 ```

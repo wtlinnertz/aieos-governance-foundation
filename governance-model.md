@@ -252,7 +252,7 @@ Some AIEOS artifacts belong to the consuming project rather than to any single k
 
 **Engagement Record (ER)** is the only project-level artifact in the current AIEOS system. It captures the full artifact lineage and key outcomes for a single initiative across all layers.
 
-- **Format:** Defined in `aieos-spec/docs/engagement-record-spec.md`
+- **Format:** Defined in `aieos-governance-foundation/docs/engagement-record-spec.md`
 - **Location:** `{project}/docs/engagement/er-{initiative}.md` in the consuming project
 - **ID format:** `ER-{INITIATIVE}-{NNN}`
 - **Governance:** Not governed by a four-file system. No generation prompt or validator. Operators maintain it by following each kit's playbook instructions.
@@ -304,7 +304,7 @@ Principles feed into the kit's context files (ACF, DCF, or kit-specific equivale
 
 ### Principle File Versioning
 
-Every principle file must carry a version field in its header. Changes to principle files follow a categorized versioning protocol (minor, significant, breaking) defined in `aieos-spec/docs/principle-file-standard.md`. That document is the authoritative reference for version field format, change categories, and the enforcement mapping requirement.
+Every principle file must carry a version field in its header. Changes to principle files follow a categorized versioning protocol (minor, significant, breaking) defined in `aieos-governance-foundation/docs/principle-file-standard.md`. That document is the authoritative reference for version field format, change categories, and the enforcement mapping requirement.
 
 ---
 
@@ -489,14 +489,14 @@ Each kit is versioned independently using semantic versioning:
 
 ### Governance Model Versioning
 
-This document is versioned as part of the `aieos-spec` repository. The canonical version lives at `aieos-spec/governance-model.md`. All kit copies must remain synchronized with that file.
+This document is versioned as part of the `aieos-governance-foundation` repository. The canonical version lives at `aieos-governance-foundation/governance-model.md`. All kit copies must remain synchronized with that file.
 
 Current version: `1.0`
 
 ### Change Protocol
 
 Changes to the governance model require:
-1. Update `aieos-spec/governance-model.md` first.
+1. Update `aieos-governance-foundation/governance-model.md` first.
 2. Impact analysis across all kits that reference it.
 3. Review by kit maintainers.
 4. Update all kit copies of `docs/governance-model.md` to match exactly.

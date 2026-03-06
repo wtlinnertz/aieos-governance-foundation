@@ -92,4 +92,4 @@ If the Kit Entry Record Path A section has the EL references field blank (neithe
 - PIK: `examples/cross-kit/README.md` — step-by-step handoff mechanics with sample outputs
 - EEK: `docs/playbook.md` §PRD Entry Paths (Path A) and §Cross-Kit Re-Entry Protocol
 - EEK: `docs/specs/kit-entry-spec.md` — Kit Entry gate rules
-- aieos-spec: `docs/layer-model.md` — Layer 2 (PIK) → Layer 4 (EEK) interface
+- aieos-governance-foundation: `docs/layer-model.md` — Layer 2 (PIK) → Layer 4 (EEK) interface

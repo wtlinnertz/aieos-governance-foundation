@@ -10,7 +10,7 @@ The ER is not governed by a four-file system. It has no generation prompt or val
 
 ## Authority
 
-This spec is the canonical definition of the ER format. It lives in `aieos-spec` because ERs span all layers — no single kit should own a cross-layer standard.
+This spec is the canonical definition of the ER format. It lives in `aieos-governance-foundation` because ERs span all layers — no single kit should own a cross-layer standard.
 
 ---
 

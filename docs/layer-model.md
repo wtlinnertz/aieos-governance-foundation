@@ -161,6 +161,16 @@ This layer synthesizes operational signals from production into actionable insig
 3. **Layer skipping is permitted only with explicit justification.** A team with a well-understood bug fix may enter Engineering Execution directly (Path B) without a discovery engagement. The Kit Entry Record captures and justifies the skip.
 4. **Layer re-entry is defined in each kit's playbook.** When upstream artifacts change after downstream work has begun, the cross-kit re-entry protocol determines what gets re-validated.
 
+## Cross-Layer Project Artifacts
+
+**Engagement Records (ERs)** are project-level artifacts that span all layers. Unlike kit artifacts, they are not owned by any single layer — they are maintained in the consuming project at `docs/engagement/er-{initiative}.md` and updated by each kit's operators as work passes through that layer.
+
+ERs serve two purposes:
+- **Episodic memory** — a structured index of every artifact ID, outcome, and key decision for one initiative, making the full artifact history queryable without re-reading all documents
+- **Portfolio synthesis input** — ERs are the primary input to Portfolio Evolution Signals (IEK Layer 7), which synthesize cross-initiative patterns and generate improvement proposals for the governing prompt files
+
+The ER spec lives in `aieos-spec/docs/engagement-record-spec.md`. No single kit owns the ER format — it is a system-level standard.
+
 ---
 
 ## Current Build State

@@ -179,6 +179,30 @@ All validators across all kits produce JSON with this schema:
 4. Prerequisite artifacts must be frozen before downstream generation begins.
 5. Generation and validation happen in **separate AI sessions** to prevent self-validation bias.
 
+### Artifact Provenance
+
+Every artifact template must include two provenance fields in its Document Control section:
+
+- `Governance Model Version` — The version of this governance model in effect when the artifact was generated. Retrieve from §15 of this document. Current value: `1.0`.
+- `Prompt Version` — The version of the generation prompt used to produce this artifact. Retrieve from the prompt file's version header. Use `N/A` for human-authored entry gates and intake forms.
+
+These fields are required for all artifacts generated after this governance model version. Existing frozen artifacts are grandfathered — no retrofitting required. Provenance tracking is forward-looking only.
+
+### Lifecycle States
+
+Artifacts progress through a defined set of lifecycle states:
+
+| State | Meaning |
+|-------|---------|
+| Draft | Artifact is being generated or authored |
+| Validated | Artifact has passed all hard gates |
+| Freeze Pending | Validation passed; human freeze review in progress |
+| Frozen | Artifact is authoritative input for downstream artifacts |
+| Deprecated | Artifact was Frozen; the system or service it governed is no longer active |
+| Abandoned | Artifact did not complete the lifecycle; initiative was cancelled before freeze |
+
+`Deprecated` and `Abandoned` are terminal states. An artifact in either state is retained for audit purposes and must not be deleted. `Deprecated` does not mean invalid — it means the governed system has ended its operational life. `Abandoned` does not mean failed — it means the initiative was discontinued before the artifact reached a freeze.
+
 ### Freeze Semantics
 
 A freeze means:

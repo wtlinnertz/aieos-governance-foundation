@@ -41,9 +41,12 @@ Changes to the governance model follow the protocol in `governance-model.md` §1
 
 | Layer | Repository | Status |
 |-------|-----------|--------|
+| 1. Strategic Direction | `aieos-strategic-direction-kit` | Planned |
 | 2. Product Intelligence | `aieos-product-intelligence-kit` | Built |
+| 3. Flow Control | `aieos-flow-control-kit` | Planned |
 | 4. Engineering Execution | `aieos-engineering-execution-kit` | Built |
 | 5. Release & Exposure | `aieos-release-exposure-kit` | Built |
 | 6. Reliability & Resilience | `aieos-reliability-resilience-kit` | Built |
+| 7. Insight & Evolution | `aieos-insight-evolution-kit` | Built |
 
-Additional kits will be registered here as they are built.
+Layers 1 and 3 remain planned. All other layers are operational.

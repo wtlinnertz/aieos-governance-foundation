@@ -128,15 +128,15 @@ This layer governs SLOs, incident management, error budgets, and the operational
 
 **Question**: What did we learn and what changes?
 
-This layer governs the collection and synthesis of signals from production — usage patterns, error rates, experiment results, customer feedback — into actionable insights that feed back to strategic and product decisions.
+This layer synthesizes operational signals from production into actionable insights that close the feedback loop to the Product Intelligence layer. It takes frozen Reliability Health Reports from Layer 6 and produces Evolution Signals that assess value hypothesis outcomes, identify reliability trends, and recommend whether the system should continue, be watched, or trigger new discovery.
 
-**Kit**: `aieos-insight-evolution-kit` *(planned)*
+**Kit**: `aieos-insight-evolution-kit` *(built)*
 
-**Inputs**: Production signals, experiment results, reliability records
+**Inputs**: Frozen Reliability Health Reports (RHRs) from Reliability & Resilience Kit (Layer 6) — minimum 2 required. Optional: frozen Value Hypothesis from Product Intelligence Kit (Layer 2).
 
-**Outputs**: Insight reports, strategic recommendations, experiment conclusions
+**Outputs**: Frozen Evolution Signal (ES) — VH outcome assessment, reliability trend analysis, pattern analysis, re-entry signal (maintain / watch / re-discover), recommended actions.
 
-**Downstream consumer**: Strategic Direction (Layer 1) — closes the loop
+**Downstream consumer**: Product Intelligence (Layer 2) — if re-entry signal is `re-discover`, ES §6 discovery question and §7 Discovery actions feed a new PIK engagement. Re-entry is advisory; a human product owner decides whether to act.
 
 ---
 
@@ -150,7 +150,7 @@ This layer governs the collection and synthesis of signals from production — u
 | 4. Engineering Execution | `aieos-engineering-execution-kit` | Built |
 | 5. Release & Exposure | `aieos-release-exposure-kit` | Built |
 | 6. Reliability & Resilience | `aieos-reliability-resilience-kit` | Built |
-| 7. Insight & Evolution | `aieos-insight-evolution-kit` | Planned |
+| 7. Insight & Evolution | `aieos-insight-evolution-kit` | Built |
 
 ---
 
@@ -165,11 +165,13 @@ This layer governs the collection and synthesis of signals from production — u
 
 ## Current Build State
 
-As of the current build, Layers 2, 4, 5, and 6 are operational:
+As of the current build, Layers 2, 4, 5, 6, and 7 are operational:
 
 - **Layer 2 → Layer 4** is the proven inter-kit handoff path. The frozen DPRD from PIK becomes the EEK PRD via a defined acceptance check.
 - **Layer 4 → Layer 5** handoff: the frozen ORD from EEK becomes the Release & Exposure Kit input via the Release Entry Gate.
 - **Layer 5 → Layer 6** handoff: the frozen Release Record §7 (Handoff to Layer 6) becomes the Reliability & Resilience Kit input via the Service Reliability Entry Gate.
-- The Kit Entry Gate pattern is used at Layers 4, 5, and 6 to enforce upstream verification before artifact generation begins.
+- **Layer 6 → Layer 7** handoff: frozen Reliability Health Reports (minimum 2) become the Insight & Evolution Kit input. No entry gate — the ES confirms frozen input status in §1. An optional frozen Value Hypothesis from Layer 2 enables VH outcome assessment.
+- **Layer 7 → Layer 2** feedback: if the Evolution Signal re-entry signal is `re-discover`, the ES §6 discovery question and §7 recommended actions inform a new PIK Discovery Intake. The feedback loop is advisory — a human product owner decides whether to initiate a new discovery engagement.
+- The Kit Entry Gate pattern is used at Layers 4, 5, and 6 to enforce upstream verification before artifact generation begins. Layer 7 uses self-confirming input validation in the ES prompt instead.
 
-Additional layers will be built in handoff order to extend the proven model.
+The full seven-layer loop is now operational. Layers 1 and 3 remain planned.

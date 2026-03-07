@@ -14,6 +14,9 @@ This repository is the **canonical authority** for the AIEOS governance model an
 | `docs/philosophy.md` | Design philosophy — the "why" behind the governance model |
 | `docs/layer-model.md` | The seven-layer model and how kits map to organizational layers |
 | `docs/kit-structure-standard.md` | Compliance checklist for building and auditing AIEOS-compatible kits |
+| `docs/getting-started.md` | Task-oriented entry guide — find your scenario and follow the path |
+| `docs/initiative-presets.md` | Five golden paths for common initiative types with full artifact routing |
+| `docs/initiative-state-view.md` | Template for tracking initiative state across all kit layers |
 
 ---
 
@@ -48,5 +51,6 @@ Changes to the governance model follow the protocol in `governance-model.md` §1
 | 5. Release & Exposure | `aieos-release-exposure-kit` | Built |
 | 6. Reliability & Resilience | `aieos-reliability-resilience-kit` | Built |
 | 7. Insight & Evolution | `aieos-insight-evolution-kit` | Built |
+| 8. Operational Diagnostics | `aieos-operational-diagnostics-kit` | Built |
 
 Layers 1 and 3 remain planned. All other layers are operational.

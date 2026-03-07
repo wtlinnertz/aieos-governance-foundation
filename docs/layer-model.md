@@ -4,6 +4,16 @@ AIEOS organizes an organization's operating system into seven layers. Each layer
 
 ---
 
+## Getting Started
+
+If you are new to AIEOS or starting a new initiative:
+
+- [`getting-started.md`](getting-started.md) — Task-oriented guide: find your scenario and follow the path
+- [`initiative-presets.md`](initiative-presets.md) — Five golden paths for common initiative types (New Feature, Enhancement, Compliance, Performance Fix, Exploratory Research)
+- [`initiative-state-view.md`](initiative-state-view.md) — Template for tracking initiative state across all kit layers, with a TaskFlow worked example
+
+---
+
 ## The Seven Layers
 
 ```

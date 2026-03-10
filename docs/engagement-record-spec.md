@@ -38,7 +38,7 @@ This spec is the canonical definition of the ER format. It lives in `aieos-gover
 | Status | Active / Deprecated / Abandoned |
 | Discovery Start | {YYYY-MM-DD — date Discovery Intake was validated in PIK} |
 | Latest ES Date | {YYYY-MM-DD — date of most recent frozen ES, or N/A} |
-| ER Spec Version | 1.0 |
+| ER Spec Version | 1.1 |
 
 **Status values:**
 - `Active` — initiative is in progress or in production and under monitoring
@@ -90,6 +90,12 @@ Example: `Pivot: Assumption A-03 (users will self-configure preferences) invalid
 | Work Decomposition Document | WDD-XXX | Frozen | |
 | Operational Readiness Decision | ORD-XXX | Frozen | |
 
+**Key decisions:**
+
+List each significant decision made during Layer 4, with enough context to be useful without re-reading the full artifact. Minimum entries: architectural amendments, re-entry decisions, and any deviation from upstream PRD scope.
+
+Format: `{decision type}: {brief description} — {artifact ID where decision is recorded}`
+
 **Gate failures (if any):**
 
 List any hard gate failures encountered during Layer 4, and how they were resolved.
@@ -113,6 +119,12 @@ Format: `{artifact ID} / {gate name}: {brief description of failure} → {resolu
 
 If Rolled Back or Abandoned, add a brief note on cause.
 
+**Key decisions:**
+
+List each significant decision made during Layer 5, with enough context to be useful without re-reading the full artifact. Minimum entries: release type justification, deviations from the Release Plan during execution, and any gate failures or validator issues encountered.
+
+Format: `{decision type}: {brief description} — {artifact ID where decision is recorded}`
+
 ---
 
 ### §5 Layer 6 — Reliability & Resilience
@@ -127,6 +139,12 @@ If Rolled Back or Abandoned, add a brief note on cause.
 | Reliability Health Reports | RHR-XXX, RHR-XXX | Frozen | List all in order |
 
 If the SRP has been revised, list all versions in the Notes column (e.g., `v1 → v2 on YYYY-MM-DD`).
+
+**Key decisions:**
+
+List each significant decision made during Layer 6, with enough context to be useful without re-reading the full artifact. Minimum entries: SRP revision decisions, error budget policy invocations, and any escalation trigger activations.
+
+Format: `{decision type}: {brief description} — {artifact ID where decision is recorded}`
 
 ---
 
@@ -159,6 +177,72 @@ Add a row for each DCR engagement (an incident may produce one DCR, one or more 
 
 ---
 
+### §9 Layer 9 — Quality Assurance (if adopted)
+
+**Artifact table:**
+
+| Artifact Type | ID | Status | Notes |
+|--------------|-----|--------|-------|
+| Quality Assurance Entry Record | QAER-XXX | Frozen | |
+| Verification Plan | VP-XXX | Frozen | |
+| Test Campaign Record | TCR-XXX | Frozen | |
+| Quality Gate Record | QGR-XXX | Frozen | Disposition: PASS / CONDITIONAL / FAIL |
+
+**Quality disposition:** PASS / CONDITIONAL / FAIL
+
+If CONDITIONAL, note the accepted risks. If FAIL, note the return-to-EEK decision.
+
+If Layer 9 is not adopted for this initiative, write "QAK not adopted — direct ORD → REK handoff."
+
+---
+
+### §10 Layer 10 — Security & Compliance (if adopted)
+
+**Artifact table:**
+
+| Artifact Type | ID | Status | Notes |
+|--------------|-----|--------|-------|
+| Threat Model | TM-XXX | Frozen | |
+| Security Assessment Record | SAR-XXX | Frozen | |
+| Compliance Evidence Record | CER-XXX | Frozen | N/A if no compliance mandate |
+| Dependency Audit Record | DAR-XXX | Frozen | |
+
+If Layer 10 is not adopted for this initiative, write "SCK not adopted for this initiative."
+
+---
+
+### §11 Layer 11 — Data & Configuration (if adopted)
+
+**Artifact table:**
+
+| Artifact Type | ID | Status | Notes |
+|--------------|-----|--------|-------|
+| Configuration Specification | CSPEC-XXX | Frozen | |
+| Feature Flag Lifecycle Record | FFLR-XXX | Frozen | Note current version |
+| Data Schema Record | DSR-XXX | Frozen | Note current version |
+
+If the FFLR or DSR has been re-frozen, list all versions in the Notes column.
+
+If Layer 11 is not adopted for this initiative, write "DCK not adopted for this initiative."
+
+---
+
+### §12 Layer 12 — Platform & Infrastructure (if adopted)
+
+**Artifact table:**
+
+| Artifact Type | ID | Status | Notes |
+|--------------|-----|--------|-------|
+| Platform Decision Record(s) | PDR-XXX | Frozen | List all PDRs |
+| Infrastructure Specification | ISPEC-XXX | Frozen | Note current version |
+| Environment Matrix | EM-XXX | Frozen | Note current version |
+
+If the ISPEC or EM has been re-frozen, list all versions in the Notes column.
+
+If Layer 12 is not adopted for this initiative, write "PINFK not adopted for this initiative."
+
+---
+
 ### §7 Initiative Outcome
 
 | Field | Value |
@@ -178,14 +262,18 @@ Each kit's playbook includes a "Maintaining the Engagement Record" section with 
 | Kit | Trigger | What to update |
 |-----|---------|---------------|
 | Product Intelligence Kit | Discovery Intake validated | Create ER (§1 Document Control + §2 header). Add artifact IDs as each Layer 2 artifact freezes. Record pivot decisions in §2 Key Decisions. |
-| Engineering Execution Kit | Each Layer 4 artifact frozen | Add artifact IDs to §3 table. Record gate failures and resolutions in §3 Gate Failures. |
-| Release & Exposure Kit | Release disposition determined | Add artifact IDs to §4 table. Record release disposition. |
-| Reliability & Resilience Kit | Each Layer 6 artifact frozen | Add artifact IDs to §5 table. Add IR entries as incidents are declared and closed. |
+| Engineering Execution Kit | Each Layer 4 artifact frozen | Add artifact IDs to §3 table. Record key decisions (architectural amendments, re-entry, scope deviations) in §3 Key Decisions. Record gate failures and resolutions in §3 Gate Failures. |
+| Release & Exposure Kit | Release disposition determined | Add artifact IDs to §4 table. Record release disposition. Record key decisions (release type justification, RP deviations, gate failures) in §4 Key Decisions. |
+| Reliability & Resilience Kit | Each Layer 6 artifact frozen | Add artifact IDs to §5 table. Add IR entries as incidents are declared and closed. Record key decisions (SRP revisions, error budget invocations, escalations) in §5 Key Decisions. |
 | Insight & Evolution Kit | ES frozen | Add ES row to §6 table with signal and VH verdict. Update §7 Initiative Outcome. |
 | Operational Diagnostics Kit | DCR frozen | Add DCR ID to §8 table. |
 | Operational Diagnostics Kit | INR frozen | Add INR ID to §8 table. |
 | Operational Diagnostics Kit | PMR frozen | Add PMR ID to §8 table. |
 | Operational Diagnostics Kit | RB frozen | Add RB ID to §8 table (N/A if no runbook produced). |
+| Quality Assurance Kit | Each Layer 9 artifact frozen | Add artifact IDs to §9 table. Record quality disposition. |
+| Security & Compliance Kit | Each Layer 10 artifact frozen | Add artifact IDs to §10 table. |
+| Data & Configuration Kit | Each Layer 11 artifact frozen | Add artifact IDs to §11 table. Note FFLR/DSR version changes. |
+| Platform & Infrastructure Kit | Each Layer 12 artifact frozen | Add artifact IDs to §12 table. Note ISPEC/EM version changes. |
 
 **On initiative end:** The operator who declares the initiative Deprecated or Abandoned updates §1 Status and §7 Initiative Outcome, and adds the DN ID reference.
 

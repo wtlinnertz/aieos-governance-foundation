@@ -7,6 +7,7 @@ This guide is organized by what you are trying to accomplish. Find your scenario
 ## Kit Map
 
 ```
+Pipeline Layers:
 ┌──────────────────────────────────────────────────────────────────────────┐
 │  Layer 2: Product Intelligence Kit (PIK)                                  │
 │  WCR → Discovery Intake → PFD → VH → AR → EL → DPRD                     │
@@ -22,11 +23,29 @@ This guide is organized by what you are trying to accomplish. Find your scenario
 ├──────────────────────────────────────────────────────────────────────────┤
 │  Layer 7: Insight & Evolution Kit (IEK)              ← RRK feedback loop │
 │  ES → PES (portfolio)                                                     │
-├──────────────────────────────────────────────────────────────────────────┤
+└──────────────────────────────────────────────────────────────────────────┘
+                    ↑ ES re-discover signal feeds back to PIK ↑
+
+Operational Track:
+┌──────────────────────────────────────────────────────────────────────────┐
 │  Layer 8: Operational Diagnostics Kit (ODK)          ← triggered by SEV  │
 │  DCR → INR → PMR → RB (optional)                                         │
 └──────────────────────────────────────────────────────────────────────────┘
-                    ↑ ES re-discover signal feeds back to PIK ↑
+
+Cross-Cutting Governance:
+┌──────────────────────────────────────────────────────────────────────────┐
+│  Layer 9: Quality Assurance Kit (QAK)                ← gate: EEK → REK  │
+│  QAER → VP → TCR → QGR                                                   │
+├──────────────────────────────────────────────────────────────────────────┤
+│  Layer 10: Security & Compliance Kit (SCK)           ← multi-layer       │
+│  TM → SAR + DAR → CER (as needed)                                        │
+├──────────────────────────────────────────────────────────────────────────┤
+│  Layer 11: Data & Configuration Kit (DCK)            ← multi-layer       │
+│  CSPEC → FFLR → DSR                                                      │
+├──────────────────────────────────────────────────────────────────────────┤
+│  Layer 12: Platform & Infrastructure Kit (PINFK)     ← foundational      │
+│  PDR → ISPEC → EM                                                         │
+└──────────────────────────────────────────────────────────────────────────┘
 ```
 
 Layers 1 (Strategic Direction) and 3 (Flow Control) are planned but not yet built.
@@ -140,6 +159,61 @@ KER → PRD → ACF → SAD → DCF → TDD → WDD → ORD
 **Session setup:** `aieos-insight-evolution-kit/docs/session-setup.md`
 
 **Arriving from RRK?** Read `aieos-insight-evolution-kit/docs/entry-from-rrk.md` first.
+
+---
+
+## We need to verify integration quality before releasing
+
+**Starting point:** Quality Assurance Kit (QAK), Layer 9
+
+**Prerequisite:** Frozen ORD from EEK
+
+**Path:** QAER → VP → TCR → QGR
+
+**Where to start:** `aieos-quality-assurance-kit/docs/playbook.md`
+
+**Arriving from EEK?** Read `aieos-quality-assurance-kit/docs/entry-from-eek.md` first.
+
+**When to use:** Adopt QAK when the system has integration points between components, external service dependencies, or cross-component behavior that unit tests cannot verify. For simple, single-component systems, direct ORD → REK handoff may be sufficient.
+
+---
+
+## We need security governance
+
+**Starting point:** Security & Compliance Kit (SCK), Layer 10
+
+**Trigger points:**
+- SAD frozen → generate Threat Model (TM)
+- Code complete → generate Security Assessment Record (SAR) and Dependency Audit Record (DAR)
+- Compliance mandate identified → generate Compliance Evidence Record (CER)
+
+**Where to start:** `aieos-security-compliance-kit/docs/playbook.md`
+
+---
+
+## We need to manage configuration and feature flags
+
+**Starting point:** Data & Configuration Kit (DCK), Layer 11
+
+**Trigger points:**
+- TDD frozen → generate Configuration Specification (CSPEC) and Data Schema Record (DSR)
+- Feature flags created (during REK) → generate Feature Flag Lifecycle Record (FFLR)
+- Periodic → FFLR review at each RHR cycle
+
+**Where to start:** `aieos-data-configuration-kit/docs/playbook.md`
+
+---
+
+## We need to govern infrastructure decisions
+
+**Starting point:** Platform & Infrastructure Kit (PINFK), Layer 12
+
+**Trigger points:**
+- Infrastructure decision needed → generate Platform Decision Record (PDR)
+- System design phase → generate Infrastructure Specification (ISPEC)
+- Project setup → generate Environment Matrix (EM)
+
+**Where to start:** `aieos-platform-infrastructure-kit/docs/playbook.md`
 
 ---
 

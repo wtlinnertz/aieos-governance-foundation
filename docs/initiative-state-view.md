@@ -48,6 +48,20 @@ Use this template to track an initiative's artifact state across all AIEOS kit l
 | 8 | ODK | Investigation Record | INR-[SERVICE]-NNN | | |
 | 8 | ODK | Postmortem Record | PMR-[SERVICE]-NNN | | |
 | 8 | ODK | Runbook | RB-[SERVICE]-NNN | | |
+| 9 | QAK | Quality Assurance Entry Record | QAER-[PROJECT]-NNN | | |
+| 9 | QAK | Verification Plan | VP-[PROJECT]-NNN | | |
+| 9 | QAK | Test Campaign Record | TCR-[PROJECT]-NNN | | |
+| 9 | QAK | Quality Gate Record | QGR-[PROJECT]-NNN | | |
+| 10 | SCK | Threat Model | TM-[PROJECT]-NNN | | |
+| 10 | SCK | Security Assessment Record | SAR-[PROJECT]-NNN | | |
+| 10 | SCK | Compliance Evidence Record | CER-[PROJECT]-NNN | | |
+| 10 | SCK | Dependency Audit Record | DAR-[PROJECT]-NNN | | |
+| 11 | DCK | Configuration Specification | CSPEC-[PROJECT]-NNN | | |
+| 11 | DCK | Feature Flag Lifecycle Record | FFLR-[PROJECT]-NNN | | |
+| 11 | DCK | Data Schema Record | DSR-[PROJECT]-NNN | | |
+| 12 | PINFK | Platform Decision Record(s) | PDR-[PROJECT]-NNN | | |
+| 12 | PINFK | Infrastructure Specification | ISPEC-[PROJECT]-NNN | | |
+| 12 | PINFK | Environment Matrix | EM-[PROJECT]-NNN | | |
 
 **Key decisions and pivot points:**
 

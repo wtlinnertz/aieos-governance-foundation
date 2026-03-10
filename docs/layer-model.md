@@ -1,6 +1,6 @@
 # AIEOS Layer Model
 
-AIEOS organizes an organization's operating system into seven layers. Each layer governs a distinct phase of the value-delivery lifecycle. A kit governs each layer.
+AIEOS organizes an organization's operating system into layers. Each layer governs a distinct phase of the value-delivery lifecycle. A kit governs each layer.
 
 ---
 
@@ -14,7 +14,13 @@ If you are new to AIEOS or starting a new initiative:
 
 ---
 
-## The Seven Layers
+## Layer Architecture
+
+AIEOS layers are organized into three categories:
+
+### Pipeline Layers (1–7)
+
+Sequential value delivery from strategy to production learning. The flow is top-down for delivery and bottom-up for learning. Layer 7 feeds insight back to Layer 1. The system is a loop, not a pipeline.
 
 ```
 ┌─────────────────────────────────────────┐
@@ -31,12 +37,36 @@ If you are new to AIEOS or starting a new initiative:
 │  6. Reliability & Resilience            │  How do we keep it running?
 ├─────────────────────────────────────────┤
 │  7. Insight & Evolution                 │  What did we learn and what changes?
-├─────────────────────────────────────────┤
+└─────────────────────────────────────────┘
+```
+
+### Operational Tracks (8)
+
+Reactive tracks triggered by production events, not SDLC progression.
+
+```
+┌─────────────────────────────────────────┐
 │  8. Operational Diagnostics             │  How do we diagnose and resolve failures?
 └─────────────────────────────────────────┘
 ```
 
-The flow is top-down for value delivery and bottom-up for learning. Layer 7 feeds insight back to Layer 1. The system is a loop, not a pipeline. Layer 8 is a reactive operational track — triggered by production events, not SDLC progression — that feeds findings back into Layers 6, 7, and optionally Layers 2 and 4.
+### Cross-Cutting Governance (9–12)
+
+Kits that interact with multiple pipeline layers. Each has defined trigger points rather than a fixed position in the sequence. They can be adopted independently.
+
+```
+┌─────────────────────────────────────────┐
+│  9. Quality Assurance                   │  Is it verified beyond unit scope?
+├─────────────────────────────────────────┤   (gate between 4 → 5)
+│  10. Security & Compliance              │  Is it secure and compliant?
+├─────────────────────────────────────────┤   (touches 2, 4, 5, 6, 8)
+│  11. Data & Configuration               │  Is config governed and flags managed?
+├─────────────────────────────────────────┤   (touches 4, 5, 6)
+│  12. Platform & Infrastructure          │  What infrastructure supports it?
+└─────────────────────────────────────────┘   (foundational input to 4, 5, 6)
+```
+
+Layer 8 is a reactive operational track — triggered by production events, not SDLC progression — that feeds findings back into Layers 6, 7, and optionally Layers 2 and 4. Layers 9–12 are cross-cutting governance kits — each operates at defined trigger points across the pipeline rather than occupying a single sequential position.
 
 ---
 
@@ -172,18 +202,107 @@ This layer governs structured investigation, hypothesis tracking, and postmortem
 
 ---
 
+### Layer 9: Quality Assurance
+
+**Question**: Is it verified beyond unit scope?
+
+This layer governs verification campaigns, integration testing, system testing, and pre-release quality gates. It fills the gap between individual work item review (Layer 4) and release readiness (Layer 5) by verifying cross-component behavior, integration point correctness, and system-level quality.
+
+**Kit**: `aieos-quality-assurance-kit` *(built)*
+
+**Position**: Cross-cutting gate between Layer 4 and Layer 5. Triggered after ORD freeze, before REK entry.
+
+**Inputs**: Frozen ORD from Engineering Execution (Layer 4), SAD (integration points), TDD (test strategy), ACF (constraints), WDD (work items for traceability)
+
+**Outputs**: Frozen Quality Gate Record (QGR) — quality disposition declaration (PASS / CONDITIONAL / FAIL), test campaign evidence, defect status, coverage assessment
+
+**Downstream consumer**: Release & Exposure (Layer 5) — QGR provides quality clearance for release entry
+
+**Artifact flow**: QAER → VP → TCR → QGR
+
+---
+
+### Layer 10: Security & Compliance
+
+**Question**: Is it secure and compliant?
+
+This layer governs threat modeling, security assessment, compliance evidence, and dependency auditing. It is cross-cutting — artifacts are triggered at different points in the pipeline rather than occupying a single sequential position.
+
+**Kit**: `aieos-security-compliance-kit` *(built)*
+
+**Trigger points**:
+- After SAD freeze (Layer 4): Threat Model
+- After code complete (Layer 4/9): Security Assessment Record, Dependency Audit Record
+- When compliance mandate identified (any layer): Compliance Evidence Record
+
+**Inputs**: SAD (system architecture), ACF §3 (security guardrails), TDD (technical design), implementation code, regulatory mandates, dependency manifests
+
+**Outputs**: Frozen Threat Model (TM) — attack surface analysis and mitigations. Frozen Security Assessment Record (SAR) — pre-release security verification. Frozen Compliance Evidence Record (CER) — regulatory evidence chain. Frozen Dependency Audit Record (DAR) — dependency vulnerability and license audit.
+
+**Downstream consumers**: Quality Assurance (Layer 9) — TM and SAR feed QGR security assessment. Release & Exposure (Layer 5) — SAR provides security clearance for release. Reliability & Resilience (Layer 6) — TM informs security monitoring requirements.
+
+**Artifact flow**: TM → SAR + DAR (parallel) → CER (as needed)
+
+---
+
+### Layer 11: Data & Configuration
+
+**Question**: Is configuration governed and are feature flags managed?
+
+This layer governs configuration management, feature flag lifecycle, and data schema evolution. It prevents configuration drift, stale feature flags, and untracked schema changes — common sources of production failures that other kits can detect but not prevent.
+
+**Kit**: `aieos-data-configuration-kit` *(built)*
+
+**Trigger points**:
+- During EEK (after TDD freeze): Configuration Specification, Data Schema Record
+- During REK (when feature flags created): Feature Flag Lifecycle Record
+- Periodic: FFLR review at each RHR cycle; DSR versioning when schemas evolve
+
+**Inputs**: TDD (config requirements, data models), ORD (config readiness), RR (feature flag states at release), RP (flag-based exposure strategy), incident data from RRK/ODK
+
+**Outputs**: Frozen Configuration Specification (CSPEC) — config structure, validation rules, per-environment values. Frozen Feature Flag Lifecycle Record (FFLR) — flag inventory, state tracking, retirement criteria. Frozen Data Schema Record (DSR) — schema definitions, evolution rules, migration plans.
+
+**Downstream consumers**: Release & Exposure (Layer 5) — CSPEC provides config validation criteria. Reliability & Resilience (Layer 6) — config drift detection requirements, stale flag alerts. Platform & Infrastructure (Layer 12) — CSPEC references EM for environment-specific values.
+
+---
+
+### Layer 12: Platform & Infrastructure
+
+**Question**: What infrastructure supports it?
+
+This layer governs infrastructure decisions, deployment targets, and environment management. It is foundational — its artifacts provide inputs to multiple pipeline layers rather than consuming their outputs. It captures the "why" behind infrastructure choices and the "what" of deployment targets.
+
+**Kit**: `aieos-platform-infrastructure-kit` *(built)*
+
+**Trigger points**:
+- Initiative planning: Platform Decision Records (per decision)
+- System design (during EEK): Infrastructure Specification
+- Project setup: Environment Matrix
+
+**Inputs**: Strategic requirements, reliability data from RRK (RHR trends), infrastructure-related PMR findings from ODK
+
+**Outputs**: Frozen Platform Decision Record (PDR) — technology decisions with rationale and tradeoffs. Frozen Infrastructure Specification (ISPEC) — deployment targets, resources, scaling, DR strategy. Frozen Environment Matrix (EM) — environment definitions, promotion rules, parity requirements.
+
+**Downstream consumers**: Engineering Execution (Layer 4) — PDRs inform ACF platform assumptions; ISPEC informs deployment model; EM informs testing. Release & Exposure (Layer 5) — ISPEC provides deployment targets; EM provides promotion rules. Reliability & Resilience (Layer 6) — ISPEC provides infrastructure monitoring baseline.
+
+---
+
 ## Kit Registry
 
-| Layer | Kit Repository | Status |
-|-------|---------------|--------|
-| 1. Strategic Direction | `aieos-strategic-direction-kit` | Planned |
-| 2. Product Intelligence | `aieos-product-intelligence-kit` | Built |
-| 3. Flow Control | `aieos-flow-control-kit` | Planned |
-| 4. Engineering Execution | `aieos-engineering-execution-kit` | Built |
-| 5. Release & Exposure | `aieos-release-exposure-kit` | Built |
-| 6. Reliability & Resilience | `aieos-reliability-resilience-kit` | Built |
-| 7. Insight & Evolution | `aieos-insight-evolution-kit` | Built |
-| 8. Operational Diagnostics | `aieos-operational-diagnostics-kit` | Built |
+| Layer | Kit Repository | Category | Status |
+|-------|---------------|----------|--------|
+| 1. Strategic Direction | `aieos-strategic-direction-kit` | Pipeline | Planned |
+| 2. Product Intelligence | `aieos-product-intelligence-kit` | Pipeline | Built |
+| 3. Flow Control | `aieos-flow-control-kit` | Pipeline | Planned |
+| 4. Engineering Execution | `aieos-engineering-execution-kit` | Pipeline | Built |
+| 5. Release & Exposure | `aieos-release-exposure-kit` | Pipeline | Built |
+| 6. Reliability & Resilience | `aieos-reliability-resilience-kit` | Pipeline | Built |
+| 7. Insight & Evolution | `aieos-insight-evolution-kit` | Pipeline | Built |
+| 8. Operational Diagnostics | `aieos-operational-diagnostics-kit` | Operational | Built |
+| 9. Quality Assurance | `aieos-quality-assurance-kit` | Cross-cutting | Built |
+| 10. Security & Compliance | `aieos-security-compliance-kit` | Cross-cutting | Built |
+| 11. Data & Configuration | `aieos-data-configuration-kit` | Cross-cutting | Built |
+| 12. Platform & Infrastructure | `aieos-platform-infrastructure-kit` | Cross-cutting | Built |
 
 ---
 
@@ -208,14 +327,25 @@ The ER spec lives in `aieos-governance-foundation/docs/engagement-record-spec.md
 
 ## Current Build State
 
-As of the current build, Layers 2, 4, 5, 6, 7, and 8 are operational:
+As of the current build, Layers 2, 4, 5, 6, 7, 8, 9, 10, 11, and 12 are operational:
 
+**Pipeline handoffs (Layers 1–7):**
 - **Layer 2 → Layer 4** is the proven inter-kit handoff path. The frozen DPRD from PIK becomes the EEK PRD via a defined acceptance check.
-- **Layer 4 → Layer 5** handoff: the frozen ORD from EEK becomes the Release & Exposure Kit input via the Release Entry Gate.
+- **Layer 4 → Layer 5** handoff: the frozen ORD from EEK becomes the Release & Exposure Kit input via the Release Entry Gate. When Layer 9 (QAK) is adopted, the frozen QGR supplements the ORD as release entry evidence.
 - **Layer 5 → Layer 6** handoff: the frozen Release Record §7 (Handoff to Layer 6) becomes the Reliability & Resilience Kit input via the Service Reliability Entry Gate.
 - **Layer 6 → Layer 7** handoff: frozen Reliability Health Reports (minimum 2) become the Insight & Evolution Kit input. No entry gate — the ES confirms frozen input status in §1. An optional frozen Value Hypothesis from Layer 2 enables VH outcome assessment.
 - **Layer 7 → Layer 2** feedback: if the Evolution Signal re-entry signal is `re-discover`, the ES §6 discovery question and §7 recommended actions inform a new PIK Discovery Intake. The feedback loop is advisory — a human product owner decides whether to initiate a new discovery engagement.
-- **Layer 8 (Operational Diagnostics)** is triggered by production events, not SDLC progression. A SEV1/2 incident (or operator judgment for high-learning-value events) triggers DCR → INR → PMR → optional RB. Frozen PMRs feed back into Layers 6, 7, and optionally 2 and 4.
-- The Kit Entry Gate pattern is used at Layers 4, 5, and 6 to enforce upstream verification before artifact generation begins. Layer 7 uses self-confirming input validation in the ES prompt. Layer 8 uses the Diagnostic Context Record (DCR) as its entry gate.
 
-The full seven-layer SDLC loop is operational. Layer 8 adds a reactive operational track. Layers 1 and 3 remain planned.
+**Operational track (Layer 8):**
+- **Layer 8 (Operational Diagnostics)** is triggered by production events, not SDLC progression. A SEV1/2 incident (or operator judgment for high-learning-value events) triggers DCR → INR → PMR → optional RB. Frozen PMRs feed back into Layers 6, 7, and optionally 2 and 4.
+
+**Cross-cutting governance (Layers 9–12):**
+- **Layer 9 (Quality Assurance)** operates as a gate between Layer 4 and Layer 5. After ORD freeze, the QAK runs verification campaigns and produces a Quality Gate Record that declares quality disposition. Adoption is optional — teams not using QAK proceed directly from ORD to REK entry.
+- **Layer 10 (Security & Compliance)** operates at multiple trigger points: Threat Models after SAD freeze, Security Assessments after code complete, Dependency Audits before release, Compliance Evidence Records when mandates apply. Artifacts feed into QAK (Layer 9) and REK (Layer 5) as security clearance evidence.
+- **Layer 11 (Data & Configuration)** establishes configuration governance during EEK (CSPEC, DSR), tracks feature flags during REK (FFLR), and provides config drift detection requirements to RRK. The FFLR is periodically re-frozen to track flag lifecycle.
+- **Layer 12 (Platform & Infrastructure)** provides foundational inputs to EEK (ACF platform assumptions), REK (deployment targets), and RRK (infrastructure monitoring baseline). PDRs capture technology decisions; ISPEC defines deployment infrastructure; EM defines environments and promotion rules.
+
+**Entry gate patterns:**
+- The Kit Entry Gate pattern is used at Layers 4, 5, 6, and 9 to enforce upstream verification before artifact generation begins. Layer 7 uses self-confirming input validation in the ES prompt. Layer 8 uses the Diagnostic Context Record (DCR) as its entry gate. Layers 10–12 use trigger-based entry rather than sequential gates.
+
+The full pipeline loop (Layers 1–7) is operational. Layer 8 adds a reactive operational track. Layers 9–12 add cross-cutting governance. Layers 1 and 3 remain planned.

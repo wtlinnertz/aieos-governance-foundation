@@ -25,6 +25,10 @@ Five golden paths for the most common initiative types. Each preset defines the 
 |-------|-----|-------------------|-------------------|
 | 2 | PIK | WCR, Discovery Intake, PFD, VH, AR, EL, DPRD | Brownfield Analysis (if adding to existing system) |
 | 4 | EEK | KER (Path A), PRD (placed from DPRD), ACF, SAD, DCF, TDD, WDD, ORD | — |
+| 9 | QAK | QAER, VP, TCR, QGR | — |
+| 10 | SCK | TM (after SAD), SAR (after code), DAR (before release) | CER (if compliance mandate) |
+| 11 | DCK | CSPEC (after TDD), DSR (after TDD) | FFLR (if feature flags used) |
+| 12 | PINFK | PDR (per decision), ISPEC, EM | — |
 | 5 | REK | RER, RCF, RP, RR | — |
 | 6 | RRK | SRER, SRP, RHR | IR (only if incidents occur) |
 | 7 | IEK | ES | PES (when ≥2 ERs available) |
@@ -36,10 +40,14 @@ Five golden paths for the most common initiative types. Each preset defines the 
 - Starting at EEK (Path B) for new features that haven't been validated through discovery
 - Skipping the Experiment Log (EL) when assumption validation was lightweight — document outcomes even for minimal tests
 - Missing VH traceability in the DPRD (a PIK traceability gate)
+- Skipping TM after SAD freeze — new features introduce new attack surfaces
+- Not establishing CSPEC before release — config drift is a top production failure cause
 
 **Exit condition (each layer):**
 - PIK → EEK: DPRD frozen, all 8 hard gates passing
-- EEK → REK: ORD frozen, all 8 hard gates passing, no open blockers
+- EEK → QAK: ORD frozen, all 8 hard gates passing, no open blockers
+- QAK → REK: QGR frozen with PASS or CONDITIONAL disposition
+- SCK: TM frozen before QAK entry; SAR + DAR frozen before REK entry
 - REK → RRK: RR frozen with §7 Handoff to Layer 6 complete
 - RRK → IEK: ≥2 frozen RHRs covering sufficient observation period
 
@@ -59,6 +67,9 @@ Five golden paths for the most common initiative types. Each preset defines the 
 |-------|-----|-------------------|-------------------|
 | 2 | PIK | — | WCR, Discovery Intake, PFD, VH (if scope is uncertain) |
 | 4 | EEK | KER (Path B), Product Brief, PRD, ACF, SAD, DCF, TDD, WDD, ORD | Brownfield Analysis, Codebase Analysis |
+| 9 | QAK | — | QAER, VP, TCR, QGR (if integration testing needed) |
+| 10 | SCK | — | SAR, DAR (if security-relevant changes) |
+| 11 | DCK | — | CSPEC updates, FFLR (if feature flags used) |
 | 5 | REK | RER, RP, RR | RCF (if not already established) |
 | 6 | RRK | IR (if incident occurs), RHR (at next review cycle) | — |
 | 7 | IEK | — | ES (if enhancement was significant enough to warrant learning capture) |
@@ -72,7 +83,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 - Missing DPRD consistency check when a DPRD exists but is being updated
 
 **Exit condition (each layer):**
-- EEK → REK: ORD frozen with all 8 hard gates passing
+- EEK → REK (or QAK if adopted): ORD frozen with all 8 hard gates passing
 - REK → RRK: RR frozen; update existing SRP at next review cycle
 
 ---
@@ -89,6 +100,8 @@ Five golden paths for the most common initiative types. Each preset defines the 
 |-------|-----|-------------------|-------------------|
 | 2 | PIK | WCR, Discovery Intake, PFD, AR, DPRD | VH (value hypothesis may be trivial or externally mandated) |
 | 4 | EEK | KER (Path A), PRD (placed from DPRD), ACF, SAD, DCF, TDD, WDD, ORD | — |
+| 10 | SCK | TM, SAR, CER, DAR | — |
+| 9 | QAK | QAER, VP, TCR, QGR | — |
 | 5 | REK | RER, RCF, RP, RR | — |
 | 6 | RRK | SRER (if new service), SRP revision (if adding compliance requirements to existing SRP), RHR | IR (if incidents) |
 | 7 | IEK | — | ES (if compliance work changes operational profile significantly) |
@@ -104,10 +117,14 @@ Five golden paths for the most common initiative types. Each preset defines the 
 - Treating compliance scope as fixed and skipping problem framing — PFD still required to bound scope and surface ambiguities in the mandate
 - ACF missing compliance constraints — regulatory requirements belong in the Architecture Context File
 - EL skipped because "experiments aren't relevant" — document the compliance testing and validation you performed
+- CER not started early — compliance evidence should be gathered incrementally, not assembled retroactively
+- DAR skipped — compliance mandates often include supply chain requirements
 
 **Exit condition (each layer):**
 - PIK → EEK: DPRD frozen with compliance mandate traceable to requirements
-- EEK → REK: ORD frozen; compliance evidence explicitly documented
+- EEK → QAK: ORD frozen; compliance evidence explicitly documented
+- SCK: CER frozen with all mandate requirements traced to evidence; SAR frozen; DAR frozen
+- QAK → REK: QGR frozen with PASS disposition (CONDITIONAL not acceptable for compliance initiatives without explicit risk acceptance)
 
 ---
 
@@ -128,6 +145,8 @@ Five golden paths for the most common initiative types. Each preset defines the 
 |-------|-----|-------------------|-------------------|
 | 8 | ODK | DCR, INR, PMR | RB (if recurring failure class) |
 | 4 | EEK | KER (Path B, citing PMR corrective action), PRD, TDD, WDD, ORD | ACF, SAD (if architecture changes) |
+| 9 | QAK | — | QAER, VP, TCR, QGR (if fix affects integration points) |
+| 10 | SCK | — | SAR (if fix touches security-sensitive paths) |
 | 5 | REK | RER, RP, RR | — |
 | 6 | RRK | SRP revision (if SLO targets change), RHR | IR (if further incidents) |
 

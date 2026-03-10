@@ -45,6 +45,9 @@ Cross-Cutting Governance:
 ├──────────────────────────────────────────────────────────────────────────┤
 │  Layer 12: Platform & Infrastructure Kit (PINFK)     ← foundational      │
 │  PDR → ISPEC → EM                                                         │
+├──────────────────────────────────────────────────────────────────────────┤
+│  Layer 13: Documentation & Knowledge Kit (DKK)       ← multi-layer       │
+│  UDR → ARR → SKA → DHR (periodic)                                        │
 └──────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -214,6 +217,22 @@ KER → PRD → ACF → SAD → DCF → TDD → WDD → ORD
 - Project setup → generate Environment Matrix (EM)
 
 **Where to start:** `aieos-platform-infrastructure-kit/docs/playbook.md`
+
+---
+
+## We need to govern user-facing documentation
+
+**Starting point:** Documentation & Knowledge Kit (DKK), Layer 13
+
+**Trigger points:**
+- After TDD freeze → generate API Reference Record (ARR) for API contracts
+- After REK release → generate User Documentation Record (UDR) for end-user docs
+- After REK release or ODK postmortem → generate Support Knowledge Article (SKA)
+- Periodic (aligned with RRK health reviews) → generate Documentation Health Review (DHR)
+
+**Where to start:** `aieos-documentation-knowledge-kit/docs/playbook.md`
+
+**When to use:** Adopt DKK when your product has end users who rely on documentation, API consumers who need reference material, or support teams who need structured knowledge bases. For internal-only tools with a small user base, DKK may be optional.
 
 ---
 

@@ -62,6 +62,10 @@ Use this template to track an initiative's artifact state across all AIEOS kit l
 | 12 | PINFK | Platform Decision Record(s) | PDR-[PROJECT]-NNN | | |
 | 12 | PINFK | Infrastructure Specification | ISPEC-[PROJECT]-NNN | | |
 | 12 | PINFK | Environment Matrix | EM-[PROJECT]-NNN | | |
+| 13 | DKK | User Documentation Record | UDR-[PROJECT]-NNN | | |
+| 13 | DKK | API Reference Record | ARR-[PROJECT]-NNN | | |
+| 13 | DKK | Support Knowledge Article(s) | SKA-[PROJECT]-NNN | | |
+| 13 | DKK | Documentation Health Review | DHR-[PROJECT]-NNN | | |
 
 **Key decisions and pivot points:**
 

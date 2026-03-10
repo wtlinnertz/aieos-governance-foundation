@@ -29,6 +29,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 | 10 | SCK | TM (after SAD), SAR (after code), DAR (before release) | CER (if compliance mandate) |
 | 11 | DCK | CSPEC (after TDD), DSR (after TDD) | FFLR (if feature flags used) |
 | 12 | PINFK | PDR (per decision), ISPEC, EM | — |
+| 13 | DKK | UDR (after release), ARR (after TDD or release) | SKA (if support team exists), DHR (periodic) |
 | 5 | REK | RER, RCF, RP, RR | — |
 | 6 | RRK | SRER, SRP, RHR | IR (only if incidents occur) |
 | 7 | IEK | ES | PES (when ≥2 ERs available) |
@@ -42,6 +43,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 - Missing VH traceability in the DPRD (a PIK traceability gate)
 - Skipping TM after SAD freeze — new features introduce new attack surfaces
 - Not establishing CSPEC before release — config drift is a top production failure cause
+- Not creating UDR after release — user-facing documentation gaps are a top support driver
 
 **Exit condition (each layer):**
 - PIK → EEK: DPRD frozen, all 8 hard gates passing
@@ -70,6 +72,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 | 9 | QAK | — | QAER, VP, TCR, QGR (if integration testing needed) |
 | 10 | SCK | — | SAR, DAR (if security-relevant changes) |
 | 11 | DCK | — | CSPEC updates, FFLR (if feature flags used) |
+| 13 | DKK | — | UDR update (if user-facing behavior changed), ARR update (if API changed) |
 | 5 | REK | RER, RP, RR | RCF (if not already established) |
 | 6 | RRK | IR (if incident occurs), RHR (at next review cycle) | — |
 | 7 | IEK | — | ES (if enhancement was significant enough to warrant learning capture) |
@@ -81,6 +84,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 - Treating an enhancement as "obvious" and skipping ACF/DCF — organizational standards must be verified regardless of scope
 - SRP revision not triggered when the enhancement changes SLO targets or failure modes
 - Missing DPRD consistency check when a DPRD exists but is being updated
+- Not updating UDR/ARR when enhancement changes user-visible behavior or API contracts
 
 **Exit condition (each layer):**
 - EEK → REK (or QAK if adopted): ORD frozen with all 8 hard gates passing
@@ -147,6 +151,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 | 4 | EEK | KER (Path B, citing PMR corrective action), PRD, TDD, WDD, ORD | ACF, SAD (if architecture changes) |
 | 9 | QAK | — | QAER, VP, TCR, QGR (if fix affects integration points) |
 | 10 | SCK | — | SAR (if fix touches security-sensitive paths) |
+| 13 | DKK | — | SKA (if incident exposed user-facing knowledge gap) |
 | 5 | REK | RER, RP, RR | — |
 | 6 | RRK | SRP revision (if SLO targets change), RHR | IR (if further incidents) |
 

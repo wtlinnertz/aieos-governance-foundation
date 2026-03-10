@@ -243,6 +243,23 @@ If Layer 12 is not adopted for this initiative, write "PINFK not adopted for thi
 
 ---
 
+### §13 Layer 13 — Documentation & Knowledge (if adopted)
+
+**Artifact table:**
+
+| Artifact Type | ID | Status | Notes |
+|--------------|-----|--------|-------|
+| User Documentation Record | UDR-XXX | Frozen | Per released capability |
+| API Reference Record | ARR-XXX | Frozen | Per public API |
+| Support Knowledge Article(s) | SKA-XXX | Frozen | List all SKAs |
+| Documentation Health Review | DHR-XXX | Frozen | Note review period |
+
+If the DHR has been re-frozen (periodic reviews), list all versions in the Notes column.
+
+If Layer 13 is not adopted for this initiative, write "DKK not adopted for this initiative."
+
+---
+
 ### §7 Initiative Outcome
 
 | Field | Value |
@@ -274,6 +291,7 @@ Each kit's playbook includes a "Maintaining the Engagement Record" section with 
 | Security & Compliance Kit | Each Layer 10 artifact frozen | Add artifact IDs to §10 table. |
 | Data & Configuration Kit | Each Layer 11 artifact frozen | Add artifact IDs to §11 table. Note FFLR/DSR version changes. |
 | Platform & Infrastructure Kit | Each Layer 12 artifact frozen | Add artifact IDs to §12 table. Note ISPEC/EM version changes. |
+| Documentation & Knowledge Kit | Each Layer 13 artifact frozen | Add artifact IDs to §13 table. Note DHR version changes for periodic reviews. |
 
 **On initiative end:** The operator who declares the initiative Deprecated or Abandoned updates §1 Status and §7 Initiative Outcome, and adds the DN ID reference.
 

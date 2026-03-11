@@ -2,6 +2,8 @@
 
 This guide is organized by what you are trying to accomplish. Find your scenario and follow the path.
 
+For a comprehensive reference of all entry points, exit conditions, parallelism rules, and flow permutations, see [`flow-reference.md`](flow-reference.md).
+
 ---
 
 ## Kit Map

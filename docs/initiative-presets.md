@@ -105,11 +105,13 @@ Five golden paths for the most common initiative types. Each preset defines the 
 | 2 | PIK | WCR, Discovery Intake, PFD, AR, DPRD | VH (value hypothesis may be trivial or externally mandated) |
 | 4 | EEK | KER (Path A), PRD (placed from DPRD), ACF, SAD, DCF, TDD, WDD, ORD | — |
 | 10 | SCK | TM, SAR, CER, DAR | — |
-| 9 | QAK | QAER, VP, TCR, QGR | — |
+| 9 | QAK | QAER, VP (references frozen TM+SAR), TCR, QGR | — |
 | 5 | REK | RER, RCF, RP, RR | — |
 | 6 | RRK | SRER (if new service), SRP revision (if adding compliance requirements to existing SRP), RHR | IR (if incidents) |
 | 7 | IEK | — | ES (if compliance work changes operational profile significantly) |
 | 8 | ODK | — | DCR, INR, PMR (if SEV occurs) |
+
+**Note on ordering:** SCK (Layer 10) appears before QAK (Layer 9) because frozen SCK artifacts (TM, SAR, CER, DAR) feed into QAK's Verification Plan as security test inputs. For compliance initiatives, SCK must complete before QAK's quality gate.
 
 **Entry gate:** WCR classifies as "Compliance/Regulatory." Discovery Intake must identify the specific mandate, jurisdiction, and deadline.
 

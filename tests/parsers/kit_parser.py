@@ -30,6 +30,17 @@ class SpecFile:
 
 
 @dataclass
+class ToolSpec:
+    """Parsed tool *-spec.md file metadata from docs/tools/."""
+    kit_name: str
+    tool_name: str            # e.g., "dependency-check", "spec-lookup"
+    file_path: str
+    version: str = ""
+    hard_gate_count: int = 0
+    hard_gate_names: list[str] = field(default_factory=list)
+
+
+@dataclass
 class KitStructure:
     """Complete parsed structure of an AIEOS kit."""
     name: str
@@ -42,6 +53,10 @@ class KitStructure:
     templates: list[str] = field(default_factory=list)
     prompts: list[str] = field(default_factory=list)
     validators: list[str] = field(default_factory=list)
+    tool_specs: list[ToolSpec] = field(default_factory=list)
+    tool_templates: list[str] = field(default_factory=list)
+    tool_prompts: list[str] = field(default_factory=list)
+    tool_validators: list[str] = field(default_factory=list)
 
 
 def find_aieos_root() -> Path:
@@ -146,6 +161,34 @@ def parse_spec_file(file_path: Path, kit_name: str) -> SpecFile:
     return spec
 
 
+def parse_tool_spec(file_path: Path, kit_name: str) -> ToolSpec:
+    """Parse a tool *-spec.md file from docs/tools/ to extract metadata."""
+    content = file_path.read_text(encoding="utf-8")
+    filename = file_path.name
+    tool_name = filename.replace("-spec.md", "")
+
+    tool = ToolSpec(
+        kit_name=kit_name,
+        tool_name=tool_name,
+        file_path=str(file_path),
+    )
+
+    # Extract version
+    version_match = re.search(r"Version:\s*(v[\d.]+)", content)
+    if version_match:
+        tool.version = version_match.group(1)
+
+    # Extract hard gate names from tables
+    gate_names = re.findall(r"\|\s*`?(\w+)`?\s*\|.*(?:Rule|rule|Check|check)", content, re.MULTILINE)
+    if not gate_names:
+        gate_names = re.findall(r'"(\w+)":\s*"PASS\s*\|\s*FAIL"', content)
+
+    tool.hard_gate_names = gate_names
+    tool.hard_gate_count = len(gate_names)
+
+    return tool
+
+
 def parse_kit(kit_path: Path) -> KitStructure:
     """Parse a complete kit directory into structured data."""
     kit_name = kit_path.name
@@ -183,5 +226,14 @@ def parse_kit(kit_path: Path) -> KitStructure:
     validators_dir = docs / "validators"
     if validators_dir.is_dir():
         kit.validators = sorted(f.name for f in validators_dir.glob("*-validator.md"))
+
+    # Parse tools
+    tools_dir = docs / "tools"
+    if tools_dir.is_dir():
+        for tool_spec_file in sorted(tools_dir.glob("*-spec.md")):
+            kit.tool_specs.append(parse_tool_spec(tool_spec_file, kit_name))
+        kit.tool_templates = sorted(f.name for f in tools_dir.glob("*-template.md"))
+        kit.tool_prompts = sorted(f.name for f in tools_dir.glob("*-prompt.md"))
+        kit.tool_validators = sorted(f.name for f in tools_dir.glob("*-validator.md"))
 
     return kit

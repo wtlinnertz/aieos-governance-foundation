@@ -176,6 +176,66 @@ else
   fail "[P2-NC] docs/validators/ files with non-standard names: ${non_validator_validators[*]}"
 fi
 
+# ─── Part 2b: Tool Four-File Completeness ───────────────────────────────────
+
+echo ""
+echo "=== Part 2b: Tool Four-File Completeness ==="
+
+if [[ -d "$KIT_ROOT/docs/tools" ]]; then
+  tool_spec_count=0
+  for tool_spec_file in "$KIT_ROOT/docs/tools/"*-spec.md; do
+    [[ -f "$tool_spec_file" ]] || continue
+    tool_spec_count=$((tool_spec_count + 1))
+
+    tool_spec_filename="$(basename "$tool_spec_file")"
+    tool_name="${tool_spec_filename%-spec.md}"
+
+    # Template
+    if [[ -f "$KIT_ROOT/docs/tools/${tool_name}-template.md" ]]; then
+      pass "[P2b-4F] tool/$tool_name: template exists"
+    else
+      fail "[P2b-4F] tool/$tool_name: template missing (docs/tools/${tool_name}-template.md)"
+    fi
+
+    # Prompt
+    if [[ -f "$KIT_ROOT/docs/tools/${tool_name}-prompt.md" ]]; then
+      pass "[P2b-4F] tool/$tool_name: prompt exists"
+    else
+      fail "[P2b-4F] tool/$tool_name: prompt missing (docs/tools/${tool_name}-prompt.md)"
+    fi
+
+    # Validator
+    if [[ -f "$KIT_ROOT/docs/tools/${tool_name}-validator.md" ]]; then
+      pass "[P2b-4F] tool/$tool_name: validator exists"
+    else
+      fail "[P2b-4F] tool/$tool_name: validator missing (docs/tools/${tool_name}-validator.md)"
+    fi
+  done
+
+  if [[ $tool_spec_count -eq 0 ]]; then
+    echo "  WARN  [P2b-4F] docs/tools/ exists but contains no tool spec files"
+  else
+    pass "[P2b-4F] Found $tool_spec_count tool spec(s) in docs/tools/"
+  fi
+
+  # Tool naming convention check
+  non_standard_tools=()
+  for f in "$KIT_ROOT/docs/tools/"*.md; do
+    [[ -f "$f" ]] || continue
+    basename_f="$(basename "$f")"
+    if [[ ! "$basename_f" =~ ^.+-(spec|template|prompt|validator)\.md$ ]] && [[ "$basename_f" != "README.md" ]]; then
+      non_standard_tools+=("$basename_f")
+    fi
+  done
+  if [[ ${#non_standard_tools[@]} -eq 0 ]]; then
+    pass "[P2b-NC] All docs/tools/ files match {tool-name}-{role}.md naming pattern"
+  else
+    fail "[P2b-NC] docs/tools/ files with non-standard names: ${non_standard_tools[*]}"
+  fi
+else
+  echo "  SKIP  [P2b-4F] docs/tools/ not present (optional)"
+fi
+
 # ─── Part 3: Validator JSON Output Schema ─────────────────────────────────────
 
 echo ""

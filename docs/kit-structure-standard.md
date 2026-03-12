@@ -33,6 +33,11 @@ Every AIEOS kit must contain:
 - [ ] `examples/` — at least one worked example demonstrating the full artifact flow `[auto]`
 - [ ] `tests/` — structural integrity checks and/or flow scenario tests `[auto]`
 
+### Optional Directories
+
+- [ ] `docs/tools/` — tool capability definitions (four-file sets) `[auto]` *(only required if the kit defines tools)*
+- [ ] `docs/bindings/` — implementation mappings `[auto]` *(only required if the kit maps abstract concepts to specific tools)*
+
 ---
 
 ## Part 2: Artifact Type Compliance
@@ -58,6 +63,32 @@ For each artifact type the kit produces:
 - [ ] Prompt references the spec for rules; it does not inline them `[ai]`
 - [ ] Validator references the spec for hard gates; it does not inline them `[ai]`
 - [ ] Validator does not suggest improvements or redesign — it judges only `[ai]`
+
+---
+
+## Part 2b: Tool Type Compliance
+
+For each tool type the kit defines (if `docs/tools/` exists):
+
+### Four-File Completeness
+
+- [ ] `docs/tools/{tool-name}-spec.md` exists `[auto]`
+- [ ] `docs/tools/{tool-name}-template.md` exists `[auto]`
+- [ ] `docs/tools/{tool-name}-prompt.md` exists `[auto]`
+- [ ] `docs/tools/{tool-name}-validator.md` exists `[auto]`
+
+### Naming Convention
+
+- [ ] Tool file names follow `{tool-name}-{role}.md` pattern (kebab-case, capability names) `[auto]`
+- [ ] Tool names describe capabilities (verbs/verb-noun phrases), not artifact types `[ai]`
+
+### Separation of Concerns
+
+- [ ] Tool spec contains all preconditions, postconditions, constraints, and hard gates — nothing is defined only in a prompt or validator `[ai]`
+- [ ] Tool template contains only output structure — no behavioral rules `[ai]`
+- [ ] Tool prompt references the tool spec for rules; it does not inline them `[ai]`
+- [ ] Tool validator references the tool spec for hard gates; it does not inline them `[ai]`
+- [ ] Tool spec contains no implementation details — binding separation is maintained `[ai]`
 
 ---
 
@@ -126,12 +157,13 @@ To audit an existing kit against this standard:
 
 1. **Check repository structure** (Part 1) — verify all required files and directories exist
 2. **List all artifact types** — enumerate from the playbook and verify four-file completeness (Part 2) for each
-3. **Sample-check separation of concerns** — read one spec, one prompt, one validator and verify rules are not duplicated or inlined (Part 2, Separation of Concerns)
-4. **Check validator output format** — confirm JSON schema matches standard (Part 3)
-5. **Check playbook completeness** — verify all required sections are present (Part 4)
-6. **Verify governance model sync** — diff kit copy against canonical (Part 5)
-7. **Read CLAUDE.md** — verify all required sections are present (Part 6)
-8. **Check tests directory** — verify structural and flow tests exist (Part 7)
+3. **Check tool types** (Part 2b) — if `docs/tools/` exists, verify four-file completeness for each tool
+4. **Sample-check separation of concerns** — read one spec, one prompt, one validator and verify rules are not duplicated or inlined (Part 2, Separation of Concerns)
+5. **Check validator output format** — confirm JSON schema matches standard (Part 3)
+6. **Check playbook completeness** — verify all required sections are present (Part 4)
+7. **Verify governance model sync** — diff kit copy against canonical (Part 5)
+8. **Read CLAUDE.md** — verify all required sections are present (Part 6)
+9. **Check tests directory** — verify structural and flow tests exist (Part 7)
 
 A kit that fails any check is not AIEOS-compatible. Fix before treating the kit as production-ready.
 

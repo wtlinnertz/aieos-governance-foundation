@@ -2,7 +2,26 @@
 
 This guide is organized by what you are trying to accomplish. Find your scenario and follow the path.
 
-For a comprehensive reference of all entry points, exit conditions, parallelism rules, and flow permutations, see [`flow-reference.md`](flow-reference.md).
+For a comprehensive reference of all entry points, exit conditions, parallelism rules, and flow permutations, see [`flow-reference.md`](flow-reference.md). For framework and initiative validation procedures, see [`healthcheck-playbook.md`](healthcheck-playbook.md). For the machine-readable flow graph used by AI navigation tools, see [`navigation-map.md`](navigation-map.md).
+
+---
+
+## AI Sherpa Mode
+
+If you are using an AI assistant (e.g., Claude Code) as your guide through AIEOS, the framework provides navigation tools that enable the AI to act as an interactive sherpa — routing you to the right starting point, tracking your position, and guiding you through decision points.
+
+**Navigation tools** (defined in `docs/tools/`, implemented via `docs/bindings/`):
+
+| Tool | What It Does | When to Use |
+|------|-------------|-------------|
+| `initiative-router` | Asks routing questions, selects your entry point and preset | Starting a new initiative — "where do I begin?" |
+| `position-check` | Reads your ER and artifacts to determine where you are | Resuming work, context switch, or feeling lost — "where am I?" |
+| `decision-router` | At any fork, presents options and recommends a path | Reaching a decision point — "which way do I go?" |
+| `handoff-navigator` | Verifies exit conditions and routes to the next kit | Completing a kit — "what's next?" |
+
+The AI combines these tools naturally as you work. You don't need to invoke them explicitly — the sherpa reads the [`navigation-map.md`](navigation-map.md) and guides you through the choose-your-own-adventure flow.
+
+**Self-correction:** If the AI gets off track, `position-check` re-orients by reading ground truth (your actual files), not memory. Every decision table includes an escape hatch: "if none of the options match, re-check position."
 
 ---
 
@@ -13,6 +32,9 @@ Pipeline Layers:
 ┌──────────────────────────────────────────────────────────────────────────┐
 │  Layer 2: Product Intelligence Kit (PIK)                                  │
 │  WCR → Discovery Intake → PFD → VH → AR → EL → DPRD                     │
+├──────────────────────────────────────────────────────────────────────────┤
+│  Layer 3: Solution Sourcing Kit (SSK)              ← optional            │
+│  SOER → VER → SDR                                                        │
 ├──────────────────────────────────────────────────────────────────────────┤
 │  Layer 4: Engineering Execution Kit (EEK)                                 │
 │  KER → PRD → ACF → SAD → DCF → TDD → WDD → ORD                          │
@@ -53,7 +75,7 @@ Cross-Cutting Governance:
 └──────────────────────────────────────────────────────────────────────────┘
 ```
 
-Layers 1 (Strategic Direction) and 3 (Flow Control) are planned but not yet built.
+Layer 1 (Strategic Direction) is planned but not yet built.
 
 ---
 
@@ -77,6 +99,24 @@ Layers 1 (Strategic Direction) and 3 (Flow Control) are planned but not yet buil
 
 ---
 
+## I need to evaluate sourcing options (Build/Buy/Adopt)
+
+**Starting point:** Solution Sourcing Kit (SSK), Layer 3
+
+**Prerequisite:** Frozen Discovery PRD (DPRD) from PIK
+
+**Path:** SOER → VER → SDR
+
+**When to use:** After discovery defines WHAT the initiative needs, before engineering defines HOW to build it. Use SSK when Build is not the obvious choice — for example, when commercial off-the-shelf (COTS) solutions exist, when open-source alternatives are viable, or when the team needs to formally evaluate sourcing options before committing engineering resources.
+
+**When to skip:** When Build is clearly the right approach (no viable Buy or Adopt alternatives). Document the fast-path justification in the KER when entering EEK directly from PIK.
+
+**Where to start:** `aieos-solution-sourcing-kit/docs/playbook.md`
+
+**Arriving from PIK?** Read `aieos-solution-sourcing-kit/docs/entry-from-pik.md`
+
+---
+
 ## We are ready to build
 
 **Starting point:** Engineering Execution Kit (EEK), Layer 4
@@ -94,6 +134,8 @@ KER → PRD → ACF → SAD → DCF → TDD → WDD → ORD
 **Session setup:** `aieos-engineering-execution-kit/docs/session-setup.md`
 
 **Arriving from PIK?** Read `aieos-engineering-execution-kit/docs/entry-from-pik.md` first.
+
+**Arriving from SSK?** Read `aieos-engineering-execution-kit/docs/entry-from-ssk.md` first. You will bring both the frozen DPRD (from PIK) and the frozen SDR (from SSK).
 
 ---
 

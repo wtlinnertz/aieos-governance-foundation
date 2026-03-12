@@ -38,7 +38,9 @@ This spec is the canonical definition of the ER format. It lives in `aieos-gover
 | Status | Active / Deprecated / Abandoned |
 | Discovery Start | {YYYY-MM-DD — date Discovery Intake was validated in PIK} |
 | Latest ES Date | {YYYY-MM-DD — date of most recent frozen ES, or N/A} |
-| ER Spec Version | 1.1 |
+| ER Spec Version | 1.3 |
+| Current Position | {Navigation map node ID, e.g., N-EEK-TDD — updated by position-check tool. Optional.} |
+| Preset | {P1–P5 or Custom — declared at initiative start} |
 
 **Status values:**
 - `Active` — initiative is in progress or in production and under monitoring
@@ -72,6 +74,26 @@ List each significant decision made during Layer 2, with enough context to be us
 Format: `{decision type}: {brief description} — {artifact ID where decision is recorded}`
 
 Example: `Pivot: Assumption A-03 (users will self-configure preferences) invalidated by user interviews — PDR-TASKFLOW-001`
+
+---
+
+### §3a Layer 3 — Solution Sourcing (if engaged)
+
+**Artifact table:**
+
+| Artifact Type | ID | Status | Notes |
+|--------------|-----|--------|-------|
+| Sourcing Options Evaluation Record | SOER-XXX | Frozen | |
+| Vendor/Solution Evaluation Record | VER-XXX | Frozen | |
+| Sourcing Decision Record | SDR-XXX | Frozen | Decision: Build / Buy / Adopt |
+
+If Layer 3 was not engaged (fast-path to Build), write "SSK not engaged — fast-path Build justified in KER."
+
+**Key decisions:**
+
+List the sourcing decision and rationale. Minimum entries: the Build/Buy/Adopt decision with brief rationale.
+
+Format: `{decision type}: {brief description} — {artifact ID where decision is recorded}`
 
 ---
 
@@ -279,6 +301,7 @@ Each kit's playbook includes a "Maintaining the Engagement Record" section with 
 | Kit | Trigger | What to update |
 |-----|---------|---------------|
 | Product Intelligence Kit | Discovery Intake validated | Create ER (§1 Document Control + §2 header). Add artifact IDs as each Layer 2 artifact freezes. Record pivot decisions in §2 Key Decisions. |
+| Solution Sourcing Kit | Each Layer 3 artifact frozen | Add artifact IDs to §3a table. Record sourcing decision and rationale in §3a Key Decisions. If SSK not engaged, write "SSK not engaged — fast-path Build justified in KER." |
 | Engineering Execution Kit | Each Layer 4 artifact frozen | Add artifact IDs to §3 table. Record key decisions (architectural amendments, re-entry, scope deviations) in §3 Key Decisions. Record gate failures and resolutions in §3 Gate Failures. |
 | Release & Exposure Kit | Release disposition determined | Add artifact IDs to §4 table. Record release disposition. Record key decisions (release type justification, RP deviations, gate failures) in §4 Key Decisions. |
 | Reliability & Resilience Kit | Each Layer 6 artifact frozen | Add artifact IDs to §5 table. Add IR entries as incidents are declared and closed. Record key decisions (SRP revisions, error budget invocations, escalations) in §5 Key Decisions. |

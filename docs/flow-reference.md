@@ -2,7 +2,7 @@
 
 This document consolidates all valid entry points, exit conditions, layer routing, parallelism rules, and flow permutations across the AIEOS framework. It is the single reference for understanding how initiatives move through the system.
 
-For initiative-specific routing (which layers to use for a given type of work), see [`initiative-presets.md`](initiative-presets.md). For tracking initiative state, see [`initiative-state-view.md`](initiative-state-view.md).
+For initiative-specific routing (which layers to use for a given type of work), see [`initiative-presets.md`](initiative-presets.md). For tracking initiative state, see [`initiative-state-view.md`](initiative-state-view.md). For the machine-readable directed graph of all nodes, edges, and decision tables used by AI navigation tools, see [`navigation-map.md`](navigation-map.md).
 
 ---
 
@@ -28,13 +28,16 @@ All other kits are entered via downstream handoff or trigger, not directly from 
 The complete pipeline for initiatives that begin with discovery:
 
 ```
-PIK → EEK (Path A) → [QAK] → REK → RRK → IEK
-         ↑                                    │
-         └────── ES re-discover signal ───────┘
+PIK → [SSK] → EEK (Path A) → [QAK] → REK → RRK → IEK
+                  ↑                                    │
+                  └────── ES re-discover signal ───────┘
 ```
+
+SSK (Layer 3) is optional. When engaged, the sub-flow is: `PIK → SSK (SOER → VER → SDR) → EEK`. When skipped (Build is obvious), the flow is: `PIK → EEK` (direct).
 
 **Sequence:**
 1. **PIK:** WCR → Discovery Intake → PFD → VH → AR → EL → DPRD (freeze)
+1a. **SSK** (optional): SOER → VER → SDR (freeze) — evaluates Build/Buy/Adopt
 2. **EEK:** KER (Path A) → PRD (placed DPRD) → ACF → SAD → DCF → TDD → WDD → Execution → ORD (freeze)
 3. **QAK** (optional): QAER → VP → TCR(s) → QGR (freeze)
 4. **REK:** RER → RCF → RP → Release Execution → RR (freeze)
@@ -42,7 +45,9 @@ PIK → EEK (Path A) → [QAK] → REK → RRK → IEK
 6. **IEK:** ES (from 2+ RHRs) → re-entry signal (maintain / watch / re-discover)
 
 **Exit gate per transition:**
+- PIK → SSK: DPRD frozen, all 8 hard gates passing (same gate as PIK → EEK)
 - PIK → EEK: DPRD frozen, all 8 hard gates passing
+- SSK → EEK: SDR frozen, references frozen DPRD
 - EEK → QAK/REK: ORD frozen, all 8 hard gates passing
 - QAK → REK: QGR frozen with PASS or CONDITIONAL disposition
 - REK → RRK: RR frozen with §7 Handoff to Layer 6 complete
@@ -180,7 +185,9 @@ These transitions are strictly sequential — the upstream artifact must be froz
 
 | Upstream | Downstream | Why |
 |----------|-----------|-----|
-| PIK DPRD | EEK entry (Path A) | EEK requires frozen DPRD |
+| PIK DPRD | SSK entry (if engaged) | SSK requires frozen DPRD |
+| PIK DPRD | EEK entry (Path A, direct) | EEK requires frozen DPRD |
+| SSK SDR | EEK entry (via SSK) | EEK requires frozen SDR + frozen DPRD |
 | EEK ORD | REK entry | REK requires frozen ORD |
 | EEK ORD | QAK entry | QAK requires frozen ORD |
 | QAK QGR | REK entry (if QAK adopted) | QGR gates REK |
@@ -255,6 +262,7 @@ Add an Amendment Log entry. If there is any ambiguity, treat it as material and 
 | Layer | Required? | Skip Condition |
 |-------|-----------|---------------|
 | PIK (L2) | Conditional | Skip if scope is well-understood (use EEK Path B) |
+| SSK (L3) | Conditional | Skip when Build is the obvious choice; engage when sourcing evaluation (Build/Buy/Adopt) is needed |
 | EEK (L4) | Always required | Every initiative passes through EEK |
 | REK (L5) | Always required | Every initiative that reaches production releases via REK |
 | RRK (L6) | Required in production | Required once system is deployed; not applicable until release |
@@ -306,6 +314,10 @@ For a large initiative adopting all kits, the maximum parallelism looks like:
 Phase 1 — Discovery (PIK linear):
   PIK:   WCR → Intake → PFD → VH → AR → EL → DPRD ────────────┐
   PINFK: PDR-001, PDR-002 (parallel, as decisions arise) ──────┤
+                                                                 │
+Phase 1a — Sourcing (SSK, optional):                             ▼
+  SSK:   SOER → VER → SDR ─────────────────────────────────────┐
+  (skip if Build is obvious — proceed directly to Phase 2)      │
                                                                  │
 Phase 2 — Design (EEK + cross-cutting parallel):                 ▼
   EEK:   KER → PRD → ACF ──┬── SAD ──┬── DCF ──┬── TDD ──── WDD

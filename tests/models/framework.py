@@ -20,9 +20,10 @@ class KitInfo:
     category: str        # "pipeline", "operational", "cross-cutting"
 
 
-# The 11 built kits
+# The 12 built kits
 KIT_REGISTRY = {
     "PIK":   KitInfo("PIK",   2,  "aieos-product-intelligence-kit",    "Product Intelligence Kit",       "pipeline"),
+    "SSK":   KitInfo("SSK",   3,  "aieos-solution-sourcing-kit",       "Solution Sourcing Kit",          "pipeline"),
     "EEK":   KitInfo("EEK",   4,  "aieos-engineering-execution-kit",   "Engineering Execution Kit",      "pipeline"),
     "REK":   KitInfo("REK",   5,  "aieos-release-exposure-kit",        "Release & Exposure Kit",         "pipeline"),
     "RRK":   KitInfo("RRK",   6,  "aieos-reliability-resilience-kit",  "Reliability & Resilience Kit",   "pipeline"),
@@ -42,7 +43,13 @@ KIT_REGISTRY = {
 
 DEPENDENCY_EDGES: list[tuple[str, str, str]] = [
     # Pipeline sequential dependencies
-    ("PIK:DPRD",   "EEK:PRD",    "freeze"),    # Path A: DPRD → EEK
+    ("PIK:DPRD",   "EEK:PRD",    "freeze"),    # Path A: DPRD → EEK (when SSK not engaged)
+
+    # SSK (between PIK and EEK)
+    ("PIK:DPRD",   "SSK:SOER",   "freeze"),    # DPRD → SSK entry
+    ("SSK:SOER",   "SSK:VER",    "freeze"),
+    ("SSK:VER",    "SSK:SDR",    "freeze"),
+    ("SSK:SDR",    "EEK:PRD",    "freeze"),    # SDR → EEK (when SSK engaged)
     ("EEK:ORD",    "REK:RER",    "freeze"),    # ORD → REK entry
     ("EEK:ORD",    "QAK:QAER",   "freeze"),    # ORD → QAK entry
     ("QAK:QGR",    "REK:RER",    "freeze"),    # QGR gates REK (when QAK adopted)
@@ -135,6 +142,8 @@ ENTRY_POINTS: list[str] = [
 
 BOUNDARY_CONTRACTS: dict[tuple[str, str], list[str]] = {
     ("EEK",  "pik"):  ["DPRD"],
+    ("SSK",  "pik"):  ["DPRD"],
+    ("EEK",  "ssk"):  ["SDR"],
     ("QAK",  "eek"):  ["ORD", "SAD", "TDD", "ACF", "WDD"],
     ("REK",  "eek"):  ["ORD"],
     ("RRK",  "rek"):  ["RR"],
@@ -179,7 +188,7 @@ PRESET_DEFINITIONS: list[PresetDefinition] = [
             "RRK:SRER", "RRK:SRP", "RRK:RHR",
             "IEK:ES",
         ],
-        optional_kits=["ODK"],
+        optional_kits=["ODK", "SSK"],
     ),
     PresetDefinition(
         name="Enhancement",
@@ -203,7 +212,7 @@ PRESET_DEFINITIONS: list[PresetDefinition] = [
             "REK:RER", "REK:RCF", "REK:RP", "REK:RR",
             "RRK:SRER", "RRK:SRP", "RRK:RHR",
         ],
-        optional_kits=["IEK", "ODK"],
+        optional_kits=["IEK", "ODK", "SSK"],
     ),
     PresetDefinition(
         name="Performance and Reliability Fix (incident)",

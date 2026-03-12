@@ -101,7 +101,7 @@ This layer governs the transformation of strategic intent into engineering-ready
 
 **Outputs**: Frozen Discovery PRD (engineering handoff artifact)
 
-**Downstream consumer**: Engineering Execution (Layer 4) via Kit Entry Gate
+**Downstream consumer**: Flow Control / Solution Sourcing (Layer 3) when sourcing evaluation is needed, or Engineering Execution (Layer 4) via Kit Entry Gate when Build is obvious
 
 ---
 
@@ -109,15 +109,17 @@ This layer governs the transformation of strategic intent into engineering-ready
 
 **Question**: What do we work on next and when?
 
-This layer governs work intake, prioritization, sequencing, and capacity management across the engineering pipeline. It determines which engineering engagements start when, and ensures work arrives at Layer 4 properly classified and prioritized.
+This layer governs work intake, prioritization, sequencing, and capacity management across the engineering pipeline. It determines which engineering engagements start when, and ensures work arrives at Layer 4 properly classified and prioritized. The full scope includes prioritization and sequencing (future capability). The first kit built for this layer focuses on solution sourcing — the Build/Buy/Adopt decision that determines how an initiative is fulfilled before engineering execution begins.
 
-**Kit**: `aieos-flow-control-kit` *(planned)*
+**Kit**: `aieos-solution-sourcing-kit` *(built)*
 
-**Inputs**: Initiative portfolio, engineering capacity, in-flight work state
+**Inputs**: Frozen Discovery PRD (DPRD) from Product Intelligence (Layer 2)
 
-**Outputs**: Prioritized work queue, engagement authorizations
+**Outputs**: Frozen Sourcing Decision Record (SDR) — documents Build/Buy/Adopt decision with rationale and downstream routing
 
-**Downstream consumer**: Engineering Execution (Layer 4)
+**Downstream consumer**: Engineering Execution (Layer 4) — SDR provides sourcing context alongside DPRD
+
+**Note**: SSK is optional. When Build is the obvious choice, initiatives skip Layer 3 and flow directly from PIK to EEK. When engaged, the internal artifact flow is: SOER → VER → SDR.
 
 ---
 
@@ -129,7 +131,7 @@ This layer governs the full execution lifecycle from PRD through production-read
 
 **Kit**: `aieos-engineering-execution-kit` *(built)*
 
-**Inputs**: Frozen PRD (from PIK via Path A, or Product Brief via Path B), Kit Entry Record (gate)
+**Inputs**: Frozen PRD (from PIK via Path A, or Product Brief via Path B), Kit Entry Record (gate). When arriving from SSK: frozen DPRD + frozen SDR.
 
 **Outputs**: Frozen ORD (operational readiness decision), validated implementation artifacts
 
@@ -318,7 +320,7 @@ This layer governs user-facing documentation, API references, support knowledge 
 |-------|---------------|----------|--------|
 | 1. Strategic Direction | `aieos-strategic-direction-kit` | Pipeline | Planned |
 | 2. Product Intelligence | `aieos-product-intelligence-kit` | Pipeline | Built |
-| 3. Flow Control | `aieos-flow-control-kit` | Pipeline | Planned |
+| 3. Flow Control (Solution Sourcing) | `aieos-solution-sourcing-kit` | Pipeline | Built |
 | 4. Engineering Execution | `aieos-engineering-execution-kit` | Pipeline | Built |
 | 5. Release & Exposure | `aieos-release-exposure-kit` | Pipeline | Built |
 | 6. Reliability & Resilience | `aieos-reliability-resilience-kit` | Pipeline | Built |
@@ -353,10 +355,11 @@ The ER spec lives in `aieos-governance-foundation/docs/engagement-record-spec.md
 
 ## Current Build State
 
-As of the current build, Layers 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, and 13 are operational:
+As of the current build, Layers 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, and 13 are operational:
 
 **Pipeline handoffs (Layers 1–7):**
-- **Layer 2 → Layer 4** is the proven inter-kit handoff path. The frozen DPRD from PIK becomes the EEK PRD via a defined acceptance check.
+- **Layer 2 → Layer 4** (direct) is the proven inter-kit handoff path when Build is the obvious choice. The frozen DPRD from PIK becomes the EEK PRD via a defined acceptance check.
+- **Layer 2 → Layer 3 → Layer 4** is the path when sourcing evaluation is needed. The frozen DPRD enters SSK, which produces SOER → VER → SDR. The frozen SDR and DPRD are then delivered to EEK. SSK is optional — skip when Build is clearly the right approach (document fast-path justification in KER).
 - **Layer 4 → Layer 5** handoff: the frozen ORD from EEK becomes the Release & Exposure Kit input via the Release Entry Gate. When Layer 9 (QAK) is adopted, the frozen QGR supplements the ORD as release entry evidence.
 - **Layer 5 → Layer 6** handoff: the frozen Release Record §7 (Handoff to Layer 6) becomes the Reliability & Resilience Kit input via the Service Reliability Entry Gate.
 - **Layer 6 → Layer 7** handoff: frozen Reliability Health Reports (minimum 2) become the Insight & Evolution Kit input. No entry gate — the ES confirms frozen input status in §1. An optional frozen Value Hypothesis from Layer 2 enables VH outcome assessment.
@@ -373,6 +376,6 @@ As of the current build, Layers 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, and 13 are oper
 - **Layer 13 (Documentation & Knowledge)** governs user-facing documentation at multiple trigger points: API Reference Records after TDD freeze, User Documentation Records and Support Knowledge Articles after release, SKAs after incident postmortems, Documentation Health Reviews aligned with RRK health review cadence. Adoption is optional — teams not using DKK manage documentation outside AIEOS governance.
 
 **Entry gate patterns:**
-- The Kit Entry Gate pattern is used at Layers 4, 5, 6, and 9 to enforce upstream verification before artifact generation begins. Layer 7 uses self-confirming input validation in the ES prompt. Layer 8 uses the Diagnostic Context Record (DCR) as its entry gate. Layers 10–13 use trigger-based entry rather than sequential gates.
+- The Kit Entry Gate pattern is used at Layers 3, 4, 5, 6, and 9 to enforce upstream verification before artifact generation begins. Layer 3 (SSK) requires a frozen DPRD as its entry gate. Layer 7 uses self-confirming input validation in the ES prompt. Layer 8 uses the Diagnostic Context Record (DCR) as its entry gate. Layers 10–13 use trigger-based entry rather than sequential gates.
 
-The full pipeline loop (Layers 1–7) is operational. Layer 8 adds a reactive operational track. Layers 9–13 add cross-cutting governance. Layers 1 and 3 remain planned.
+The full pipeline loop (Layers 1–7) is operational. Layer 8 adds a reactive operational track. Layers 9–13 add cross-cutting governance. Layer 1 remains planned.

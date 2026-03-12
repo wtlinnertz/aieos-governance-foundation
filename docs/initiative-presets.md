@@ -24,6 +24,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 | Layer | Kit | Required Artifacts | Optional Artifacts |
 |-------|-----|-------------------|-------------------|
 | 2 | PIK | WCR, Discovery Intake, PFD, VH, AR, EL, DPRD | Brownfield Analysis (if adding to existing system) |
+| 3 | SSK | — | SOER, VER, SDR (use SSK when Build is not the obvious choice) |
 | 4 | EEK | KER (Path A), PRD (placed from DPRD), ACF, SAD, DCF, TDD, WDD, ORD | — |
 | 9 | QAK | QAER, VP, TCR, QGR | — |
 | 10 | SCK | TM (after SAD), SAR (after code), DAR (before release) | CER (if compliance mandate) |
@@ -103,6 +104,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 | Layer | Kit | Required Artifacts | Optional Artifacts |
 |-------|-----|-------------------|-------------------|
 | 2 | PIK | WCR, Discovery Intake, PFD, AR, DPRD | VH (value hypothesis may be trivial or externally mandated) |
+| 3 | SSK | — | SOER, VER, SDR (compliance mandates may require evaluating compliant COTS solutions) |
 | 4 | EEK | KER (Path A), PRD (placed from DPRD), ACF, SAD, DCF, TDD, WDD, ORD | — |
 | 10 | SCK | TM, SAR, CER, DAR | — |
 | 9 | QAK | QAER, VP (references frozen TM+SAR), TCR, QGR | — |

@@ -104,7 +104,7 @@ RRK (SRP revision) → EEK (Path B) → REK → RRK (next RHR cycle)
 
 ## 3. Cross-Cutting Kit Activation
 
-Cross-cutting kits (Layers 9–13) do not follow the pipeline sequence. They activate at trigger points and run in parallel with pipeline layers.
+Cross-cutting kits (Layers 9–14) do not follow the pipeline sequence. They activate at trigger points and run in parallel with pipeline layers.
 
 ### 3.1 Trigger Points
 
@@ -125,6 +125,15 @@ Cross-cutting kits (Layers 9–13) do not follow the pipeline sequence. They act
 | **DKK (L13)** | ARR | TDD frozen (early) or RR frozen (at release) | Frozen TDD or RR |
 | **DKK (L13)** | SKA | RR frozen, PMR frozen, or support patterns | Trigger-dependent |
 | **DKK (L13)** | DHR | Periodic (aligned with RHR) | 2+ frozen documentation artifacts |
+| **PRK (L14)** | PRR (Concept) | DPRD validated | Validated DPRD |
+| **PRK (L14)** | PRR (Architecture) | SAD validated | Validated SAD + frozen PRD + frozen ACF |
+| **PRK (L14)** | PRR (Tech Design) | TDD validated | Validated TDD + frozen SAD + frozen ACF |
+| **PRK (L14)** | PRR (Impl Readiness) | WDD validated | Validated WDD + frozen TDD |
+| **PRK (L14)** | PRR (Code Review) | ORD validated | Validated ORD + execution evidence |
+| **PRK (L14)** | PRR (Integration) | QGR validated | Validated QGR + frozen TCR(s) |
+| **PRK (L14)** | PRR (Ops Readiness) | RP validated | Validated RP + frozen RCF |
+| **PRK (L14)** | PRR (Post-Deploy) | RHR validated | Validated RHR + frozen SRP |
+| **PRK (L14)** | PRR (Incident) | PMR validated | Validated PMR + frozen INR |
 
 ### 3.2 Cross-Cutting Feeds Into Pipeline
 
@@ -142,6 +151,7 @@ Cross-cutting artifacts feed back into the pipeline at specific points:
 | PINFK ISPEC | EEK SAD | Deployment model constraints |
 | PINFK EM | REK RP | Environment promotion rules |
 | DKK DHR | IEK PES | Documentation health signal |
+| PRK PRR | Any kit | Multi-perspective findings that must be addressed before freeze |
 
 ### 3.3 Special Ordering: Compliance Initiatives
 
@@ -176,6 +186,10 @@ Frozen SCK artifacts feed into QAK's Verification Plan as security test inputs. 
 - DKK: UDR, ARR, SKA, DHR are completely independent
 - PINFK: PDRs are independent; ISPEC depends on PDRs; EM depends on ISPEC
 
+**PRK during any kit:**
+- PRR generation triggers after artifact validation, runs in parallel with human freeze review preparation
+- Multiple PRR lenses run in parallel (all lenses for a review point execute simultaneously)
+
 **Multiple initiatives:**
 - Different projects' entire cycles run in parallel with independent Engagement Records
 
@@ -194,6 +208,15 @@ These transitions are strictly sequential — the upstream artifact must be froz
 | REK RR | RRK entry | RRK requires frozen RR §7 |
 | RRK 2+ RHRs | IEK entry | IEK requires operational evidence |
 | SCK TM | SCK SAR | SAR uses TM as verification input |
+| PRK PRR | Artifact freeze (reviewed artifact) | PRR must pass before artifact can freeze |
+
+### 4.3 Sub-Agent Orchestration
+
+The parallelism rules in §4.1 define **what** can run in parallel. For operational guidance on **how** an orchestrating agent should fan out to sub-agents, package self-contained context, track completion, and reconverge validated outputs, see [`sub-agent-orchestration.md`](sub-agent-orchestration.md). That document defines three patterns: independent lens parallelism (PRK), parallel-safe work item execution (EEK), and provider/consumer contract development (EEK).
+
+### 4.4 Convergence Loops
+
+Flow validation rule 3 (FAIL blocks promotion) is operationalized by the convergence loop pattern for autonomous agents. When an artifact fails validation, the convergence loop automates the correction-revalidation cycle with bounded iteration (max 3 attempts), structured feedback from validator findings, and escalation to a human when convergence is not achieved. See [`review-convergence-loop.md`](review-convergence-loop.md) for the full pattern specification. Convergence loops operate within the Draft → Validated transition — they do not affect freeze-before-promote or cross-kit handoffs.
 
 ---
 
@@ -277,6 +300,7 @@ Add an Amendment Log entry. If there is any ambiguity, treat it as material and 
 | DCK (L11) | Conditional | CSPEC: if config exists; FFLR: if feature flags used; DSR: if data schemas exist |
 | PINFK (L12) | Conditional | PDRs: if technology decisions need documentation; ISPEC: if non-trivial infrastructure |
 | DKK (L13) | Conditional | UDR: if end users exist; ARR: if API consumers exist; SKA: if support team exists |
+| PRK (L14) | Optional | Adopt when multi-perspective quality assurance is valuable; recommended for SAD and TDD at minimum |
 
 ### 7.3 Operational Track
 
@@ -361,3 +385,5 @@ These invariants must hold for any valid flow through the framework:
 6. **Escalation always creates a new initiative cycle** — escalation from REK/RRK/ODK to EEK/PIK starts a new KER or WCR, not a patch to existing frozen artifacts
 7. **Path selection is immutable** — EEK Path A vs. Path B is decided at KER and cannot change mid-engagement
 8. **Separate generation and validation sessions** — the AI that generates an artifact must not validate it in the same session
+9. **Peer review gates freeze (when adopted)** — when PRK is adopted for a review point, the PRR for that artifact must pass before the artifact freezes
+10. **Correction loops are bounded** — autonomous correction of failed artifacts is limited to 3 iterations; failure to converge requires human escalation (see [`review-convergence-loop.md`](review-convergence-loop.md))

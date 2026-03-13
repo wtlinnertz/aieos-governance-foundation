@@ -168,6 +168,20 @@ Every node represents a state the initiative can be in. Node types:
 | N-DKK-SKA | DKK | artifact | Support Knowledge Article(s) |
 | N-DKK-DHR | DKK | artifact | Documentation Health Review |
 
+### PRK (Layer 14) Nodes — Cross-Cutting
+
+| Node ID | Kit | Type | Name |
+|---------|-----|------|------|
+| N-PRK-PRR-DPRD | PRK | artifact | Peer Review Record (Concept Review) |
+| N-PRK-PRR-SAD | PRK | artifact | Peer Review Record (Architecture Review) |
+| N-PRK-PRR-TDD | PRK | artifact | Peer Review Record (Technical Design Review) |
+| N-PRK-PRR-WDD | PRK | artifact | Peer Review Record (Implementation Readiness) |
+| N-PRK-PRR-ORD | PRK | artifact | Peer Review Record (Code Review) |
+| N-PRK-PRR-QGR | PRK | artifact | Peer Review Record (Integration Review) |
+| N-PRK-PRR-RP | PRK | artifact | Peer Review Record (Operational Readiness) |
+| N-PRK-PRR-RHR | PRK | artifact | Peer Review Record (Post-Deployment Review) |
+| N-PRK-PRR-PMR | PRK | artifact | Peer Review Record (Incident Review) |
+
 ---
 
 ## Section 2: Edges
@@ -330,6 +344,20 @@ Every valid transition in the framework. Conditions describe what must be true f
 | E-121 | N-PINFK-ISPEC | N-PINFK-EM | ISPEC frozen | Any |
 | E-122 | N-SCK-TM | N-QAK-VP | Compliance: TM/SAR feed VP (optional input) | P3 |
 | E-123 | N-SCK-SAR | N-QAK-VP | Compliance: SAR feeds VP (optional input) | P3 |
+
+### PRK Cross-Cutting Trigger Edges
+
+| Edge ID | From | To | Condition | Presets |
+|---------|------|----|-----------|--------|
+| E-140 | N-PIK-DPRD | N-PRK-PRR-DPRD | DPRD validated; PRK adopted | P1, P3 |
+| E-141 | N-EEK-SAD | N-PRK-PRR-SAD | SAD validated; PRK adopted | All |
+| E-142 | N-EEK-TDD | N-PRK-PRR-TDD | TDD validated; PRK adopted | All |
+| E-143 | N-EEK-WDD | N-PRK-PRR-WDD | WDD validated; PRK adopted | P1, P3 |
+| E-144 | N-EEK-ORD | N-PRK-PRR-ORD | ORD validated; PRK adopted | All |
+| E-145 | N-QAK-QGR | N-PRK-PRR-QGR | QGR validated; PRK adopted | P1, P3 |
+| E-146 | N-REK-RP | N-PRK-PRR-RP | RP validated; PRK adopted | All |
+| E-147 | N-RRK-RHR | N-PRK-PRR-RHR | RHR validated; PRK adopted | All |
+| E-148 | N-ODK-PMR | N-PRK-PRR-PMR | PMR validated; PRK adopted | P4 |
 
 ### Escalation Edges (reverse direction)
 

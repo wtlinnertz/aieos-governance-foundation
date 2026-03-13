@@ -53,9 +53,9 @@ class TestStateTransitions:
 
 
 class TestCrossCuttingIndependence:
-    """Cross-cutting kits (SCK, DCK, DKK, PINFK) must not depend on each other."""
+    """Cross-cutting kits (SCK, DCK, DKK, PINFK, PRK) must not depend on each other."""
 
-    CROSS_CUTTING_KITS = {"SCK", "DCK", "DKK", "PINFK"}
+    CROSS_CUTTING_KITS = {"SCK", "DCK", "DKK", "PINFK", "PRK"}
 
     def test_no_cross_cutting_to_cross_cutting_dependencies(self):
         violations = []

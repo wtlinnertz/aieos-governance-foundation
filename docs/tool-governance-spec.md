@@ -102,6 +102,8 @@ Tool bindings live in `docs/bindings/` (the same location as other bindings) and
 
 The four-file set never references a specific implementation. The binding never defines policy. When the implementation environment changes, only bindings are updated — tool specs, templates, prompts, and validators remain unchanged.
 
+When a tool capability needs to execute against an external API (e.g., publishing artifacts to a wiki, syncing work items to a tracker), a third layer is involved: the **adapter**. An adapter is executable code that implements the binding's field mapping against a concrete external system. Adapter code lives outside AIEOS kits. AIEOS defines the interface contract for adapters in `adapter-conformance-spec.md`. The three-layer model is: Tool Spec (policy) → Binding (mapping) → Adapter (code).
+
 ## Versioning
 
 Tool specs follow the same versioning protocol as artifact specs, defined in `aieos-governance-foundation/docs/spec-file-standard.md`:

@@ -31,6 +31,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 | 11 | DCK | CSPEC (after TDD), DSR (after TDD) | FFLR (if feature flags used) |
 | 12 | PINFK | PDR (per decision), ISPEC, EM | — |
 | 13 | DKK | UDR (after release), ARR (after TDD or release) | SKA (if support team exists), DHR (periodic) |
+| 14 | PRK | — | PRR for DPRD, SAD, TDD, WDD, ORD, QGR, RP, RHR (when adopted) |
 | 5 | REK | RER, RCF, RP, RR | — |
 | 6 | RRK | SRER, SRP, RHR | IR (only if incidents occur) |
 | 7 | IEK | ES | PES (when ≥2 ERs available) |
@@ -74,6 +75,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 | 10 | SCK | — | SAR, DAR (if security-relevant changes) |
 | 11 | DCK | — | CSPEC updates, FFLR (if feature flags used) |
 | 13 | DKK | — | UDR update (if user-facing behavior changed), ARR update (if API changed) |
+| 14 | PRK | — | PRR for SAD, TDD, ORD, RP (when adopted) |
 | 5 | REK | RER, RP, RR | RCF (if not already established) |
 | 6 | RRK | IR (if incident occurs), RHR (at next review cycle) | — |
 | 7 | IEK | — | ES (if enhancement was significant enough to warrant learning capture) |
@@ -108,6 +110,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 | 4 | EEK | KER (Path A), PRD (placed from DPRD), ACF, SAD, DCF, TDD, WDD, ORD | — |
 | 10 | SCK | TM, SAR, CER, DAR | — |
 | 9 | QAK | QAER, VP (references frozen TM+SAR), TCR, QGR | — |
+| 14 | PRK | — | PRR for DPRD, SAD, TDD, WDD, ORD, QGR, RP (when adopted) |
 | 5 | REK | RER, RCF, RP, RR | — |
 | 6 | RRK | SRER (if new service), SRP revision (if adding compliance requirements to existing SRP), RHR | IR (if incidents) |
 | 7 | IEK | — | ES (if compliance work changes operational profile significantly) |
@@ -156,6 +159,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 | 9 | QAK | — | QAER, VP, TCR, QGR (if fix affects integration points) |
 | 10 | SCK | — | SAR (if fix touches security-sensitive paths) |
 | 13 | DKK | — | SKA (if incident exposed user-facing knowledge gap) |
+| 14 | PRK | — | PRR for TDD, ORD, PMR (when adopted) |
 | 5 | REK | RER, RP, RR | — |
 | 6 | RRK | SRP revision (if SLO targets change), RHR | IR (if further incidents) |
 

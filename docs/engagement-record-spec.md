@@ -282,6 +282,22 @@ If Layer 13 is not adopted for this initiative, write "DKK not adopted for this 
 
 ---
 
+### §14 Layer 14 — Peer Review (if adopted)
+
+**Artifact table:**
+
+| Review Point | PRR ID | Artifact Reviewed | Status | Disposition | Notes |
+|-------------|--------|-------------------|--------|-------------|-------|
+| Architecture Review | PRR-XXX | SAD-XXX | Frozen | PASS / FAIL | |
+| Technical Design Review | PRR-XXX | TDD-XXX | Frozen | PASS / FAIL | |
+| Code Review | PRR-XXX | ORD-XXX | Frozen | PASS / FAIL | |
+
+Add a row for each PRR produced. Disposition must be PASS for the reviewed artifact to freeze.
+
+If Layer 14 is not adopted for this initiative, write "PRK not adopted for this initiative."
+
+---
+
 ### §7 Initiative Outcome
 
 | Field | Value |
@@ -315,6 +331,7 @@ Each kit's playbook includes a "Maintaining the Engagement Record" section with 
 | Data & Configuration Kit | Each Layer 11 artifact frozen | Add artifact IDs to §11 table. Note FFLR/DSR version changes. |
 | Platform & Infrastructure Kit | Each Layer 12 artifact frozen | Add artifact IDs to §12 table. Note ISPEC/EM version changes. |
 | Documentation & Knowledge Kit | Each Layer 13 artifact frozen | Add artifact IDs to §13 table. Note DHR version changes for periodic reviews. |
+| Peer Review Kit | Each PRR frozen | Add PRR IDs to §14 table. Note review point and disposition. |
 
 **On initiative end:** The operator who declares the initiative Deprecated or Abandoned updates §1 Status and §7 Initiative Outcome, and adds the DN ID reference.
 

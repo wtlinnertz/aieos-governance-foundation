@@ -2,7 +2,7 @@
 
 This guide is organized by what you are trying to accomplish. Find your scenario and follow the path.
 
-For a comprehensive reference of all entry points, exit conditions, parallelism rules, and flow permutations, see [`flow-reference.md`](flow-reference.md). For framework and initiative validation procedures, see [`healthcheck-playbook.md`](healthcheck-playbook.md). For the machine-readable flow graph used by AI navigation tools, see [`navigation-map.md`](navigation-map.md).
+For a comprehensive reference of all entry points, exit conditions, parallelism rules, and flow permutations, see [`flow-reference.md`](flow-reference.md). For framework and initiative validation procedures, see [`healthcheck-playbook.md`](healthcheck-playbook.md). For the machine-readable flow graph used by AI navigation tools, see [`navigation-map.md`](navigation-map.md). For the autonomous correction loop pattern (bounded iteration on validation failures), see [`review-convergence-loop.md`](review-convergence-loop.md).
 
 ---
 
@@ -72,6 +72,9 @@ Cross-Cutting Governance:
 ├──────────────────────────────────────────────────────────────────────────┤
 │  Layer 13: Documentation & Knowledge Kit (DKK)       ← multi-layer       │
 │  UDR → ARR → SKA → DHR (periodic)                                        │
+├──────────────────────────────────────────────────────────────────────────┤
+│  Layer 14: Peer Review Kit (PRK)                     ← multi-layer       │
+│  PRR (per review point)                                                   │
 └──────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -277,6 +280,106 @@ KER → PRD → ACF → SAD → DCF → TDD → WDD → ORD
 **Where to start:** `aieos-documentation-knowledge-kit/docs/playbook.md`
 
 **When to use:** Adopt DKK when your product has end users who rely on documentation, API consumers who need reference material, or support teams who need structured knowledge bases. For internal-only tools with a small user base, DKK may be optional.
+
+---
+
+## We want multi-perspective peer review
+
+**Starting point:** Peer Review Kit (PRK), Layer 14
+
+**Trigger points:** PRK activates when an artifact passes its own validator but before freeze. It runs specialized review lenses and produces a Peer Review Record (PRR) that must pass before the artifact can freeze.
+
+**Review points:**
+- Concept Review → DPRD (business value, cost, compliance)
+- Architecture Review → SAD (all 9 lenses)
+- Technical Design Review → TDD (security, reliability, performance, maintainability, devex)
+- Implementation Readiness → WDD (cost, operability, business value)
+- Code Review → ORD (security, performance, reliability, maintainability, devex)
+- Integration Review → QGR (reliability, security, performance)
+- Operational Readiness → RP (operability, reliability, security, cost)
+- Post-Deployment → RHR (reliability, performance, cost, operability)
+- Incident Review → PMR (security, reliability, operability)
+
+**Where to start:** `aieos-peer-review-kit/docs/playbook.md`
+
+**When to use:** Adopt PRK when you want the quality assurance benefits of architecture review boards, design reviews, and CABs without requiring human reviewers at every stage. Recommended at minimum for SAD (architecture review) and TDD (technical design review).
+
+---
+
+## I want to publish artifacts to external systems
+
+**Starting point:** `artifact-publish` tool in `aieos-governance-foundation/docs/tools/`
+
+**What you need:**
+- A frozen artifact to publish
+- A binding for your target platform (e.g., `docs/bindings/artifact-publish-confluence.md`)
+- An adapter implementing the binding (lives in your project, not in AIEOS)
+
+**Path:**
+1. Review the tool spec (`artifact-publish-spec.md`) to understand preconditions and constraints
+2. Review or create a binding for your target document platform
+3. Build or obtain an adapter that satisfies `docs/adapter-conformance-spec.md`
+4. Invoke the tool to publish frozen artifacts
+
+**Example binding:** `docs/bindings/artifact-publish-confluence.md` (Confluence)
+
+---
+
+## I want to sync work items to a tracker
+
+**Starting point:** `work-item-sync` tool in `aieos-governance-foundation/docs/tools/`
+
+**What you need:**
+- A frozen WDD with enumerable work items
+- A binding for your target tracker (e.g., `docs/bindings/work-item-sync-github-issues.md`)
+- An adapter implementing the binding (lives in your project, not in AIEOS)
+
+**Path:**
+1. Review the tool spec (`work-item-sync-spec.md`) to understand preconditions and constraints
+2. Review or create a binding for your target work tracker
+3. Build or obtain an adapter that satisfies `docs/adapter-conformance-spec.md`
+4. Invoke the tool to sync work items from the frozen WDD
+
+**Example binding:** `docs/bindings/work-item-sync-github-issues.md` (GitHub Issues)
+
+---
+
+## I want to post validation results to my SCM platform
+
+**Starting point:** `validation-status` tool in `aieos-governance-foundation/docs/tools/`
+
+**What you need:**
+- Validator JSON output conforming to governance-model.md §5
+- A commit SHA or PR number to attach the status check to
+- A binding for your target SCM platform (e.g., `docs/bindings/validation-status-github.md`)
+- An adapter implementing the binding (lives in your project, not in AIEOS)
+
+**Path:**
+1. Review the tool spec (`validation-status-spec.md`) to understand preconditions and constraints
+2. Review or create a binding for your target SCM platform
+3. Build or obtain an adapter that satisfies `docs/adapter-conformance-spec.md`
+4. Invoke the tool to post validator results as SCM status checks
+
+**Example binding:** `docs/bindings/validation-status-github.md` (GitHub Check Runs)
+
+---
+
+## I want to tag releases on my SCM platform
+
+**Starting point:** `release-tag` tool in `aieos-governance-foundation/docs/tools/`
+
+**What you need:**
+- A frozen Release Record (RR) from REK
+- A binding for your target SCM platform (e.g., `docs/bindings/release-tag-github.md`)
+- An adapter implementing the binding (lives in your project, not in AIEOS)
+
+**Path:**
+1. Review the tool spec (`release-tag-spec.md`) to understand preconditions and constraints
+2. Review or create a binding for your target SCM platform
+3. Build or obtain an adapter that satisfies `docs/adapter-conformance-spec.md`
+4. Invoke the tool to create a tagged release from the frozen RR
+
+**Example binding:** `docs/bindings/release-tag-github.md` (GitHub Releases)
 
 ---
 

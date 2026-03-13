@@ -51,7 +51,7 @@ Reactive tracks triggered by production events, not SDLC progression.
 └─────────────────────────────────────────┘
 ```
 
-### Cross-Cutting Governance (9–13)
+### Cross-Cutting Governance (9–14)
 
 Kits that interact with multiple pipeline layers. Each has defined trigger points rather than a fixed position in the sequence. They can be adopted independently.
 
@@ -66,10 +66,12 @@ Kits that interact with multiple pipeline layers. Each has defined trigger point
 │  12. Platform & Infrastructure          │  What infrastructure supports it?
 ├─────────────────────────────────────────┤   (foundational input to 4, 5, 6)
 │  13. Documentation & Knowledge          │  Is user-facing documentation governed?
-└─────────────────────────────────────────┘   (touches 4, 5, 6, 8)
+├─────────────────────────────────────────┤   (touches 4, 5, 6, 8)
+│  14. Peer Review                        │  Has it been reviewed from multiple perspectives?
+└─────────────────────────────────────────┘   (touches 2, 4, 5, 6, 8, 9)
 ```
 
-Layer 8 is a reactive operational track — triggered by production events, not SDLC progression — that feeds findings back into Layers 6, 7, and optionally Layers 2 and 4. Layers 9–13 are cross-cutting governance kits — each operates at defined trigger points across the pipeline rather than occupying a single sequential position.
+Layer 8 is a reactive operational track — triggered by production events, not SDLC progression — that feeds findings back into Layers 6, 7, and optionally Layers 2 and 4. Layers 9–14 are cross-cutting governance kits — each operates at defined trigger points across the pipeline rather than occupying a single sequential position.
 
 ---
 
@@ -314,6 +316,33 @@ This layer governs user-facing documentation, API references, support knowledge 
 
 ---
 
+### Layer 14: Peer Review
+
+**Question**: Has this artifact been evaluated from multiple expert perspectives?
+
+This layer governs autonomous multi-perspective peer review. It replicates the role of human review boards (architecture review boards, design reviews, code reviews, CABs) by running specialized review lenses against artifacts at key lifecycle points. Each lens represents an expert perspective (security, reliability, cost, operability, etc.) and produces structured findings independently. The aggregated Peer Review Record surfaces findings, conflicts between perspectives, and an overall PASS/FAIL disposition.
+
+**Kit**: `aieos-peer-review-kit` *(built)*
+
+**Trigger points**:
+- After DPRD validated (PIK): Concept Review
+- After SAD validated (EEK): Architecture Review (all 9 lenses)
+- After TDD validated (EEK): Technical Design Review
+- After WDD validated (EEK): Implementation Readiness Review
+- After ORD validated (EEK): Code Review
+- After QGR validated (QAK): Integration Review
+- After RP validated (REK): Operational Readiness Review
+- After RHR validated (RRK): Post-Deployment Review
+- After PMR validated (ODK): Incident Review
+
+**Inputs**: Validated (not yet frozen) artifact from the producing kit, plus relevant context documents (upstream frozen artifacts, principles files)
+
+**Outputs**: Frozen Peer Review Record (PRR) — per-lens findings with severity and remediation, conflict analysis between lenses, aggregate PASS/FAIL disposition. PRR must pass before the reviewed artifact can freeze.
+
+**Downstream consumers**: The producing kit — PRR findings inform artifact revision before freeze. Portfolio synthesis (IEK) — PRR patterns across initiatives surface systematic quality gaps.
+
+---
+
 ## Kit Registry
 
 | Layer | Kit Repository | Category | Status |
@@ -331,6 +360,7 @@ This layer governs user-facing documentation, API references, support knowledge 
 | 11. Data & Configuration | `aieos-data-configuration-kit` | Cross-cutting | Built |
 | 12. Platform & Infrastructure | `aieos-platform-infrastructure-kit` | Cross-cutting | Built |
 | 13. Documentation & Knowledge | `aieos-documentation-knowledge-kit` | Cross-cutting | Built |
+| 14. Peer Review | `aieos-peer-review-kit` | Cross-cutting | Built |
 
 ---
 
@@ -355,7 +385,7 @@ The ER spec lives in `aieos-governance-foundation/docs/engagement-record-spec.md
 
 ## Current Build State
 
-As of the current build, Layers 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, and 13 are operational:
+As of the current build, Layers 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, and 14 are operational:
 
 **Pipeline handoffs (Layers 1–7):**
 - **Layer 2 → Layer 4** (direct) is the proven inter-kit handoff path when Build is the obvious choice. The frozen DPRD from PIK becomes the EEK PRD via a defined acceptance check.
@@ -368,14 +398,15 @@ As of the current build, Layers 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, and 13 are o
 **Operational track (Layer 8):**
 - **Layer 8 (Operational Diagnostics)** is triggered by production events, not SDLC progression. A SEV1/2 incident (or operator judgment for high-learning-value events) triggers DCR → INR → PMR → optional RB. Frozen PMRs feed back into Layers 6, 7, and optionally 2 and 4.
 
-**Cross-cutting governance (Layers 9–13):**
+**Cross-cutting governance (Layers 9–14):**
 - **Layer 9 (Quality Assurance)** operates as a gate between Layer 4 and Layer 5. After ORD freeze, the QAK runs verification campaigns and produces a Quality Gate Record that declares quality disposition. Adoption is optional — teams not using QAK proceed directly from ORD to REK entry.
 - **Layer 10 (Security & Compliance)** operates at multiple trigger points: Threat Models after SAD freeze, Security Assessments after code complete, Dependency Audits before release, Compliance Evidence Records when mandates apply. Artifacts feed into QAK (Layer 9) and REK (Layer 5) as security clearance evidence.
 - **Layer 11 (Data & Configuration)** establishes configuration governance during EEK (CSPEC, DSR), tracks feature flags during REK (FFLR), and provides config drift detection requirements to RRK. The FFLR is periodically re-frozen to track flag lifecycle.
 - **Layer 12 (Platform & Infrastructure)** provides foundational inputs to EEK (ACF platform assumptions), REK (deployment targets), and RRK (infrastructure monitoring baseline). PDRs capture technology decisions; ISPEC defines deployment infrastructure; EM defines environments and promotion rules.
 - **Layer 13 (Documentation & Knowledge)** governs user-facing documentation at multiple trigger points: API Reference Records after TDD freeze, User Documentation Records and Support Knowledge Articles after release, SKAs after incident postmortems, Documentation Health Reviews aligned with RRK health review cadence. Adoption is optional — teams not using DKK manage documentation outside AIEOS governance.
+- **Layer 14 (Peer Review)** provides autonomous multi-perspective peer review at artifact lifecycle points. When adopted, PRK runs specialized review lenses (security, reliability, performance, cost, operability, maintainability, compliance, devex, business-value) against validated artifacts and produces a Peer Review Record (PRR) that must pass before the reviewed artifact can freeze. Trigger points span PIK, EEK, QAK, REK, RRK, and ODK. Adoption is optional — teams not using PRK proceed with standard validate-then-freeze.
 
 **Entry gate patterns:**
 - The Kit Entry Gate pattern is used at Layers 3, 4, 5, 6, and 9 to enforce upstream verification before artifact generation begins. Layer 3 (SSK) requires a frozen DPRD as its entry gate. Layer 7 uses self-confirming input validation in the ES prompt. Layer 8 uses the Diagnostic Context Record (DCR) as its entry gate. Layers 10–13 use trigger-based entry rather than sequential gates.
 
-The full pipeline loop (Layers 1–7) is operational. Layer 8 adds a reactive operational track. Layers 9–13 add cross-cutting governance. Layer 1 remains planned.
+The full pipeline loop (Layers 1–7) is operational. Layer 8 adds a reactive operational track. Layers 9–14 add cross-cutting governance. Layer 1 remains planned.

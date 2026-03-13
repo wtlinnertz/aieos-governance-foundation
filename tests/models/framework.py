@@ -20,7 +20,7 @@ class KitInfo:
     category: str        # "pipeline", "operational", "cross-cutting"
 
 
-# The 12 built kits
+# The 13 built kits
 KIT_REGISTRY = {
     "PIK":   KitInfo("PIK",   2,  "aieos-product-intelligence-kit",    "Product Intelligence Kit",       "pipeline"),
     "SSK":   KitInfo("SSK",   3,  "aieos-solution-sourcing-kit",       "Solution Sourcing Kit",          "pipeline"),
@@ -34,6 +34,7 @@ KIT_REGISTRY = {
     "DCK":   KitInfo("DCK",   11, "aieos-data-configuration-kit",      "Data & Configuration Kit",       "cross-cutting"),
     "PINFK": KitInfo("PINFK", 12, "aieos-platform-infrastructure-kit", "Platform & Infrastructure Kit",  "cross-cutting"),
     "DKK":   KitInfo("DKK",   13, "aieos-documentation-knowledge-kit", "Documentation & Knowledge Kit",  "cross-cutting"),
+    "PRK":   KitInfo("PRK",   14, "aieos-peer-review-kit",             "Peer Review Kit",                "cross-cutting"),
 }
 
 
@@ -114,6 +115,17 @@ DEPENDENCY_EDGES: list[tuple[str, str, str]] = [
     ("REK:RR",     "DKK:SKA",    "trigger"),   # RR frozen → SKA
     ("ODK:PMR",    "DKK:SKA",    "trigger"),   # PMR frozen → SKA (alternative trigger)
 
+    # PRK trigger points (peer review after validation, before freeze)
+    ("PIK:DPRD",   "PRK:PRR",    "trigger"),   # DPRD validated → concept review
+    ("EEK:SAD",    "PRK:PRR",    "trigger"),   # SAD validated → architecture review
+    ("EEK:TDD",    "PRK:PRR",    "trigger"),   # TDD validated → technical design review
+    ("EEK:WDD",    "PRK:PRR",    "trigger"),   # WDD validated → implementation readiness
+    ("EEK:ORD",    "PRK:PRR",    "trigger"),   # ORD validated → code review
+    ("QAK:QGR",    "PRK:PRR",    "trigger"),   # QGR validated → integration review
+    ("REK:RP",     "PRK:PRR",    "trigger"),   # RP validated → operational readiness
+    ("RRK:RHR",    "PRK:PRR",    "trigger"),   # RHR validated → post-deployment review
+    ("ODK:PMR",    "PRK:PRR",    "trigger"),   # PMR validated → incident review
+
     # Cross-kit escalation transitions (forward-direction for preset flows)
     ("ODK:PMR",    "EEK:KER",    "trigger"),   # PMR corrective action → EEK (incident fix path)
 
@@ -156,6 +168,12 @@ BOUNDARY_CONTRACTS: dict[tuple[str, str], list[str]] = {
     ("DKK",  "rek"):  ["RR"],
     ("DKK",  "odk"):  ["PMR"],
     ("PIK",  "iek"):  ["ES"],
+    ("PRK",  "pik"):  ["DPRD"],
+    ("PRK",  "eek"):  ["SAD", "TDD", "WDD", "ORD"],
+    ("PRK",  "qak"):  ["QGR"],
+    ("PRK",  "rek"):  ["RP"],
+    ("PRK",  "rrk"):  ["RHR"],
+    ("PRK",  "odk"):  ["PMR"],
 }
 
 
@@ -188,7 +206,7 @@ PRESET_DEFINITIONS: list[PresetDefinition] = [
             "RRK:SRER", "RRK:SRP", "RRK:RHR",
             "IEK:ES",
         ],
-        optional_kits=["ODK", "SSK"],
+        optional_kits=["ODK", "SSK", "PRK"],
     ),
     PresetDefinition(
         name="Enhancement",
@@ -198,7 +216,7 @@ PRESET_DEFINITIONS: list[PresetDefinition] = [
             "EEK:PRD", "EEK:ACF", "EEK:SAD", "EEK:DCF", "EEK:TDD", "EEK:WDD", "EEK:ORD",
             "REK:RER", "REK:RP", "REK:RR",
         ],
-        optional_kits=["PIK", "QAK", "SCK", "DCK", "DKK", "RRK", "IEK"],
+        optional_kits=["PIK", "QAK", "SCK", "DCK", "DKK", "RRK", "IEK", "PRK"],
     ),
     PresetDefinition(
         name="Compliance and Regulatory",
@@ -212,7 +230,7 @@ PRESET_DEFINITIONS: list[PresetDefinition] = [
             "REK:RER", "REK:RCF", "REK:RP", "REK:RR",
             "RRK:SRER", "RRK:SRP", "RRK:RHR",
         ],
-        optional_kits=["IEK", "ODK", "SSK"],
+        optional_kits=["IEK", "ODK", "SSK", "PRK"],
     ),
     PresetDefinition(
         name="Performance and Reliability Fix (incident)",
@@ -224,7 +242,7 @@ PRESET_DEFINITIONS: list[PresetDefinition] = [
             "REK:RER", "REK:RP", "REK:RR",
             "RRK:RHR",
         ],
-        optional_kits=["QAK", "SCK", "DKK"],
+        optional_kits=["QAK", "SCK", "DKK", "PRK"],
     ),
     PresetDefinition(
         name="Exploratory Research",

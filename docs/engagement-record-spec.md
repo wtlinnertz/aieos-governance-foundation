@@ -51,6 +51,27 @@ When status changes to `Deprecated` or `Abandoned`, add a `Deprecation Notice` f
 
 ---
 
+### §1a Layer 1 — Strategic Direction (Optional)
+
+This section is present only when the initiative originated from a governed strategic bet (SDK). Omit this section when SDK was not used.
+
+**Artifact table:**
+
+| Artifact Type | ID | Status | Notes |
+|--------------|-----|--------|-------|
+| Strategic Bet Record | SBR-XXX | Frozen | |
+| Portfolio Prioritization Record | PPR-XXX | Frozen | Above/below the line: {above/below} |
+
+**Key decisions:**
+
+List the strategic prioritization decision. Minimum entry: the PPR ranking position and cut line status.
+
+Format: `{decision type}: {brief description} — {artifact ID where decision is recorded}`
+
+Example: `Priority: Ranked #2 of 5 bets, above the cut line with 1 team for 1 quarter allocation — PPR-001`
+
+---
+
 ### §2 Layer 2 — Product Intelligence
 
 **Artifact table:**

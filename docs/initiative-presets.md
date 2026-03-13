@@ -23,6 +23,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 
 | Layer | Kit | Required Artifacts | Optional Artifacts |
 |-------|-----|-------------------|-------------------|
+| 1 | SDK | — | SBR, PPR (use SDK when multiple strategic bets compete for capacity) |
 | 2 | PIK | WCR, Discovery Intake, PFD, VH, AR, EL, DPRD | Brownfield Analysis (if adding to existing system) |
 | 3 | SSK | — | SOER, VER, SDR (use SSK when Build is not the obvious choice) |
 | 4 | EEK | KER (Path A), PRD (placed from DPRD), ACF, SAD, DCF, TDD, WDD, ORD | — |
@@ -105,6 +106,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 
 | Layer | Kit | Required Artifacts | Optional Artifacts |
 |-------|-----|-------------------|-------------------|
+| 1 | SDK | — | SBR, PPR (if compliance is one of several competing investments) |
 | 2 | PIK | WCR, Discovery Intake, PFD, AR, DPRD | VH (value hypothesis may be trivial or externally mandated) |
 | 3 | SSK | — | SOER, VER, SDR (compliance mandates may require evaluating compliant COTS solutions) |
 | 4 | EEK | KER (Path A), PRD (placed from DPRD), ACF, SAD, DCF, TDD, WDD, ORD | — |
@@ -194,6 +196,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 
 | Layer | Kit | Required Artifacts | Optional Artifacts |
 |-------|-----|-------------------|-------------------|
+| 1 | SDK | — | SBR, PPR (if research is one of several competing investments) |
 | 2 | PIK | WCR, Discovery Intake, PFD, VH, AR, EL | DPRD (only if research concludes with a build recommendation) |
 | 4+ | — | — | All downstream kits only if research leads to a committed initiative |
 

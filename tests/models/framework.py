@@ -20,8 +20,9 @@ class KitInfo:
     category: str        # "pipeline", "operational", "cross-cutting"
 
 
-# The 13 built kits
+# The 15 built kits
 KIT_REGISTRY = {
+    "SDK":   KitInfo("SDK",   1,  "aieos-strategic-direction-kit",     "Strategic Direction Kit",        "pipeline"),
     "PIK":   KitInfo("PIK",   2,  "aieos-product-intelligence-kit",    "Product Intelligence Kit",       "pipeline"),
     "SSK":   KitInfo("SSK",   3,  "aieos-solution-sourcing-kit",       "Solution Sourcing Kit",          "pipeline"),
     "EEK":   KitInfo("EEK",   4,  "aieos-engineering-execution-kit",   "Engineering Execution Kit",      "pipeline"),
@@ -44,6 +45,10 @@ KIT_REGISTRY = {
 
 DEPENDENCY_EDGES: list[tuple[str, str, str]] = [
     # Pipeline sequential dependencies
+    # SDK
+    ("SDK:SBR",    "SDK:PPR",    "freeze"),    # SBRs must be frozen before PPR
+    ("SDK:PPR",    "PIK:WCR",    "freeze"),    # PPR → PIK (when SDK engaged, optional)
+
     ("PIK:DPRD",   "EEK:PRD",    "freeze"),    # Path A: DPRD → EEK (when SSK not engaged)
 
     # SSK (between PIK and EEK)
@@ -135,13 +140,15 @@ DEPENDENCY_EDGES: list[tuple[str, str, str]] = [
     ("REK:RR",     "EEK:KER",    "escalation"),  # T3: rollback code defect
     ("REK:RR",     "PIK:WCR",    "escalation"),  # T4: rollback wrong feature
     ("RRK:IR",     "ODK:DCR",    "escalation"),  # T5: SEV1/2 → ODK
-    ("IEK:ES",     "PIK:WCR",    "escalation"),  # T6: re-discover signal
+    ("IEK:ES",     "PIK:WCR",    "escalation"),  # T6: re-discover signal (within existing bet)
+    ("IEK:ES",     "SDK:SBR",    "escalation"),  # T6b: re-discover signal (new strategic question)
 ]
 
 
 # ─── Entry Points ────────────────────────────────────────────────────────────
 
 ENTRY_POINTS: list[str] = [
+    "SDK:SBR",      # Strategic bet (Layer 1 entry)
     "PIK:WCR",      # New work request
     "EEK:KER",      # Path B enhancement (direct entry)
     "ODK:DCR",      # Production incident
@@ -153,6 +160,8 @@ ENTRY_POINTS: list[str] = [
 # Maps: (downstream_kit, entry_file_suffix) → list of expected upstream artifacts
 
 BOUNDARY_CONTRACTS: dict[tuple[str, str], list[str]] = {
+    ("SDK",  "iek"):  ["ES"],
+    ("PIK",  "sdk"):  ["PPR", "SBR"],
     ("EEK",  "pik"):  ["DPRD"],
     ("SSK",  "pik"):  ["DPRD"],
     ("EEK",  "ssk"):  ["SDR"],
@@ -206,7 +215,7 @@ PRESET_DEFINITIONS: list[PresetDefinition] = [
             "RRK:SRER", "RRK:SRP", "RRK:RHR",
             "IEK:ES",
         ],
-        optional_kits=["ODK", "SSK", "PRK"],
+        optional_kits=["SDK", "ODK", "SSK", "PRK"],
     ),
     PresetDefinition(
         name="Enhancement",
@@ -216,7 +225,7 @@ PRESET_DEFINITIONS: list[PresetDefinition] = [
             "EEK:PRD", "EEK:ACF", "EEK:SAD", "EEK:DCF", "EEK:TDD", "EEK:WDD", "EEK:ORD",
             "REK:RER", "REK:RP", "REK:RR",
         ],
-        optional_kits=["PIK", "QAK", "SCK", "DCK", "DKK", "RRK", "IEK", "PRK"],
+        optional_kits=["SDK", "PIK", "QAK", "SCK", "DCK", "DKK", "RRK", "IEK", "PRK"],
     ),
     PresetDefinition(
         name="Compliance and Regulatory",
@@ -230,7 +239,7 @@ PRESET_DEFINITIONS: list[PresetDefinition] = [
             "REK:RER", "REK:RCF", "REK:RP", "REK:RR",
             "RRK:SRER", "RRK:SRP", "RRK:RHR",
         ],
-        optional_kits=["IEK", "ODK", "SSK", "PRK"],
+        optional_kits=["SDK", "IEK", "ODK", "SSK", "PRK"],
     ),
     PresetDefinition(
         name="Performance and Reliability Fix (incident)",

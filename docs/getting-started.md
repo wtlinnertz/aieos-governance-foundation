@@ -30,6 +30,9 @@ The AI combines these tools naturally as you work. You don't need to invoke them
 ```
 Pipeline Layers:
 ┌──────────────────────────────────────────────────────────────────────────┐
+│  Layer 1: Strategic Direction Kit (SDK)               ← optional         │
+│  SBR (per bet) → PPR (portfolio ranking)                                 │
+├──────────────────────────────────────────────────────────────────────────┤
 │  Layer 2: Product Intelligence Kit (PIK)                                  │
 │  WCR → Discovery Intake → PFD → VH → AR → EL → DPRD                     │
 ├──────────────────────────────────────────────────────────────────────────┤
@@ -78,7 +81,26 @@ Cross-Cutting Governance:
 └──────────────────────────────────────────────────────────────────────────┘
 ```
 
-Layer 1 (Strategic Direction) is planned but not yet built.
+---
+
+## I need to decide which strategic bets to fund
+
+**Starting point:** Strategic Direction Kit (SDK), Layer 1
+
+**Path:**
+1. For each strategic bet, author a Strategic Bet Record (SBR) with AI assistance
+2. Validate each SBR (6 hard gates: thesis falsifiable, success signal measurable, failure signal defined, time horizon bounded, investment envelope stated, single accountable owner)
+3. Freeze each validated SBR
+4. Author a Portfolio Prioritization Record (PPR) ranking all active frozen SBRs
+5. Validate the PPR (5 hard gates: strict rank order, trade-off rationale, cut line explicit, capacity not exceeded, review trigger defined)
+6. Freeze the PPR
+7. Route above-the-line SBRs to PIK for discovery
+
+**Where to start:** `aieos-strategic-direction-kit/docs/playbook.md`
+
+**When to use:** When the organization has multiple strategic options competing for limited capacity and needs a governed process for prioritization decisions. SDK is optional — teams with clear direction can enter PIK directly.
+
+**When to skip:** When strategic direction is clear and singular, when the initiative is an enhancement within an existing bet, or when the team is small enough that strategic alignment happens naturally.
 
 ---
 

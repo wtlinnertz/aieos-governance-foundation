@@ -81,13 +81,17 @@ Layer 8 is a reactive operational track — triggered by production events, not 
 
 **Question**: What are we trying to achieve?
 
-This layer governs the organization's goals, priorities, and bets at the strategic level. It produces OKRs, strategic briefs, initiative portfolios, and the tradeoff decisions that constrain all downstream layers.
+This layer governs how an organization captures, validates, and prioritizes strategic bets. It produces falsifiable bets with measurable signals and a strict-rank-ordered portfolio with explicit capacity constraints. The emphasis is on decision quality — falsifiability, measurability, and prioritization honesty — not comprehensive strategy documentation.
 
-**Kit**: `aieos-strategic-direction-kit` *(planned)*
+**Kit**: `aieos-strategic-direction-kit` *(built)*
 
-**Outputs**: Strategic OKRs, initiative portfolio, tradeoff decisions
+**Artifacts**: Strategic Bet Record (SBR, 6 hard gates), Portfolio Prioritization Record (PPR, 5 hard gates)
 
-**Downstream consumer**: Product Intelligence (Layer 2)
+**Outputs**: Frozen PPR with above-the-line SBRs routed to Product Intelligence
+
+**Downstream consumer**: Product Intelligence (Layer 2) — frozen SBR provides strategic context for discovery
+
+**Feedback loop**: IEK (Layer 7) `re-discover` signals may trigger new SBRs
 
 ---
 

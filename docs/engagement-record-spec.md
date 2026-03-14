@@ -263,8 +263,9 @@ If Layer 10 is not adopted for this initiative, write "SCK not adopted for this 
 | Configuration Specification | CSPEC-XXX | Frozen | |
 | Feature Flag Lifecycle Record | FFLR-XXX | Frozen | Note current version |
 | Data Schema Record | DSR-XXX | Frozen | Note current version |
+| Data Migration Record | DMR-XXX | Frozen | N/A if no migration required |
 
-If the FFLR or DSR has been re-frozen, list all versions in the Notes column.
+If the FFLR or DSR has been re-frozen, list all versions in the Notes column. If no data migration is required, write "DMR not required — DSR schema changes are purely additive" in the Notes column.
 
 If Layer 11 is not adopted for this initiative, write "DCK not adopted for this initiative."
 

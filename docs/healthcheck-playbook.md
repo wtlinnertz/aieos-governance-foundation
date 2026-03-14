@@ -351,6 +351,56 @@ These checks run against a specific initiative's artifacts, not against the fram
 
 ---
 
+### B9. Initiative Staleness
+
+**What it checks:**
+- No artifact in the initiative's ER has been frozen in the last 30 days
+- No explicit pause, hold, or deprioritization decision is recorded in the ER
+- The initiative status is still "Active"
+
+**When to run:** Periodically (weekly recommended). Run across all active initiatives.
+
+**Automated:** No — requires reading ER artifact dates and comparing to current date.
+
+**Manual check procedure:**
+1. For each active initiative ER, find the most recent artifact freeze date across all layer sections
+2. If the most recent freeze is >30 days ago and no pause decision is recorded in any Key Decisions section, flag the initiative
+3. Review flagged initiatives with the initiative owner to determine if work is stalled, deprioritized, or blocked
+
+**Remediation:**
+| Failure | Fix |
+|---------|-----|
+| No recent freeze, no pause decision | Initiative owner records a decision in the ER: active work continuing (with explanation), paused (with reason and expected resume date), or abandoned (with DN reference) |
+| Initiative genuinely stalled | Escalate to portfolio owner; consider Deprecation Note if the initiative will not resume |
+
+**Note:** This check is a signal, not a gate. Some initiatives have legitimately long phases (e.g., extended monitoring in RRK before IEK). The 30-day threshold surfaces candidates for review — it does not mandate action.
+
+---
+
+### B10. Dependency Freshness
+
+**What it checks:**
+- For initiatives with a frozen DAR (Dependency Audit Record from SCK), whether any flagged dependencies have had security advisories, EOL announcements, or major version releases since the DAR was frozen
+- The DAR's findings are still current and do not require re-evaluation
+
+**When to run:** Periodically (monthly recommended). Run for all initiatives with frozen DARs where the initiative is still Active.
+
+**Automated:** Partially — dependency advisory databases (e.g., GitHub Advisory Database, NVD) can be queried programmatically against the DAR's dependency list.
+
+**Manual check procedure:**
+1. For each active initiative with a frozen DAR, extract the dependency list from the DAR
+2. Check each dependency against public advisory databases for new CVEs or EOL announcements since the DAR freeze date
+3. If new advisories are found for flagged dependencies, assess whether they affect the initiative's risk profile
+
+**Remediation:**
+| Failure | Fix |
+|---------|-----|
+| New CVE for a DAR-listed dependency | Assess severity; if critical/high, trigger DAR re-entry (new version) and evaluate whether corrective action is needed |
+| Dependency EOL announced | Assess timeline; record finding in ER; if EOL is imminent, trigger engineering action via EEK |
+| No new advisories | No action — record check date for audit trail |
+
+---
+
 ## Healthcheck Schedule
 
 ### Per-Commit (Automated)
@@ -384,6 +434,13 @@ These checks run against a specific initiative's artifacts, not against the fram
 |-------|-------|
 | A3: Spec-Version Drift | Framework |
 | B3: Frozen Artifact Immutability | Initiative |
+| B9: Initiative Staleness | Initiative |
+
+### Periodic (Monthly Recommended)
+
+| Check | Scope |
+|-------|-------|
+| B10: Dependency Freshness | Initiative |
 
 ### Per-Initiative-Completion (Manual)
 

@@ -115,6 +115,7 @@ DEPENDENCY_EDGES: list[tuple[str, str, str]] = [
     ("EEK:ORD",    "SCK:CER",    "trigger"),   # Compliance mandate → CER
     ("EEK:TDD",    "DCK:CSPEC",  "trigger"),   # TDD frozen → CSPEC
     ("EEK:TDD",    "DCK:DSR",    "trigger"),   # TDD frozen → DSR
+    ("DCK:DSR",    "DCK:DMR",    "trigger"),   # DSR frozen → DMR (when migration needed)
     ("EEK:TDD",    "DKK:ARR",    "trigger"),   # TDD frozen → ARR (early)
     ("REK:RR",     "DCK:FFLR",   "trigger"),   # RR frozen → FFLR
     ("REK:RR",     "DKK:UDR",    "trigger"),   # RR frozen → UDR

@@ -33,6 +33,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 | 12 | PINFK | PDR (per decision), ISPEC, EM | — |
 | 13 | DKK | UDR (after release), ARR (after TDD or release) | SKA (if support team exists), DHR (periodic) |
 | 14 | PRK | — | PRR for DPRD, SAD, TDD, WDD, ORD, QGR, RP, RHR (when adopted) |
+| 15 | BPK | — | PIA (after SAD/TDD), TP, RC (when process-affecting changes identified) |
 | 5 | REK | RER, RCF, RP, RR | — |
 | 6 | RRK | SRER, SRP, RHR | IR (only if incidents occur) |
 | 7 | IEK | ES | PES (when ≥2 ERs available) |
@@ -77,6 +78,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 | 11 | DCK | — | CSPEC updates, FFLR (if feature flags used) |
 | 13 | DKK | — | UDR update (if user-facing behavior changed), ARR update (if API changed) |
 | 14 | PRK | — | PRR for SAD, TDD, ORD, RP (when adopted) |
+| 15 | BPK | — | PIA, TP, RC (when process-affecting changes identified) |
 | 5 | REK | RER, RP, RR | RCF (if not already established) |
 | 6 | RRK | IR (if incident occurs), RHR (at next review cycle) | — |
 | 7 | IEK | — | ES (if enhancement was significant enough to warrant learning capture) |
@@ -113,6 +115,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 | 10 | SCK | TM, SAR, CER, DAR | — |
 | 9 | QAK | QAER, VP (references frozen TM+SAR), TCR, QGR | — |
 | 14 | PRK | — | PRR for DPRD, SAD, TDD, WDD, ORD, QGR, RP (when adopted) |
+| 15 | BPK | — | PIA, TP, RC (compliance changes often impact business processes) |
 | 5 | REK | RER, RCF, RP, RR | — |
 | 6 | RRK | SRER (if new service), SRP revision (if adding compliance requirements to existing SRP), RHR | IR (if incidents) |
 | 7 | IEK | — | ES (if compliance work changes operational profile significantly) |

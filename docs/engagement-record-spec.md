@@ -38,7 +38,7 @@ This spec is the canonical definition of the ER format. It lives in `aieos-gover
 | Status | Active / Deprecated / Abandoned |
 | Discovery Start | {YYYY-MM-DD — date Discovery Intake was validated in PIK} |
 | Latest ES Date | {YYYY-MM-DD — date of most recent frozen ES, or N/A} |
-| ER Spec Version | 1.3 |
+| ER Spec Version | 1.4 |
 | Current Position | {Navigation map node ID, e.g., N-EEK-TDD — updated by position-check tool. Optional.} |
 | Preset | {P1–P5 or Custom — declared at initiative start} |
 
@@ -319,6 +319,20 @@ If Layer 14 is not adopted for this initiative, write "PRK not adopted for this 
 
 ---
 
+### §15 Layer 15 — Business Process (if adopted)
+
+**Artifact table:**
+
+| Artifact Type | ID | Status | Notes |
+|--------------|-----|--------|-------|
+| Process Impact Assessment | PIA-XXX | Frozen | |
+| Transition Plan | TP-XXX | Frozen | |
+| Readiness Confirmation | RC-XXX | Frozen | Readiness: Ready / Ready-with-conditions / Not Ready |
+
+If Layer 15 is not adopted for this initiative, write "BPK not adopted for this initiative."
+
+---
+
 ### §7 Initiative Outcome
 
 | Field | Value |
@@ -353,6 +367,7 @@ Each kit's playbook includes a "Maintaining the Engagement Record" section with 
 | Platform & Infrastructure Kit | Each Layer 12 artifact frozen | Add artifact IDs to §12 table. Note ISPEC/EM version changes. |
 | Documentation & Knowledge Kit | Each Layer 13 artifact frozen | Add artifact IDs to §13 table. Note DHR version changes for periodic reviews. |
 | Peer Review Kit | Each PRR frozen | Add PRR IDs to §14 table. Note review point and disposition. |
+| Business Process Kit | Each Layer 15 artifact frozen | Add artifact IDs to §15 table. Note RC readiness declaration. |
 
 **On initiative end:** The operator who declares the initiative Deprecated or Abandoned updates §1 Status and §7 Initiative Outcome, and adds the DN ID reference.
 

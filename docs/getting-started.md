@@ -78,6 +78,9 @@ Cross-Cutting Governance:
 ├──────────────────────────────────────────────────────────────────────────┤
 │  Layer 14: Peer Review Kit (PRK)                     ← multi-layer       │
 │  PRR (per review point)                                                   │
+├──────────────────────────────────────────────────────────────────────────┤
+│  Layer 15: Business Process Kit (BPK)                ← cross-cutting     │
+│  PIA → TP → RC                                                            │
 └──────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -325,6 +328,27 @@ KER → PRD → ACF → SAD → DCF → TDD → WDD → ORD
 **Where to start:** `aieos-peer-review-kit/docs/playbook.md`
 
 **When to use:** Adopt PRK when you want the quality assurance benefits of architecture review boards, design reviews, and CABs without requiring human reviewers at every stage. Recommended at minimum for SAD (architecture review) and TDD (technical design review).
+
+---
+
+## I need to govern business process changes
+
+**Starting point:** Business Process Kit (BPK), Layer 15
+
+Not every initiative affects business processes — but when one does, shipping the technical solution without governing the process change leads to adoption failures, broken workflows, and untrained teams.
+
+**When to adopt BPK:**
+- The initiative introduces new user-facing workflows
+- The initiative changes how an existing process works
+- The initiative removes or automates a manual process
+- An API redesign affects downstream manual consumers
+
+**Artifact sequence:**
+1. SAD or TDD frozen → generate Process Impact Assessment (PIA) — identifies affected processes and roles
+2. PIA frozen → generate Transition Plan (TP) — defines transition strategy, communication, training, cutover schedule
+3. TP frozen + evidence collected → generate Readiness Confirmation (RC) — captures training completion, SOP updates, stakeholder acknowledgments
+
+**Where to start:** `aieos-business-process-kit/docs/playbook.md`
 
 ---
 

@@ -182,6 +182,14 @@ Every node represents a state the initiative can be in. Node types:
 | N-PRK-PRR-RHR | PRK | artifact | Peer Review Record (Post-Deployment Review) |
 | N-PRK-PRR-PMR | PRK | artifact | Peer Review Record (Incident Review) |
 
+### BPK (Layer 15) Nodes — Cross-Cutting
+
+| Node ID | Kit | Type | Name |
+|---------|-----|------|------|
+| N-BPK-PIA | BPK | artifact | Process Impact Assessment |
+| N-BPK-TP | BPK | artifact | Transition Plan |
+| N-BPK-RC | BPK | artifact | Readiness Confirmation |
+
 ---
 
 ## Section 2: Edges
@@ -358,6 +366,20 @@ Every valid transition in the framework. Conditions describe what must be true f
 | E-146 | N-REK-RP | N-PRK-PRR-RP | RP validated; PRK adopted | All |
 | E-147 | N-RRK-RHR | N-PRK-PRR-RHR | RHR validated; PRK adopted | All |
 | E-148 | N-ODK-PMR | N-PRK-PRR-PMR | PMR validated; PRK adopted | P4 |
+
+### BPK Cross-Cutting Trigger Edges
+
+| Edge ID | From | To | Condition | Presets |
+|---------|------|----|-----------|--------|
+| E-150 | N-EEK-SAD | N-BPK-PIA | SAD frozen; process-affecting changes identified | P1, P2, P3 |
+| E-151 | N-EEK-TDD | N-BPK-PIA | TDD frozen; process-affecting changes identified (alternative trigger) | P1, P2, P3 |
+
+### BPK Internal Edges
+
+| Edge ID | From | To | Condition | Presets |
+|---------|------|----|-----------|--------|
+| E-152 | N-BPK-PIA | N-BPK-TP | PIA frozen | P1, P2, P3 |
+| E-153 | N-BPK-TP | N-BPK-RC | TP frozen; evidence collected | P1, P2, P3 |
 
 ### Escalation Edges (reverse direction)
 

@@ -134,6 +134,9 @@ Cross-cutting kits (Layers 9–14) do not follow the pipeline sequence. They act
 | **PRK (L14)** | PRR (Ops Readiness) | RP validated | Validated RP + frozen RCF |
 | **PRK (L14)** | PRR (Post-Deploy) | RHR validated | Validated RHR + frozen SRP |
 | **PRK (L14)** | PRR (Incident) | PMR validated | Validated PMR + frozen INR |
+| **BPK (L15)** | PIA | SAD or TDD frozen (with process impacts) | Frozen SAD or TDD |
+| **BPK (L15)** | TP | PIA frozen | Frozen PIA |
+| **BPK (L15)** | RC | TP frozen + evidence collected | Frozen TP + readiness evidence |
 
 ### 3.2 Cross-Cutting Feeds Into Pipeline
 
@@ -152,6 +155,8 @@ Cross-cutting artifacts feed back into the pipeline at specific points:
 | PINFK EM | REK RP | Environment promotion rules |
 | DKK DHR | IEK PES | Documentation health signal |
 | PRK PRR | Any kit | Multi-perspective findings that must be addressed before freeze |
+| BPK RC | REK RER | Process readiness declaration |
+| BPK TP | REK RP | Cutover schedule alignment |
 
 ### 3.3 Special Ordering: Compliance Initiatives
 
@@ -301,6 +306,7 @@ Add an Amendment Log entry. If there is any ambiguity, treat it as material and 
 | PINFK (L12) | Conditional | PDRs: if technology decisions need documentation; ISPEC: if non-trivial infrastructure |
 | DKK (L13) | Conditional | UDR: if end users exist; ARR: if API consumers exist; SKA: if support team exists |
 | PRK (L14) | Optional | Adopt when multi-perspective quality assurance is valuable; recommended for SAD and TDD at minimum |
+| BPK (L15) | Conditional | Adopt when the initiative changes, adds, or removes business processes or user workflows |
 
 ### 7.3 Operational Track
 
@@ -327,6 +333,7 @@ Any cross-cutting kit can be adopted mid-initiative when its trigger conditions 
 | PINFK | Yes | PDRs can be created at any point |
 | DKK | Yes | Trigger-based; activate when documentation governance needed |
 | ODK | Yes | Reactive; triggered by any qualifying incident |
+| BPK | Yes | Trigger-based; activate when process impact is identified during design |
 
 ---
 

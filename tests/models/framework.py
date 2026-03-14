@@ -36,6 +36,7 @@ KIT_REGISTRY = {
     "PINFK": KitInfo("PINFK", 12, "aieos-platform-infrastructure-kit", "Platform & Infrastructure Kit",  "cross-cutting"),
     "DKK":   KitInfo("DKK",   13, "aieos-documentation-knowledge-kit", "Documentation & Knowledge Kit",  "cross-cutting"),
     "PRK":   KitInfo("PRK",   14, "aieos-peer-review-kit",             "Peer Review Kit",                "cross-cutting"),
+    "BPK":   KitInfo("BPK",   15, "aieos-business-process-kit",        "Business Process Kit",           "cross-cutting"),
 }
 
 
@@ -131,6 +132,14 @@ DEPENDENCY_EDGES: list[tuple[str, str, str]] = [
     ("RRK:RHR",    "PRK:PRR",    "trigger"),   # RHR validated → post-deployment review
     ("ODK:PMR",    "PRK:PRR",    "trigger"),   # PMR validated → incident review
 
+    # BPK internal sequential dependencies
+    ("BPK:PIA",    "BPK:TP",     "freeze"),    # PIA must be frozen before TP
+    ("BPK:TP",     "BPK:RC",     "freeze"),    # TP must be frozen before RC
+
+    # BPK cross-cutting trigger points
+    ("EEK:SAD",    "BPK:PIA",    "trigger"),   # SAD frozen → PIA
+    ("EEK:TDD",    "BPK:PIA",    "trigger"),   # TDD frozen → PIA (alternative trigger)
+
     # Cross-kit escalation transitions (forward-direction for preset flows)
     ("ODK:PMR",    "EEK:KER",    "trigger"),   # PMR corrective action → EEK (incident fix path)
 
@@ -183,6 +192,7 @@ BOUNDARY_CONTRACTS: dict[tuple[str, str], list[str]] = {
     ("PRK",  "rek"):  ["RP"],
     ("PRK",  "rrk"):  ["RHR"],
     ("PRK",  "odk"):  ["PMR"],
+    ("BPK",  "eek"):  ["SAD", "TDD"],
 }
 
 
@@ -215,7 +225,7 @@ PRESET_DEFINITIONS: list[PresetDefinition] = [
             "RRK:SRER", "RRK:SRP", "RRK:RHR",
             "IEK:ES",
         ],
-        optional_kits=["SDK", "ODK", "SSK", "PRK"],
+        optional_kits=["SDK", "ODK", "SSK", "PRK", "BPK"],
     ),
     PresetDefinition(
         name="Enhancement",
@@ -225,7 +235,7 @@ PRESET_DEFINITIONS: list[PresetDefinition] = [
             "EEK:PRD", "EEK:ACF", "EEK:SAD", "EEK:DCF", "EEK:TDD", "EEK:WDD", "EEK:ORD",
             "REK:RER", "REK:RP", "REK:RR",
         ],
-        optional_kits=["SDK", "PIK", "QAK", "SCK", "DCK", "DKK", "RRK", "IEK", "PRK"],
+        optional_kits=["SDK", "PIK", "QAK", "SCK", "DCK", "DKK", "RRK", "IEK", "PRK", "BPK"],
     ),
     PresetDefinition(
         name="Compliance and Regulatory",
@@ -239,7 +249,7 @@ PRESET_DEFINITIONS: list[PresetDefinition] = [
             "REK:RER", "REK:RCF", "REK:RP", "REK:RR",
             "RRK:SRER", "RRK:SRP", "RRK:RHR",
         ],
-        optional_kits=["SDK", "IEK", "ODK", "SSK", "PRK"],
+        optional_kits=["SDK", "IEK", "ODK", "SSK", "PRK", "BPK"],
     ),
     PresetDefinition(
         name="Performance and Reliability Fix (incident)",

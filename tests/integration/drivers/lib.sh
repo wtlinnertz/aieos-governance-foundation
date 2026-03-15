@@ -77,7 +77,7 @@ Use the Write tool to create the file. Output only the artifact content — no c
   local result
   if result=$(claude -p "$full_prompt" \
     --allowedTools "Read,Write,Edit,Glob,Grep" \
-    --no-user-prompt \
+    --permission-mode bypassPermissions \
     --output-format text \
     2>&1); then
     if [[ -f "$output_file" ]]; then
@@ -135,7 +135,7 @@ Write the JSON result to: $result_file"
   local result
   if result=$(claude -p "$prompt" \
     --allowedTools "Read,Write" \
-    --no-user-prompt \
+    --permission-mode bypassPermissions \
     --output-format text \
     2>&1); then
     if [[ -f "$result_file" ]]; then

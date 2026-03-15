@@ -94,7 +94,13 @@ For each artifact in the preset sequence:
 3. Read the artifact's spec (`docs/specs/{type}-spec.md`) to understand hard gates
 4. Read the artifact's template (`docs/artifacts/{type}-template.md`) for structure
 5. Verify all upstream dependencies are frozen
-6. **Check for utility prompts** — read the kit's playbook and CLAUDE.md for utility prompts that apply at this stage in the flow. If one exists, briefly explain what it does in plain language and ask if the user wants to run it before proceeding. Example: "Before we design the experiments, there's an optional step — an adversarial stress test that tries to poke holes in your assumptions. It can surface blind spots before you invest time running experiments. Want to do that, or move straight to experiment design?"
+6. **Check for utility prompts** — read the kit's playbook and CLAUDE.md for utility prompts that apply at this stage in the flow. If one exists, you MUST briefly explain what it does in plain language and ask if the user wants to run it before proceeding. This is not optional — surfacing available tools is part of the sherpa's guide role. The user cannot request tools they don't know about.
+
+   **Known utility prompt trigger points (PIK):**
+   - After AR freeze, before EL generation → offer `assumption-stress-test-prompt.md` ("Before we design experiments, there's an optional adversarial stress test that tries to poke holes in your assumptions. Want to run it first?")
+   - After Discovery Intake, before PFD → offer `brownfield-analysis-prompt.md` if the initiative involves an existing system
+   - After PFD, before VH → offer `stakeholder-alignment-prompt.md` if multiple stakeholders with potentially conflicting interests
+   - At any point with parallel initiatives → offer `cross-initiative-conflict-prompt.md`
 
 ### Explain to the user:
 - What artifact you're about to create and what it does (in plain language)

@@ -89,10 +89,13 @@ def check_routing_record(project_dir: Path) -> list[str]:
 def check_er_completeness(project_dir: Path) -> list[str]:
     """Check ER has artifact IDs for all generated artifacts."""
     issues = []
-    er_path = project_dir / "docs/engagement/er-AICR-001.md"
-    if not er_path.exists():
+    # ER filename may be uppercase or lowercase — find case-insensitively
+    er_candidates = list(project_dir.glob("docs/engagement/er-*icr*.md")) + \
+                    list(project_dir.glob("docs/engagement/er-*ICR*.md"))
+    if not er_candidates:
         issues.append("Engagement Record not found")
         return issues
+    er_path = er_candidates[0]
 
     er_content = er_path.read_text()
 

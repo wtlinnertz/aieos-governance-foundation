@@ -131,7 +131,7 @@ For each artifact in the preset sequence:
 - **Never cite versions from memory** — always read the file to confirm the current version number before including it in Document Control fields.
 
 ### Artifact ID discipline:
-- **Artifact IDs must use the initiative name** — format is `{TYPE}-{INITIATIVE}-{NNN}` (e.g., `WCR-AICR-001`, `PFD-TASKFLOW-001`). Never use dates or years in artifact IDs. The initiative name was chosen by the user in Phase 2 — use it consistently in every artifact.
+- **Artifact IDs must use the initiative name in UPPERCASE** — format is `{TYPE}-{INITIATIVE}-{NNN}` (e.g., `WCR-AICR-001`, `PFD-TASKFLOW-001`). Never use dates or years in artifact IDs. The initiative name was chosen by the user in Phase 2 — use it consistently in every artifact ID and filename (including the ER: `er-{INITIATIVE}-001.md` in uppercase, e.g., `er-AICR-001.md`).
 
 ## Phase 4: Kit Transitions
 

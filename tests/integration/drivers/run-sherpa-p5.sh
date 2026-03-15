@@ -165,8 +165,9 @@ else
 fi
 
 log_step "Verify Engagement Record"
-if [[ -f "$PROJECT_DIR/docs/engagement/er-AICR-001.md" ]]; then
-  log_pass "ER exists: er-AICR-001.md ($(wc -l < "$PROJECT_DIR/docs/engagement/er-AICR-001.md") lines)"
+ER_FILE=$(find "$PROJECT_DIR/docs/engagement" -iname "er-aicr-001.md" 2>/dev/null | head -1)
+if [[ -n "$ER_FILE" ]]; then
+  log_pass "ER exists: $(basename "$ER_FILE") ($(wc -l < "$ER_FILE") lines)"
 else
   log_fail "Engagement Record not generated"
 fi

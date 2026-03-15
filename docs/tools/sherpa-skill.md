@@ -130,6 +130,9 @@ For each artifact in the preset sequence:
 ### Provenance discipline:
 - **Never cite versions from memory** — always read the file to confirm the current version number before including it in Document Control fields.
 
+### Artifact ID discipline:
+- **Artifact IDs must use the initiative name** — format is `{TYPE}-{INITIATIVE}-{NNN}` (e.g., `WCR-AICR-001`, `PFD-TASKFLOW-001`). Never use dates or years in artifact IDs. The initiative name was chosen by the user in Phase 2 — use it consistently in every artifact.
+
 ## Phase 4: Kit Transitions
 
 When you finish the last artifact in a kit:

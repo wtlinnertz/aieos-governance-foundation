@@ -96,10 +96,10 @@ def check_er_completeness(project_dir: Path) -> list[str]:
 
     er_content = er_path.read_text()
 
-    # Check that each artifact type has an ID in the ER.
-    # WCR naming varies (WCR-AICR-001 or WCR-2026-001), so check for pattern.
+    # Check that each artifact type has an ID with the initiative name.
+    # Artifact ID format: {TYPE}-{INITIATIVE}-{NNN}
     expected_patterns = [
-        ("WCR", r"WCR-\w+-\d+"),
+        ("WCR", r"WCR-AICR-\d+"),
         ("PFD", r"PFD-AICR-\d+"),
         ("VH", r"VH-AICR-\d+"),
         ("AR", r"AR-AICR-\d+"),

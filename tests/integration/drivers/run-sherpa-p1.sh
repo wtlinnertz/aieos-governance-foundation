@@ -1,19 +1,22 @@
 #!/usr/bin/env bash
-# run-sherpa-p5.sh — Sherpa P5 (Exploratory Research) integration test
+# run-sherpa-p1.sh — Sherpa P1 (New Feature) integration test
 #
-# Tests the /sherpa skill end-to-end with a pre-scripted P5 scenario.
-# The sherpa generates all PIK artifacts (WCR, Intake, PFD, VH, AR, EL),
-# validates each, maintains the ER, and handles the full flow.
+# Tests the full PIK discovery flow through EEK entry:
+# - PIK: WCR, Intake, PFD, VH, AR, EL (with proceed decision), DPRD
+# - PIK→EEK transition with handoff explanation
+# - EEK Path A: KER (referencing DPRD), PRD (placed from DPRD), ACF, SAD
+# - Cross-cutting kit adoption decisions
 #
-# Usage: bash run-sherpa-p5.sh
+# Usage: bash run-sherpa-p1.sh
 
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 
-INITIATIVE="AICR"
-FIXTURE_DIR="$INTEGRATION_DIR/fixtures/aicr-exploratory"
+INITIATIVE="PUSHNOTIFY"
+PRESET="p1"
+FIXTURE_DIR="$INTEGRATION_DIR/fixtures/notifications-feature"
 TIMESTAMP=$(date +%Y%m%d-%H%M%S)
-RUN_DIR="$OUTPUT_DIR/sherpa-p5-$TIMESTAMP"
-PROJECT_DIR="$RUN_DIR/aieos-aicr"
+RUN_DIR="$OUTPUT_DIR/sherpa-p1-$TIMESTAMP"
+PROJECT_DIR="$RUN_DIR/aieos-pushnotify"
 
 # ─── Setup ────────────────────────────────────────────────────────────────────
 
@@ -27,7 +30,7 @@ log_pass "Created project structure at $PROJECT_DIR"
 log_step "Read test scenario fixture"
 if [[ ! -f "$FIXTURE_DIR/scenario.md" ]]; then
   log_fail "Scenario fixture not found: $FIXTURE_DIR/scenario.md"
-  print_summary "Sherpa P5 (Exploratory)"
+  print_summary "Sherpa P1 (New Feature)"
   exit 1
 fi
 SCENARIO=$(cat "$FIXTURE_DIR/scenario.md")
@@ -38,16 +41,14 @@ log_pass "Loaded scenario fixture"
 log_step "Read sherpa skill definition"
 SKILL_FILE="$AIEOS_ROOT/.claude/skills/sherpa/SKILL.md"
 if [[ ! -f "$SKILL_FILE" ]]; then
-  # Fall back to tracked copy
   SKILL_FILE="$AIEOS_ROOT/aieos-governance-foundation/docs/tools/sherpa-skill.md"
 fi
 if [[ ! -f "$SKILL_FILE" ]]; then
   log_fail "Sherpa skill not found"
-  print_summary "Sherpa P5 (Exploratory)"
+  print_summary "Sherpa P1 (New Feature)"
   exit 1
 fi
-# Strip YAML frontmatter from skill file
-SHERPA_PROMPT=$(sed '1{/^---$/d}; /^---$/,/^---$/d' "$SKILL_FILE")
+SHERPA_PROMPT=$(sed '1{/^---$/d}; /^---$/d' "$SKILL_FILE")
 log_pass "Loaded sherpa skill definition"
 
 # ─── Run sherpa session ───────────────────────────────────────────────────────
@@ -56,7 +57,7 @@ log_step "Run sherpa session (this may take several minutes)"
 
 if ! command -v claude &>/dev/null; then
   log_skip "claude CLI not found — skipping sherpa session"
-  print_summary "Sherpa P5 (Exploratory)"
+  print_summary "Sherpa P1 (New Feature)"
   exit 0
 fi
 
@@ -71,10 +72,17 @@ You are running in automated test mode. Instead of asking questions interactivel
 **Important test mode rules:**
 - Do NOT ask questions — use the scripted responses below
 - Do NOT ask \"Ready?\" or \"Ready to proceed?\" — just proceed through the flow
-- Generate ALL artifacts in the P5 sequence: WCR, Discovery Intake, PFD, VH, AR, EL
+- This is a P1 New Feature — route through full PIK discovery then transition to EEK
+- Generate all PIK artifacts: WCR, Discovery Intake, PFD, VH, AR, EL
+- The EL gets experiment results and a \"proceed\" decision — freeze the EL
+- Generate DPRD from the EL proceed decision — freeze the DPRD
+- Transition to EEK with a clear handoff explanation
+- Generate EEK Path A artifacts: KER (referencing frozen DPRD), PRD (placed from DPRD), ACF, SAD
+- The PRD should be PLACED from the DPRD, not generated from scratch
 - Validate each artifact after generation (separate step — re-read from file)
-- Freeze each artifact that passes validation (except EL which stays Draft)
-- Maintain the Engagement Record throughout
+- Freeze each artifact that passes validation
+- Offer cross-cutting kit adoption decisions and record them in the ER
+- Maintain the Engagement Record throughout — it should track artifacts across both PIK and EEK
 - Save the routing record as 00-routing-record.md
 - Use this project directory for all output: $PROJECT_DIR
 - The AIEOS framework is at: $AIEOS_ROOT
@@ -85,12 +93,13 @@ $SCENARIO
 
 ## Execution
 
-Begin now. Process all responses in sequence and generate the complete P5 artifact set. After completing all artifacts, write a session transcript summary to $RUN_DIR/session-transcript.md that includes:
+Begin now. Process all responses in sequence and generate the complete P1 artifact set through SAD freeze. After completing all artifacts, write a session transcript summary to $RUN_DIR/session-transcript.md that includes:
 1. Each artifact generated (filename, artifact ID, status)
 2. Each validation result (gate-by-gate)
-3. Any utility prompts offered (and whether accepted/declined)
-4. The final ER state
-5. Whether you asked \"Ready?\" at any point (you should NOT have)"
+3. The PIK→EEK transition point and explanation
+4. Cross-cutting kit adoption decisions
+5. The final ER state (should span both PIK and EEK artifacts)
+6. Whether you asked \"Ready?\" at any point (you should NOT have)"
 
 log_info "Invoking claude headless mode..."
 CLAUDE_OUTPUT=""
@@ -98,7 +107,7 @@ if CLAUDE_OUTPUT=$(claude -p "$PROMPT" \
   --allowedTools "Read,Write,Edit,Glob,Grep,Bash" \
   --permission-mode bypassPermissions \
   --output-format text \
-  --max-budget-usd 5 \
+  --max-budget-usd 8 \
   2>"$RUN_DIR/claude-stderr.log"); then
   log_pass "Claude session completed"
   echo "$CLAUDE_OUTPUT" > "$RUN_DIR/claude-output.log"
@@ -116,56 +125,30 @@ else
   log_fail "Routing record missing: 00-routing-record.md"
 fi
 
-log_step "Verify WCR"
-if [[ -f "$PROJECT_DIR/docs/sdlc/00-wcr.md" ]] || [[ -f "$PROJECT_DIR/docs/sdlc/01-wcr.md" ]]; then
-  WCR_FILE=$(ls "$PROJECT_DIR/docs/sdlc/"*wcr.md 2>/dev/null | head -1)
-  log_pass "WCR exists: $(basename "$WCR_FILE") ($(wc -l < "$WCR_FILE") lines)"
-else
-  log_fail "WCR not generated"
-fi
+# PIK artifacts
+for artifact in wcr intake pfd vh ar el dprd; do
+  log_step "Verify ${artifact^^} (PIK)"
+  if ls "$PROJECT_DIR/docs/sdlc/"*${artifact}*.md &>/dev/null; then
+    FILE=$(ls "$PROJECT_DIR/docs/sdlc/"*${artifact}*.md 2>/dev/null | head -1)
+    log_pass "${artifact^^} exists: $(basename "$FILE") ($(wc -l < "$FILE") lines)"
+  else
+    log_fail "${artifact^^} not generated"
+  fi
+done
 
-log_step "Verify Discovery Intake"
-if ls "$PROJECT_DIR/docs/sdlc/"*intake*.md &>/dev/null; then
-  INTAKE_FILE=$(ls "$PROJECT_DIR/docs/sdlc/"*intake*.md 2>/dev/null | head -1)
-  log_pass "Intake exists: $(basename "$INTAKE_FILE") ($(wc -l < "$INTAKE_FILE") lines)"
-else
-  log_fail "Discovery Intake not generated"
-fi
-
-log_step "Verify PFD"
-if ls "$PROJECT_DIR/docs/sdlc/"*pfd*.md &>/dev/null; then
-  PFD_FILE=$(ls "$PROJECT_DIR/docs/sdlc/"*pfd*.md 2>/dev/null | head -1)
-  log_pass "PFD exists: $(basename "$PFD_FILE") ($(wc -l < "$PFD_FILE") lines)"
-else
-  log_fail "PFD not generated"
-fi
-
-log_step "Verify VH"
-if ls "$PROJECT_DIR/docs/sdlc/"*vh*.md &>/dev/null; then
-  VH_FILE=$(ls "$PROJECT_DIR/docs/sdlc/"*vh*.md 2>/dev/null | head -1)
-  log_pass "VH exists: $(basename "$VH_FILE") ($(wc -l < "$VH_FILE") lines)"
-else
-  log_fail "VH not generated"
-fi
-
-log_step "Verify AR"
-if ls "$PROJECT_DIR/docs/sdlc/"*ar*.md &>/dev/null; then
-  AR_FILE=$(ls "$PROJECT_DIR/docs/sdlc/"*ar*.md 2>/dev/null | head -1)
-  log_pass "AR exists: $(basename "$AR_FILE") ($(wc -l < "$AR_FILE") lines)"
-else
-  log_fail "AR not generated"
-fi
-
-log_step "Verify EL"
-if ls "$PROJECT_DIR/docs/sdlc/"*el*.md &>/dev/null; then
-  EL_FILE=$(ls "$PROJECT_DIR/docs/sdlc/"*el*.md 2>/dev/null | head -1)
-  log_pass "EL exists: $(basename "$EL_FILE") ($(wc -l < "$EL_FILE") lines)"
-else
-  log_fail "EL not generated"
-fi
+# EEK artifacts
+for artifact in ker prd acf sad; do
+  log_step "Verify ${artifact^^} (EEK)"
+  if ls "$PROJECT_DIR/docs/sdlc/"*${artifact}*.md &>/dev/null; then
+    FILE=$(ls "$PROJECT_DIR/docs/sdlc/"*${artifact}*.md 2>/dev/null | head -1)
+    log_pass "${artifact^^} exists: $(basename "$FILE") ($(wc -l < "$FILE") lines)"
+  else
+    log_fail "${artifact^^} not generated"
+  fi
+done
 
 log_step "Verify Engagement Record"
-ER_FILE=$(find "$PROJECT_DIR/docs/engagement" -iname "er-aicr-001.md" 2>/dev/null | head -1)
+ER_FILE=$(find "$PROJECT_DIR/docs/engagement" -iname "er-*notify*.md" -o -iname "er-*pushnotify*.md" 2>/dev/null | head -1)
 if [[ -n "$ER_FILE" ]]; then
   log_pass "ER exists: $(basename "$ER_FILE") ($(wc -l < "$ER_FILE") lines)"
 else
@@ -183,32 +166,44 @@ fi
 
 log_step "Behavioral checks"
 
-# Check AR has Origin field
-if [[ -n "${AR_FILE:-}" ]] && [[ -f "${AR_FILE:-}" ]]; then
-  if grep -qi "origin" "$AR_FILE"; then
-    log_pass "AR contains Origin field"
-  else
-    log_fail "AR missing Origin field (AI transparency fix #3)"
-  fi
-fi
-
-# Check EL is Draft (not Frozen)
+# Check EL is Frozen (results received, proceed decision)
+EL_FILE=$(ls "$PROJECT_DIR/docs/sdlc/"*el*.md 2>/dev/null | head -1)
 if [[ -n "${EL_FILE:-}" ]] && [[ -f "${EL_FILE:-}" ]]; then
-  if grep -q "Draft" "$EL_FILE"; then
-    log_pass "EL status is Draft (correct — results pending)"
+  if grep -q "Frozen" "$EL_FILE"; then
+    log_pass "EL is Frozen (proceed decision made)"
   else
-    log_fail "EL should be Draft, not Frozen"
+    log_fail "EL should be Frozen after proceed decision"
   fi
 fi
 
-# Check frozen artifacts have Frozen status
-for artifact_var in WCR_FILE PFD_FILE VH_FILE AR_FILE; do
-  artifact_file="${!artifact_var:-}"
-  if [[ -n "$artifact_file" ]] && [[ -f "$artifact_file" ]]; then
-    if grep -q "Frozen" "$artifact_file"; then
-      log_pass "$(basename "$artifact_file") is Frozen"
+# Check DPRD is Frozen
+DPRD_FILE=$(ls "$PROJECT_DIR/docs/sdlc/"*dprd*.md 2>/dev/null | head -1)
+if [[ -n "${DPRD_FILE:-}" ]] && [[ -f "${DPRD_FILE:-}" ]]; then
+  if grep -q "Frozen" "$DPRD_FILE"; then
+    log_pass "DPRD is Frozen"
+  else
+    log_fail "DPRD should be Frozen"
+  fi
+fi
+
+# Check KER references DPRD (Path A)
+KER_FILE=$(ls "$PROJECT_DIR/docs/sdlc/"*ker*.md 2>/dev/null | head -1)
+if [[ -n "${KER_FILE:-}" ]] && [[ -f "${KER_FILE:-}" ]]; then
+  if grep -qi "DPRD\|Path A\|discovery" "$KER_FILE"; then
+    log_pass "KER references DPRD/Path A"
+  else
+    log_fail "KER should reference frozen DPRD (Path A entry)"
+  fi
+fi
+
+# Check frozen status on all expected-frozen artifacts
+for artifact in wcr pfd vh ar el dprd ker prd acf sad; do
+  FILE=$(ls "$PROJECT_DIR/docs/sdlc/"*${artifact}*.md 2>/dev/null | head -1)
+  if [[ -n "$FILE" ]] && [[ -f "$FILE" ]]; then
+    if grep -q "Frozen" "$FILE"; then
+      log_pass "$(basename "$FILE") is Frozen"
     else
-      log_fail "$(basename "$artifact_file") should be Frozen"
+      log_fail "$(basename "$FILE") should be Frozen"
     fi
   fi
 done
@@ -217,7 +212,7 @@ done
 
 log_step "Run post-analysis"
 if [[ -f "$INTEGRATION_DIR/validate-sherpa-run.py" ]]; then
-  if python3 "$INTEGRATION_DIR/validate-sherpa-run.py" p5 "$RUN_DIR" "$PROJECT_DIR"; then
+  if python3 "$INTEGRATION_DIR/validate-sherpa-run.py" "$PRESET" "$RUN_DIR" "$PROJECT_DIR"; then
     log_pass "Post-analysis passed"
   else
     log_fail "Post-analysis found issues"
@@ -228,4 +223,4 @@ fi
 
 # ─── Summary ──────────────────────────────────────────────────────────────────
 
-print_summary "Sherpa P5 (Exploratory)"
+print_summary "Sherpa P1 (New Feature)"

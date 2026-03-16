@@ -143,6 +143,84 @@ Use these personas to evaluate how the sherpa adapts to different user types.
 
 ---
 
+## Manual Test Script
+
+Step-by-step procedure for running a manual sherpa evaluation session.
+
+### Prerequisites
+
+- Claude Code installed with the `/sherpa` skill available
+- A working directory with the AIEOS framework accessible
+- This rubric open for reference
+- A blank scoring sheet (copy the template at the bottom of this document)
+
+### Procedure
+
+**1. Select a test configuration (before starting the session)**
+
+Choose one combination:
+
+| Variable | Options |
+|----------|---------|
+| Preset | P1 New Feature, P2 Enhancement, P3 Compliance, P4 Performance Fix, P5 Exploratory |
+| Persona | A: Technical Lead, B: Product Manager, C: Skeptic |
+| Scope | Full flow (through freeze of last artifact) or Partial (through first kit only) |
+
+Recommended starting matrix (covers the most ground with fewest sessions):
+
+| Session | Preset | Persona | Why |
+|---------|--------|---------|-----|
+| 1 | P5 | B (PM) | Tests plain language, pacing — PM persona reveals jargon issues |
+| 2 | P2 | A (Tech Lead) | Tests calibration — does sherpa avoid over-explaining to an expert? |
+| 3 | P1 | C (Skeptic) | Tests kit transition clarity and process justification under pushback |
+| 4 | P4 | B (PM) | Tests ODK flow with someone unfamiliar with incident process |
+
+**2. Start the session**
+
+Open Claude Code in a clean project directory (or an existing project if testing session resumption). Type `/sherpa` to invoke the skill.
+
+**3. Deliver your opening line**
+
+Use the sample opening from your chosen persona (see Personas section above), or adapt it to the preset. Stay in character throughout the session.
+
+**4. Observe and log at these specific moments**
+
+These are the moments where quality differences are most visible:
+
+| Moment | What to watch | Criteria affected |
+|--------|---------------|-------------------|
+| **Routing questions** | Does the sherpa ask 2-3 targeted questions or dump all 5? Does it skip questions already answered by your opening? | #1 Question relevance |
+| **Preset recommendation** | Does it explain in your persona's language? Does it say what gets skipped and why? | #2 Plain language |
+| **First artifact explanation** | Does it build on what you said during routing, or start fresh? | #3 Builds on prior |
+| **Intake sections** | Does it rush or give you space? Does it adapt section prompts to your answers? | #1, #4 Pauses |
+| **After first validation** | Does it announce freeze clearly? Does it give progress count? | #4 Pauses, #5 Progress |
+| **Utility prompt offer** (if applicable) | Does it explain what the tool does and why now? | #7 Utility prompts |
+| **Kit transition** (P1, P4 only) | Does it explain why you're moving and what changes? | #6 Transitions |
+| **Cross-cutting kit offer** | Does it explain each kit's value or just list them? | #2 Plain language |
+| **If you give a vague/incomplete answer** | Does it ask a follow-up or fill in the gap itself? | #1, #8 Error handling |
+| **If you push back** (Persona C) | Does it justify the step or cave? | #2, #8 |
+
+Log each observation using the template below as it happens — don't wait until the end.
+
+**5. Introduce at least one deliberate challenge**
+
+To test error handling (criterion #8), introduce one of these mid-session:
+
+- **Vague answer:** Give a one-word answer where a paragraph is needed ("Users." / "It's slow.")
+- **Contradictory answer:** Contradict something you said earlier ("Actually, we do have existing notifications")
+- **Skip request:** Ask to skip an artifact ("Can we skip the VH? We already know users want this.")
+- **Jargon test:** Ask "What's a VH?" or "Why do I need an ER?" to see if the sherpa explains without condescension
+
+**6. End the session and score**
+
+After completing the planned scope (full flow or partial), fill in the scoring sheet. Score each criterion 1-5 based on your observations. Write the summary and top finding while the experience is fresh.
+
+**7. File the results**
+
+Save the completed scoring sheet to `tests/integration/output/manual-{preset}-{persona}-{YYYYMMDD}.md`. If the session surfaced a sherpa prompt issue, log a finding in the test log.
+
+---
+
 ## Observation Log Template
 
 Use this template when conducting manual sherpa tests. One entry per observation.

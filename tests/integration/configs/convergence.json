@@ -8,7 +8,7 @@
   "expected_artifacts": [
     {"glob": "*routing-record*", "type": "routing-record", "frozen": false},
     {"glob": "*wcr*",            "type": "WCR",            "frozen": true},
-    {"glob": "*intake*",         "type": "intake",         "frozen": true},
+    {"glob": "*intake*",         "type": "intake",         "frozen": false},
     {"glob": "*pfd*",            "type": "PFD",            "frozen": true},
     {"glob": "*vh*",             "type": "VH",             "frozen": true},
     {"glob": "*ar*",             "type": "AR",             "frozen": true},

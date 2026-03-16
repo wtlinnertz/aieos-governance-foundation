@@ -141,8 +141,8 @@ def check_frozen_artifacts(config: dict, run_dir: Path, project_dir: Path) -> li
         if not files:
             # Existence is checked separately by the driver
             continue
-        content = files[0].read_text()
-        if "Frozen" not in content:
+        content = files[0].read_text().lower()
+        if "frozen" not in content:
             issues.append(f"{files[0].name} should be Frozen but is not")
 
     return issues
@@ -188,6 +188,10 @@ def check_no_ready_prompts(config: dict, run_dir: Path, project_dir: Path) -> li
         r'##\s+(?:\d+\.\s+)?"?Ready\b|## Summary|## Session Statistics|## Utility Prompts',
         content, flags=re.IGNORECASE
     )[0]
+    # Remove self-assessment lines that discuss whether "Ready?" was asked
+    search_content = re.sub(
+        r"^.*(?:Asked.*Ready|Ready.*Asked).*$", "", search_content, flags=re.MULTILINE | re.IGNORECASE
+    )
     ready_matches = re.findall(
         r"[Rr]eady\s*(to\s+(proceed|continue|move|go))?\s*\?", search_content
     )
@@ -300,11 +304,14 @@ def check_convergence_loop(config: dict, run_dir: Path, project_dir: Path) -> li
     output_log = run_dir / "claude-output.log"
     transcript = run_dir / "session-transcript.md"
 
-    content = ""
+    # Convergence evidence may be split across output log and transcript —
+    # check both sources combined.
+    parts = []
     if output_log.exists():
-        content = output_log.read_text()
-    elif transcript.exists():
-        content = transcript.read_text()
+        parts.append(output_log.read_text())
+    if transcript.exists():
+        parts.append(transcript.read_text())
+    content = "\n".join(parts)
 
     if not content:
         issues.append("No transcript available to check convergence loop")

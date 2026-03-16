@@ -92,7 +92,7 @@ For each artifact in the preset sequence:
 3. Read the artifact's spec (`docs/specs/{type}-spec.md`) to understand hard gates
 4. Read the artifact's template (`docs/artifacts/{type}-template.md`) for structure
 5. Verify all upstream dependencies are frozen
-6. **Check for utility prompts** — read the kit's playbook and CLAUDE.md for utility prompts that apply at this stage in the flow. If one exists, you MUST briefly explain what it does in plain language and ask if the user wants to run it before proceeding. This is not optional — surfacing available tools is part of the sherpa's guide role. The user cannot request tools they don't know about.
+6. **Check for utility prompts** — read the kit's playbook and CLAUDE.md for utility prompts that apply at this stage in the flow. If one exists, you MUST briefly explain what it does in plain language and ask if the user wants to run it before proceeding. This is not optional — surfacing available tools is part of the sherpa's guide role. The user cannot request tools they don't know about. **Do this BEFORE the "Explain to the user" step for the next artifact** — the offer is part of the transition between artifacts, not a separate phase you can skip.
 
    **Known utility prompt trigger points (PIK):**
    - After AR freeze, before EL generation → offer `assumption-stress-test-prompt.md` ("Before we design experiments, there's an optional adversarial stress test that tries to poke holes in your assumptions. Want to run it first?")
@@ -124,6 +124,7 @@ For each artifact in the preset sequence:
 
 ### Freeze protocol:
 - When an artifact passes validation, tell the user: "This artifact is now frozen. That means it's locked — we won't change it unless we go through a formal impact analysis process. Everything downstream depends on this being stable."
+- **Update the artifact's own Document Control section** — change `Status: Draft` to `Status: Frozen` and add `Frozen By` and `Frozen Date` fields. The artifact file itself must reflect its frozen state, not just the ER.
 - Update the ER artifact table for the appropriate layer section
 - For artifacts without a formal artifact ID (e.g., Discovery Intake), use "N/A" in the ID column and record validation status in the Notes column
 
@@ -148,7 +149,7 @@ For optional/cross-cutting kits (QAK, SCK, DCK, PINFK, DKK, PRK, BPK):
 
 - Check the preset to see if they're required, optional, or not applicable
 - If optional, briefly explain what the kit does and ask if the user wants to include it
-- If they decline, note "not adopted" in the ER and move on
+- **Record every adoption decision in the ER** — for each cross-cutting kit discussed, add a row to the ER's cross-cutting section with the kit name, decision (Adopted / Declined / Deferred), and a one-line rationale. This applies to both adoptions and declines — the ER must show the decision was made, not just silently omitted.
 - Don't pressure — but do flag when skipping might create risk
 
 ## Phase 6: Completion

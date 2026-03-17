@@ -38,7 +38,7 @@ This spec is the canonical definition of the ER format. It lives in `aieos-gover
 | Status | Active / Deprecated / Abandoned |
 | Discovery Start | {YYYY-MM-DD — date Discovery Intake was validated in PIK} |
 | Latest ES Date | {YYYY-MM-DD — date of most recent frozen ES, or N/A} |
-| ER Spec Version | 1.4 |
+| ER Spec Version | 1.5 |
 | Current Position | {Navigation map node ID, e.g., N-EEK-TDD — updated by position-check tool. Optional.} |
 | Preset | {P1–P5 or Custom — declared at initiative start} |
 
@@ -155,6 +155,7 @@ Format: `{artifact ID} / {gate name}: {brief description of failure} → {resolu
 |--------------|-----|--------|-------|
 | Release Entry Record | RER-XXX | Frozen | |
 | Release Context File | RCF-XXX | Frozen | |
+| Release Safety Assessment | RSA-XXX | Frozen | |
 | Release Plan | RP-XXX | Frozen | |
 | Release Record | RR-XXX | Frozen | |
 
@@ -280,8 +281,9 @@ If Layer 11 is not adopted for this initiative, write "DCK not adopted for this 
 | Platform Decision Record(s) | PDR-XXX | Frozen | List all PDRs |
 | Infrastructure Specification | ISPEC-XXX | Frozen | Note current version |
 | Environment Matrix | EM-XXX | Frozen | Note current version |
+| System Model Record | SMR-XXX | Frozen | Note current version |
 
-If the ISPEC or EM has been re-frozen, list all versions in the Notes column.
+If the ISPEC or EM has been re-frozen, list all versions in the Notes column. If the SMR has been re-frozen, list all versions in the Notes column.
 
 If Layer 12 is not adopted for this initiative, write "PINFK not adopted for this initiative."
 

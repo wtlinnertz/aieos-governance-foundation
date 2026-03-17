@@ -47,7 +47,10 @@
   "soft_checks": [
     "utility_prompts_mentioned",
     "kit_transition_explanations",
-    "cross_cutting_adoption"
+    "cross_cutting_adoption",
+    "intent_resolution",
+    "decision_explanation",
+    "health_dashboard"
   ],
 
   "budget_usd": 8,

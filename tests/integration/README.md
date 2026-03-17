@@ -137,6 +137,32 @@ When a test surfaces a framework gap or sherpa behavior issue:
 3. If the finding is accepted behavior (LLM non-determinism), add it as a soft check relaxation in the config
 4. Re-run the test after the fix to confirm resolution
 
+## Behavioral Check Reference
+
+The following checks are available in `validate-sherpa-run.py`:
+
+| Check | Type | What it verifies |
+|-------|------|-----------------|
+| `routing_record` | Hard | Routing record exists and references correct preset |
+| `frozen_artifacts` | Hard | Expected artifacts have Frozen status |
+| `provenance` | Hard | AI-generated artifacts have Governance Model Version and Spec Version |
+| `er_completeness` | Hard | ER has artifact IDs for all expected artifacts |
+| `no_ready_prompts` | Hard | Session transcript contains no "Ready?" prompts |
+| `ar_origin` | Hard | Every AR assumption has an Origin field (User-stated/AI-derived) |
+| `el_draft` | Hard | EL is Draft (results pending, not Frozen) |
+| `ker_justification` | Hard | KER contains Path B justification |
+| `convergence_loop` | Hard | Evidence of validation failure followed by correction retry |
+| `el_pause_outcome` | Hard | EL indicates pause/stop outcome for negative results |
+| `no_dprd` | Hard | No DPRD generated (expected for pause outcomes) |
+| `session_resumption` | Hard | Sherpa discovered existing ER and resumed from correct position |
+| `no_force_routing` | Hard | Sherpa asked clarifying question instead of force-routing |
+| `utility_prompts_mentioned` | Soft | Utility prompts actively offered at appropriate moments |
+| `kit_transition_explanations` | Soft | Kit transitions mentioned and explained in transcript |
+| `cross_cutting_adoption` | Soft | ER documents cross-cutting kit adoption decisions |
+| `intent_resolution` | Soft | Sherpa translated user intent to framework vocabulary before routing |
+| `decision_explanation` | Soft | Sherpa cited decision table ID, criteria, and evidence at junctions |
+| `health_dashboard` | Soft | Sherpa surfaced health signals after 3+ artifact freezes |
+
 ## What Requires Manual Testing
 
 The automated framework cannot verify:
@@ -145,5 +171,7 @@ The automated framework cannot verify:
 - Quality of plain-language translations of governance concepts
 - Appropriateness of pause points and pacing
 - Whether the sherpa "feels" like a helpful guide vs a checklist runner
+- Quality of Decision Outcome Taxonomy usage at junctions
+- Whether health signals are delivered at natural moments vs feeling forced
 
-Use `docs/sherpa-conversation-rubric.md` for structured manual evaluation of these qualities.
+Use `docs/sherpa-conversation-rubric.md` for structured manual evaluation of these qualities (11 criteria on a 1-5 scale, including 3 new criteria for intent translation, decision junction reasoning, and proactive health monitoring).

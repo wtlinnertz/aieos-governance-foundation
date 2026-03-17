@@ -1,6 +1,6 @@
 # Position Check Tool Spec
 
-Version: v1.0
+Version: v1.1
 
 Tool ID: TOOL-POSITION-CHECK
 
@@ -69,6 +69,19 @@ The tool checks for anomalies defined in navigation-map.md Section 4:
 | Skipped node in sequence | Warning |
 | Cross-cutting kit not activated when expected | Advisory |
 | Stale position (no activity beyond expected cadence) | Advisory |
+
+## Health Signals
+
+When invoked after 3+ artifacts have been frozen, the position check additionally surfaces these health signals:
+
+| Signal | Detection | Severity |
+|--------|-----------|----------|
+| **Staleness** | A cross-cutting kit's trigger condition was met 3+ artifacts ago but the kit has not been activated | Advisory |
+| **Cross-cutting gap** | The initiative's preset expects a cross-cutting kit at this stage but it is not activated and no decline decision is recorded in the ER | Advisory |
+| **Decision velocity** | More than 2 junction decisions pending without resolution | Advisory |
+| **Upcoming junctions** | Decision points expected within the next 2-3 artifacts in the preset sequence | Informational |
+
+Health signals are advisory — they do not affect the PASS/FAIL disposition of the position check. They are surfaced to help the operator maintain initiative momentum and prevent cross-cutting kits from being silently forgotten.
 
 ## Hard Gates
 

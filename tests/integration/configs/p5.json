@@ -36,7 +36,10 @@
   ],
 
   "soft_checks": [
-    "utility_prompts_mentioned"
+    "utility_prompts_mentioned",
+    "intent_resolution",
+    "decision_explanation",
+    "health_dashboard"
   ],
 
   "budget_usd": 5,

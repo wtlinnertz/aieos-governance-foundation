@@ -93,6 +93,7 @@ Every node represents a state the initiative can be in. Node types:
 | N-REK-RER | REK | gate | Release Entry Record |
 | N-REK-RCF-DECISION | REK | junction | RCF Reuse Decision |
 | N-REK-RCF | REK | artifact | Release Context File |
+| N-REK-RSA | REK | artifact | Release Safety Assessment |
 | N-REK-RP | REK | artifact | Release Plan |
 | N-REK-AUTH | REK | gate | Pre-Release Authorization Checklist |
 | N-REK-EXECUTION | REK | artifact | Release Execution |
@@ -158,6 +159,7 @@ Every node represents a state the initiative can be in. Node types:
 | N-PINFK-PDR | PINFK | artifact | Platform Decision Record(s) |
 | N-PINFK-ISPEC | PINFK | artifact | Infrastructure Specification |
 | N-PINFK-EM | PINFK | artifact | Environment Matrix |
+| N-PINFK-SMR | PINFK | artifact | System Model Record |
 
 ### DKK (Layer 13) Nodes — Cross-Cutting
 
@@ -291,7 +293,8 @@ Every valid transition in the framework. Conditions describe what must be true f
 |---------|------|----|-----------|--------|
 | E-070 | N-REK-RER | N-REK-RCF-DECISION | RER frozen | All |
 | E-071 | N-REK-RCF-DECISION | N-REK-RCF | New RCF needed (or existing reused and confirmed) | All |
-| E-072 | N-REK-RCF | N-REK-RP | RCF frozen | All |
+| E-072 | N-REK-RCF | N-REK-RSA | RCF frozen | All |
+| E-072a | N-REK-RSA | N-REK-RP | RSA frozen | All |
 | E-073 | N-REK-RP | N-REK-AUTH | RP frozen | All |
 | E-074 | N-REK-AUTH | N-REK-EXECUTION | All 10 checklist items confirmed | All |
 | E-075 | N-REK-EXECUTION | N-REK-DISPOSITION | Execution complete (or rollback/abort) | All |
@@ -350,6 +353,7 @@ Every valid transition in the framework. Conditions describe what must be true f
 | E-119 | N-ODK-PMR | N-DKK-SKA | PMR frozen (incident learnings) | P4 |
 | E-120 | N-PINFK-PDR | N-PINFK-ISPEC | All relevant PDRs frozen | Any |
 | E-121 | N-PINFK-ISPEC | N-PINFK-EM | ISPEC frozen | Any |
+| E-121a | N-PINFK-ISPEC | N-PINFK-SMR | ISPEC frozen | Any |
 | E-122 | N-SCK-TM | N-QAK-VP | Compliance: TM/SAR feed VP (optional input) | P3 |
 | E-123 | N-SCK-SAR | N-QAK-VP | Compliance: SAR feeds VP (optional input) | P3 |
 
@@ -485,11 +489,11 @@ For each junction node, the structured routing criteria. At every junction, if *
 
 ### J-QAK-DISPOSITION: QGR Disposition (N-QAK-DISPOSITION)
 
-| # | Disposition | Condition | Route To |
-|---|------------|-----------|----------|
-| 1 | PASS | All quality gates met | N-QAK-EXIT → N-REK-RER |
-| 2 | CONDITIONAL | Quality gates met with documented risks | N-QAK-EXIT → N-REK-RER (with conditions) |
-| 3 | FAIL | Blocking quality issues | N-EEK-ORD (return to EEK) |
+| # | Disposition | Condition | Route To | Outcome |
+|---|------------|-----------|----------|---------|
+| 1 | PASS | All quality gates met | N-QAK-EXIT → N-REK-RER | Approve |
+| 2 | CONDITIONAL | Quality gates met with documented risks | N-QAK-EXIT → N-REK-RER (with conditions) | Approve-with-Conditions |
+| 3 | FAIL | Blocking quality issues | N-EEK-ORD (return to EEK) | Block or Remediate-and-Retry |
 
 ### J-REK-RCF: RCF Reuse Decision (N-REK-RCF-DECISION)
 
@@ -500,12 +504,12 @@ For each junction node, the structured routing criteria. At every junction, if *
 
 ### J-REK-DISPOSITION: Release Disposition (N-REK-DISPOSITION)
 
-| # | Outcome | Route To | Escalation |
-|---|---------|----------|------------|
-| 1 | Released (successful) | N-REK-RR | None |
-| 2 | Rolled back — code defect | N-REK-RR | Trigger 3 → EEK |
-| 3 | Rolled back — wrong feature | N-REK-RR | Trigger 4 → PIK |
-| 4 | Abandoned | N-REK-RR | None (document reason) |
+| # | Release Result | Route To | Escalation | Decision Outcome |
+|---|---------------|----------|------------|-----------------|
+| 1 | Released (successful) | N-REK-RR | None | Approve |
+| 2 | Rolled back — code defect | N-REK-RR | Trigger 3 → EEK | Rollback → Require-Redesign |
+| 3 | Rolled back — wrong feature | N-REK-RR | Trigger 4 → PIK | Rollback → Require-Redesign |
+| 4 | Abandoned | N-REK-RR | None (document reason) | Block |
 
 ### J-RRK-SRP-REVISION: SRP Revision (N-RRK-SRP-REVISION)
 
@@ -516,12 +520,12 @@ For each junction node, the structured routing criteria. At every junction, if *
 
 ### J-RRK-ESCALATION: Escalation Assessment (N-RRK-ESCALATION)
 
-| # | Trigger | Condition | Route To |
-|---|---------|-----------|----------|
-| 1 | Trigger 1 | SEV1/2 incident with code defect root cause | N-EEK-KER (Path B) |
-| 2 | Trigger 2 | Same root cause class in 3+ consecutive RHRs | N-PIK-WCR |
-| 3 | Trigger 5 | SEV1/2 incident declared | N-ODK-DCR (parallel) |
-| 4 | None | No escalation criteria met | N-RRK-ACTIVE (continue) |
+| # | Trigger | Condition | Route To | Decision Outcome |
+|---|---------|-----------|----------|-----------------|
+| 1 | Trigger 1 | SEV1/2 incident with code defect root cause | N-EEK-KER (Path B) | Require-Redesign |
+| 2 | Trigger 2 | Same root cause class in 3+ consecutive RHRs | N-PIK-WCR | Require-Redesign |
+| 3 | Trigger 5 | SEV1/2 incident declared | N-ODK-DCR (parallel) | Rollback |
+| 4 | None | No escalation criteria met | N-RRK-ACTIVE (continue) | Approve |
 
 ### J-IEK-SIGNAL: Re-Entry Signal (N-IEK-SIGNAL)
 

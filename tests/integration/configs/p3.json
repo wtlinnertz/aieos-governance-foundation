@@ -34,7 +34,10 @@
   ],
 
   "soft_checks": [
-    "cross_cutting_adoption"
+    "cross_cutting_adoption",
+    "intent_resolution",
+    "decision_explanation",
+    "health_dashboard"
   ],
 
   "budget_usd": 8,

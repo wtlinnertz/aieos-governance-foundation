@@ -265,6 +265,63 @@ class TestSpecVersionDrift:
         )
 
 
+class TestNavigationMapConsistency:
+    """Navigation map nodes should exist for new artifacts in framework.py."""
+
+    def test_smr_node_in_navigation_map(self, aieos_root: Path):
+        nav_map = aieos_root / "aieos-governance-foundation" / "docs" / "navigation-map.md"
+        content = nav_map.read_text(encoding="utf-8")
+        assert "N-PINFK-SMR" in content, "SMR node missing from navigation map"
+
+    def test_rsa_node_in_navigation_map(self, aieos_root: Path):
+        nav_map = aieos_root / "aieos-governance-foundation" / "docs" / "navigation-map.md"
+        content = nav_map.read_text(encoding="utf-8")
+        assert "N-REK-RSA" in content, "RSA node missing from navigation map"
+
+    def test_rsa_edge_in_navigation_map(self, aieos_root: Path):
+        """Navigation map should show RSA between RCF and RP."""
+        nav_map = aieos_root / "aieos-governance-foundation" / "docs" / "navigation-map.md"
+        content = nav_map.read_text(encoding="utf-8")
+        assert "N-REK-RCF" in content and "N-REK-RSA" in content, (
+            "RCF→RSA edge nodes missing from navigation map"
+        )
+
+    def test_smr_edge_in_navigation_map(self, aieos_root: Path):
+        """Navigation map should show ISPEC→SMR edge."""
+        nav_map = aieos_root / "aieos-governance-foundation" / "docs" / "navigation-map.md"
+        content = nav_map.read_text(encoding="utf-8")
+        assert "E-121a" in content, "ISPEC→SMR edge (E-121a) missing from navigation map"
+
+
+class TestPRKLensCount:
+    """PRK should have exactly 12 review lens tools."""
+
+    def test_prk_has_twelve_lenses(self, parsed_kits):
+        prk = parsed_kits.get("aieos-peer-review-kit")
+        assert prk is not None, "PRK not found in parsed kits"
+        lens_specs = [t for t in prk.tool_specs if t.tool_name.startswith("review-")]
+        assert len(lens_specs) == 12, (
+            f"Expected 12 review lens specs in PRK, found {len(lens_specs)}: "
+            f"{[t.tool_name for t in lens_specs]}"
+        )
+
+    def test_observability_lens_exists(self, parsed_kits):
+        prk = parsed_kits.get("aieos-peer-review-kit")
+        assert prk is not None
+        lens_names = [t.tool_name for t in prk.tool_specs]
+        assert "review-observability" in lens_names, (
+            "review-observability lens not found in PRK tools"
+        )
+
+    def test_resilience_lens_exists(self, parsed_kits):
+        prk = parsed_kits.get("aieos-peer-review-kit")
+        assert prk is not None
+        lens_names = [t.tool_name for t in prk.tool_specs]
+        assert "review-resilience" in lens_names, (
+            "review-resilience lens not found in PRK tools"
+        )
+
+
 class TestToolFourFileCompleteness:
     """Every tool spec in docs/tools/ must have a matching template, prompt, and validator."""
 

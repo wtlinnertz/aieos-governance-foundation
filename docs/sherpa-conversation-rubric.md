@@ -30,7 +30,19 @@ Does the sherpa ask questions that are relevant to the current flow step, or doe
 | 4 | Questions are well-targeted and adapt to prior responses |
 | 5 | Questions demonstrate deep understanding of the user's context; asks exactly the right thing at the right time |
 
-### 2. Plain Language
+### 2. Intent-to-Framework Translation
+
+Does the sherpa visibly map the user's natural language to AIEOS concepts before consulting decision tables? This goes beyond plain language — it evaluates whether the sherpa shows its translation work.
+
+| Score | Description |
+|-------|-------------|
+| 1 | Jumps directly to framework routing with no translation; user's words are ignored |
+| 2 | Routes correctly but doesn't show the connection between user's words and the framework concept |
+| 3 | Mentions both the user's language and the framework concept but doesn't explicitly connect them |
+| 4 | Explicitly maps user's description to framework vocabulary ("this sounds like X, which maps to Y") |
+| 5 | Translation feels effortless and educational — user learns the framework vocabulary naturally through the mapping |
+
+### 3. Plain Language
 
 Does the sherpa translate governance concepts into accessible language, or does it use jargon and acronyms without explanation?
 
@@ -42,7 +54,7 @@ Does the sherpa translate governance concepts into accessible language, or does 
 | 4 | Consistently clear; governance concepts contextualized naturally |
 | 5 | Governance is invisible — the user experiences a natural problem-solving conversation, not a framework exercise |
 
-### 3. Builds on Prior Context
+### 4. Builds on Prior Context
 
 Does each response demonstrate awareness of what the user has already said, or does the sherpa repeat questions or ignore earlier context?
 
@@ -54,7 +66,7 @@ Does each response demonstrate awareness of what the user has already said, or d
 | 4 | Weaves prior context into new questions and explanations naturally |
 | 5 | Maintains a running mental model of the user's situation; each interaction clearly builds on everything before |
 
-### 4. Appropriate Pauses
+### 5. Appropriate Pauses
 
 Does the sherpa pause at natural decision points (freeze gates, kit transitions, cross-cutting adoption), or does it barrel through without giving the user time to think?
 
@@ -66,7 +78,7 @@ Does the sherpa pause at natural decision points (freeze gates, kit transitions,
 | 4 | Pauses at all natural decision points; user always has agency |
 | 5 | Pause points feel natural and well-timed; includes brief "here's what just happened and what's next" context |
 
-### 5. Running Count / Progress Awareness
+### 6. Running Count / Progress Awareness
 
 Does the sherpa maintain and communicate a sense of progress — artifact count, flow position, what's next?
 
@@ -78,7 +90,7 @@ Does the sherpa maintain and communicate a sense of progress — artifact count,
 | 4 | Consistent progress updates with count and position context |
 | 5 | Natural progress narration — "We've completed 3 of 6 PIK artifacts; the next step is..." — that feels helpful, not mechanical |
 
-### 6. Kit Transition Clarity
+### 7. Kit Transition Clarity
 
 When moving between kits (PIK→EEK, ODK→EEK, etc.), does the sherpa explain why the transition is happening and what changes?
 
@@ -90,7 +102,7 @@ When moving between kits (PIK→EEK, ODK→EEK, etc.), does the sherpa explain w
 | 4 | Explains what triggered the transition, what the new kit does, and what to expect |
 | 5 | Transition feels like a natural milestone; the user understands the progression without feeling lectured |
 
-### 7. Utility Prompt Surfacing
+### 8. Utility Prompt Surfacing
 
 Does the sherpa offer optional utility prompts (assumption stress test, brownfield analysis, stakeholder map) at appropriate moments?
 
@@ -102,7 +114,31 @@ Does the sherpa offer optional utility prompts (assumption stress test, brownfie
 | 4 | Offers utility prompts with clear "why now" reasoning; respects user's decision |
 | 5 | Utility prompt offers feel like helpful suggestions from an experienced colleague, not checkbox items |
 
-### 8. Error Handling and Recovery
+### 9. Decision Junction Reasoning
+
+At decision junctions (preset selection, path choice, kit adoption, disposition), does the sherpa provide structured reasoning that cites the decision table?
+
+| Score | Description |
+|-------|-------------|
+| 1 | Makes routing/adoption decisions without any reasoning |
+| 2 | States the recommendation with thin reasoning ("this is the right choice") |
+| 3 | Provides reasoning with evidence but doesn't cite decision tables or the Decision Outcome Taxonomy |
+| 4 | Cites the decision table (e.g., "J-EEK-PATH"), evaluates criteria against evidence, and names the outcome (Approve, Block, etc.) |
+| 5 | Junction reasoning feels like expert coaching — "Here's the decision, here's why based on your specifics, and here's what the framework says" |
+
+### 10. Proactive Health Monitoring
+
+After 3+ artifact freezes, does the sherpa proactively surface health signals (staleness, cross-cutting gaps, decision velocity, upcoming junctions)?
+
+| Score | Description |
+|-------|-------------|
+| 1 | Never surfaces health signals; cross-cutting kits are forgotten |
+| 2 | Mentions cross-cutting kits only when asked or at kit transitions |
+| 3 | Offers cross-cutting kit adoption at the correct point but no proactive health check |
+| 4 | Runs a health check after 3+ freezes; surfaces overdue kits and upcoming decisions |
+| 5 | Health signals feel like a natural part of the guide experience — "Quick checkpoint: here's where we are and what might need attention" |
+
+### 11. Error Handling and Recovery
 
 When something goes wrong (validation failure, missing input, ambiguous response), does the sherpa handle it gracefully?
 
@@ -190,15 +226,17 @@ These are the moments where quality differences are most visible:
 | Moment | What to watch | Criteria affected |
 |--------|---------------|-------------------|
 | **Routing questions** | Does the sherpa ask 2-3 targeted questions or dump all 5? Does it skip questions already answered by your opening? | #1 Question relevance |
-| **Preset recommendation** | Does it explain in your persona's language? Does it say what gets skipped and why? | #2 Plain language |
-| **First artifact explanation** | Does it build on what you said during routing, or start fresh? | #3 Builds on prior |
-| **Intake sections** | Does it rush or give you space? Does it adapt section prompts to your answers? | #1, #4 Pauses |
-| **After first validation** | Does it announce freeze clearly? Does it give progress count? | #4 Pauses, #5 Progress |
-| **Utility prompt offer** (if applicable) | Does it explain what the tool does and why now? | #7 Utility prompts |
-| **Kit transition** (P1, P4 only) | Does it explain why you're moving and what changes? | #6 Transitions |
-| **Cross-cutting kit offer** | Does it explain each kit's value or just list them? | #2 Plain language |
-| **If you give a vague/incomplete answer** | Does it ask a follow-up or fill in the gap itself? | #1, #8 Error handling |
-| **If you push back** (Persona C) | Does it justify the step or cave? | #2, #8 |
+| **Intent translation** | Does the sherpa visibly map your words to framework concepts before consulting decision tables? ("This sounds like X, which maps to Y") | #2 Intent translation |
+| **Preset recommendation** | Does it explain in your persona's language? Does it say what gets skipped and why? Does it cite the decision table? | #3 Plain language, #9 Junction reasoning |
+| **First artifact explanation** | Does it build on what you said during routing, or start fresh? | #4 Builds on prior |
+| **Intake sections** | Does it rush or give you space? Does it adapt section prompts to your answers? | #1, #5 Pauses |
+| **After first validation** | Does it announce freeze clearly? Does it give progress count? | #5 Pauses, #6 Progress |
+| **Utility prompt offer** (if applicable) | Does it explain what the tool does and why now? | #8 Utility prompts |
+| **Kit transition** (P1, P4 only) | Does it explain why you're moving and what changes? | #7 Transitions |
+| **Cross-cutting kit offer** | Does it explain each kit's value or just list them? Does it cite the decision criteria? | #3 Plain language, #9 Junction reasoning |
+| **After 3+ artifact freezes** | Does it proactively surface health signals? Overdue kits? Upcoming decisions? | #10 Health monitoring |
+| **If you give a vague/incomplete answer** | Does it ask a follow-up or fill in the gap itself? | #1, #11 Error handling |
+| **If you push back** (Persona C) | Does it justify the step or cave? | #3, #11 |
 
 Log each observation using the template below as it happens — don't wait until the end.
 
@@ -230,7 +268,7 @@ Use this template when conducting manual sherpa tests. One entry per observation
 
 - **Timestamp:** {HH:MM}
 - **Flow position:** {Kit} / {Artifact} / {Step}
-- **Category:** {question-relevance | plain-language | context-building | pause-point | progress | transition | utility-prompt | error-handling | other}
+- **Category:** {question-relevance | intent-translation | plain-language | context-building | pause-point | progress | transition | utility-prompt | junction-reasoning | health-monitoring | error-handling | other}
 - **Observation:** {What happened}
 - **Expected:** {What should have happened}
 - **Score impact:** {Which criterion, +/- direction}
@@ -255,15 +293,18 @@ Use this template when conducting manual sherpa tests. One entry per observation
 | # | Criterion | Score (1-5) | Notes |
 |---|-----------|-------------|-------|
 | 1 | Question relevance | | |
-| 2 | Plain language | | |
-| 3 | Builds on prior context | | |
-| 4 | Appropriate pauses | | |
-| 5 | Running count / progress | | |
-| 6 | Kit transition clarity | | |
-| 7 | Utility prompt surfacing | | |
-| 8 | Error handling | | |
+| 2 | Intent-to-framework translation | | |
+| 3 | Plain language | | |
+| 4 | Builds on prior context | | |
+| 5 | Appropriate pauses | | |
+| 6 | Running count / progress | | |
+| 7 | Kit transition clarity | | |
+| 8 | Utility prompt surfacing | | |
+| 9 | Decision junction reasoning | | |
+| 10 | Proactive health monitoring | | |
+| 11 | Error handling | | |
 
-**Total:** ___ / 40
+**Total:** ___ / 55
 **Average:** ___ / 5.0
 
 ## Summary observations

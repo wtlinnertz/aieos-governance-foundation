@@ -35,7 +35,10 @@
     "no_dprd"
   ],
 
-  "soft_checks": [],
+  "soft_checks": [
+    "intent_resolution",
+    "decision_explanation"
+  ],
 
   "budget_usd": 5,
 

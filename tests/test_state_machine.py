@@ -53,22 +53,38 @@ class TestStateTransitions:
 
 
 class TestCrossCuttingIndependence:
-    """Cross-cutting kits (SCK, DCK, DKK, PINFK, PRK) must not depend on each other."""
+    """Cross-cutting kits must not depend on each other."""
 
-    CROSS_CUTTING_KITS = {"SCK", "DCK", "DKK", "PINFK", "PRK"}
+    CROSS_CUTTING_KITS = {
+        name for name, info in KIT_REGISTRY.items()
+        if info.category == "cross-cutting"
+    }
 
-    def test_no_cross_cutting_to_cross_cutting_dependencies(self):
+    def test_cross_cutting_set_matches_registry(self):
+        """The cross-cutting set should include all kits with category 'cross-cutting'."""
+        expected = {"QAK", "SCK", "DCK", "PINFK", "DKK", "PRK", "BPK"}
+        assert self.CROSS_CUTTING_KITS == expected, (
+            f"Cross-cutting kit mismatch. Got: {self.CROSS_CUTTING_KITS}, "
+            f"expected: {expected}"
+        )
+
+    def test_no_cross_cutting_to_cross_cutting_freeze_dependencies(self):
+        """Cross-cutting kits must not have freeze dependencies on each other.
+
+        Trigger edges between cross-cutting kits are allowed (e.g., PRK reviews
+        QAK artifacts). Only freeze-type edges would create blocking dependencies.
+        """
         violations = []
         for upstream, downstream, gate_type in DEPENDENCY_EDGES:
-            if gate_type == "escalation":
-                continue
+            if gate_type != "freeze":
+                continue  # Only freeze edges create blocking dependencies
             up_kit = upstream.split(":")[0]
             down_kit = downstream.split(":")[0]
             if up_kit in self.CROSS_CUTTING_KITS and down_kit in self.CROSS_CUTTING_KITS:
                 if up_kit != down_kit:  # Internal dependencies within a kit are fine
                     violations.append(f"{upstream} → {downstream}")
         assert violations == [], (
-            f"Cross-cutting kits must not depend on each other:\n" +
+            f"Cross-cutting kits must not have freeze dependencies on each other:\n" +
             "\n".join(f"  - {v}" for v in violations)
         )
 

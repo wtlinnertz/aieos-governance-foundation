@@ -25,6 +25,23 @@ The AIEOS framework is in the current working directory. Before doing anything e
 
 ## Phase 1: Discovery (Ask Before Acting)
 
+### Intent Resolution
+
+Before routing, translate the user's natural language into framework vocabulary. Users will describe their work in plain language — your job is to map their intent to AIEOS concepts before consulting the decision tables.
+
+**Translation examples:**
+
+| User Says | Framework Concept | Entry Point |
+|-----------|------------------|-------------|
+| "I want to add dark mode to the app" | Enhancement to existing capability | EEK Path B (P2) |
+| "We need to comply with GDPR by Q3" | Compliance mandate | PIK (P3) |
+| "The checkout page is timing out in production" | Production incident / performance issue | ODK (P4) or RRK |
+| "I have an idea for a recommendation engine" | New feature, unvalidated | PIK (P1) |
+| "Should we use Kafka or RabbitMQ?" | Technology decision | PINFK (PDR) |
+| "Our login service keeps crashing every Friday" | Recurring reliability pattern | RRK escalation (T2) → PIK |
+
+If the user's intent doesn't cleanly map to a single framework concept, ask one clarifying question to disambiguate — do not guess. The routing record (§00) documents the translation for audit traceability.
+
 Start by understanding what the user wants to build or accomplish. Use a conversational approach — ask questions one at a time, don't dump them all at once. But your routing logic MUST be driven by the formal decision tables in the navigation map.
 
 ### Step 1: Gather context conversationally
@@ -49,6 +66,20 @@ After gathering the user's answers, read the decision tables in `navigation-map.
 - **J-ENTRY-2** — Evaluate each context factor to identify the correct preset (P1–P5 or Custom)
 
 Do NOT invent your own routing criteria. The decision tables are authoritative. If the user's answers don't clearly match any row, ask clarifying questions until they do — or present the matching options and let the user choose.
+
+### Decision Explanation Protocol
+
+At every junction (not just the initial routing), provide plain-language reasoning for your recommendation:
+
+1. **Name the junction** — cite the decision table ID (e.g., "J-EEK-PATH")
+2. **State the criteria evaluated** — what the decision table asks
+3. **Cite the evidence** — what in the user's context or artifacts satisfies the criteria
+4. **Name the outcome** — which Decision Outcome Taxonomy label applies (Approve, Approve-with-Conditions, Block, Remediate-and-Retry, Require-Redesign, Rollback — see `flow-reference.md` §11)
+5. **State the recommendation** in plain language
+
+Example: "We're at the Path A vs Path B decision (J-EEK-PATH). The decision table asks whether we have a frozen DPRD from PIK. We do — DPRD-NOTIFY-001 is frozen with all 8 gates passing. So I recommend Path A. This is an **Approve** — we meet the criteria to proceed."
+
+This protocol ensures the user understands *why* the framework routes them a certain way, not just *where* it sends them.
 
 ### Step 3: Present your recommendation and save the routing record
 
@@ -142,6 +173,19 @@ When you finish the last artifact in a kit:
 2. Read the entry-from file in the next kit (e.g., `aieos-engineering-execution-kit/docs/entry-from-pik.md`)
 3. Explain to the user: "We've completed [Kit Name]. All artifacts are frozen. Now we're moving to [Next Kit], which handles [plain language description]."
 4. Verify all exit conditions from the current kit are met before proceeding
+
+### Health Dashboard Check
+
+After 3 or more artifacts have been frozen in the initiative, run `position-check` proactively and surface these health signals to the user:
+
+1. **Staleness** — Has any kit been waiting longer than expected? (e.g., SCK TM not started after SAD was frozen 3+ artifacts ago)
+2. **Cross-cutting gaps** — Are cross-cutting kits that should be active still not started? Flag per the preset's expected activation points.
+3. **Decision velocity** — How many artifacts have been frozen vs. how many decision junctions have been encountered? A high junction-to-freeze ratio may indicate the initiative is stuck in routing.
+4. **Upcoming junctions** — What decision points are coming in the next 2-3 artifacts? Flag these so the user can prepare context.
+
+Present health signals in a brief summary: "Quick health check: we've frozen 5 artifacts. SCK Threat Model is overdue (should have started after SAD freeze). Next decision point is QAK adoption after ORD freeze."
+
+This check is advisory — it does not block progress. But it prevents cross-cutting kits from being silently forgotten.
 
 ## Phase 5: Cross-Cutting Kits
 

@@ -91,7 +91,8 @@ DEPENDENCY_EDGES: list[tuple[str, str, str]] = [
 
     # REK
     ("REK:RER",    "REK:RCF",    "freeze"),
-    ("REK:RCF",    "REK:RP",     "freeze"),
+    ("REK:RCF",    "REK:RSA",    "freeze"),
+    ("REK:RSA",    "REK:RP",     "freeze"),
     ("REK:RP",     "REK:RR",     "freeze"),
 
     # RRK (SRP depends on SRER; RHR depends on SRP being active)
@@ -105,6 +106,7 @@ DEPENDENCY_EDGES: list[tuple[str, str, str]] = [
     # PINFK (sequential: PDR → ISPEC → EM)
     ("PINFK:PDR",  "PINFK:ISPEC","freeze"),
     ("PINFK:ISPEC","PINFK:EM",   "freeze"),
+    ("PINFK:ISPEC","PINFK:SMR",  "freeze"),
 
     # SCK internal
     ("SCK:TM",     "SCK:SAR",    "freeze"),
@@ -220,9 +222,9 @@ PRESET_DEFINITIONS: list[PresetDefinition] = [
             "QAK:QAER", "QAK:VP", "QAK:TCR", "QAK:QGR",
             "SCK:TM", "SCK:SAR", "SCK:DAR",
             "DCK:CSPEC", "DCK:DSR",
-            "PINFK:PDR", "PINFK:ISPEC", "PINFK:EM",
+            "PINFK:PDR", "PINFK:ISPEC", "PINFK:SMR", "PINFK:EM",
             "DKK:UDR", "DKK:ARR",
-            "REK:RER", "REK:RCF", "REK:RP", "REK:RR",
+            "REK:RER", "REK:RCF", "REK:RSA", "REK:RP", "REK:RR",
             "RRK:SRER", "RRK:SRP", "RRK:RHR",
             "IEK:ES",
         ],
@@ -247,7 +249,7 @@ PRESET_DEFINITIONS: list[PresetDefinition] = [
             "EEK:PRD", "EEK:ACF", "EEK:SAD", "EEK:DCF", "EEK:TDD", "EEK:WDD", "EEK:ORD",
             "SCK:TM", "SCK:SAR", "SCK:CER", "SCK:DAR",
             "QAK:QAER", "QAK:VP", "QAK:TCR", "QAK:QGR",
-            "REK:RER", "REK:RCF", "REK:RP", "REK:RR",
+            "REK:RER", "REK:RCF", "REK:RSA", "REK:RP", "REK:RR",
             "RRK:SRER", "RRK:SRP", "RRK:RHR",
         ],
         optional_kits=["SDK", "IEK", "ODK", "SSK", "PRK", "BPK"],

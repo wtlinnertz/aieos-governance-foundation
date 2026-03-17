@@ -32,7 +32,10 @@
   ],
 
   "soft_checks": [
-    "kit_transition_explanations"
+    "kit_transition_explanations",
+    "intent_resolution",
+    "decision_explanation",
+    "health_dashboard"
   ],
 
   "budget_usd": 5,

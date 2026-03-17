@@ -71,6 +71,8 @@ The corrected artifact is validated in a **separate session** using the same val
 
 The loop converges when all hard gates return PASS. The corrected artifact proceeds to freeze pending (human review).
 
+This pattern corresponds to the **Remediate-and-Retry** outcome in the Decision Outcome Taxonomy (see `flow-reference.md` §11). The decision to enter a convergence loop — rather than blocking or escalating — is made by the operator or orchestrating agent when validator findings are judged to be correctable within the current artifact scope.
+
 ### Stopping Rules
 
 The loop stops — without convergence — under any of these conditions:
@@ -125,6 +127,8 @@ A frozen PRR has `FAIL` disposition. PRR §6 Required Remediations lists the blo
 ### Convergence
 
 The loop converges when the new PRR returns PASS disposition. The corrected artifact and its PRR proceed to freeze pending.
+
+Pattern B also maps to **Remediate-and-Retry** in the Decision Outcome Taxonomy. When PRR findings are correctable without redesign, the artifact enters this bounded correction loop. If convergence fails (3 iterations), the outcome escalates to **Block** (human must intervene) or **Require-Redesign** (upstream artifact must change).
 
 ### Affected Lens Determination
 

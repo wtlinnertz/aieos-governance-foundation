@@ -1,6 +1,6 @@
 # Initiative Router Tool Spec
 
-Version: v1.0
+Version: v1.1
 
 Tool ID: TOOL-INITIATIVE-ROUTER
 
@@ -13,6 +13,7 @@ The front door to AIEOS. Evaluates the user's situation through structured routi
 - A work request, incident, or decision exists that needs to enter the AIEOS framework
 - The navigation map (`navigation-map.md`) is accessible
 - The initiative presets (`initiative-presets.md`) are accessible
+- When `natural_language_intent` is provided, it must be translated to framework vocabulary before evaluating routing questions. The translation must be documented in the output.
 
 ## Input
 
@@ -21,6 +22,7 @@ The front door to AIEOS. Evaluates the user's situation through structured routi
 | `work_context` | Yes | Description of the work request, incident, or decision |
 | `user_responses` | Yes | Answers to the routing questions from decision tables J-ENTRY-1 and J-ENTRY-2 |
 | `initiative_id` | No | If continuing an existing initiative, its ID |
+| `natural_language_intent` | No | The user's original plain-language description of what they want to accomplish, before any framework translation |
 | `project_directory` | No | Path to the consuming project (to check for existing ER) |
 
 ## Postconditions

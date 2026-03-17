@@ -1,6 +1,6 @@
 # Decision Router Tool Spec
 
-Version: v1.0
+Version: v1.1
 
 Tool ID: TOOL-DECISION-ROUTER
 
@@ -30,6 +30,7 @@ At any junction in the AIEOS flow, presents all available options, evaluates the
 - The decision criteria have been evaluated against the user's context
 - A recommendation has been produced with evidence-grounded rationale
 - Human approval has been stated as required
+- A plain-language explanation has been provided for the recommendation, citing: the decision table ID, the criteria evaluated, the evidence from context or artifacts, and the applicable Decision Outcome Taxonomy label (see `flow-reference.md` §11)
 
 ## Output
 
@@ -62,3 +63,4 @@ The tool produces structured output conforming to `decision-router-template.md`.
 | `evaluation_criteria_applied` | Each option is evaluated against the decision table criteria using the user's context |
 | `recommendation_justified` | The recommended path has a rationale grounded in evidence from the ER or artifact content |
 | `no_auto_decision` | The output explicitly states that human approval is required |
+| `explanation_provided` | The recommendation includes plain-language reasoning citing the decision table ID, evaluation criteria, supporting evidence, and the applicable Decision Outcome Taxonomy label |

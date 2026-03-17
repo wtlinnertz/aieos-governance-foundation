@@ -429,6 +429,109 @@ def check_no_dprd(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
     return issues
 
 
+def check_intent_resolution(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa translated user intent to framework vocabulary before routing."""
+    issues = []
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    # Look for evidence of intent-to-framework translation
+    intent_patterns = [
+        r"(translat|map|interpret).{0,30}(framework|AIEOS|preset|entry)",
+        r"(sounds like|this is|this maps to|I.d classify|I.d categorize).{0,30}(P[1-5]|preset|new feature|enhancement|compliance|incident|exploratory)",
+        r"(entry point|starting kit|starting at).{0,20}(PIK|EEK|ODK|RRK|PINFK)",
+        r"J-ENTRY",  # Decision table reference
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in intent_patterns)
+    if not found:
+        issues.append(
+            "No intent-to-framework translation evidence found (sherpa should map user language to AIEOS concepts)"
+        )
+
+    return issues
+
+
+def check_decision_explanation(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa provides plain-language reasoning at decision junctions."""
+    issues = []
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    # Look for evidence of structured decision explanation
+    explanation_patterns = [
+        r"J-[A-Z]+-[A-Z]+",  # Decision table ID (e.g., J-ENTRY-1, J-EEK-PATH)
+        r"decision\s+table",
+        r"(criteria|condition).{0,30}(met|satisfied|match)",
+        r"(recommend|routing).{0,30}(because|since|given)",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in explanation_patterns)
+    if not found:
+        issues.append(
+            "No decision explanation evidence found (sherpa should cite decision tables and criteria at junctions)"
+        )
+
+    return issues
+
+
+def check_health_dashboard(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa surfaced health signals after 3+ artifacts frozen."""
+    issues = []
+
+    # Only check if enough artifacts were expected to trigger health check
+    expected_frozen = sum(
+        1 for a in config.get("expected_artifacts", []) if a.get("frozen", False)
+    )
+    if expected_frozen < 3:
+        return issues  # Not enough artifacts to trigger health dashboard
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    health_patterns = [
+        r"health\s+(check|signal|dashboard|status)",
+        r"(staleness|stale|overdue).{0,30}(kit|artifact|cross.cutting)",
+        r"cross.cutting\s+(gap|missing|not\s+started)",
+        r"upcoming\s+(junction|decision)",
+        r"position.check",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in health_patterns)
+    if not found:
+        issues.append(
+            "No health dashboard evidence found (sherpa should surface health signals after 3+ artifact freezes)"
+        )
+
+    return issues
+
+
 def check_session_resumption(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
     """Verify sherpa discovered existing ER and resumed from correct position."""
     issues = []
@@ -479,6 +582,9 @@ CHECK_REGISTRY: dict[str, callable] = {
     "el_pause_outcome":             check_el_pause_outcome,
     "no_dprd":                      check_no_dprd,
     "session_resumption":           check_session_resumption,
+    "intent_resolution":            check_intent_resolution,
+    "decision_explanation":         check_decision_explanation,
+    "health_dashboard":             check_health_dashboard,
 }
 
 

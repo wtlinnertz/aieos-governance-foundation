@@ -40,7 +40,7 @@ SSK (Layer 3) is optional. When engaged, the sub-flow is: `PIK → SSK (SOER →
 1a. **SSK** (optional): SOER → VER → SDR (freeze) — evaluates Build/Buy/Adopt
 2. **EEK:** KER (Path A) → PRD (placed DPRD) → ACF → SAD → DCF → TDD → WDD → Execution → ORD (freeze)
 3. **QAK** (optional): QAER → VP → TCR(s) → QGR (freeze)
-4. **REK:** RER → RCF → RP → Release Execution → RR (freeze)
+4. **REK:** RER → RCF → RSA → RP → Release Execution → RR (freeze)
 5. **RRK:** SRER → SRP → IR (per incident) → RHR (periodic)
 6. **IEK:** ES (from 2+ RHRs) → re-entry signal (maintain / watch / re-discover)
 
@@ -121,6 +121,7 @@ Cross-cutting kits (Layers 9–14) do not follow the pipeline sequence. They act
 | **PINFK (L12)** | PDR | Technology decision arises | Decision context (no upstream artifact required) |
 | **PINFK (L12)** | ISPEC | PDRs frozen | Frozen PDRs |
 | **PINFK (L12)** | EM | ISPEC frozen | Frozen ISPEC |
+| **PINFK (L12)** | SMR | ISPEC frozen | Frozen ISPEC + system inventory |
 | **DKK (L13)** | UDR | RR frozen | Frozen RR + PRD + WDD |
 | **DKK (L13)** | ARR | TDD frozen (early) or RR frozen (at release) | Frozen TDD or RR |
 | **DKK (L13)** | SKA | RR frozen, PMR frozen, or support patterns | Trigger-dependent |
@@ -189,7 +190,7 @@ Frozen SCK artifacts feed into QAK's Verification Plan as security test inputs. 
 - SCK: TM, DAR, CER are independent (SAR depends on TM)
 - DCK: CSPEC, DSR, FFLR are completely independent
 - DKK: UDR, ARR, SKA, DHR are completely independent
-- PINFK: PDRs are independent; ISPEC depends on PDRs; EM depends on ISPEC
+- PINFK: PDRs are independent; ISPEC depends on PDRs; EM and SMR depend on ISPEC (can generate in parallel)
 
 **PRK during any kit:**
 - PRR generation triggers after artifact validation, runs in parallel with human freeze review preparation
@@ -364,7 +365,7 @@ Phase 3 — Execution (EEK + QAK):
   QAK:                                   QAER → VP → TCR(s) → QGR
                                                                  │
 Phase 4 — Release (REK + cross-cutting):                         ▼
-  REK:   RER → RCF → RP → Execute → RR ─────────────────────────┐
+  REK:   RER → RCF → RSA → RP → Execute → RR ─────────────────────────┐
   DCK:   FFLR (during release) ──────────────────────────────────┤
                                                                   │
 Phase 5 — Operations (RRK + DKK + ODK):                          ▼
@@ -394,3 +395,33 @@ These invariants must hold for any valid flow through the framework:
 8. **Separate generation and validation sessions** — the AI that generates an artifact must not validate it in the same session
 9. **Peer review gates freeze (when adopted)** — when PRK is adopted for a review point, the PRR for that artifact must pass before the artifact freezes
 10. **Correction loops are bounded** — autonomous correction of failed artifacts is limited to 3 iterations; failure to converge requires human escalation (see [`review-convergence-loop.md`](review-convergence-loop.md))
+
+---
+
+## 11. Decision Outcome Taxonomy
+
+Six formal outcomes that apply at decision points throughout the framework. These outcomes operate at the decision layer above validators — validators still output PASS/FAIL; the taxonomy classifies the human or orchestrator decision that follows.
+
+| Outcome | Definition | Maps To | Typical Context |
+|---------|-----------|---------|-----------------|
+| **Approve** | All gates pass; proceed to next state | Validator PASS + human confirmation | Artifact freeze, kit transition |
+| **Approve-with-Conditions** | Gates pass with documented risks accepted | QAK CONDITIONAL disposition | Quality gate with accepted risk |
+| **Block** | Critical violation; halt and remediate before proceeding | Validator FAIL with critical findings | Hard gate failure, security block |
+| **Remediate-and-Retry** | Fixable findings; correct and re-validate (max 3 iterations) | Convergence loop (Pattern A/B) | Validator FAIL with correctable issues |
+| **Require-Redesign** | Architecture or design risk too high; return to design phase | Escalation triggers 3/4 | Fundamental approach change needed |
+| **Rollback** | Runtime SLO violation; execute rollback procedure | Escalation trigger 5 (REK/RRK) | Production failure after release |
+
+### Relationship to Existing Mechanisms
+
+- **Validators** continue to output `PASS` or `FAIL`. The taxonomy does not change validator behavior.
+- **Approve** and **Block** map directly to validator PASS and FAIL respectively when no additional context applies.
+- **Approve-with-Conditions** is currently used only at QAK (QGR CONDITIONAL disposition). Other kits may adopt it when risk acceptance is formally documented.
+- **Remediate-and-Retry** is the decision to enter a convergence loop. See [`review-convergence-loop.md`](review-convergence-loop.md) for the bounded correction pattern.
+- **Require-Redesign** applies when the issue cannot be fixed by correcting the current artifact — the problem is upstream. This triggers cross-kit re-entry (§6.2) or within-kit re-entry to a design-phase artifact.
+- **Rollback** applies only after release execution has begun. It triggers the REK abort protocol and escalation paths (T3, T4).
+
+### When to Apply
+
+The taxonomy applies at every junction node in the navigation map and at every artifact freeze decision. It does not apply within validator execution (validators remain PASS/FAIL).
+
+At decision junctions, the `decision-router` tool references this taxonomy when presenting options. The outcome label is recorded in the ER key decisions section for audit traceability.

@@ -30,3 +30,17 @@ Feature: Initiative Presets
     Then the entry point is "PIK:WCR"
     And "REK" is not a required kit
     And "RRK" is not a required kit
+
+  Scenario: SSK path flows through to EEK
+    Given the dependency graph is loaded
+    Then a path exists from "PIK:DPRD" to "SSK:SOER"
+    And a path exists from "SSK:SDR" to "EEK:PRD"
+
+  Scenario: New Feature preset includes RSA and SMR
+    Given the preset "New Feature" is loaded
+    Then "REK:RSA" is a required artifact
+    And "PINFK:SMR" is a required artifact
+
+  Scenario: Compliance preset includes RSA
+    Given the preset "Compliance and Regulatory" is loaded
+    Then "REK:RSA" is a required artifact

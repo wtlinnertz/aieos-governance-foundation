@@ -60,6 +60,15 @@
 
 *(If no anomalies: "None detected — position is consistent with navigation map.")*
 
+## Health Signals
+
+| # | Signal | Severity | Description | Recommendation |
+|---|--------|----------|-------------|----------------|
+| {n} | {Staleness / Cross-cutting Gap / Decision Velocity / Upcoming Junction} | {Advisory / Informational} | {what was detected} | {suggested action} |
+
+*(If fewer than 3 artifacts frozen: "Health signals not yet applicable — fewer than 3 artifacts frozen.")*
+*(If 3+ artifacts and no signals: "No health signals — initiative is on track.")*
+
 ## Disposition
 
 | Field | Value |

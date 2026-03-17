@@ -79,6 +79,69 @@ class TestFreezeBeforePromote:
         )
 
 
+class TestNewArtifactPositioning:
+    """Verify SMR and RSA are correctly positioned in the dependency graph."""
+
+    def test_rsa_between_rcf_and_rp(self, freeze_graph: nx.DiGraph):
+        """RSA must sit between RCF and RP in the REK flow."""
+        assert freeze_graph.has_edge("REK:RCF", "REK:RSA"), (
+            "Missing edge: REK:RCF → REK:RSA"
+        )
+        assert freeze_graph.has_edge("REK:RSA", "REK:RP"), (
+            "Missing edge: REK:RSA → REK:RP"
+        )
+        assert not freeze_graph.has_edge("REK:RCF", "REK:RP"), (
+            "Direct edge REK:RCF → REK:RP should not exist (RSA is between them)"
+        )
+
+    def test_smr_parallel_with_em(self, freeze_graph: nx.DiGraph):
+        """SMR and EM should both depend on ISPEC but not on each other."""
+        assert freeze_graph.has_edge("PINFK:ISPEC", "PINFK:SMR"), (
+            "Missing edge: PINFK:ISPEC → PINFK:SMR"
+        )
+        assert freeze_graph.has_edge("PINFK:ISPEC", "PINFK:EM"), (
+            "Missing edge: PINFK:ISPEC → PINFK:EM"
+        )
+        assert not freeze_graph.has_edge("PINFK:SMR", "PINFK:EM"), (
+            "SMR should not depend on EM"
+        )
+        assert not freeze_graph.has_edge("PINFK:EM", "PINFK:SMR"), (
+            "EM should not depend on SMR"
+        )
+
+    def test_smr_reachable_from_pdr(self, freeze_graph: nx.DiGraph):
+        """SMR must be reachable from PDR entry point."""
+        assert nx.has_path(freeze_graph, "PINFK:PDR", "PINFK:SMR"), (
+            "PINFK:SMR not reachable from PINFK:PDR"
+        )
+
+    def test_rsa_reachable_from_rer(self, freeze_graph: nx.DiGraph):
+        """RSA must be reachable from RER."""
+        assert nx.has_path(freeze_graph, "REK:RER", "REK:RSA"), (
+            "REK:RSA not reachable from REK:RER"
+        )
+
+    def test_rek_artifact_ordering(self, freeze_graph: nx.DiGraph):
+        """REK flow must be strictly ordered: RER → RCF → RSA → RP → RR."""
+        order = list(nx.topological_sort(freeze_graph))
+        pos = {node: i for i, node in enumerate(order)}
+        rek_artifacts = ["REK:RER", "REK:RCF", "REK:RSA", "REK:RP", "REK:RR"]
+        for i in range(len(rek_artifacts) - 1):
+            a, b = rek_artifacts[i], rek_artifacts[i + 1]
+            assert pos[a] < pos[b], (
+                f"REK ordering violation: {a} (pos {pos[a]}) should come before "
+                f"{b} (pos {pos[b]})"
+            )
+
+    def test_pinfk_artifact_ordering(self, freeze_graph: nx.DiGraph):
+        """PINFK flow: PDR before ISPEC; ISPEC before both SMR and EM."""
+        order = list(nx.topological_sort(freeze_graph))
+        pos = {node: i for i, node in enumerate(order)}
+        assert pos["PINFK:PDR"] < pos["PINFK:ISPEC"], "PDR must come before ISPEC"
+        assert pos["PINFK:ISPEC"] < pos["PINFK:SMR"], "ISPEC must come before SMR"
+        assert pos["PINFK:ISPEC"] < pos["PINFK:EM"], "ISPEC must come before EM"
+
+
 class TestEscalationPaths:
     """Escalation edges go upstream and must not create forward cycles."""
 

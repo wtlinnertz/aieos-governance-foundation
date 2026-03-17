@@ -19,7 +19,9 @@
     "no_force_routing"
   ],
 
-  "soft_checks": [],
+  "soft_checks": [
+    "intent_resolution"
+  ],
 
   "budget_usd": 2,
 

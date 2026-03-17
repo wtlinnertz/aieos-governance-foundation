@@ -36,7 +36,9 @@
     "session_resumption"
   ],
 
-  "soft_checks": [],
+  "soft_checks": [
+    "intent_resolution"
+  ],
 
   "budget_usd": 8,
 

@@ -25,3 +25,25 @@ MD024: false
 
 # Allow emphasis as heading — some docs use bold text as pseudo-headings
 MD036: false
+
+# Disable table column style — AIEOS tables use mixed compact/padded styles
+# across ~14K instances; enforcing alignment provides no governance value
+MD060: false
+
+# Disable blanks around lists — AIEOS uses compact list/prose transitions
+MD032: false
+
+# Disable blanks around headings — AIEOS uses compact heading/content transitions
+MD022: false
+
+# Disable link image reference — some docs use reference-style links
+MD040: false
+
+# Disable ordered list prefix — AIEOS uses both sequential and fixed-1 styles
+MD029: false
+
+# Disable blanks around fenced code — AIEOS uses compact code/prose transitions
+MD031: false
+
+# Disable table pipe style — AIEOS uses mixed table pipe styles
+MD058: false

@@ -92,8 +92,25 @@ echo ""
 
 echo "--- Step 3: structural validation (check-structure.sh) ---"
 
+# Directories that are not governance kits — skip structural checks
+SKIP_STRUCTURE=("aieos-console" "aieos-governance-foundation")
+
 for kit_dir in "${KITS[@]}"; do
   kit_name="$(basename "$kit_dir")"
+
+  # Skip non-kit directories
+  skip=false
+  for skip_name in "${SKIP_STRUCTURE[@]}"; do
+    if [[ "$kit_name" == "$skip_name" ]]; then
+      skip=true
+      break
+    fi
+  done
+  if $skip; then
+    echo "  SKIP  structure: $kit_name (not a governance kit)"
+    continue
+  fi
+
   if "$SCRIPT_DIR/check-structure.sh" "$kit_dir" > /dev/null 2>&1; then
     pass "structure: $kit_name"
   else

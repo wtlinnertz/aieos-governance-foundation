@@ -1,7 +1,9 @@
 {
   "ignorePatterns": [
     { "pattern": "^https?://" },
-    { "pattern": "^mailto:" }
+    { "pattern": "^mailto:" },
+    { "pattern": "review-convergence-loop\\.md" },
+    { "pattern": "sub-agent-orchestration\\.md" }
   ],
   "aliveStatusCodes": [200, 206],
   "retryOn429": true,

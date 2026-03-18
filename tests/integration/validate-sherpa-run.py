@@ -1503,6 +1503,118 @@ def check_finding_accumulated(config: dict, run_dir: Path, project_dir: Path) ->
     return issues
 
 
+def check_template_prepopulated(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa pre-populated template sections from upstream artifacts."""
+    issues = []
+
+    expected_frozen = sum(
+        1 for a in config.get("expected_artifacts", []) if a.get("frozen", False)
+    )
+    if expected_frozen < 3:
+        return issues  # Need enough artifacts for pre-population to matter
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    prepop_patterns = [
+        r"pre.fill",
+        r"pre.populat",
+        r"(filled|populated).{0,20}(from|using|based\s+on).{0,20}(upstream|frozen|prior|PRD|SAD|PFD)",
+        r"\d+\s+of\s+\d+\s+section",
+        r"(carried|copied|inherited).{0,20}(from|over).{0,20}(upstream|frozen|PRD|SAD|TDD)",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in prepop_patterns)
+    if not found:
+        issues.append(
+            "No template pre-population evidence found (sherpa should pre-fill sections from frozen upstream artifacts)"
+        )
+
+    return issues
+
+
+def check_retrospective_generated(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify initiative retrospective was generated at completion."""
+    issues = []
+    retro_files = list(project_dir.glob("docs/engagement/retrospective-*.md"))
+    if not retro_files:
+        # Check transcript for retrospective content (may not have been saved as file in test)
+        output_log = run_dir / "claude-output.log"
+        transcript = run_dir / "session-transcript.md"
+
+        content = ""
+        if output_log.exists():
+            content = output_log.read_text()
+        elif transcript.exists():
+            content = transcript.read_text()
+
+        if content:
+            retro_patterns = [
+                r"retrospective",
+                r"artifact\s+timeline",
+                r"quality\s+trajectory",
+                r"decision\s+log",
+                r"cycle\s+metrics",
+            ]
+            found = any(re.search(pat, content, re.IGNORECASE) for pat in retro_patterns)
+            if not found:
+                issues.append("No retrospective generated at completion")
+        else:
+            issues.append("No retrospective file or content found")
+
+    return issues
+
+
+def check_self_score_generated(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa self-scoring was generated at completion."""
+    issues = []
+
+    # Check for self-score file
+    score_files = list(run_dir.glob("self-score-*.md"))
+    if score_files:
+        return issues
+
+    # Check output directory
+    output_dir = project_dir.parent / "aieos-governance-foundation" / "tests" / "integration" / "output"
+    if output_dir.exists():
+        score_files = list(output_dir.glob("self-score-*.md"))
+        if score_files:
+            return issues
+
+    # Check transcript for self-scoring content
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if content:
+        score_patterns = [
+            r"self.scor",
+            r"(criterion|criteria).{0,20}(score|rating|evaluation)",
+            r"(my|sherpa).{0,20}(performance|evaluation|assessment)",
+            r"\d+\s*/\s*(5|75)",
+        ]
+        found = any(re.search(pat, content, re.IGNORECASE) for pat in score_patterns)
+        if not found:
+            issues.append("No self-scoring generated at completion")
+    else:
+        issues.append("No self-score file or content found")
+
+    return issues
+
+
 def check_cross_initiative_scan(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
     """Verify sherpa scanned for sibling initiatives and mentioned any found."""
     issues = []
@@ -1614,6 +1726,9 @@ CHECK_REGISTRY: dict[str, callable] = {
     "finding_accumulated":          check_finding_accumulated,
     "cross_initiative_scan":        check_cross_initiative_scan,
     "parallel_execution":           check_parallel_execution,
+    "template_prepopulated":        check_template_prepopulated,
+    "retrospective_generated":      check_retrospective_generated,
+    "self_score_generated":         check_self_score_generated,
     "convergence_loop_depth":       check_convergence_loop_depth,
     "utility_prompts_per_kit":      check_utility_prompts_per_kit,
     "cross_cutting_timing":         check_cross_cutting_timing,

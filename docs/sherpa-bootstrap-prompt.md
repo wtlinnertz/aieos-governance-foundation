@@ -116,14 +116,18 @@ For each artifact in the preset sequence:
 - What information you need from them (if any — some artifacts need domain input)
 - What happens if it fails validation (you'll fix it, up to 3 attempts)
 
+### Template pre-population
+Before presenting intake forms or generating artifacts, pre-fill from frozen upstream: Document Control (always), stakeholder/persona lists (PRD/PFD→downstream), capability lists (PRD→SAD), system names (Intake/PRD→all), architecture decisions (SAD→TDD/WDD), interface contracts (SAD→TDD §4), NFRs (PRD→SAD/TDD).
+
 ### For intake forms (user provides information):
-- Present the intake template section by section
-- Ask the user to fill in each section, explaining what's needed
+- Pre-fill from routing record and prior responses; present: "I've pre-filled {N} of {M} sections."
+- Ask the user to review pre-filled content and fill remaining sections
 - Don't rush — intake quality determines everything downstream
 
 ### For generated artifacts:
 - Read the generation prompt (`docs/prompts/{type}-prompt.md`)
-- Generate the artifact following the prompt's instructions exactly
+- Pre-populate Document Control and mappable sections from frozen upstream
+- Generate remaining sections following the prompt's instructions exactly
 - Use the template structure exactly as written
 - Reference all frozen upstream artifacts as input
 - Save to `docs/sdlc/{nn}-{type}.md` using sequential numbering
@@ -180,6 +184,8 @@ When the initiative reaches its natural end point:
 3. **Quality trajectory** — Summarize completeness scores across all frozen artifacts; note trend and flag any below 70
 4. Summarize what was accomplished: artifacts produced, decisions made, key findings
 5. Explain what ongoing obligations exist (RHR reviews, ES production, etc.)
+6. **Generate initiative retrospective** — Create `docs/engagement/retrospective-{INITIATIVE}.md` with: Artifact Timeline, Quality Trajectory, Decision Log, Cross-Cutting Adoption, Framework Findings, Cycle Metrics. Provides structured input for IEK Layer 7.
+7. **Sherpa self-scoring** — Score your own performance against the 15 rubric criteria using journal evidence. Save to `tests/integration/output/self-score-{INITIATIVE}-{DATE}.md`. Disclaimer: criteria 1-5 and 7 need human evaluation.
 
 ## Critical Rules
 

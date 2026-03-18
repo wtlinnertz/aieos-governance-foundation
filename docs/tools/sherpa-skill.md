@@ -186,14 +186,29 @@ For each artifact in the preset sequence:
 - What information you need from them (if any — some artifacts need domain input)
 - What happens if it fails validation (you'll fix it, up to 3 attempts)
 
-### For intake forms (user provides information):
-- Present the intake template section by section
-- Ask the user to fill in each section, explaining what's needed
+### Template pre-population
+
+Before presenting an intake form or generating an artifact, scan frozen upstream artifacts for fields that map to the current template's sections. Pre-fill what you can:
+
+| Target Section | Source |
+|---------------|--------|
+| Document Control (initiative name, date, GM version, spec version) | Always pre-fill from ER and current file versions |
+| Stakeholder/persona lists | PRD/PFD stakeholder sections → SAD, TDD, WDD stakeholder fields |
+| Capability/feature list | PRD capability table → SAD component mapping section |
+| System/service names | Discovery Intake or PRD → all downstream artifact references |
+| Architecture decisions | SAD decisions → TDD design rationale, WDD scoping rationale |
+| Interface contracts | SAD interface section → TDD §4 contracts |
+| Non-functional requirements | PRD NFRs → SAD constraints, TDD test scenarios |
+
+**For intake forms (user provides information):**
+- Pre-fill sections from the routing record and prior user responses where possible
+- Present the pre-populated template: "I've pre-filled {N} of {M} sections from your earlier inputs. Please review the pre-filled content and fill in the remaining sections."
 - Don't rush — intake quality determines everything downstream
 
-### For generated artifacts:
+**For generated artifacts:**
 - Read the generation prompt (`docs/prompts/{type}-prompt.md`)
-- Generate the artifact following the prompt's instructions exactly
+- Pre-populate Document Control and any sections mappable from frozen upstream artifacts
+- Generate the remaining sections following the prompt's instructions exactly
 - Use the template structure exactly as written
 - Reference all frozen upstream artifacts as input
 - Save to `docs/sdlc/{nn}-{type}.md` using sequential numbering
@@ -351,6 +366,8 @@ When the initiative reaches its natural end point:
 3. **Quality trajectory** — Summarize completeness scores across all frozen artifacts. Note the trend (improving/declining/stable) and flag any artifacts that froze below 70
 4. Summarize what was accomplished: artifacts produced, decisions made, key findings
 5. Explain what ongoing obligations exist (RHR reviews, ES production, etc.)
+6. **Generate initiative retrospective** — Create `docs/engagement/retrospective-{INITIATIVE}.md` with structured sections: Artifact Timeline (per-artifact: ID, kit, frozen date, completeness score, convergence iterations), Quality Trajectory (average score, trend, below-70 list), Decision Log (all junction decisions with rationale from journal), Cross-Cutting Kit Adoption table, Framework Findings with upstream reporting recommendations, and Cycle Metrics (total frozen, validation failure rate, kits traversed, session count). This is NOT a governed artifact — it's an operational summary. If the initiative feeds into IEK (Layer 7), the retrospective provides structured input for the Evolution Signal.
+7. **Sherpa self-scoring** — Evaluate your own performance against the 15 conversation rubric criteria using journal evidence. Score each criterion 1-5 with evidence citations. Save to `tests/integration/output/self-score-{INITIATIVE}-{DATE}.md`. Include disclaimer: "Self-scoring has known bias — criteria 1-5 and 7 require human evaluation for accurate scoring."
 
 ## Critical Rules
 

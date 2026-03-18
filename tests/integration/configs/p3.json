@@ -54,7 +54,8 @@
     "quality_score_surfaced",
     "consistency_check_run",
     "finding_accumulated",
-    "cross_initiative_scan"
+    "cross_initiative_scan",
+    "template_prepopulated"
   ],
 
   "budget_usd": 8,

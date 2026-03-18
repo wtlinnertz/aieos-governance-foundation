@@ -173,6 +173,9 @@ The following checks are available in `validate-sherpa-run.py`:
 | `finding_accumulated` | Soft | Sherpa detected or offered to log framework findings during generation |
 | `cross_initiative_scan` | Soft | Sherpa scanned for sibling initiatives and mentioned results at routing |
 | `parallel_execution` | Soft | Sherpa offered parallel artifact generation for independent pairs (ACF+SAD, DCF+TDD) |
+| `template_prepopulated` | Soft | Sherpa pre-filled template sections from frozen upstream artifacts |
+| `retrospective_generated` | Soft | Initiative retrospective generated at completion with structured sections |
+| `self_score_generated` | Soft | Sherpa self-scoring against 15 rubric criteria generated at completion |
 
 ## What Requires Manual Testing
 

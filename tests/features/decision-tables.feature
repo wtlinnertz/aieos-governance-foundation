@@ -145,3 +145,111 @@ Feature: Decision Table Routing
   Scenario: BPK triggers from SAD
     Given the dependency graph is loaded
     Then a path exists from "EEK:SAD" to "BPK:PIA"
+
+  # J-PIK-WCR: Work Classification Routing
+  Scenario: J-PIK-WCR route 1/2 — full or targeted discovery routes to intake
+    Given the dependency graph is loaded
+    Then a path exists from "PIK:WCR" to "PIK:PFD"
+
+  Scenario: J-PIK-WCR route 3 — no discovery routes to EEK
+    Given the dependency graph is loaded
+    Then a path exists from "PIK:WCR" to "PIK:PFD"
+    And a path exists from "EEK:KER" to "EEK:PRD"
+
+  # J-PIK-PIVOT: Pivot Pattern Selection
+  Scenario: J-PIK-PIVOT pattern 1 — problem reframe re-enters at PFD
+    Given the dependency graph is loaded
+    Then a path exists from "PIK:EL" to "PIK:DPRD"
+    And a path exists from "PIK:PFD" to "PIK:VH"
+
+  Scenario: J-PIK-PIVOT pattern 2 — hypothesis revision re-enters at VH
+    Given the dependency graph is loaded
+    Then a path exists from "PIK:VH" to "PIK:AR"
+
+  Scenario: J-PIK-PIVOT all patterns cascade to DPRD
+    Given the dependency graph is loaded
+    Then a path exists from "PIK:PFD" to "PIK:DPRD"
+    And a path exists from "PIK:VH" to "PIK:DPRD"
+
+  # J-EEK-BAT: BAT Outcome
+  Scenario: J-EEK-BAT pass continues to next work group
+    Given the dependency graph is loaded
+    Then a path exists from "EEK:WDD" to "EEK:ORD"
+
+  Scenario: J-EEK-BAT execution path through WDD to ORD
+    Given the dependency graph is loaded
+    Then a path exists from "EEK:TDD" to "EEK:WDD"
+    And a path exists from "EEK:WDD" to "EEK:ORD"
+
+  # J-REK-RCF: RCF Reuse Decision
+  Scenario: J-REK-RCF new RCF routes through RCF generation
+    Given the dependency graph is loaded
+    Then a path exists from "REK:RER" to "REK:RCF"
+
+  Scenario: J-REK-RCF route reaches RP regardless
+    Given the dependency graph is loaded
+    Then a path exists from "REK:RCF" to "REK:RP"
+
+  # J-ODK-RB: Runbook Decision
+  Scenario: J-ODK-RB routes from PMR to escalation
+    Given the dependency graph is loaded
+    Then a path exists from "ODK:INR" to "ODK:PMR"
+
+  # J-RRK-SRP-REVISION: SRP Revision
+  Scenario: J-RRK-SRP-REVISION SRP depends on SRER
+    Given the dependency graph is loaded
+    Then a path exists from "RRK:SRER" to "RRK:SRP"
+
+  # J-ENTRY-1: SDK entry point (was missing)
+  Scenario: J-ENTRY-1 route 5 — strategic bet to SDK
+    Given the dependency graph is loaded
+    Then a path exists from "SDK:SBR" to "SDK:PPR"
+    And a path exists from "SDK:PPR" to "PIK:WCR"
+
+  # Boundary contract: QAK receives full EEK context
+  Scenario: QAK reachable from EEK ORD
+    Given the dependency graph is loaded
+    Then a path exists from "EEK:ORD" to "QAK:QAER"
+
+  # Boundary contract: IEK requires RHR
+  Scenario: IEK reachable from RRK RHR
+    Given the dependency graph is loaded
+    Then a path exists from "RRK:RHR" to "IEK:ES"
+
+  # BPK completion path
+  Scenario: BPK PIA cascades to TP and RC
+    Given the dependency graph is loaded
+    Then a path exists from "BPK:PIA" to "BPK:TP"
+    And a path exists from "BPK:TP" to "BPK:RC"
+
+  # Alternative cross-cutting trigger paths
+  Scenario: BPK also triggers from TDD
+    Given the dependency graph is loaded
+    Then a path exists from "EEK:TDD" to "BPK:PIA"
+
+  Scenario: DKK SKA triggers from ODK PMR
+    Given the dependency graph is loaded
+    Then a path exists from "ODK:PMR" to "DKK:SKA"
+
+  # EEK execution-phase reachability
+  Scenario: EEK full execution path reachable
+    Given the dependency graph is loaded
+    Then a path exists from "EEK:PRD" to "EEK:ACF"
+    And a path exists from "EEK:ACF" to "EEK:TDD"
+    And a path exists from "EEK:TDD" to "EEK:WDD"
+    And a path exists from "EEK:WDD" to "EEK:ORD"
+
+  Scenario: EEK DCF parallel path exists
+    Given the dependency graph is loaded
+    Then a path exists from "EEK:ACF" to "EEK:DCF"
+    And a path exists from "EEK:DCF" to "EEK:WDD"
+
+  # Full pipeline reachability
+  Scenario: Full P1 pipeline PIK through IEK is reachable
+    Given the dependency graph is loaded
+    Then a path exists from "PIK:WCR" to "PIK:DPRD"
+    And a path exists from "PIK:DPRD" to "EEK:PRD"
+    And a path exists from "EEK:ORD" to "QAK:QAER"
+    And a path exists from "QAK:QGR" to "REK:RER"
+    And a path exists from "REK:RR" to "RRK:SRER"
+    And a path exists from "RRK:RHR" to "IEK:ES"

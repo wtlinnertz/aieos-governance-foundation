@@ -171,6 +171,8 @@ The following checks are available in `validate-sherpa-run.py`:
 | `quality_score_surfaced` | Soft | Sherpa presented completeness score with assessment after validation |
 | `consistency_check_run` | Soft | Sherpa ran cross-artifact consistency checks (PRD→SAD, SAD→TDD, etc.) |
 | `finding_accumulated` | Soft | Sherpa detected or offered to log framework findings during generation |
+| `cross_initiative_scan` | Soft | Sherpa scanned for sibling initiatives and mentioned results at routing |
+| `parallel_execution` | Soft | Sherpa offered parallel artifact generation for independent pairs (ACF+SAD, DCF+TDD) |
 
 ## What Requires Manual Testing
 

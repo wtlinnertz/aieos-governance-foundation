@@ -1503,6 +1503,79 @@ def check_finding_accumulated(config: dict, run_dir: Path, project_dir: Path) ->
     return issues
 
 
+def check_cross_initiative_scan(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa scanned for sibling initiatives and mentioned any found."""
+    issues = []
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    scan_patterns = [
+        r"(found|detect|scan|discover).{0,30}(initiative|project|ER|engagement)",
+        r"(other|sibling|parallel|active).{0,20}initiative",
+        r"(no|zero|0).{0,20}(other|sibling).{0,20}initiative",
+        r"(overlap|conflict|shared).{0,20}(component|system|module)",
+        r"cross.initiative",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in scan_patterns)
+    if not found:
+        issues.append(
+            "No cross-initiative scan evidence found (sherpa should scan for sibling initiatives at routing)"
+        )
+
+    return issues
+
+
+def check_parallel_execution(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa offered or used parallel artifact generation where applicable."""
+    issues = []
+
+    # Only check if the preset traverses EEK (where parallelism is most relevant)
+    expected_types = [a["type"] for a in config.get("expected_artifacts", [])]
+    has_parallel_candidates = (
+        ("ACF" in expected_types and "SAD" in expected_types) or
+        ("DCF" in expected_types and "TDD" in expected_types)
+    )
+    if not has_parallel_candidates:
+        return issues  # No parallelizable pairs in this preset
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    parallel_patterns = [
+        r"(parallel|simultaneous|concurrent).{0,30}(generat|creat|produc)",
+        r"(ACF|SAD|DCF|TDD).{0,10}(and|&|\+).{0,10}(ACF|SAD|DCF|TDD).{0,20}(parallel|same\s+time|simultaneous)",
+        r"(independent|both\s+depend).{0,30}(parallel|simultaneous)",
+        r"(fan.out|sub.agent|agent).{0,30}(parallel|concurrent|simultaneous)",
+        r"(save\s+time|faster|efficient).{0,30}(parallel|both|simultaneous)",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in parallel_patterns)
+    if not found:
+        issues.append(
+            "No parallel execution evidence found (sherpa should offer to generate parallelizable artifact pairs like ACF+SAD or DCF+TDD simultaneously)"
+        )
+
+    return issues
+
+
 CHECK_REGISTRY: dict[str, callable] = {
     "ar_origin":                    check_ar_origin,
     "el_draft":                     check_el_draft,
@@ -1539,6 +1612,8 @@ CHECK_REGISTRY: dict[str, callable] = {
     "quality_score_surfaced":       check_quality_score_surfaced,
     "consistency_check_run":        check_consistency_check_run,
     "finding_accumulated":          check_finding_accumulated,
+    "cross_initiative_scan":        check_cross_initiative_scan,
+    "parallel_execution":           check_parallel_execution,
     "convergence_loop_depth":       check_convergence_loop_depth,
     "utility_prompts_per_kit":      check_utility_prompts_per_kit,
     "cross_cutting_timing":         check_cross_cutting_timing,

@@ -59,6 +59,17 @@ You don't need to ask all 5 if earlier answers make some irrelevant (e.g., if it
 
 **Limit discovery to 2–3 clarifying questions, then present your routing recommendation.** If the user's initial message already answers multiple questions, skip the ones that are already clear. If routing is still ambiguous after 3 questions, present all matching options and let the user choose.
 
+### Step 1a: Cross-initiative scan
+
+Before routing, scan the parent directory for other initiative directories by looking for `docs/engagement/er-*.md` files in sibling project folders. For each active ER found, extract: initiative name, status, preset, current layer, and key system/component names from frozen artifacts.
+
+If other active initiatives exist, note them for later use:
+- **At routing:** mention them to the user: "I found {N} other active initiatives: {names}. I'll flag any scope overlaps as we go."
+- **During generation (Phase 3):** when an artifact references a system or component that appears in another initiative's frozen artifacts, flag it as a cross-initiative overlap
+- **At cross-cutting decisions (Phase 5):** if another initiative adopted a cross-cutting kit for the same system, note it
+
+This scan is best-effort — if the parent directory structure doesn't contain other projects, skip silently.
+
 ### Step 2: Evaluate against the navigation map decision tables
 
 After gathering the user's answers, read the decision tables in `navigation-map.md`:
@@ -250,6 +261,39 @@ When detected, ask: "This looks like it might be a framework gap — {descriptio
 
 ### Artifact ID discipline:
 - **Artifact IDs must use the initiative name in UPPERCASE** — format is `{TYPE}-{INITIATIVE}-{NNN}` (e.g., `WCR-AICR-001`, `PFD-TASKFLOW-001`). Never use dates or years in artifact IDs. The initiative name was chosen by the user in Phase 2 — use it consistently in every artifact ID and filename (including the ER: `er-{INITIATIVE}-001.md` in uppercase, e.g., `er-AICR-001.md`).
+
+### Parallel artifact orchestration
+
+Where the dependency graph permits, generate artifacts in parallel using the Agent tool to fan out sub-agents. Follow `sub-agent-orchestration.md` patterns exactly: self-contained context packages, separate validation sessions, track all agents to completion.
+
+**Parallelizable pairs from `flow-reference.md` §4.1:**
+
+| Parallel Set | Kit | Condition |
+|-------------|-----|-----------|
+| ACF + SAD | EEK | Both depend on frozen PRD — can generate simultaneously |
+| DCF + TDD | EEK | Both depend on frozen ACF/SAD — can generate simultaneously |
+| WDD work items | EEK | Items within a work group marked parallel-safe by execution plan |
+| PRK lenses | PRK | All lenses for a review point execute simultaneously |
+| PINFK PDRs | PINFK | Independent decisions; can generate in parallel |
+| PINFK EM + SMR | PINFK | Both depend on ISPEC; can generate in parallel |
+| Cross-cutting kits | Any | SCK TM, DCK CSPEC+DSR, DKK ARR, PINFK PDRs — all independent of each other |
+
+**When to offer parallel execution:**
+- Present to the user: "The next two artifacts ({A} and {B}) are independent — I can generate them in parallel to save time. Both will be validated separately before we proceed."
+- Only offer when both artifacts' upstream dependencies are frozen
+- If the user prefers sequential, respect that preference (log as `user-preference` in journal)
+
+**Execution:**
+1. Launch one Agent per artifact with a self-contained context package (frozen upstream artifacts, spec, template, prompt)
+2. Each agent generates and saves its artifact independently
+3. Validate each artifact in a separate step (not the generating agent)
+4. Run cross-artifact consistency checks after both pass
+5. Freeze both, update ER and journal
+
+**Do NOT parallelize** when:
+- One artifact's content depends on the other's decisions (e.g., TDD depends on SAD interfaces)
+- The user has expressed a preference for sequential review
+- You're uncertain about the dependency relationship — when in doubt, go sequential
 
 ## Phase 4: Kit Transitions
 

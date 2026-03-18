@@ -56,7 +56,9 @@
     "reentry_awareness",
     "quality_score_surfaced",
     "consistency_check_run",
-    "finding_accumulated"
+    "finding_accumulated",
+    "cross_initiative_scan",
+    "parallel_execution"
   ],
 
   "budget_usd": 5,

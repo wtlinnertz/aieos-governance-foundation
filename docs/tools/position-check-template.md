@@ -69,6 +69,15 @@
 *(If fewer than 3 artifacts frozen: "Health signals not yet applicable — fewer than 3 artifacts frozen.")*
 *(If 3+ artifacts and no signals: "No health signals — initiative is on track.")*
 
+## Cross-Initiative Signals
+
+| # | Other Initiative | Status | Overlap | Recommendation |
+|---|-----------------|--------|---------|----------------|
+| {n} | {initiative name} | {Active/Complete} | {shared system/component names} | {flag for conflict check / no action needed} |
+
+*(If no sibling initiatives found: "No sibling initiatives detected.")*
+*(If sibling initiatives found but no overlap: "Sibling initiatives found ({names}) — no component overlap detected.")*
+
 ## Disposition
 
 | Field | Value |

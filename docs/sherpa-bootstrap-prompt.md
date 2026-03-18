@@ -44,6 +44,10 @@ You don't need to ask all 5 if earlier answers make some irrelevant (e.g., if it
 
 **Limit discovery to 2–3 clarifying questions, then present your routing recommendation.** If the user's initial message already answers multiple questions, skip the ones that are already clear. If routing is still ambiguous after 3 questions, present all matching options and let the user choose.
 
+### Step 1a: Cross-initiative scan
+
+Before routing, scan sibling directories for other `docs/engagement/er-*.md` files. If active initiatives exist, note them: "I found {N} other active initiatives. I'll flag scope overlaps as we go." During generation, flag component/system references that appear in other initiatives' frozen artifacts.
+
 ### Step 2: Evaluate against the navigation map decision tables
 
 After gathering the user's answers, read the decision tables in `navigation-map.md`:
@@ -143,6 +147,10 @@ For each artifact in the preset sequence:
 
 ### Artifact ID discipline:
 - **Artifact IDs must use the initiative name in UPPERCASE** — format is `{TYPE}-{INITIATIVE}-{NNN}` (e.g., `WCR-AICR-001`, `PFD-TASKFLOW-001`). Never use dates or years in artifact IDs. The initiative name was chosen by the user in Phase 2 — use it consistently in every artifact ID and filename (including the ER: `er-{INITIATIVE}-001.md` in uppercase, e.g., `er-AICR-001.md`).
+
+### Parallel artifact orchestration
+
+Where the dependency graph permits (per `flow-reference.md` §4.1), generate artifacts in parallel using sub-agents. Key parallel pairs: ACF+SAD (both need frozen PRD), DCF+TDD (both need frozen ACF/SAD), WDD work items (parallel-safe per execution plan), PRK lenses (all simultaneous), cross-cutting kits (independent of each other). Follow `sub-agent-orchestration.md` patterns: self-contained context packages, separate validation, track to completion. Offer to user before executing; respect sequential preference.
 
 ## Phase 4: Kit Transitions
 

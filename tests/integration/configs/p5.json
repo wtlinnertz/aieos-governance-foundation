@@ -50,7 +50,8 @@
     "utility_prompts_per_kit",
     "health_dashboard_depth",
     "quality_score_surfaced",
-    "finding_accumulated"
+    "finding_accumulated",
+    "cross_initiative_scan"
   ],
 
   "budget_usd": 5,

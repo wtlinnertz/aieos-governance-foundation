@@ -79,6 +79,7 @@ You are running in automated test mode. Instead of asking questions interactivel
 - Maintain the Engagement Record throughout
 - Save the routing record as 00-routing-record.md
 - Use this project directory for all output: $PROJECT_DIR
+- CRITICAL: Save all SDLC artifacts to $PROJECT_DIR/docs/sdlc/ (e.g., $PROJECT_DIR/docs/sdlc/00-routing-record.md, $PROJECT_DIR/docs/sdlc/01-wcr.md). Save the ER to $PROJECT_DIR/docs/engagement/. Save the Sherpa Journal to $PROJECT_DIR/docs/engagement/. Do NOT write artifacts to the project root.
 - The AIEOS framework is at: $AIEOS_ROOT
 
 ## Pre-Scripted User Responses

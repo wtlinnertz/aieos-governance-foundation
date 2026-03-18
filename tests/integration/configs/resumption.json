@@ -43,7 +43,8 @@
     "rationale_replay",
     "position_check_invoked",
     "decision_explanation_depth",
-    "session_resumption_depth"
+    "session_resumption_depth",
+    "cross_initiative_scan"
   ],
 
   "budget_usd": 8,

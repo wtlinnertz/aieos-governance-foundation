@@ -41,6 +41,9 @@
   "soft_checks": [
     "utility_prompts_mentioned",
     "intent_resolution",
+    "intent_translation_timing",
+    "conditional_opening",
+    "intake_quality_probe",
     "decision_explanation",
     "health_dashboard",
     "elicitation_applied",
@@ -48,7 +51,9 @@
     "position_check_invoked",
     "decision_router_invoked",
     "convergence_loop_depth",
-    "utility_prompts_per_kit"
+    "utility_prompts_per_kit",
+    "quality_score_surfaced",
+    "generation_validation_separation"
   ],
 
   "budget_usd": 5,

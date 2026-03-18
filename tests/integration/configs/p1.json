@@ -51,6 +51,9 @@
     "kit_transition_explanations",
     "cross_cutting_adoption",
     "intent_resolution",
+    "intent_translation_timing",
+    "conditional_opening",
+    "intake_quality_probe",
     "decision_explanation",
     "health_dashboard",
     "elicitation_applied",
@@ -73,7 +76,10 @@
     "finding_accumulated",
     "cross_initiative_scan",
     "parallel_execution",
-    "template_prepopulated"
+    "template_prepopulated",
+    "generation_validation_separation",
+    "artifact_id_discipline",
+    "boundary_contract_verified"
   ],
 
   "budget_usd": 8,

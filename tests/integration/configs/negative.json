@@ -39,9 +39,13 @@
 
   "soft_checks": [
     "intent_resolution",
+    "intent_translation_timing",
+    "conditional_opening",
+    "intake_quality_probe",
     "decision_explanation",
     "decision_explanation_depth",
-    "decision_router_invoked"
+    "decision_router_invoked",
+    "finding_accumulated"
   ],
 
   "budget_usd": 5,

@@ -40,6 +40,9 @@
   "soft_checks": [
     "utility_prompts_mentioned",
     "intent_resolution",
+    "intent_translation_timing",
+    "conditional_opening",
+    "intake_quality_probe",
     "decision_explanation",
     "health_dashboard",
     "elicitation_applied",
@@ -51,7 +54,9 @@
     "health_dashboard_depth",
     "quality_score_surfaced",
     "finding_accumulated",
-    "cross_initiative_scan"
+    "cross_initiative_scan",
+    "generation_validation_separation",
+    "artifact_id_discipline"
   ],
 
   "budget_usd": 5,

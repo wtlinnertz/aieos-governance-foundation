@@ -39,6 +39,8 @@
   "soft_checks": [
     "cross_cutting_adoption",
     "intent_resolution",
+    "intent_translation_timing",
+    "conditional_opening",
     "decision_explanation",
     "health_dashboard",
     "elicitation_applied",
@@ -59,7 +61,9 @@
     "finding_accumulated",
     "cross_initiative_scan",
     "parallel_execution",
-    "template_prepopulated"
+    "template_prepopulated",
+    "generation_validation_separation",
+    "artifact_id_discipline"
   ],
 
   "budget_usd": 5,

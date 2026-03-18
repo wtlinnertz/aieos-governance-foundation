@@ -54,6 +54,9 @@
     "kit_transition_explanations",
     "cross_cutting_adoption",
     "intent_resolution",
+    "intent_translation_timing",
+    "conditional_opening",
+    "intake_quality_probe",
     "decision_explanation",
     "health_dashboard",
     "elicitation_applied",
@@ -70,7 +73,16 @@
     "cross_cutting_timing",
     "health_dashboard_depth",
     "sub_agent_awareness",
-    "reentry_awareness"
+    "reentry_awareness",
+    "quality_score_surfaced",
+    "consistency_check_run",
+    "finding_accumulated",
+    "cross_initiative_scan",
+    "parallel_execution",
+    "template_prepopulated",
+    "generation_validation_separation",
+    "artifact_id_discipline",
+    "boundary_contract_verified"
   ],
 
   "budget_usd": 12,

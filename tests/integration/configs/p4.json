@@ -36,6 +36,8 @@
   "soft_checks": [
     "kit_transition_explanations",
     "intent_resolution",
+    "intent_translation_timing",
+    "conditional_opening",
     "decision_explanation",
     "health_dashboard",
     "briefing_distillation_offered",
@@ -49,7 +51,10 @@
     "quality_score_surfaced",
     "consistency_check_run",
     "finding_accumulated",
-    "cross_initiative_scan"
+    "cross_initiative_scan",
+    "adversarial_lens_offered",
+    "generation_validation_separation",
+    "boundary_contract_verified"
   ],
 
   "budget_usd": 5,

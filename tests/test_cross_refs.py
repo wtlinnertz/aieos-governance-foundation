@@ -7,6 +7,7 @@ Validates:
 - Four-file completeness for all artifact types
 - Spec-version drift: templates reference current spec versions
 - Template provenance: Document Control has Spec Version and Principles Version fields
+- Sherpa skill: Critical Rules section contains required behavioral rules
 """
 
 from __future__ import annotations
@@ -380,3 +381,112 @@ class TestToolFourFileCompleteness:
             f"Tool specs missing Version field:\n" +
             "\n".join(f"  - {m}" for m in missing)
         )
+
+
+class TestSherpaSkillCriticalRules:
+    """Verify sherpa-skill.md Critical Rules section contains all required behavioral rules."""
+
+    SHERPA_SKILL = Path("aieos-governance-foundation/docs/tools/sherpa-skill.md")
+
+    @pytest.fixture
+    def critical_rules(self):
+        """Extract the Critical Rules section from sherpa-skill.md."""
+        content = self.SHERPA_SKILL.read_text()
+        match = re.search(
+            r"## Critical Rules\n\n(.*?)(?:\n## |\Z)",
+            content, re.DOTALL
+        )
+        assert match, "Critical Rules section not found in sherpa-skill.md"
+        return match.group(1)
+
+    def test_risk_scan_rule(self, critical_rules):
+        """WS2 structured output: Risk scan must be in Critical Rules."""
+        assert re.search(r'emit "Risk scan:"', critical_rules), \
+            "Critical Rules missing: Risk scan structured output rule"
+
+    def test_health_check_rule(self, critical_rules):
+        """WS2 structured output: Health Check block must be in Critical Rules."""
+        assert re.search(r"emit the Health Check block", critical_rules), \
+            "Critical Rules missing: Health Check structured output rule"
+
+    def test_consistency_rule(self, critical_rules):
+        """WS2 structured output: Consistency line must be in Critical Rules."""
+        assert re.search(r'emit "Consistency:"', critical_rules), \
+            "Critical Rules missing: Consistency structured output rule"
+
+    def test_position_check_rule(self, critical_rules):
+        """WS2 structured output: Position check must be in Critical Rules."""
+        assert re.search(r'emit "Position check:"', critical_rules), \
+            "Critical Rules missing: Position check structured output rule"
+
+    def test_boundary_check_rule(self, critical_rules):
+        """WS2 structured output: Boundary check must be in Critical Rules."""
+        assert re.search(r'emit "Boundary check:"', critical_rules), \
+            "Critical Rules missing: Boundary check structured output rule"
+
+    def test_no_permission_seeking_rule(self, critical_rules):
+        """Broadened prohibition: Must cover Shall I and Want me to variants."""
+        assert re.search(r"Shall I", critical_rules), \
+            "Critical Rules missing: 'Shall I…?' in permission-seeking prohibition"
+        assert re.search(r"Want me to", critical_rules), \
+            "Critical Rules missing: 'Want me to…?' in permission-seeking prohibition"
+
+    def test_intake_probe_rule(self, critical_rules):
+        """Intake quality: Must require probing thin sections."""
+        assert re.search(r"[Pp]robe thin intake", critical_rules), \
+            "Critical Rules missing: intake quality probe rule"
+
+    def test_critical_rules_count(self, critical_rules):
+        """Critical Rules should have at least 17 bullet points."""
+        bullets = re.findall(r"^- \*\*", critical_rules, re.MULTILINE)
+        assert len(bullets) >= 17, (
+            f"Critical Rules has {len(bullets)} bullets, expected >= 17"
+        )
+
+
+class TestSherpaSkillConversationalBehavior:
+    """Verify sherpa-skill.md contains correct conversational behavior instructions."""
+
+    SHERPA_SKILL = Path("aieos-governance-foundation/docs/tools/sherpa-skill.md")
+
+    @pytest.fixture
+    def content(self):
+        return self.SHERPA_SKILL.read_text()
+
+    def test_conditional_opening_question(self, content):
+        """Getting Started must not force the stock question unconditionally."""
+        # Must contain conditional logic for the opening question
+        assert re.search(
+            r"[Ii]f the user.s message already describes", content
+        ), "Getting Started should conditionally skip stock opening question"
+        assert re.search(
+            r"[Oo]nly ask.*[Ww]hat are you trying to build", content
+        ), "Getting Started should only ask stock question when user gives no indication"
+
+    def test_intent_translation_first_response(self, content):
+        """Step 1 must instruct front-loaded intent translation."""
+        assert re.search(
+            r"[Aa]pply Step 1a.*in your very first response", content
+        ), "Step 1 should instruct applying intent translation in the first response"
+
+    def test_broadened_flow_control_prohibition(self, content):
+        """Flow control rule must cover Shall I and Want me to variants."""
+        # Find the flow control rule section
+        flow_match = re.search(
+            r"Do NOT ask.*?confirmed flow\.", content, re.DOTALL
+        )
+        assert flow_match, "Flow control prohibition rule not found"
+        flow_rule = flow_match.group(0)
+        assert "Shall I validate" in flow_rule, \
+            "Flow control rule missing 'Shall I validate?' variant"
+        assert "Want me to generate" in flow_rule, \
+            "Flow control rule missing 'Want me to generate...?' variant"
+
+    def test_intake_probe_instruction(self, content):
+        """Pre-population section must instruct probing thin intake sections."""
+        assert re.search(
+            r"fewer than 2 substantive sentences", content
+        ), "Intake quality probe instruction missing from pre-population section"
+        assert re.search(
+            r"[Pp]robe once.*downstream", content
+        ), "Intake probe should link gap to downstream impact"

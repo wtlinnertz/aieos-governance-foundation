@@ -35,6 +35,8 @@
 
   "soft_checks": [
     "intent_resolution",
+    "intent_translation_timing",
+    "conditional_opening",
     "decision_explanation",
     "decision_explanation_depth",
     "decision_router_invoked",
@@ -43,7 +45,11 @@
     "convergence_loop_depth",
     "elicitation_applied",
     "risk_surfaced",
-    "path_prediction"
+    "path_prediction",
+    "quality_score_surfaced",
+    "generation_validation_separation",
+    "artifact_id_discipline",
+    "parallel_execution"
   ],
 
   "budget_usd": 6,

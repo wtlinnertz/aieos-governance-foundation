@@ -21,7 +21,10 @@
 
   "soft_checks": [
     "intent_resolution",
-    "decision_router_invoked"
+    "intent_translation_timing",
+    "decision_router_invoked",
+    "cross_initiative_scan",
+    "path_prediction"
   ],
 
   "budget_usd": 2,

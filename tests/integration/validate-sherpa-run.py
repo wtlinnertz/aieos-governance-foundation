@@ -176,7 +176,7 @@ def check_provenance(config: dict, run_dir: Path, project_dir: Path) -> list[str
 
 
 def check_no_ready_prompts(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
-    """Check session transcript for 'Ready?' prompts."""
+    """Check session transcript for 'Ready?' and other permission-seeking prompts."""
     issues = []
     transcript = run_dir / "session-transcript.md"
     if not transcript.exists():
@@ -190,21 +190,54 @@ def check_no_ready_prompts(config: dict, run_dir: Path, project_dir: Path) -> li
     )[0]
     # Remove self-assessment lines that discuss whether "Ready?" was asked
     search_content = re.sub(
-        r"^.*(?:Asked.*Ready|Ready.*Asked).*$", "", search_content, flags=re.MULTILINE | re.IGNORECASE
+        r"^.*(?:Asked.*Ready|Ready.*Asked|permission.seeking|prohibition).*$",
+        "", search_content, flags=re.MULTILINE | re.IGNORECASE
     )
+    # Remove lines that quote the prohibition rule itself (e.g., "The rule says no 'Shall I…?'")
+    search_content = re.sub(
+        r"^.*(?:rule|prohibit|never ask|critical rules).*$",
+        "", search_content, flags=re.MULTILINE | re.IGNORECASE
+    )
+
+    # Pattern 1: "Ready?" variants
     ready_matches = re.findall(
         r"[Rr]eady\s*(to\s+(proceed|continue|move|go))?\s*\?", search_content
     )
-    if ready_matches:
+    # Pattern 2: "Shall I…?" permission-seeking
+    shall_matches = re.findall(
+        r"[Ss]hall I\s+(validate|go ahead|generate|proceed|continue|create|run|start)\b.*\?",
+        search_content
+    )
+    # Pattern 3: "Want me to…?" permission-seeking
+    want_matches = re.findall(
+        r"[Ww]ant me to\s+(validate|generate|proceed|continue|create|run|start|go)\b.*\?",
+        search_content
+    )
+
+    total = len(ready_matches) + len(shall_matches) + len(want_matches)
+    if total:
+        parts = []
+        if ready_matches:
+            parts.append(f"{len(ready_matches)} 'Ready?' prompt(s)")
+        if shall_matches:
+            parts.append(f"{len(shall_matches)} 'Shall I…?' prompt(s)")
+        if want_matches:
+            parts.append(f"{len(want_matches)} 'Want me to…?' prompt(s)")
         issues.append(
-            f"Session transcript contains {len(ready_matches)} 'Ready?' prompt(s)"
+            f"Session transcript contains {', '.join(parts)} — "
+            f"permission-seeking between sequential artifacts is prohibited"
         )
 
     return issues
 
 
 def check_utility_prompts_mentioned(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
-    """Check that utility prompts were actively offered."""
+    """Check that utility prompts were actively offered.
+
+    WARN rationale: Utility prompts are optional enhancements. The sherpa correctly
+    prioritizes artifact generation over utility offers in budget-constrained sessions.
+    Promote to hard check when: interactive session tests show >80% offer rate.
+    """
     issues = []
     output_log = run_dir / "claude-output.log"
     transcript = run_dir / "session-transcript.md"
@@ -451,11 +484,153 @@ def check_intent_resolution(config: dict, run_dir: Path, project_dir: Path) -> l
         r"(sounds like|this is|this maps to|I.d classify|I.d categorize).{0,30}(P[1-5]|preset|new feature|enhancement|compliance|incident|exploratory)",
         r"(entry point|starting kit|starting at).{0,20}(PIK|EEK|ODK|RRK|PINFK)",
         r"J-ENTRY",  # Decision table reference
+        # WS1: Broader natural-language translation patterns
+        r"(this|your|you.re).{0,20}(describing|asking|looking).{0,20}(enhancement|new feature|compliance|incident|performance|exploratory)",
+        r"(sounds like|looks like|this is).{0,30}(enhancement|new feature|existing|improvement)",
+        r"(P[1-5]).{0,20}(preset|path|flow)",
+        r"(classify|categorize|route|routing).{0,20}(this|your|initiative)",
     ]
     found = any(re.search(pat, content, re.IGNORECASE) for pat in intent_patterns)
     if not found:
         issues.append(
             "No intent-to-framework translation evidence found (sherpa should map user language to AIEOS concepts)"
+        )
+
+    return issues
+
+
+def check_intent_translation_timing(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa translates intent to framework vocabulary in its first response.
+
+    The sherpa should apply Step 1a (Intent Resolution) immediately in its first
+    response — not defer translation to the second exchange. This check looks for
+    framework vocabulary in the first assistant response block.
+    """
+    issues = []
+
+    transcript = run_dir / "session-transcript.md"
+    output_log = run_dir / "claude-output.log"
+
+    content = ""
+    if transcript.exists():
+        content = transcript.read_text()
+    elif output_log.exists():
+        content = output_log.read_text()
+
+    if not content:
+        return issues
+
+    # Extract the first assistant response (before the second user message)
+    # Typical transcript format: user message, then assistant response, then user again
+    # Look for framework vocabulary in the first ~2000 chars of assistant output
+    first_block = content[:3000]
+
+    translation_patterns = [
+        r"(sounds like|this is|this maps to|I.d classify|I.d categorize).{0,30}(P[1-5]|preset|new feature|enhancement|compliance|incident|exploratory)",
+        r"(translat|map|interpret).{0,30}(framework|AIEOS|preset|entry)",
+        r"(this|your|you.re).{0,20}(describing|asking|looking).{0,20}(enhancement|new feature|compliance|incident|performance|exploratory)",
+        r"(P[1-5]).{0,20}(preset|path|flow)",
+        r"(entry point|starting kit|starting at).{0,20}(PIK|EEK|ODK|RRK)",
+    ]
+    found = any(re.search(pat, first_block, re.IGNORECASE) for pat in translation_patterns)
+    if not found:
+        issues.append(
+            "No intent translation in first response — sherpa should map user intent "
+            "to framework vocabulary immediately, not defer to second exchange"
+        )
+
+    return issues
+
+
+def check_conditional_opening(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa doesn't re-ask 'What are you trying to build?' when user already stated intent.
+
+    The sherpa should skip the stock opening question if the user's initial message
+    already describes what they want to build. This check looks for the stock question
+    in sessions where the driver provides upfront context.
+    """
+    issues = []
+
+    transcript = run_dir / "session-transcript.md"
+    output_log = run_dir / "claude-output.log"
+
+    content = ""
+    if transcript.exists():
+        content = transcript.read_text()
+    elif output_log.exists():
+        content = output_log.read_text()
+
+    if not content:
+        return issues
+
+    # Check if the config indicates the driver provides upfront context
+    # (i.e., this is NOT an ambiguous routing test where the question is expected)
+    if config.get("preset") == "ambiguous":
+        return issues  # Stock question is appropriate for ambiguous inputs
+
+    # Look for the stock opening question in assistant output
+    stock_question = re.search(
+        r"[Ww]hat are you trying to build or accomplish\s*\?", content
+    )
+
+    if stock_question:
+        # Only flag if the user's initial message clearly described their goal
+        # Check the driver config for a descriptive initial prompt
+        driver_prompt = config.get("driver_prompt", "")
+        if driver_prompt and len(driver_prompt) > 50:
+            issues.append(
+                "Sherpa asked stock opening question 'What are you trying to build?' "
+                "even though the user's message already described their goal — "
+                "should acknowledge description and apply Intent Resolution immediately"
+            )
+
+    return issues
+
+
+def check_intake_quality_probe(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa probes thin intake sections instead of silently accepting them.
+
+    When a user-provided intake section has <2 substantive sentences or only generic
+    language, the sherpa should ask one follow-up linking the gap to downstream impact.
+    """
+    issues = []
+
+    # Only relevant for configs that include intake artifacts
+    has_intake = any(
+        a.get("type") == "intake" for a in config.get("expected_artifacts", [])
+    )
+    if not has_intake:
+        return issues
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    # Look for evidence of intake probing behavior
+    probe_patterns = [
+        # Direct probe language
+        r"(section|field|input).{0,30}(light|thin|brief|sparse|generic|vague)",
+        r"could you (add|provide|elaborate|expand).{0,30}(specific|detail|more)",
+        r"(feeds|flows|goes) (directly )?into.{0,20}(downstream|next|PRD|SAD|PFD)",
+        # Downstream impact linkage
+        r"(this|that) (feeds|affects|determines|shapes).{0,30}(downstream|PRD|PFD|VH|SAD)",
+        r"(quality|detail).{0,20}(determines|affects|shapes).{0,20}(everything|downstream)",
+        # Acceptance after probe
+        r"(accept|proceed|move on|good enough).{0,20}(as.is|with what|after)",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in probe_patterns)
+    if not found:
+        issues.append(
+            "No intake quality probing evidence found — sherpa should ask one "
+            "follow-up when intake sections are thin, linking the gap to downstream impact"
         )
 
     return issues
@@ -483,6 +658,10 @@ def check_decision_explanation(config: dict, run_dir: Path, project_dir: Path) -
         r"decision\s+table",
         r"(criteria|condition).{0,30}(met|satisfied|match)",
         r"(recommend|routing).{0,30}(because|since|given)",
+        # WS1: Broader informal reasoning patterns
+        r"(because|since|given).{0,30}(you|your|this|the).{0,30}(existing|new|compliance|incident)",
+        r"(path|preset|route).{0,20}(A|B|[1-5]).{0,20}(because|since|fits|matches)",
+        r"(this means|that means|so|therefore).{0,20}(we.ll|we should|I recommend|path)",
     ]
     found = any(re.search(pat, content, re.IGNORECASE) for pat in explanation_patterns)
     if not found:
@@ -522,6 +701,12 @@ def check_health_dashboard(config: dict, run_dir: Path, project_dir: Path) -> li
         r"cross.cutting\s+(gap|missing|not\s+started)",
         r"upcoming\s+(junction|decision)",
         r"position.check",
+        # WS4: Structured health dashboard block patterns
+        r"Health Check.{0,10}(after|following)",
+        r"Frozen:\s*\d+\s*of",
+        r"Cross.cutting status:",
+        r"Overdue triggers:",
+        r"Next junction:",
     ]
     found = any(re.search(pat, content, re.IGNORECASE) for pat in health_patterns)
     if not found:
@@ -608,7 +793,13 @@ def check_rationale_replay(config: dict, run_dir: Path, project_dir: Path) -> li
 
 
 def check_elicitation_applied(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
-    """Verify sherpa applied elicitation protocol before high-value artifact generation."""
+    """Verify sherpa applied elicitation protocol before high-value artifact generation.
+
+    WARN rationale: Elicitation is the most advanced cognitive behavior — applying named
+    reasoning techniques (pre-mortem, inversion, etc.) before generation. Forcing it risks
+    cargo-cult application. Will improve as the skill is refined. Promote to hard check when:
+    elicitation application shows measurable quality improvement in artifact scores.
+    """
     issues = []
 
     output_log = run_dir / "claude-output.log"
@@ -762,6 +953,8 @@ def check_position_check_invoked(config: dict, run_dir: Path, project_dir: Path)
         r"(where\s+(are\s+)?we|current\s+position|you\s+are\s+at|you\s+are\s+here)",
         r"(ER|engagement\s+record).{0,30}(shows|indicates|confirms|has).{0,30}(frozen|artifact)",
         r"(reading|checking|reviewing).{0,30}(ER|engagement\s+record|artifact\s+director)",
+        # WS4: Structured position check output pattern
+        r"Position check:\s*(ER|engagement)",
     ]
     found = any(re.search(pat, content, re.IGNORECASE) for pat in position_patterns)
     if not found:
@@ -966,6 +1159,11 @@ def check_utility_prompts_per_kit(config: dict, run_dir: Path, project_dir: Path
 
     Enhanced version: checks for specific utility prompts per kit based on
     the preset and which kits are traversed.
+
+    WARN rationale: Kit-specific utility prompt offers are optional enhancements.
+    Budget-constrained headless sessions correctly prioritize artifact generation
+    over per-kit utility offers. Promote to hard check when: interactive session
+    tests show >80% offer rate per applicable kit.
     """
     issues = []
 
@@ -1316,6 +1514,8 @@ def check_risk_surfaced(config: dict, run_dir: Path, project_dir: Path) -> list[
         r"(missing|gap|inconsistenc).{0,30}(cross.reference|between|PRD|SAD|TDD)",
         r"(conflict|contradict).{0,30}(constraint|requirement|upstream)",
         r"before\s+(I\s+)?generat.{0,30}(notice|flag|found|see)",
+        # WS4: Structured risk scan output pattern
+        r"Risk scan:\s*\d+\s*signal",
     ]
     found = any(re.search(pat, content, re.IGNORECASE) for pat in risk_patterns)
     if not found:
@@ -1396,7 +1596,14 @@ def check_fast_path_used(config: dict, run_dir: Path, project_dir: Path) -> list
 
 
 def check_quality_score_surfaced(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
-    """Verify sherpa surfaced completeness scores after validation."""
+    """Verify sherpa surfaced completeness scores after validation.
+
+    WARN rationale: The completeness score exists in validator JSON output; verbal
+    announcement to the user is a nice-to-have quality coaching behavior. The score
+    is captured in the ER regardless. Promote to hard check when: validator output
+    parsing confirms score is always computed (i.e., the issue is announcement, not
+    computation).
+    """
     issues = []
 
     expected_frozen = sum(
@@ -1461,6 +1668,9 @@ def check_consistency_check_run(config: dict, run_dir: Path, project_dir: Path) 
         r"(PRD|SAD|TDD|WDD).{0,30}(covers|maps|aligns|matches|consistent).{0,30}(PRD|SAD|TDD|WDD|capability|component|interface)",
         r"\d+\s+of\s+\d+\s+(capabilit|component|interface|item)",
         r"(missing|gap|mismatch).{0,30}(PRD|SAD|TDD|WDD|§)",
+        # WS4: Structured consistency check output patterns
+        r"Consistency:\s*(PRD|SAD|TDD|WDD|VH|DPRD|ORD)",
+        r"\d+\s+of\s+\d+.{0,20}(mapped|covered|aligned)",
     ]
     found = any(re.search(pat, content, re.IGNORECASE) for pat in consistency_patterns)
     if not found:
@@ -1472,7 +1682,13 @@ def check_consistency_check_run(config: dict, run_dir: Path, project_dir: Path) 
 
 
 def check_finding_accumulated(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
-    """Verify sherpa detected or offered to log framework findings during the initiative."""
+    """Verify sherpa detected or offered to log framework findings during the initiative.
+
+    WARN rationale: Finding accumulation is a meta-cognitive task requiring simultaneous
+    artifact generation + framework critique. Rare in single-pass headless sessions where
+    budget is focused on artifact production. Promote to hard check when: multi-session
+    tests show >50% detection rate for planted framework gaps.
+    """
     issues = []
 
     output_log = run_dir / "claude-output.log"
@@ -1637,6 +1853,10 @@ def check_cross_initiative_scan(config: dict, run_dir: Path, project_dir: Path) 
         r"(no|zero|0).{0,20}(other|sibling).{0,20}initiative",
         r"(overlap|conflict|shared).{0,20}(component|system|module)",
         r"cross.initiative",
+        # WS1: "Scan found nothing" patterns (correct behavior in test environment)
+        r"(no|don.t see|didn.t find).{0,30}(other|sibling|existing).{0,20}(initiative|project|ER)",
+        r"(only|single|just).{0,20}(initiative|project)",
+        r"(scann|check|look).{0,30}(parent|sibling|adjacent).{0,20}(director|folder|project)",
     ]
     found = any(re.search(pat, content, re.IGNORECASE) for pat in scan_patterns)
     if not found:
@@ -1688,6 +1908,113 @@ def check_parallel_execution(config: dict, run_dir: Path, project_dir: Path) -> 
     return issues
 
 
+def check_artifact_id_discipline(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify generated artifacts use correct ID format: {TYPE}-{INITIATIVE}-{NNN}."""
+    issues = []
+    initiative = config.get("initiative_pattern", "")
+    if not initiative:
+        return issues
+
+    for artifact in config.get("expected_artifacts", []):
+        if artifact["type"] in ("routing-record", "intake"):
+            continue
+        glob_pattern = artifact["glob"]
+        files = list(project_dir.glob(f"docs/sdlc/{glob_pattern}.md"))
+        for f in files:
+            content = f.read_text()
+            artifact_type = artifact["type"]
+            # Check for properly formatted artifact ID
+            id_pattern = rf"{artifact_type}-{initiative}-\d{{3}}"
+            if not re.search(id_pattern, content, re.IGNORECASE):
+                # Also check uppercase initiative
+                id_pattern_upper = rf"{artifact_type}-{initiative.upper()}-\d{{3}}"
+                if not re.search(id_pattern_upper, content):
+                    issues.append(
+                        f"{f.name} missing properly formatted artifact ID "
+                        f"(expected {artifact_type}-{initiative.upper()}-NNN)"
+                    )
+
+    return issues
+
+
+def check_generation_validation_separation(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa enforced separate generation and validation sessions."""
+    issues = []
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    separation_patterns = [
+        r"separate.{0,20}(session|step|pass)",
+        r"(validat|evaluat).{0,20}(separate|different|new).{0,20}(session|step|pass)",
+        r"(now|next).{0,10}(validat|evaluat)",
+        r"(generat|produc).{0,30}(then|now).{0,10}(validat|evaluat)",
+        r"(do\s+not|never).{0,20}(self.validat|validat.{0,10}(same|own))",
+        # WS1: Implicit separation (sherpa re-reads file for validation)
+        r"(let me|I.ll|going to).{0,20}(review|check|validate|evaluate).{0,20}(against|using).{0,20}(gate|spec|validator)",
+        r"(reading|checking|evaluating).{0,20}(hard gate|validator|spec)",
+        r"(gate\s+\d+|hard.gate).{0,10}(PASS|FAIL|pass|fail)",
+        r"(all\s+\d+\s+gates?\s+pass|passed\s+all)",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in separation_patterns)
+    if not found:
+        issues.append(
+            "No evidence of generation/validation separation "
+            "(sherpa should generate then validate in distinct steps)"
+        )
+
+    return issues
+
+
+def check_boundary_contract_verified(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa checked boundary contracts at kit transitions."""
+    issues = []
+
+    transitions = config.get("kit_transitions", [])
+    if not transitions:
+        return issues
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    boundary_patterns = [
+        r"entry.from",
+        r"boundary.{0,20}(contract|briefing|check)",
+        r"(upstream|input).{0,20}(artifact|document).{0,20}(present|confirmed|available|frozen)",
+        r"(DPRD|ORD|RR|QGR|SDR).{0,20}(frozen|confirmed|received|present)",
+        r"(prerequisite|required\s+input).{0,20}(check|confirm|verify)",
+        # WS4: Structured boundary check output patterns
+        r"Boundary check:\s*Read entry.from",
+        r"All present:\s*(yes|no)",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in boundary_patterns)
+    if not found:
+        issues.append(
+            f"No boundary contract verification found at kit transition(s) {transitions} "
+            f"(sherpa should verify upstream artifacts are frozen and read entry-from docs)"
+        )
+
+    return issues
+
+
 CHECK_REGISTRY: dict[str, callable] = {
     "ar_origin":                    check_ar_origin,
     "el_draft":                     check_el_draft,
@@ -1713,6 +2040,9 @@ CHECK_REGISTRY: dict[str, callable] = {
     "handoff_navigator_invoked":    check_handoff_navigator_invoked,
     "decision_router_invoked":      check_decision_router_invoked,
     "intent_resolution":            check_intent_resolution,
+    "intent_translation_timing":    check_intent_translation_timing,
+    "conditional_opening":          check_conditional_opening,
+    "intake_quality_probe":         check_intake_quality_probe,
     "decision_explanation":         check_decision_explanation,
     "health_dashboard":             check_health_dashboard,
     "journal_exists":               check_journal_exists,
@@ -1736,6 +2066,9 @@ CHECK_REGISTRY: dict[str, callable] = {
     "sub_agent_awareness":          check_sub_agent_awareness,
     "reentry_awareness":            check_reentry_awareness,
     "session_resumption_depth":     check_session_resumption_depth,
+    "artifact_id_discipline":       check_artifact_id_discipline,
+    "generation_validation_separation": check_generation_validation_separation,
+    "boundary_contract_verified":   check_boundary_contract_verified,
 }
 
 

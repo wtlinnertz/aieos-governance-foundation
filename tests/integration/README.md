@@ -168,6 +168,9 @@ The following checks are available in `validate-sherpa-run.py`:
 | `risk_surfaced` | Soft | Sherpa scanned upstream artifacts for risk patterns (TBD, untested assumptions, cross-ref gaps) before generating |
 | `path_prediction` | Soft | Sherpa presented concrete artifact count, cross-cutting kit list, decision junctions, and bottleneck alerts at routing |
 | `fast_path_used` | Soft | Sherpa pre-filled obvious cross-cutting kit skip/adopt decisions with contextual reasoning |
+| `quality_score_surfaced` | Soft | Sherpa presented completeness score with assessment after validation |
+| `consistency_check_run` | Soft | Sherpa ran cross-artifact consistency checks (PRD→SAD, SAD→TDD, etc.) |
+| `finding_accumulated` | Soft | Sherpa detected or offered to log framework findings during generation |
 
 ## What Requires Manual Testing
 
@@ -181,4 +184,4 @@ The automated framework cannot verify:
 - Whether health signals are delivered at natural moments vs feeling forced
 - Whether decision rationale replay cites specific journal entries and feels like consulting a colleague who was there
 
-Use `docs/sherpa-conversation-rubric.md` for structured manual evaluation of these qualities (14 criteria on a 1-5 scale, including criteria for intent translation, decision junction reasoning, proactive health monitoring, risk awareness, cross-cutting decision efficiency, and decision rationale accessibility).
+Use `docs/sherpa-conversation-rubric.md` for structured manual evaluation of these qualities (15 criteria on a 1-5 scale, including criteria for intent translation, decision junction reasoning, proactive health monitoring, risk awareness, cross-cutting decision efficiency, quality coaching, and decision rationale accessibility).

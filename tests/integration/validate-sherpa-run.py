@@ -1395,6 +1395,114 @@ def check_fast_path_used(config: dict, run_dir: Path, project_dir: Path) -> list
     return issues
 
 
+def check_quality_score_surfaced(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa surfaced completeness scores after validation."""
+    issues = []
+
+    expected_frozen = sum(
+        1 for a in config.get("expected_artifacts", []) if a.get("frozen", False)
+    )
+    if expected_frozen < 2:
+        return issues
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    score_patterns = [
+        r"completeness.{0,10}(score|rating).{0,10}\d+",
+        r"score.{0,5}\d+\s*/\s*100",
+        r"\d+/100",
+        r"(strong|adequate|thin).{0,20}(score|completeness|quality)",
+        r"(score|completeness).{0,10}(of\s+)?\d+",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in score_patterns)
+    if not found:
+        issues.append(
+            "No completeness score surfaced after validation (sherpa should present score with assessment)"
+        )
+
+    return issues
+
+
+def check_consistency_check_run(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa ran cross-artifact consistency checks."""
+    issues = []
+
+    expected_frozen = sum(
+        1 for a in config.get("expected_artifacts", []) if a.get("frozen", False)
+    )
+    if expected_frozen < 3:
+        return issues  # Need enough artifacts for cross-checking
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    consistency_patterns = [
+        r"consistency.{0,20}check",
+        r"cross.artifact.{0,20}(check|verify|align|consistent)",
+        r"(PRD|SAD|TDD|WDD).{0,30}(covers|maps|aligns|matches|consistent).{0,30}(PRD|SAD|TDD|WDD|capability|component|interface)",
+        r"\d+\s+of\s+\d+\s+(capabilit|component|interface|item)",
+        r"(missing|gap|mismatch).{0,30}(PRD|SAD|TDD|WDD|§)",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in consistency_patterns)
+    if not found:
+        issues.append(
+            "No cross-artifact consistency check evidence found (sherpa should verify alignment between frozen artifacts)"
+        )
+
+    return issues
+
+
+def check_finding_accumulated(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa detected or offered to log framework findings during the initiative."""
+    issues = []
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    finding_patterns = [
+        r"framework\s+(gap|finding|issue)",
+        r"(template|spec|validator).{0,20}(gap|mismatch|doesn.t\s+(apply|fit|cover))",
+        r"(log|record|note).{0,20}(finding|gap|issue)",
+        r"FINDING-\d+",
+        r"(this|that).{0,20}(might|could|looks\s+like).{0,20}(framework|gap|finding)",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in finding_patterns)
+    if not found:
+        issues.append(
+            "No framework finding detection evidence found (sherpa should watch for template mismatches, spec gaps, and offer to log findings)"
+        )
+
+    return issues
+
+
 CHECK_REGISTRY: dict[str, callable] = {
     "ar_origin":                    check_ar_origin,
     "el_draft":                     check_el_draft,
@@ -1428,6 +1536,9 @@ CHECK_REGISTRY: dict[str, callable] = {
     "risk_surfaced":                check_risk_surfaced,
     "path_prediction":              check_path_prediction,
     "fast_path_used":               check_fast_path_used,
+    "quality_score_surfaced":       check_quality_score_surfaced,
+    "consistency_check_run":        check_consistency_check_run,
+    "finding_accumulated":          check_finding_accumulated,
     "convergence_loop_depth":       check_convergence_loop_depth,
     "utility_prompts_per_kit":      check_utility_prompts_per_kit,
     "cross_cutting_timing":         check_cross_cutting_timing,

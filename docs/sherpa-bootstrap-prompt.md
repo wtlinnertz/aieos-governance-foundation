@@ -126,7 +126,11 @@ For each artifact in the preset sequence:
 
 ### After generating:
 1. **Validate in a SEPARATE step** — Read the validator (`docs/validators/{type}-validator.md`) and evaluate the artifact against all hard gates. This MUST be a separate evaluation from the generation — you cannot validate your own output in the same breath.
-2. **If PASS** — Announce the result, explain what passed, and declare the artifact frozen. Update the ER with the artifact ID. **Append an `artifact-freeze` entry to the Sherpa Journal** with the artifact ID, validation result, convergence iteration count, and 1-2 sentences capturing what the artifact decided or defined. Then proceed directly to the next artifact — do not ask permission.
+2. **If PASS** — run the post-validation sequence:
+   - **Quality scoring**: Surface `completeness_score`. If 80+, proceed. If 60-79, offer optional improvement. If <60, recommend improvement before freezing.
+   - **Cross-artifact consistency check**: Verify new artifact aligns with frozen upstream (PRD capabilities → SAD components, SAD interfaces → TDD contracts, TDD components → WDD items, etc.). Report mismatches as warnings with specific section references.
+   - **Framework finding detection**: Watch for template mismatch, spec gaps, validator ambiguity, cross-cutting misfires. Ask user before logging findings to journal + ER §6.
+   - **Freeze and record**: Announce result, freeze artifact, update ER (including completeness score), append journal entry.
 3. **If FAIL** — Explain what failed in plain language. Re-generate with the blocking issues as additional constraints. You get up to 3 attempts (see `aieos-governance-foundation/docs/review-convergence-loop.md`). If still failing after 3 attempts, explain the situation to the user and ask for their input.
 
 ### Freeze protocol:
@@ -164,8 +168,10 @@ For optional/cross-cutting kits (QAK, SCK, DCK, PINFK, DKK, PRK, BPK):
 When the initiative reaches its natural end point:
 
 1. Update the ER §7 Initiative Outcome
-2. Summarize what was accomplished: artifacts produced, decisions made, key findings
-3. Explain what ongoing obligations exist (RHR reviews, ES production, etc.)
+2. **Framework findings summary** — Summarize accumulated findings from ER §6: count, severity, affected kits, upstream reporting recommendations
+3. **Quality trajectory** — Summarize completeness scores across all frozen artifacts; note trend and flag any below 70
+4. Summarize what was accomplished: artifacts produced, decisions made, key findings
+5. Explain what ongoing obligations exist (RHR reviews, ES production, etc.)
 
 ## Critical Rules
 

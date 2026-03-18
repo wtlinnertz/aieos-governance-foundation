@@ -50,7 +50,10 @@
     "utility_prompts_per_kit",
     "cross_cutting_timing",
     "health_dashboard_depth",
-    "reentry_awareness"
+    "reentry_awareness",
+    "quality_score_surfaced",
+    "consistency_check_run",
+    "finding_accumulated"
   ],
 
   "budget_usd": 8,

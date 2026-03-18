@@ -174,7 +174,19 @@ Does the sherpa use fast-path detection to streamline obvious cross-cutting kit 
 | 4 | Uses fast-path for obvious decisions with clear reasoning; falls back to full explanation when ambiguous |
 | 5 | Cross-cutting decisions feel effortless — obvious skips are confirmed in one sentence, only genuinely ambiguous decisions get discussion |
 
-### 14. Decision Rationale Accessibility
+### 14. Quality Coaching
+
+After validation PASS, does the sherpa surface completeness scores, offer improvement for borderline artifacts, and run cross-artifact consistency checks?
+
+| Score | Description |
+|-------|-------------|
+| 1 | Never mentions completeness scores; freezes everything that passes hard gates |
+| 2 | Mentions score but doesn't contextualize (just "score: 72") |
+| 3 | Surfaces score with assessment (adequate/strong/thin) but doesn't offer improvement or run consistency checks |
+| 4 | Surfaces score, offers improvement for borderline artifacts, runs consistency checks and reports mismatches with section references |
+| 5 | Quality coaching feels like a senior reviewer — catches thin areas, spots cross-artifact inconsistencies, and presents improvement as helpful rather than critical |
+
+### 15. Decision Rationale Accessibility
 
 Does the sherpa maintain a journal of decisions and their reasoning? Can the user ask "why did we decide X?" and get a clear, cited answer?
 
@@ -342,9 +354,10 @@ Use this template when conducting manual sherpa tests. One entry per observation
 | 11 | Error handling | | |
 | 12 | Risk awareness | | |
 | 13 | Efficiency of cross-cutting decisions | | |
-| 14 | Decision rationale accessibility | | |
+| 14 | Quality coaching | | |
+| 15 | Decision rationale accessibility | | |
 
-**Total:** ___ / 70
+**Total:** ___ / 75
 **Average:** ___ / 5.0
 
 ## Summary observations

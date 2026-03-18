@@ -189,8 +189,55 @@ For each artifact in the preset sequence:
 
 ### After generating:
 1. **Validate in a SEPARATE step** — Read the validator (`docs/validators/{type}-validator.md`) and evaluate the artifact against all hard gates. This MUST be a separate evaluation from the generation — you cannot validate your own output in the same breath.
-2. **If PASS** — Announce the result, explain what passed, and declare the artifact frozen. Update the ER with the artifact ID. **Append an `artifact-freeze` entry to the Sherpa Journal** with the artifact ID, validation result, convergence iteration count, and 1-2 sentences capturing what the artifact decided or defined. Then proceed directly to the next artifact — do not ask permission.
-3. **If FAIL** — Explain what failed in plain language. Re-generate with the blocking issues as additional constraints. You get up to 3 attempts (see `aieos-governance-foundation/docs/review-convergence-loop.md`). If still failing after 3 attempts, explain the situation to the user and ask for their input.
+2. **If PASS** — proceed through the post-validation sequence below. **If FAIL** — explain what failed in plain language. Re-generate with the blocking issues as additional constraints. You get up to 3 attempts (see `aieos-governance-foundation/docs/review-convergence-loop.md`). If still failing after 3 attempts, explain the situation to the user and ask for their input.
+
+### Post-validation sequence (on PASS):
+
+**Step A: Quality scoring** — Read the `completeness_score` from the validator output. Surface it to the user with context:
+
+| Score Range | Assessment | Action |
+|-------------|-----------|--------|
+| 80–100 | Strong | Announce score, proceed to freeze |
+| 60–79 | Adequate | "This passed all hard gates (score: {N}/100). Common gaps at this level: {gap hints based on artifact type}. You can freeze as-is, or I can strengthen it." |
+| Below 60 | Thin | "This passed hard gates but scored {N}/100 — that's thin. I recommend one improvement pass before freezing. The weak areas are likely: {gap hints}." |
+
+**Gap hints by artifact type** (use when score < 80):
+- PRD/DPRD: missing non-functional requirements, incomplete acceptance criteria
+- SAD: missing failure modes, incomplete interface contracts
+- TDD: missing error handling scenarios, incomplete state transitions
+- WDD: missing dependency analysis, unclear assignee rationale
+- VH: weak falsification criteria, missing measurement methodology
+
+If the user chooses to improve, run one correction cycle targeting the weak areas, then re-validate. This does NOT count against the 3-attempt convergence limit (it's optional improvement, not a failure correction).
+
+**Step B: Cross-artifact consistency check** — After validation PASS (and optional quality improvement), verify the new artifact is consistent with previously frozen artifacts:
+
+| New Artifact | Check Against | What to Verify |
+|-------------|--------------|----------------|
+| SAD | PRD/DPRD | Every PRD capability maps to at least one SAD component |
+| TDD | SAD | Interface names and signatures match SAD contracts |
+| WDD | TDD | Every TDD component appears in at least one WDD item |
+| VH | PFD | PFD personas are represented in value hypotheses |
+| DPRD | VH + EL | VH verdicts and EL outcomes are reflected in DPRD scope decisions |
+| Execution Plan | SAD + TDD | Every SAD layer has at least one work item; every TDD component is covered |
+| ORD | WDD + TDD | All WDD items are addressed; TDD test coverage is complete |
+
+Report mismatches as **warnings** (not blockers) with specific location references: "SAD covers 5 of 7 PRD capabilities. Missing: Notification Preferences (PRD §3.4) and Audit Trail (PRD §3.6). These may be intentionally deferred — want to add them or document the exclusion?"
+
+If the user confirms the exclusion, note it in the artifact. If they want to add the missing items, update before freezing.
+
+**Step C: Framework finding detection** — During generation and validation, watch for patterns that suggest framework gaps:
+
+| Pattern | Detection | Example |
+|---------|-----------|---------|
+| **Template mismatch** | User says "this section doesn't apply to us" or a template section is force-filled with "N/A" content | CLI tool filling web-specific deployment sections |
+| **Spec gap** | Spec doesn't cover a scenario the user described; validation passes but feels like a stretch | Multi-tenant SaaS hitting single-tenant assumptions |
+| **Validator ambiguity** | Gate passes but the artifact content seems to satisfy the letter, not the spirit | Completeness score high but domain coverage thin |
+| **Cross-cutting misfire** | Kit trigger conditions don't match the initiative's reality | SCK triggered for a read-only internal dashboard |
+
+When detected, ask: "This looks like it might be a framework gap — {description}. Want me to log it as a finding?" If yes, append a `finding-detected` entry to the Sherpa Journal and add to ER §6 Framework Findings with: finding ID ({KIT}-FINDING-{N}), artifact context, description, and severity (observation / suggestion / gap).
+
+**Step D: Freeze and record** — Announce the result, explain what passed, and declare the artifact frozen. Update the ER with the artifact ID and completeness score. **Append an `artifact-freeze` entry to the Sherpa Journal** with the artifact ID, validation result, completeness score, convergence iteration count, and 1-2 sentences capturing what the artifact decided or defined. Then proceed directly to the next artifact — do not ask permission.
 
 ### Freeze protocol:
 - When an artifact passes validation, tell the user: "This artifact is now frozen. That means it's locked — we won't change it unless we go through a formal impact analysis process. Everything downstream depends on this being stable."
@@ -256,8 +303,10 @@ For optional/cross-cutting kits (QAK, SCK, DCK, PINFK, DKK, PRK, BPK):
 When the initiative reaches its natural end point:
 
 1. Update the ER §7 Initiative Outcome
-2. Summarize what was accomplished: artifacts produced, decisions made, key findings
-3. Explain what ongoing obligations exist (RHR reviews, ES production, etc.)
+2. **Framework findings summary** — If any framework findings were accumulated during the initiative (in the journal and ER §6), summarize them: count, severity distribution, which kits/specs they affect, and recommend which should be reported upstream to the governance foundation for framework improvement
+3. **Quality trajectory** — Summarize completeness scores across all frozen artifacts. Note the trend (improving/declining/stable) and flag any artifacts that froze below 70
+4. Summarize what was accomplished: artifacts produced, decisions made, key findings
+5. Explain what ongoing obligations exist (RHR reviews, ES production, etc.)
 
 ## Critical Rules
 

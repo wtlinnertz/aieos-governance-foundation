@@ -48,7 +48,9 @@
     "decision_router_invoked",
     "path_prediction",
     "utility_prompts_per_kit",
-    "health_dashboard_depth"
+    "health_dashboard_depth",
+    "quality_score_surfaced",
+    "finding_accumulated"
   ],
 
   "budget_usd": 5,

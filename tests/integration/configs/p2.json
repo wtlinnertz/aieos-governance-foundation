@@ -53,7 +53,10 @@
     "cross_cutting_timing",
     "health_dashboard_depth",
     "sub_agent_awareness",
-    "reentry_awareness"
+    "reentry_awareness",
+    "quality_score_surfaced",
+    "consistency_check_run",
+    "finding_accumulated"
   ],
 
   "budget_usd": 5,

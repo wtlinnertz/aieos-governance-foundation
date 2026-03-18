@@ -165,6 +165,9 @@ The following checks are available in `validate-sherpa-run.py`:
 | `journal_exists` | Hard | Sherpa Journal file created in docs/engagement/ |
 | `journal_entries` | Hard | Journal has routing-decision entry and artifact-freeze entries matching frozen artifact count |
 | `rationale_replay` | Soft | When "why did we decide X?" is asked, sherpa cites journal entries and decision tables |
+| `risk_surfaced` | Soft | Sherpa scanned upstream artifacts for risk patterns (TBD, untested assumptions, cross-ref gaps) before generating |
+| `path_prediction` | Soft | Sherpa presented concrete artifact count, cross-cutting kit list, decision junctions, and bottleneck alerts at routing |
+| `fast_path_used` | Soft | Sherpa pre-filled obvious cross-cutting kit skip/adopt decisions with contextual reasoning |
 
 ## What Requires Manual Testing
 
@@ -178,4 +181,4 @@ The automated framework cannot verify:
 - Whether health signals are delivered at natural moments vs feeling forced
 - Whether decision rationale replay cites specific journal entries and feels like consulting a colleague who was there
 
-Use `docs/sherpa-conversation-rubric.md` for structured manual evaluation of these qualities (12 criteria on a 1-5 scale, including criteria for intent translation, decision junction reasoning, proactive health monitoring, and decision rationale accessibility).
+Use `docs/sherpa-conversation-rubric.md` for structured manual evaluation of these qualities (14 criteria on a 1-5 scale, including criteria for intent translation, decision junction reasoning, proactive health monitoring, risk awareness, cross-cutting decision efficiency, and decision rationale accessibility).

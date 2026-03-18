@@ -41,7 +41,14 @@
     "utility_prompts_mentioned",
     "intent_resolution",
     "decision_explanation",
-    "health_dashboard"
+    "health_dashboard",
+    "elicitation_applied",
+    "decision_explanation_depth",
+    "position_check_invoked",
+    "decision_router_invoked",
+    "path_prediction",
+    "utility_prompts_per_kit",
+    "health_dashboard_depth"
   ],
 
   "budget_usd": 5,

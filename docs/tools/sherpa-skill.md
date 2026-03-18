@@ -82,12 +82,25 @@ Example: "We're at the Path A vs Path B decision (J-EEK-PATH). The decision tabl
 
 This protocol ensures the user understands *why* the framework routes them a certain way, not just *where* it sends them.
 
-### Step 3: Present your recommendation and save the routing record
+### Step 3: Present your recommendation with path prediction
 
 Based on the decision table evaluation, explain your recommendation in plain language:
 - What preset you're recommending and why
-- What the journey looks like at a high level (which kits, roughly how many artifacts)
 - What you'll skip and why (optional layers not relevant to their initiative)
+
+**Predictive path summary:** After selecting the preset, read `initiative-presets.md` and compute a concrete roadmap for the user:
+
+1. **Required artifact count** — count the required artifacts from the preset's artifact table (exact number, not "roughly")
+2. **Cross-cutting kits** — list which are required vs. optional for this preset
+3. **Decision junctions** — count the junction points ahead (kit transitions, path selections, adoption decisions)
+4. **Bottleneck alerts** — flag known high-effort points:
+   - QAK quality gate (requires test execution evidence)
+   - PRK multi-lens review (requires parallel lens execution)
+   - SCK Threat Model (requires security expertise)
+   - EL experiments (requires real-world execution, often pauses the session)
+   - BPK Readiness Confirmation (requires stakeholder sign-off)
+
+Present as a brief roadmap: "This P1 New Feature will produce 18 required artifacts across PIK and EEK, with 6 optional cross-cutting kits. You'll hit 4 decision points. The Experiment Log typically pauses the session (you'll need to run real experiments), and the QAK quality gate requires the most detailed test evidence."
 
 Wait for the user to confirm before proceeding.
 
@@ -125,13 +138,37 @@ For each artifact in the preset sequence:
 3. Read the artifact's spec (`docs/specs/{type}-spec.md`) to understand hard gates
 4. Read the artifact's template (`docs/artifacts/{type}-template.md`) for structure
 5. Verify all upstream dependencies are frozen
-6. **Check for utility prompts** — read the kit's playbook and CLAUDE.md for utility prompts that apply at this stage in the flow. If one exists, you MUST briefly explain what it does in plain language and ask if the user wants to run it before proceeding. This is not optional — surfacing available tools is part of the sherpa's guide role. The user cannot request tools they don't know about. **Do this BEFORE the "Explain to the user" step for the next artifact** — the offer is part of the transition between artifacts, not a separate phase you can skip.
+6. **Scan upstream artifacts for risk signals** — before generating, read the frozen upstream artifacts and flag patterns that could affect quality:
 
-   **Known utility prompt trigger points (PIK):**
-   - After AR freeze, before EL generation → offer `assumption-stress-test-prompt.md` ("Before we design experiments, there's an optional adversarial stress test that tries to poke holes in your assumptions. Want to run it first?")
-   - After Discovery Intake, before PFD → offer `brownfield-analysis-prompt.md` if the initiative involves an existing system
-   - After PFD, before VH → offer `stakeholder-alignment-prompt.md` if multiple stakeholders with potentially conflicting interests
-   - At any point with parallel initiatives → offer `cross-initiative-conflict-prompt.md`
+   | Risk Pattern | Detection | Advisory |
+   |-------------|-----------|----------|
+   | **High assumption count** | AR has >8 assumptions | "Your assumption register is substantial — consider running the stress test before proceeding" |
+   | **Untested assumptions** | AR has assumptions marked "Untested" or Origin: "AI-derived" | "Some assumptions haven't been validated by users — flag these in the next artifact" |
+   | **Ambiguous scope** | Upstream contains "TBD", "to be determined", "out of scope for now" | "There are unresolved scope items in {artifact} §{section} — should we clarify before building on them?" |
+   | **Missing cross-references** | PRD mentions a system/capability not referenced in SAD components | "PRD mentions {system} but SAD doesn't have a component for it — gap or intentional exclusion?" |
+   | **Conflicting constraints** | Upstream artifacts contain contradictory requirements (e.g., "real-time" in PRD but "batch" in SAD) | "PRD says {X} but SAD says {Y} — which takes precedence?" |
+
+   Risk signals are advisory — present them briefly before generation and let the user decide whether to address them. Do NOT block generation; do NOT silently skip them.
+
+7. **Offer applicable tools and utilities** — check for utility prompts, elicitation techniques, and tools that apply at this stage. Use **heuristic triggers** (not a static checklist) to determine what to offer:
+
+   **Utility prompts (offer if heuristic is met):**
+
+   | Utility | Kit | Heuristic Trigger | Offer Language |
+   |---------|-----|-------------------|----------------|
+   | Brownfield Analysis | PIK | Intake or PRD mentions existing system, migration, replacement, or legacy | "This involves an existing system — there's an analysis tool that maps what you're changing onto what's already there. Want to run it?" |
+   | Assumption Stress Test | PIK | AR has >5 assumptions OR any assumption is AI-derived | "You have {N} assumptions, some AI-derived. There's an adversarial stress test that tries to poke holes in them. Worth running before experiments?" |
+   | Stakeholder Alignment | PIK | PFD identifies >3 stakeholders OR stakeholders span different org units | "Multiple stakeholders with potentially different priorities — want to run a quick alignment check?" |
+   | Cross-Initiative Conflict | Any | Other active initiatives detected with overlapping components | "I found {N} other active initiatives — {names}. There's a conflict check that compares scope overlap. Want to run it?" |
+   | Elicitation Protocol | Any | Next artifact has 5+ hard gates, or upstream has untested assumptions (per `elicitation-protocol.md`) | "This is a high-gate artifact — I'll apply {technique name} to strengthen it before generating. This surfaces blind spots proactively." |
+   | Adversarial Review (PRK) | EEK | After freezing SAD, TDD, or ORD — these are high-impact artifacts | "Now that {artifact} is frozen, want me to run an adversarial review lens? It stress-tests from a skeptic's perspective." |
+   | Briefing Distillation | Any | At kit transitions with >3 frozen artifacts to hand off (per `briefing-distillation-spec.md`) | "We're handing off {N} frozen artifacts to {next kit}. Want me to distill them into a compact briefing for downstream consumption?" |
+
+   **Rules for offering:**
+   - One sentence on what it does, one sentence on why now, then the question
+   - Never offer more than 2 utilities at once — prioritize by relevance
+   - If the user declined a utility type earlier in this session, don't re-offer it
+   - Elicitation is applied silently (with a `<!-- Elicitation: ... -->` comment) — inform the user but don't require confirmation
 
 ### Explain to the user:
 - What artifact you're about to create and what it does (in plain language)
@@ -195,7 +232,21 @@ This check is advisory — it does not block progress. But it prevents cross-cut
 For optional/cross-cutting kits (QAK, SCK, DCK, PINFK, DKK, PRK, BPK):
 
 - Check the preset to see if they're required, optional, or not applicable
-- If optional, briefly explain what the kit does and ask if the user wants to include it
+- **For optional kits, apply fast-path detection first** — check if the adoption/decline decision is obvious from context already gathered. If fast-path criteria are met, present the pre-filled decision for confirmation instead of a multi-question exploration:
+
+  | Kit | Fast-path SKIP criteria | Fast-path ADOPT criteria |
+  |-----|------------------------|-------------------------|
+  | SCK | No external data, no PII, no auth changes, solo developer, internal tool | Handles PII, has auth, external-facing, compliance preset (P3) |
+  | QAK | P5 (exploratory), fewer than 3 integration points | P1 or P3 (new feature or compliance) |
+  | DCK | No feature flags, no config changes, no schema changes | Feature flags mentioned in PRD/SAD, schema migration needed |
+  | PINFK | Deploying to existing infrastructure, no new services | New service, new deployment target, infrastructure changes |
+  | DKK | Internal-only tool, no API changes, no user-facing features | Public API, user-facing features, support team exists |
+  | PRK | P5 (exploratory), P4 (targeted fix with <3 artifacts) | P1 or P3 (high-impact, multi-artifact) |
+  | BPK | No workflow changes, no role changes, developer-only tool | Changes how people do their jobs, new roles or handoffs |
+
+  **Fast-path format:** "I'm recommending we **skip SCK** for this initiative — it's a solo-developer internal tool with no PII or auth changes. Sound right?" One confirmation replaces a multi-question exploration.
+
+- If fast-path criteria are NOT met (ambiguous), fall back to the full explanation: briefly explain what the kit does and ask if the user wants to include it
 - **Record every adoption decision in the ER** — for each cross-cutting kit discussed, add a row to the ER's cross-cutting section with the kit name, decision (Adopted / Declined / Deferred), and a one-line rationale. This applies to both adoptions and declines — the ER must show the decision was made, not just silently omitted.
 - **Append a `cross-cutting-adoption` entry to the Sherpa Journal** for each decision, capturing the kit, decision, rationale, and any risk acknowledged.
 - Don't pressure — but do flag when skipping might create risk

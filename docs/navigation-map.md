@@ -192,6 +192,12 @@ Every node represents a state the initiative can be in. Node types:
 | N-BPK-TP | BPK | artifact | Transition Plan |
 | N-BPK-RC | BPK | artifact | Readiness Confirmation |
 
+### Shared Utility Nodes
+
+| Node ID | Kit | Type | Name |
+|---------|-----|------|------|
+| N-UTIL-BRIEFING-DISTILLATION | — | utility | Briefing Distillation (compress frozen artifact for downstream consumption) |
+
 ---
 
 ## Section 2: Edges

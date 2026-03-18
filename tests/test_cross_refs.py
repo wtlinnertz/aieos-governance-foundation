@@ -294,14 +294,14 @@ class TestNavigationMapConsistency:
 
 
 class TestPRKLensCount:
-    """PRK should have exactly 12 review lens tools."""
+    """PRK should have exactly 13 review lens tools."""
 
-    def test_prk_has_twelve_lenses(self, parsed_kits):
+    def test_prk_has_thirteen_lenses(self, parsed_kits):
         prk = parsed_kits.get("aieos-peer-review-kit")
         assert prk is not None, "PRK not found in parsed kits"
         lens_specs = [t for t in prk.tool_specs if t.tool_name.startswith("review-")]
-        assert len(lens_specs) == 12, (
-            f"Expected 12 review lens specs in PRK, found {len(lens_specs)}: "
+        assert len(lens_specs) == 13, (
+            f"Expected 13 review lens specs in PRK, found {len(lens_specs)}: "
             f"{[t.tool_name for t in lens_specs]}"
         )
 
@@ -319,6 +319,14 @@ class TestPRKLensCount:
         lens_names = [t.tool_name for t in prk.tool_specs]
         assert "review-resilience" in lens_names, (
             "review-resilience lens not found in PRK tools"
+        )
+
+    def test_adversarial_lens_exists(self, parsed_kits):
+        prk = parsed_kits.get("aieos-peer-review-kit")
+        assert prk is not None
+        lens_names = [t.tool_name for t in prk.tool_specs]
+        assert "review-adversarial" in lens_names, (
+            "review-adversarial lens not found in PRK tools"
         )
 
 

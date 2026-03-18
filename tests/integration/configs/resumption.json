@@ -40,7 +40,10 @@
 
   "soft_checks": [
     "intent_resolution",
-    "rationale_replay"
+    "rationale_replay",
+    "position_check_invoked",
+    "decision_explanation_depth",
+    "session_resumption_depth"
   ],
 
   "budget_usd": 8,

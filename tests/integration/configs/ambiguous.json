@@ -20,7 +20,8 @@
   ],
 
   "soft_checks": [
-    "intent_resolution"
+    "intent_resolution",
+    "decision_router_invoked"
   ],
 
   "budget_usd": 2,

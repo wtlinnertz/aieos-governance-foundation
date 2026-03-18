@@ -37,7 +37,15 @@
     "kit_transition_explanations",
     "intent_resolution",
     "decision_explanation",
-    "health_dashboard"
+    "health_dashboard",
+    "briefing_distillation_offered",
+    "decision_explanation_depth",
+    "handoff_navigator_invoked",
+    "decision_router_invoked",
+    "risk_surfaced",
+    "path_prediction",
+    "utility_prompts_per_kit",
+    "reentry_awareness"
   ],
 
   "budget_usd": 5,

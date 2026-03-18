@@ -39,7 +39,9 @@
 
   "soft_checks": [
     "intent_resolution",
-    "decision_explanation"
+    "decision_explanation",
+    "decision_explanation_depth",
+    "decision_router_invoked"
   ],
 
   "budget_usd": 5,

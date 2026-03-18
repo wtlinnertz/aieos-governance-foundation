@@ -53,12 +53,12 @@ After gathering the user's answers, read the decision tables in `navigation-map.
 
 Do NOT invent your own routing criteria. The decision tables are authoritative. If the user's answers don't clearly match any row, ask clarifying questions until they do — or present the matching options and let the user choose.
 
-### Step 3: Present your recommendation and save the routing record
+### Step 3: Present your recommendation with path prediction
 
 Based on the decision table evaluation, explain your recommendation in plain language:
 - What preset you're recommending and why
-- What the journey looks like at a high level (which kits, roughly how many artifacts)
 - What you'll skip and why (optional layers not relevant to their initiative)
+- **Predictive path summary:** Read `initiative-presets.md` and present: exact required artifact count, which cross-cutting kits are required vs. optional, how many decision junctions lie ahead, and known bottleneck points (QAK quality gate, EL experiments, PRK multi-lens review, SCK Threat Model). Give the user a concrete roadmap, not a vague "roughly how many."
 
 Wait for the user to confirm before proceeding.
 
@@ -96,13 +96,16 @@ For each artifact in the preset sequence:
 3. Read the artifact's spec (`docs/specs/{type}-spec.md`) to understand hard gates
 4. Read the artifact's template (`docs/artifacts/{type}-template.md`) for structure
 5. Verify all upstream dependencies are frozen
-6. **Check for utility prompts** — read the kit's playbook and CLAUDE.md for utility prompts that apply at this stage in the flow. If one exists, you MUST briefly explain what it does in plain language and ask if the user wants to run it before proceeding. This is not optional — surfacing available tools is part of the sherpa's guide role. The user cannot request tools they don't know about.
-
-   **Known utility prompt trigger points (PIK):**
-   - After AR freeze, before EL generation → offer `assumption-stress-test-prompt.md` ("Before we design experiments, there's an optional adversarial stress test that tries to poke holes in your assumptions. Want to run it first?")
-   - After Discovery Intake, before PFD → offer `brownfield-analysis-prompt.md` if the initiative involves an existing system
-   - After PFD, before VH → offer `stakeholder-alignment-prompt.md` if multiple stakeholders with potentially conflicting interests
-   - At any point with parallel initiatives → offer `cross-initiative-conflict-prompt.md`
+6. **Scan upstream artifacts for risk signals** — flag high assumption counts (>8), untested/AI-derived assumptions, "TBD" scope items, missing cross-references between artifacts, and conflicting constraints. Present as brief advisory — do not block generation.
+7. **Offer applicable tools and utilities using heuristic triggers** — don't use a static checklist. Offer based on context:
+   - Brownfield Analysis if intake mentions existing systems/migration/legacy
+   - Assumption Stress Test if AR has >5 assumptions or AI-derived ones
+   - Stakeholder Alignment if >3 stakeholders or cross-org
+   - Cross-Initiative Conflict if other active initiatives overlap
+   - Elicitation Protocol before artifacts with 5+ hard gates (per `elicitation-protocol.md`)
+   - Adversarial Review (PRK lens) after freezing SAD, TDD, or ORD
+   - Briefing Distillation at kit transitions with >3 frozen artifacts (per `briefing-distillation-spec.md`)
+   - Never offer more than 2 at once; respect prior declines
 
 ### Explain to the user:
 - What artifact you're about to create and what it does (in plain language)
@@ -151,9 +154,9 @@ When you finish the last artifact in a kit:
 For optional/cross-cutting kits (QAK, SCK, DCK, PINFK, DKK, PRK, BPK):
 
 - Check the preset to see if they're required, optional, or not applicable
-- If optional, briefly explain what the kit does and ask if the user wants to include it
-- If they decline, note "not adopted" in the ER and move on
-- **Append a `cross-cutting-adoption` entry to the Sherpa Journal** for each decision, capturing the kit, decision, rationale, and any risk acknowledged.
+- **Apply fast-path detection first** — if the skip/adopt decision is obvious from context (e.g., no PII → skip SCK; P1 preset → adopt QAK), present a pre-filled recommendation for one-click confirmation instead of a multi-question exploration. Fast-path format: "I'm recommending we **skip SCK** — no PII or auth changes. Sound right?"
+- If ambiguous, fall back to explaining the kit and asking
+- **Record every adoption decision in the ER** and **append a `cross-cutting-adoption` entry to the Sherpa Journal**
 - Don't pressure — but do flag when skipping might create risk
 
 ## Phase 6: Completion

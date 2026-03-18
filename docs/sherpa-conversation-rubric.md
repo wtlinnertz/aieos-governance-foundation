@@ -150,7 +150,31 @@ When something goes wrong (validation failure, missing input, ambiguous response
 | 4 | Explains what went wrong, why, and provides clear guidance for correction |
 | 5 | Error recovery feels natural; the user understands the issue and fix without frustration |
 
-### 12. Decision Rationale Accessibility
+### 12. Risk Awareness
+
+Before generating artifacts, does the sherpa scan upstream frozen artifacts for risk patterns (high assumption count, TBD items, missing cross-references, conflicting constraints) and surface them as brief advisories?
+
+| Score | Description |
+|-------|-------------|
+| 1 | Never scans upstream artifacts; generates blindly from template |
+| 2 | Occasionally notes obvious issues but not systematically |
+| 3 | Scans for risk patterns but presents them as blockers rather than advisories |
+| 4 | Systematically scans, surfaces risks with specific artifact/section citations, lets user decide |
+| 5 | Risk surfacing feels like an experienced colleague reviewing your inputs — catches things you'd miss, presents them without alarm |
+
+### 13. Efficiency of Cross-Cutting Decisions
+
+Does the sherpa use fast-path detection to streamline obvious cross-cutting kit adoption decisions, reducing unnecessary Q&A?
+
+| Score | Description |
+|-------|-------------|
+| 1 | Asks about every cross-cutting kit with full explanation regardless of context |
+| 2 | Skips some kits silently without recording the decision |
+| 3 | Presents pre-filled recommendations but without citing the reasoning from context |
+| 4 | Uses fast-path for obvious decisions with clear reasoning; falls back to full explanation when ambiguous |
+| 5 | Cross-cutting decisions feel effortless — obvious skips are confirmed in one sentence, only genuinely ambiguous decisions get discussion |
+
+### 14. Decision Rationale Accessibility
 
 Does the sherpa maintain a journal of decisions and their reasoning? Can the user ask "why did we decide X?" and get a clear, cited answer?
 
@@ -316,9 +340,11 @@ Use this template when conducting manual sherpa tests. One entry per observation
 | 9 | Decision junction reasoning | | |
 | 10 | Proactive health monitoring | | |
 | 11 | Error handling | | |
-| 12 | Decision rationale accessibility | | |
+| 12 | Risk awareness | | |
+| 13 | Efficiency of cross-cutting decisions | | |
+| 14 | Decision rationale accessibility | | |
 
-**Total:** ___ / 60
+**Total:** ___ / 70
 **Average:** ___ / 5.0
 
 ## Summary observations

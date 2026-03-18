@@ -12,12 +12,19 @@ from models.framework import (
     DEPENDENCY_EDGES,
     ENTRY_POINTS,
     PRESET_DEFINITIONS,
+    BOUNDARY_CONTRACTS,
 )
 
 # Load all feature files
 scenarios("features/escalation.feature")
 scenarios("features/presets.feature")
 scenarios("features/reentry.feature")
+scenarios("features/sherpa.feature")
+scenarios("features/decision-tables.feature")
+scenarios("features/utility-prompts.feature")
+scenarios("features/cross-cutting-timing.feature")
+scenarios("features/sub-agent-orchestration.feature")
+scenarios("features/reentry-behavior.feature")
 
 
 # ─── Shared State ─────────────────────────────────────────────────────────────
@@ -126,6 +133,31 @@ def check_required_artifact(state, artifact):
     assert artifact in state.preset.required_artifacts, (
         f"'{artifact}' not in required artifacts"
     )
+
+
+@then(parsers.parse('"{artifact}" is not a required artifact'))
+def check_not_required_artifact(state, artifact):
+    assert artifact not in state.preset.required_artifacts, (
+        f"'{artifact}' should not be required but is in: {state.preset.required_artifacts}"
+    )
+
+
+@then(parsers.parse('"{entry}" is a valid entry point'))
+def check_valid_entry_point(state, entry):
+    assert entry in ENTRY_POINTS, (
+        f"'{entry}' not in ENTRY_POINTS: {ENTRY_POINTS}"
+    )
+
+
+@then(parsers.parse('"{source}" does not block "{target}"'))
+def check_no_freeze_dependency(state, source, target):
+    """Verify no freeze-type edge exists between two artifacts (they are independent)."""
+    if state.freeze_graph.has_edge(source, target):
+        edge_data = state.freeze_graph.edges[source, target]
+        assert edge_data.get("gate") != "freeze", (
+            f"Unexpected freeze dependency from {source} to {target}"
+        )
+    # No edge = no dependency = PASS
 
 
 # ─── Flow Validation Rules Steps ─────────────────────────────────────────────

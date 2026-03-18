@@ -607,6 +607,279 @@ def check_rationale_replay(config: dict, run_dir: Path, project_dir: Path) -> li
     return issues
 
 
+def check_elicitation_applied(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa applied elicitation protocol before high-value artifact generation."""
+    issues = []
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    # Look for evidence of elicitation protocol application
+    elicitation_patterns = [
+        r"elicitation",
+        r"pre.mortem",
+        r"first.principles",
+        r"inversion",
+        r"stakeholder.lens",
+        r"constraint.removal",
+        r"assumption.surfacing",
+        r"<!-- Elicitation:",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in elicitation_patterns)
+    if not found:
+        issues.append(
+            "No elicitation protocol evidence found (sherpa should apply elicitation techniques before generating high-gate-count artifacts)"
+        )
+
+    return issues
+
+
+def check_adversarial_lens_offered(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa offered the adversarial review lens at appropriate review points."""
+    issues = []
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    # Look for evidence of adversarial lens being offered or discussed
+    adversarial_patterns = [
+        r"adversarial\s+(lens|review)",
+        r"review.adversarial",
+        r"minimum.findings",
+        r"(attack|probe|skeptic).{0,30}(assumption|boundary|failure)",
+        r"(optional|recommend).{0,30}adversarial",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in adversarial_patterns)
+    if not found:
+        issues.append(
+            "No adversarial lens mention found (sherpa should offer adversarial review for high-impact artifacts like SAD, TDD, ORD)"
+        )
+
+    return issues
+
+
+def check_decision_explanation_depth(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa provides structured 5-part decision explanations at junctions.
+
+    The 5-part protocol: (1) cite decision table ID, (2) state criteria evaluated,
+    (3) cite evidence, (4) name the outcome, (5) recommend action.
+    """
+    issues = []
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    # Part 1: Decision table ID cited
+    has_table_id = bool(re.search(r"J-[A-Z]+-[A-Z0-9]+", content))
+
+    # Part 2: Criteria evaluated
+    criteria_patterns = [
+        r"(criteria|condition|question).{0,30}(evaluat|check|assess|met|satisfied)",
+        r"routing\s+question",
+        r"(is\s+this|does\s+this|has\s+the).{0,30}\?",
+    ]
+    has_criteria = any(re.search(pat, content, re.IGNORECASE) for pat in criteria_patterns)
+
+    # Part 3: Evidence cited
+    evidence_patterns = [
+        r"(because|since|given\s+that|evidence|based\s+on).{0,40}(frozen|artifact|intake|ER|DPRD|ORD|PRD)",
+        r"(from|per|according\s+to).{0,30}(upstream|PIK|EEK|SSK|QAK|REK|RRK|ODK)",
+    ]
+    has_evidence = any(re.search(pat, content, re.IGNORECASE) for pat in evidence_patterns)
+
+    # Part 4: Outcome named (Decision Outcome Taxonomy: Approve, Block, Defer, etc.)
+    outcome_patterns = [
+        r"(recommend|route|routing|proceed|select).{0,30}(P[1-5]|Path\s+[AB]|PIK|EEK|ODK|SSK|PINFK)",
+        r"(entry\s+point|preset|starting\s+kit)\s*[:=]?\s*(PIK|EEK|ODK|SSK|PINFK|P[1-5])",
+        r"(approve|block|defer|require.redesign|rollback|remediate)",
+    ]
+    has_outcome = any(re.search(pat, content, re.IGNORECASE) for pat in outcome_patterns)
+
+    parts_found = sum([has_table_id, has_criteria, has_evidence, has_outcome])
+
+    if parts_found < 2:
+        issues.append(
+            f"Decision explanation lacks depth: found {parts_found}/4 protocol parts "
+            f"(table_id={has_table_id}, criteria={has_criteria}, evidence={has_evidence}, outcome={has_outcome}). "
+            f"Sherpa should cite decision table ID, evaluate criteria with evidence, and name the routing outcome."
+        )
+
+    return issues
+
+
+def check_position_check_invoked(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa invoked position-check tool after 3+ artifact freezes or at context switches."""
+    issues = []
+
+    expected_frozen = sum(
+        1 for a in config.get("expected_artifacts", []) if a.get("frozen", False)
+    )
+    if expected_frozen < 3:
+        return issues  # Not enough artifacts to trigger position-check
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    position_patterns = [
+        r"position.check",
+        r"TOOL.POSITION.CHECK",
+        r"(where\s+(are\s+)?we|current\s+position|you\s+are\s+at|you\s+are\s+here)",
+        r"(ER|engagement\s+record).{0,30}(shows|indicates|confirms|has).{0,30}(frozen|artifact)",
+        r"(reading|checking|reviewing).{0,30}(ER|engagement\s+record|artifact\s+director)",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in position_patterns)
+    if not found:
+        issues.append(
+            f"No position-check evidence found after {expected_frozen} frozen artifacts "
+            f"(sherpa should invoke position-check to orient after 3+ freezes)"
+        )
+
+    return issues
+
+
+def check_handoff_navigator_invoked(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa invoked handoff-navigator at kit transitions."""
+    issues = []
+
+    transitions = config.get("kit_transitions", [])
+    if not transitions:
+        return issues  # No kit transitions
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    handoff_patterns = [
+        r"handoff.navigator",
+        r"TOOL.HANDOFF.NAVIGATOR",
+        r"(exit\s+condition|entry.from|boundary\s+(contract|briefing))",
+        r"(handoff|hand.off).{0,30}(artifact|checklist|requirement|complete)",
+        r"(verif|confirm|check).{0,30}(exit|handoff|transition).{0,30}(condition|requirement|complete)",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in handoff_patterns)
+    if not found:
+        issues.append(
+            f"No handoff-navigator evidence found at kit transition(s) {transitions} "
+            f"(sherpa should verify exit conditions and boundary contracts at transitions)"
+        )
+
+    return issues
+
+
+def check_decision_router_invoked(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa invoked decision-router at junction points."""
+    issues = []
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    # Look for evidence of structured junction navigation
+    router_patterns = [
+        r"decision.router",
+        r"TOOL.DECISION.ROUTER",
+        r"J-[A-Z]+-[A-Z0-9]+",  # Decision table citation
+        r"(junction|decision\s+point|fork).{0,30}(option|path|route|choice)",
+        r"(option\s+\d|choice\s+\d).{0,20}(:|—|-)",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in router_patterns)
+    if not found:
+        issues.append(
+            "No decision-router evidence found (sherpa should present options and cite decision tables at junctions)"
+        )
+
+    return issues
+
+
+def check_briefing_distillation_offered(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa offered briefing distillation at kit transitions."""
+    issues = []
+
+    transitions = config.get("kit_transitions", [])
+    if not transitions:
+        return issues  # No kit transitions — distillation not applicable
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    # Look for evidence of briefing distillation being offered or used
+    distillation_patterns = [
+        r"briefing.distillation",
+        r"distill.{0,20}(artifact|frozen|upstream)",
+        r"compress.{0,20}(artifact|frozen|upstream)",
+        r"briefing.{0,20}(downstream|consumption|summary)",
+        r"TOOL.BRIEFING.DISTILLATION",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in distillation_patterns)
+    if not found:
+        issues.append(
+            "No briefing distillation mention found at kit transition (sherpa should offer to distill frozen artifacts for downstream consumption)"
+        )
+
+    return issues
+
+
 def check_session_resumption(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
     """Verify sherpa discovered existing ER and resumed from correct position."""
     issues = []
@@ -640,6 +913,488 @@ def check_session_resumption(config: dict, run_dir: Path, project_dir: Path) -> 
 # ─── Check Registry ──────────────────────────────────────────────────────────
 # Maps check name (used in config JSON) to function
 
+def check_convergence_loop_depth(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify convergence loop follows stopping rules and tracks iterations.
+
+    Enhanced version of convergence_loop: checks for iteration counting,
+    max-iteration awareness, and escalation when convergence fails.
+    """
+    issues = []
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    parts = []
+    if output_log.exists():
+        parts.append(output_log.read_text())
+    if transcript.exists():
+        parts.append(transcript.read_text())
+    content = "\n".join(parts)
+
+    if not content:
+        return issues
+
+    # Check for iteration tracking
+    iteration_patterns = [
+        r"(iteration|attempt|try|pass)\s*[#:]?\s*[123]",
+        r"(first|second|third)\s+(attempt|pass|try|iteration)",
+        r"(1|2|3)\s+of\s+(3|max)",
+        r"max.{0,10}(iteration|attempt|retries)",
+    ]
+    has_iteration = any(re.search(pat, content, re.IGNORECASE) for pat in iteration_patterns)
+
+    # Check for stopping rule awareness
+    stopping_patterns = [
+        r"(max|limit).{0,20}(iteration|attempt|retries|3)",
+        r"(convergence|converge).{0,20}(fail|not|unable|exhaust)",
+        r"(escalat|human\s+review).{0,20}(convergence|iteration|attempt)",
+        r"(same|identical|repeat).{0,20}(fail|error|issue)",  # oscillation detection
+    ]
+    has_stopping = any(re.search(pat, content, re.IGNORECASE) for pat in stopping_patterns)
+
+    if not has_iteration and not has_stopping:
+        issues.append(
+            "Convergence loop lacks depth: no iteration tracking or stopping rule awareness "
+            "(sherpa should count iterations and know the max=3 limit)"
+        )
+
+    return issues
+
+
+def check_utility_prompts_per_kit(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa offered kit-specific utility prompts at the right moments.
+
+    Enhanced version: checks for specific utility prompts per kit based on
+    the preset and which kits are traversed.
+    """
+    issues = []
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    entry_kit = config.get("entry_kit", "")
+
+    # Kit-specific utility prompt patterns
+    kit_utilities = {
+        "PIK": [
+            (r"(stress.test|assumption.stress|adversarial.{0,10}assumption)", "assumption-stress-test"),
+            (r"(brownfield|existing.{0,10}(system|code))", "brownfield-analysis"),
+            (r"(stakeholder|alignment|conflict)", "stakeholder-alignment"),
+        ],
+        "EEK": [
+            (r"(codebase.analysis|existing.{0,10}codebase|brownfield)", "codebase-analysis"),
+            (r"(impact.analysis|downstream.{0,10}impact|cascade)", "impact-analysis"),
+        ],
+        "REK": [
+            (r"(rollout.risk|risk.assessment|adversarial.{0,10}release)", "rollout-risk-assessment"),
+            (r"(release.communication|stakeholder.{0,10}communi)", "release-communication"),
+        ],
+        "RRK": [
+            (r"(slo.calibration|calibrat.{0,10}slo|baseline.{0,10}data)", "slo-calibration"),
+            (r"(escalation.assessment|trigger.{0,10}escalation)", "escalation-assessment"),
+        ],
+    }
+
+    # Check utilities for the entry kit
+    if entry_kit in kit_utilities:
+        utilities = kit_utilities[entry_kit]
+        found_any = any(
+            re.search(pattern, content, re.IGNORECASE)
+            for pattern, _ in utilities
+        )
+        if not found_any:
+            names = [name for _, name in utilities]
+            issues.append(
+                f"No {entry_kit}-specific utility prompts offered: expected one of {names}"
+            )
+
+    # Check utilities for transitioning kits
+    for transition in config.get("kit_transitions", []):
+        kits = re.split(r"[→>-]", transition)
+        if len(kits) >= 2:
+            to_kit = kits[1].strip()
+            if to_kit in kit_utilities:
+                utilities = kit_utilities[to_kit]
+                found_any = any(
+                    re.search(pattern, content, re.IGNORECASE)
+                    for pattern, _ in utilities
+                )
+                if not found_any:
+                    names = [name for _, name in utilities]
+                    issues.append(
+                        f"No {to_kit}-specific utility prompts offered at transition: expected one of {names}"
+                    )
+
+    return issues
+
+
+def check_cross_cutting_timing(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa mentioned cross-cutting kit trigger points at the right time.
+
+    Cross-cutting kits should be surfaced when their trigger artifact is frozen,
+    not before and not forgotten.
+    """
+    issues = []
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    # Check if the test generated enough artifacts for cross-cutting to matter
+    expected_frozen = sum(
+        1 for a in config.get("expected_artifacts", []) if a.get("frozen", False)
+    )
+    if expected_frozen < 4:
+        return issues  # Too few artifacts for cross-cutting timing to be testable
+
+    # Trigger awareness patterns
+    trigger_patterns = [
+        r"(SAD|architecture).{0,30}(trigger|activat|time\s+to|now.{0,10}(SCK|security|threat))",
+        r"(TDD|design).{0,30}(trigger|activat|time\s+to|now.{0,10}(DCK|config|DKK|doc|API\s+ref))",
+        r"(ORD|code\s+complete).{0,30}(trigger|activat|time\s+to|now.{0,10}(SCK|DAR|dependency))",
+        r"(cross.cutting|optional\s+kit).{0,30}(trigger|activated|now|ready)",
+        r"(SCK|DCK|DKK|BPK|PINFK|PRK).{0,30}(trigger|activated|should|can\s+now|at\s+this\s+point)",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in trigger_patterns)
+    if not found:
+        issues.append(
+            "No cross-cutting kit trigger timing evidence found "
+            "(sherpa should surface cross-cutting kits when their trigger artifact freezes)"
+        )
+
+    return issues
+
+
+def check_health_dashboard_depth(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify health dashboard includes specific calculations, not just keywords.
+
+    Enhanced version: checks for staleness signals, cross-cutting gap analysis,
+    and upcoming junction forecasting.
+    """
+    issues = []
+
+    expected_frozen = sum(
+        1 for a in config.get("expected_artifacts", []) if a.get("frozen", False)
+    )
+    if expected_frozen < 3:
+        return issues
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    depth_parts = 0
+
+    # Part 1: Artifact status summary (counts or inventory)
+    status_patterns = [
+        r"\d+\s+(artifact|frozen|validated|generated)",
+        r"(frozen|validated|draft)[:=]\s*\d+",
+        r"(complete|remaining|next).{0,20}\d+",
+    ]
+    if any(re.search(pat, content, re.IGNORECASE) for pat in status_patterns):
+        depth_parts += 1
+
+    # Part 2: Cross-cutting gap detection
+    gap_patterns = [
+        r"(cross.cutting|optional).{0,30}(not\s+started|gap|missing|pending|deferred)",
+        r"(SCK|QAK|DCK|DKK|PINFK|PRK|BPK).{0,30}(not\s+(yet|started)|pending|deferred|skipped)",
+        r"(adopt|skip).{0,20}decision.{0,20}(pending|needed|outstanding)",
+    ]
+    if any(re.search(pat, content, re.IGNORECASE) for pat in gap_patterns):
+        depth_parts += 1
+
+    # Part 3: Upcoming junction forecast
+    junction_patterns = [
+        r"(next|upcoming|approaching).{0,30}(decision|junction|fork|choice)",
+        r"(will\s+need|should\s+decide|coming\s+up).{0,30}(QAK|SSK|Path|release|deploy)",
+        r"(before|after).{0,20}(freeze|generate).{0,20}(decide|choose)",
+    ]
+    if any(re.search(pat, content, re.IGNORECASE) for pat in junction_patterns):
+        depth_parts += 1
+
+    if depth_parts < 1:
+        issues.append(
+            f"Health dashboard lacks depth: found {depth_parts}/3 elements "
+            f"(sherpa should include artifact status counts, cross-cutting gap analysis, "
+            f"and upcoming junction forecasts)"
+        )
+
+    return issues
+
+
+def check_sub_agent_awareness(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa demonstrated awareness of parallel execution patterns.
+
+    Checks for mentions of parallelism (PRK lens independence, ACF||SAD,
+    cross-cutting independence) in the transcript.
+    """
+    issues = []
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    parallel_patterns = [
+        r"(parallel|simultaneous|concurrent|independent).{0,30}(lens|review|execution|session)",
+        r"(ACF|SAD).{0,10}(and|&).{0,10}(ACF|SAD).{0,20}(parallel|simultaneous|both)",
+        r"(lens|review).{0,20}independen",
+        r"(fan.out|reconverg|aggregat).{0,20}(lens|result|output)",
+        r"cross.cutting.{0,20}(parallel|independent|do\s+not\s+block)",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in parallel_patterns)
+    if not found:
+        issues.append(
+            "No parallelism awareness evidence found "
+            "(sherpa should mention lens independence, ACF||SAD parallelism, or cross-cutting independence)"
+        )
+
+    return issues
+
+
+def check_reentry_awareness(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa demonstrated awareness of re-entry protocols.
+
+    Checks for mentions of material vs non-material changes, impact analysis,
+    or cascade implications when modifying frozen artifacts.
+    """
+    issues = []
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    # Only check if there are frozen artifacts that could trigger re-entry discussion
+    expected_frozen = sum(
+        1 for a in config.get("expected_artifacts", []) if a.get("frozen", False)
+    )
+    if expected_frozen < 2:
+        return issues
+
+    reentry_patterns = [
+        r"(material|non.material).{0,20}(change|amendment|modification)",
+        r"(impact.analysis|downstream.{0,10}impact|cascade)",
+        r"(amend|amendment).{0,20}(log|in.place|non.material)",
+        r"(frozen|immutable).{0,20}(cannot|must\s+not|do\s+not).{0,10}(edit|change|modify)",
+        r"re.entry.{0,20}(protocol|process|procedure)",
+        r"(change|modif).{0,20}frozen.{0,20}(artifact|document)",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in reentry_patterns)
+    if not found:
+        issues.append(
+            "No re-entry protocol awareness found "
+            "(sherpa should mention material vs non-material changes and immutability of frozen artifacts)"
+        )
+
+    return issues
+
+
+def check_session_resumption_depth(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify session resumption includes journal reconstruction and position-check.
+
+    Enhanced version: beyond detecting existing ER, checks for journal context
+    loading and explicit position determination.
+    """
+    issues = []
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    depth_parts = 0
+
+    # Part 1: ER discovery
+    er_patterns = [
+        r"(found|discover|see|existing).{0,30}(ER|engagement\s+record)",
+        r"(ER|engagement\s+record).{0,20}(exists|found|present)",
+    ]
+    if any(re.search(pat, content, re.IGNORECASE) for pat in er_patterns):
+        depth_parts += 1
+
+    # Part 2: Journal reconstruction
+    journal_patterns = [
+        r"(journal|sherpa.journal).{0,30}(read|load|review|found|check)",
+        r"(prior|previous|last).{0,20}(session|decision|routing)",
+        r"(history|context).{0,20}(from|in).{0,20}(journal|ER|prior)",
+    ]
+    if any(re.search(pat, content, re.IGNORECASE) for pat in journal_patterns):
+        depth_parts += 1
+
+    # Part 3: Position determination
+    position_patterns = [
+        r"(current|your).{0,20}(position|state|progress).{0,20}(is|at|in)",
+        r"(left\s+off|resume|continue|pick\s+up).{0,20}(at|from|where)",
+        r"(next|remaining).{0,20}(artifact|step|action)",
+    ]
+    if any(re.search(pat, content, re.IGNORECASE) for pat in position_patterns):
+        depth_parts += 1
+
+    if depth_parts < 2:
+        issues.append(
+            f"Session resumption lacks depth: found {depth_parts}/3 elements "
+            f"(sherpa should discover ER, load journal context, and determine current position)"
+        )
+
+    return issues
+
+
+def check_risk_surfaced(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa surfaced upstream risk signals before artifact generation."""
+    issues = []
+
+    # Only check if there are enough artifacts to have upstream risks
+    expected_frozen = sum(
+        1 for a in config.get("expected_artifacts", []) if a.get("frozen", False)
+    )
+    if expected_frozen < 3:
+        return issues  # Too few artifacts — risk scan not meaningful
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    risk_patterns = [
+        r"(risk|concern|flag|notice|heads.up).{0,30}(upstream|frozen|prior|earlier)",
+        r"(TBD|to\s+be\s+determined|out\s+of\s+scope\s+for\s+now).{0,30}(in|from|upstream)",
+        r"assumption.{0,20}(untested|AI.derived|unvalidated)",
+        r"(missing|gap|inconsistenc).{0,30}(cross.reference|between|PRD|SAD|TDD)",
+        r"(conflict|contradict).{0,30}(constraint|requirement|upstream)",
+        r"before\s+(I\s+)?generat.{0,30}(notice|flag|found|see)",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in risk_patterns)
+    if not found:
+        issues.append(
+            "No upstream risk surfacing evidence found (sherpa should scan frozen artifacts for risk patterns before generating)"
+        )
+
+    return issues
+
+
+def check_path_prediction(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa presented a predictive path summary at routing time."""
+    issues = []
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    # Look for evidence of concrete artifact counts and bottleneck warnings
+    prediction_patterns = [
+        r"\d+\s+(required\s+)?artifact",
+        r"(cross.cutting|optional)\s+kit",
+        r"decision\s+(point|junction)",
+        r"(bottleneck|high.effort|pause|typically\s+requires)",
+        r"(roadmap|journey|path).{0,30}\d+",
+    ]
+    found_count = sum(
+        1 for pat in prediction_patterns
+        if re.search(pat, content, re.IGNORECASE)
+    )
+    if found_count < 2:
+        issues.append(
+            f"Path prediction lacks specificity: found {found_count}/5 prediction elements "
+            f"(sherpa should present exact artifact count, cross-cutting kits, decision points, and bottleneck alerts)"
+        )
+
+    return issues
+
+
+def check_fast_path_used(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa used fast-path detection for cross-cutting kit decisions."""
+    issues = []
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    # Look for evidence of pre-filled recommendations
+    fast_path_patterns = [
+        r"(recommend|suggesting).{0,30}(skip|adopt|include|decline).{0,30}(SCK|QAK|DCK|PINFK|DKK|PRK|BPK)",
+        r"(skip|decline).{0,30}(because|since|no\s+PII|no\s+auth|no\s+API|internal|solo)",
+        r"(adopt|include).{0,30}(because|since|PII|auth|compliance|external|user.facing)",
+        r"sound\s+right",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in fast_path_patterns)
+    if not found:
+        issues.append(
+            "No fast-path cross-cutting kit decision evidence found (sherpa should pre-fill obvious skip/adopt decisions with reasoning)"
+        )
+
+    return issues
+
+
 CHECK_REGISTRY: dict[str, callable] = {
     "ar_origin":                    check_ar_origin,
     "el_draft":                     check_el_draft,
@@ -657,12 +1412,29 @@ CHECK_REGISTRY: dict[str, callable] = {
     "el_pause_outcome":             check_el_pause_outcome,
     "no_dprd":                      check_no_dprd,
     "session_resumption":           check_session_resumption,
+    "elicitation_applied":          check_elicitation_applied,
+    "adversarial_lens_offered":     check_adversarial_lens_offered,
+    "briefing_distillation_offered": check_briefing_distillation_offered,
+    "decision_explanation_depth":   check_decision_explanation_depth,
+    "position_check_invoked":       check_position_check_invoked,
+    "handoff_navigator_invoked":    check_handoff_navigator_invoked,
+    "decision_router_invoked":      check_decision_router_invoked,
     "intent_resolution":            check_intent_resolution,
     "decision_explanation":         check_decision_explanation,
     "health_dashboard":             check_health_dashboard,
     "journal_exists":               check_journal_exists,
     "journal_entries":              check_journal_entries,
     "rationale_replay":             check_rationale_replay,
+    "risk_surfaced":                check_risk_surfaced,
+    "path_prediction":              check_path_prediction,
+    "fast_path_used":               check_fast_path_used,
+    "convergence_loop_depth":       check_convergence_loop_depth,
+    "utility_prompts_per_kit":      check_utility_prompts_per_kit,
+    "cross_cutting_timing":         check_cross_cutting_timing,
+    "health_dashboard_depth":       check_health_dashboard_depth,
+    "sub_agent_awareness":          check_sub_agent_awareness,
+    "reentry_awareness":            check_reentry_awareness,
+    "session_resumption_depth":     check_session_resumption_depth,
 }
 
 

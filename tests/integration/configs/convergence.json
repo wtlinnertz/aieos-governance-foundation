@@ -42,7 +42,13 @@
     "utility_prompts_mentioned",
     "intent_resolution",
     "decision_explanation",
-    "health_dashboard"
+    "health_dashboard",
+    "elicitation_applied",
+    "decision_explanation_depth",
+    "position_check_invoked",
+    "decision_router_invoked",
+    "convergence_loop_depth",
+    "utility_prompts_per_kit"
   ],
 
   "budget_usd": 5,

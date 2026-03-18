@@ -2,7 +2,7 @@
 
 This guide is organized by what you are trying to accomplish. Find your scenario and follow the path.
 
-For a comprehensive reference of all entry points, exit conditions, parallelism rules, and flow permutations, see [`flow-reference.md`](flow-reference.md). For framework and initiative validation procedures, see [`healthcheck-playbook.md`](healthcheck-playbook.md). For the machine-readable flow graph used by AI navigation tools, see [`navigation-map.md`](navigation-map.md). For the autonomous correction loop pattern (bounded iteration on validation failures), see [`review-convergence-loop.md`](review-convergence-loop.md).
+For a comprehensive reference of all entry points, exit conditions, parallelism rules, and flow permutations, see [`flow-reference.md`](flow-reference.md). For framework and initiative validation procedures, see [`healthcheck-playbook.md`](healthcheck-playbook.md). For the machine-readable flow graph used by AI navigation tools, see [`navigation-map.md`](navigation-map.md). For the autonomous correction loop pattern (bounded iteration on validation failures), see [`review-convergence-loop.md`](review-convergence-loop.md). Before generating high-value artifacts, apply the [`elicitation-protocol.md`](elicitation-protocol.md) reasoning techniques to surface gaps and challenge assumptions. Use the [`briefing-distillation`](tools/briefing-distillation-spec.md) tool to compress frozen artifacts for downstream prompt consumption.
 
 ---
 

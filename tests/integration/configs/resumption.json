@@ -33,11 +33,14 @@
     "provenance",
     "er_completeness",
     "no_ready_prompts",
-    "session_resumption"
+    "session_resumption",
+    "journal_exists",
+    "journal_entries"
   ],
 
   "soft_checks": [
-    "intent_resolution"
+    "intent_resolution",
+    "rationale_replay"
   ],
 
   "budget_usd": 8,

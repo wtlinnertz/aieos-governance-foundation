@@ -30,7 +30,9 @@
     "frozen_artifacts",
     "provenance",
     "er_completeness",
-    "no_ready_prompts"
+    "no_ready_prompts",
+    "journal_exists",
+    "journal_entries"
   ],
 
   "soft_checks": [

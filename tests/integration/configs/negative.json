@@ -32,7 +32,9 @@
     "er_completeness",
     "no_ready_prompts",
     "el_pause_outcome",
-    "no_dprd"
+    "no_dprd",
+    "journal_exists",
+    "journal_entries"
   ],
 
   "soft_checks": [

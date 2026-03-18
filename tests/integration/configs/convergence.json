@@ -33,7 +33,9 @@
     "no_ready_prompts",
     "ar_origin",
     "el_draft",
-    "convergence_loop"
+    "convergence_loop",
+    "journal_exists",
+    "journal_entries"
   ],
 
   "soft_checks": [

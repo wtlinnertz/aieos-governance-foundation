@@ -25,6 +25,7 @@ This is the AI sherpa's compass — it can be invoked at any time to re-orient.
 | `er_path` | Yes | Path to the Engagement Record file |
 | `artifact_directory` | Yes | Path to the project's artifact directory (e.g., `docs/sdlc/`) |
 | `preset` | No | The preset in use (P1–P5), if known; derived from ER if not provided |
+| `journal_path` | No | Path to the Sherpa Journal file (e.g., `docs/engagement/sherpa-journal-TASKFLOW.md`). If provided, the position check uses journal entries to enrich health signals with decision context and detect deferred decisions that may need revisiting. |
 
 ## Postconditions
 
@@ -80,6 +81,7 @@ When invoked after 3+ artifacts have been frozen, the position check additionall
 | **Cross-cutting gap** | The initiative's preset expects a cross-cutting kit at this stage but it is not activated and no decline decision is recorded in the ER | Advisory |
 | **Decision velocity** | More than 2 junction decisions pending without resolution | Advisory |
 | **Upcoming junctions** | Decision points expected within the next 2-3 artifacts in the preset sequence | Informational |
+| **Deferred decisions** | Journal contains `cross-cutting-adoption` or `junction-decision` entries with "Deferred" status that have not been revisited | Advisory |
 
 Health signals are advisory — they do not affect the PASS/FAIL disposition of the position check. They are surfaced to help the operator maintain initiative momentum and prevent cross-cutting kits from being silently forgotten.
 

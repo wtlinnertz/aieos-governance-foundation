@@ -532,6 +532,81 @@ def check_health_dashboard(config: dict, run_dir: Path, project_dir: Path) -> li
     return issues
 
 
+def check_journal_exists(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Check that a Sherpa Journal file was created."""
+    issues = []
+    journal_files = list(project_dir.glob("docs/engagement/sherpa-journal-*.md"))
+    if not journal_files:
+        issues.append("Sherpa Journal not found in docs/engagement/")
+    return issues
+
+
+def check_journal_entries(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Check that the journal has expected entry types for the preset."""
+    issues = []
+    journal_files = list(project_dir.glob("docs/engagement/sherpa-journal-*.md"))
+    if not journal_files:
+        issues.append("Sherpa Journal not found — cannot check entries")
+        return issues
+
+    content = journal_files[0].read_text()
+
+    # Every initiative should have a routing-decision entry
+    if "routing-decision" not in content.lower() and "routing decision" not in content.lower():
+        issues.append("Journal missing routing-decision entry")
+
+    # Check for artifact-freeze entries — count should match expected frozen artifacts
+    freeze_count = len(re.findall(r"artifact.freeze", content, re.IGNORECASE))
+    expected_frozen = sum(
+        1 for a in config.get("expected_artifacts", []) if a.get("frozen", False)
+    )
+    if expected_frozen > 0 and freeze_count == 0:
+        issues.append(
+            f"Journal has no artifact-freeze entries but {expected_frozen} artifacts should be frozen"
+        )
+
+    return issues
+
+
+def check_rationale_replay(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa can replay decision rationale when asked (requires transcript with 'why' question)."""
+    issues = []
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    # Only check if the test fixture included a "why did we decide" question
+    why_asked = re.search(
+        r"why\s+did\s+we\s+(decide|choose|pick|select|skip)", content, re.IGNORECASE
+    )
+    if not why_asked:
+        return issues  # No replay was requested in this test
+
+    # Look for evidence of replay with citations
+    replay_patterns = [
+        r"journal\s+entry\s+#?\d+",
+        r"entry\s+\[?\d+\]?.*routing",
+        r"decision\s+table\s+J-",
+        r"at\s+that\s+point.*because",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in replay_patterns)
+    if not found:
+        issues.append(
+            "Rationale replay requested but no evidence of journal-cited reasoning in response"
+        )
+
+    return issues
+
+
 def check_session_resumption(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
     """Verify sherpa discovered existing ER and resumed from correct position."""
     issues = []
@@ -585,6 +660,9 @@ CHECK_REGISTRY: dict[str, callable] = {
     "intent_resolution":            check_intent_resolution,
     "decision_explanation":         check_decision_explanation,
     "health_dashboard":             check_health_dashboard,
+    "journal_exists":               check_journal_exists,
+    "journal_entries":              check_journal_entries,
+    "rationale_replay":             check_rationale_replay,
 }
 
 

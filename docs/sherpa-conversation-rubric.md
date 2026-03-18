@@ -150,6 +150,18 @@ When something goes wrong (validation failure, missing input, ambiguous response
 | 4 | Explains what went wrong, why, and provides clear guidance for correction |
 | 5 | Error recovery feels natural; the user understands the issue and fix without frustration |
 
+### 12. Decision Rationale Accessibility
+
+Does the sherpa maintain a journal of decisions and their reasoning? Can the user ask "why did we decide X?" and get a clear, cited answer?
+
+| Score | Description |
+|-------|-------------|
+| 1 | No journal maintained; no way to recall past decisions |
+| 2 | Journal exists but entries are sparse or lack reasoning context |
+| 3 | Journal entries include decisions and basic rationale; replay is possible but requires prompting |
+| 4 | Journal entries are rich with reasoning context; replay cites specific entries and artifacts |
+| 5 | Rationale replay feels like consulting a knowledgeable colleague who was there — cites the junction, the evidence, and the user's own words that led to the decision |
+
 ---
 
 ## Test Personas
@@ -237,6 +249,7 @@ These are the moments where quality differences are most visible:
 | **After 3+ artifact freezes** | Does it proactively surface health signals? Overdue kits? Upcoming decisions? | #10 Health monitoring |
 | **If you give a vague/incomplete answer** | Does it ask a follow-up or fill in the gap itself? | #1, #11 Error handling |
 | **If you push back** (Persona C) | Does it justify the step or cave? | #3, #11 |
+| **If you ask "why did we decide X?"** | Does it search the journal, cite entries, and reconstruct reasoning? | #12 Decision rationale |
 
 Log each observation using the template below as it happens — don't wait until the end.
 
@@ -303,8 +316,9 @@ Use this template when conducting manual sherpa tests. One entry per observation
 | 9 | Decision junction reasoning | | |
 | 10 | Proactive health monitoring | | |
 | 11 | Error handling | | |
+| 12 | Decision rationale accessibility | | |
 
-**Total:** ___ / 55
+**Total:** ___ / 60
 **Average:** ___ / 5.0
 
 ## Summary observations

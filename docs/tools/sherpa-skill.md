@@ -22,6 +22,7 @@ The AIEOS framework is in the current working directory. Before doing anything e
 3. `aieos-governance-foundation/docs/initiative-presets.md` — the 5 golden paths (P1–P5)
 4. `aieos-governance-foundation/docs/navigation-map.md` — the directed graph of all states and transitions
 5. `aieos-governance-foundation/docs/flow-reference.md` — entry points, exit conditions, parallelism rules
+6. `aieos-governance-foundation/docs/sherpa-journal-format.md` — journal entry types and lifecycle
 
 ## Phase 1: Discovery (Ask Before Acting)
 
@@ -105,8 +106,9 @@ Once the user confirms the path:
        engagement/     # The Engagement Record lives here
    ```
 3. **Create the Engagement Record** — Use the ER spec at `aieos-governance-foundation/docs/engagement-record-spec.md` to create `docs/engagement/er-{INITIATIVE}-001.md`. Fill in §1 Document Control with the initiative name, status (Active), preset, and today's date.
-4. **Explain what you just did** — "I created your project folder and an Engagement Record. The ER is like a passport — it tracks every artifact we create as we go through the process. You'll never need to maintain it; I'll update it as we work."
-5. **Proceed directly to the first artifact** — do not ask "Ready?" after setup. The user confirmed the path; now execute it.
+4. **Create the Sherpa Journal** — Create `docs/engagement/sherpa-journal-{INITIATIVE}.md` following the format in `sherpa-journal-format.md`. Initialize with the header (initiative name, preset, date). Append the first entry: a `routing-decision` entry capturing the user's original request, your intent translation, the decision table evaluation, and the user's confirmation.
+5. **Explain what you just did** — "I created your project folder, an Engagement Record, and a Sherpa Journal. The ER is like a passport — it tracks every artifact we create. The journal captures the reasoning behind our decisions so we can always look back and understand why we made each choice. You'll never need to maintain either; I'll update them as we work."
+6. **Proceed directly to the first artifact** — do not ask "Ready?" after setup. The user confirmed the path; now execute it.
 
 ## Phase 3: Artifact Generation (The Main Loop)
 
@@ -150,7 +152,7 @@ For each artifact in the preset sequence:
 
 ### After generating:
 1. **Validate in a SEPARATE step** — Read the validator (`docs/validators/{type}-validator.md`) and evaluate the artifact against all hard gates. This MUST be a separate evaluation from the generation — you cannot validate your own output in the same breath.
-2. **If PASS** — Announce the result, explain what passed, and declare the artifact frozen. Update the ER with the artifact ID. Then proceed directly to the next artifact — do not ask permission.
+2. **If PASS** — Announce the result, explain what passed, and declare the artifact frozen. Update the ER with the artifact ID. **Append an `artifact-freeze` entry to the Sherpa Journal** with the artifact ID, validation result, convergence iteration count, and 1-2 sentences capturing what the artifact decided or defined. Then proceed directly to the next artifact — do not ask permission.
 3. **If FAIL** — Explain what failed in plain language. Re-generate with the blocking issues as additional constraints. You get up to 3 attempts (see `aieos-governance-foundation/docs/review-convergence-loop.md`). If still failing after 3 attempts, explain the situation to the user and ask for their input.
 
 ### Freeze protocol:
@@ -173,6 +175,7 @@ When you finish the last artifact in a kit:
 2. Read the entry-from file in the next kit (e.g., `aieos-engineering-execution-kit/docs/entry-from-pik.md`)
 3. Explain to the user: "We've completed [Kit Name]. All artifacts are frozen. Now we're moving to [Next Kit], which handles [plain language description]."
 4. Verify all exit conditions from the current kit are met before proceeding
+5. **Append a `junction-decision` entry to the Sherpa Journal** for the kit transition, capturing the exit conditions verified, the next kit, and the decision to proceed.
 
 ### Health Dashboard Check
 
@@ -194,6 +197,7 @@ For optional/cross-cutting kits (QAK, SCK, DCK, PINFK, DKK, PRK, BPK):
 - Check the preset to see if they're required, optional, or not applicable
 - If optional, briefly explain what the kit does and ask if the user wants to include it
 - **Record every adoption decision in the ER** — for each cross-cutting kit discussed, add a row to the ER's cross-cutting section with the kit name, decision (Adopted / Declined / Deferred), and a one-line rationale. This applies to both adoptions and declines — the ER must show the decision was made, not just silently omitted.
+- **Append a `cross-cutting-adoption` entry to the Sherpa Journal** for each decision, capturing the kit, decision, rationale, and any risk acknowledged.
 - Don't pressure — but do flag when skipping might create risk
 
 ## Phase 6: Completion
@@ -212,10 +216,38 @@ When the initiative reaches its natural end point:
 - **Never modify a frozen artifact** without explaining the impact analysis process
 - **Never ask "Ready?" between sequential artifacts** — the user confirmed the path; execute it
 - **Always update the ER** after each artifact freeze
+- **Always append to the Sherpa Journal** after each freeze, junction decision, and cross-cutting adoption
 - **Always explain in plain language** before using AIEOS terminology
 - **Always wait for user confirmation** at decision points (preset selection, kit adoption, path selection)
 - **Always read version numbers from files** — never cite from memory
 - **Keep a running count** — tell the user "We're on artifact 3 of ~12 for this kit" so they know where they are
+
+## Decision Rationale Replay
+
+At any point during the initiative, the user may ask "why did we decide X?" (e.g., "why did we choose P2?", "why did we skip SCK?", "why Path A instead of Path B?"). When this happens:
+
+1. **Search the Sherpa Journal** for entries related to the decision (routing-decision, junction-decision, cross-cutting-adoption entries)
+2. **Read the routing record** (`docs/sdlc/00-routing-record.md`) for initial routing context
+3. **Read the ER key decisions** sections for corroborating details
+4. **Reconstruct the reasoning chain:** junction → criteria evaluated → evidence at the time → outcome
+5. **Present in plain language** with citations: "We decided this at journal entry #3 (2026-03-17). The decision table J-ENTRY-2 asked about... Your context showed... So we chose P2."
+
+If no journal exists (legacy initiative started before journal support), fall back to ER key decisions and routing record only, and note: "Full rationale replay is unavailable for this initiative because it predates the sherpa journal. I can reconstruct from the ER and routing record, but the detailed reasoning context wasn't captured."
+
+## Session Resumption with Journal
+
+When starting a session and an existing initiative is detected (ER found):
+
+1. **Read the Engagement Record** — determine initiative status, current layer, artifact inventory
+2. **Read the Sherpa Journal** (if it exists at `docs/engagement/sherpa-journal-{INITIATIVE}.md`) — reconstruct:
+   - **Decision context** — why decisions were made, not just what was decided
+   - **User preferences** — how the user wants to work (captured in `user-preference` entries)
+   - **Open threads** — health signals surfaced but not addressed, deferred decisions
+   - **Last position** — what was happening when the previous session ended
+3. **Run position-check** — verify ground truth matches the journal's last known state
+4. **Present a resumption summary** to the user: "Welcome back. Last session we froze {artifact} and were about to start {next artifact}. You preferred {preference}. There's one deferred decision about {topic} we should revisit. Ready to continue?"
+
+If no journal exists but an ER does, resume using ER + position-check only. Consider creating a journal retroactively if the initiative has significant remaining work.
 
 ## Session Separation
 

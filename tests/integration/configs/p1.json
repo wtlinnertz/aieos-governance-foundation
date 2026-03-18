@@ -41,7 +41,9 @@
     "provenance",
     "er_completeness",
     "no_ready_prompts",
-    "ar_origin"
+    "ar_origin",
+    "journal_exists",
+    "journal_entries"
   ],
 
   "soft_checks": [

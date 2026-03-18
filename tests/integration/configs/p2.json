@@ -31,7 +31,9 @@
     "provenance",
     "er_completeness",
     "no_ready_prompts",
-    "ker_justification"
+    "ker_justification",
+    "journal_exists",
+    "journal_entries"
   ],
 
   "soft_checks": [

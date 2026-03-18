@@ -162,6 +162,9 @@ The following checks are available in `validate-sherpa-run.py`:
 | `intent_resolution` | Soft | Sherpa translated user intent to framework vocabulary before routing |
 | `decision_explanation` | Soft | Sherpa cited decision table ID, criteria, and evidence at junctions |
 | `health_dashboard` | Soft | Sherpa surfaced health signals after 3+ artifact freezes |
+| `journal_exists` | Hard | Sherpa Journal file created in docs/engagement/ |
+| `journal_entries` | Hard | Journal has routing-decision entry and artifact-freeze entries matching frozen artifact count |
+| `rationale_replay` | Soft | When "why did we decide X?" is asked, sherpa cites journal entries and decision tables |
 
 ## What Requires Manual Testing
 
@@ -173,5 +176,6 @@ The automated framework cannot verify:
 - Whether the sherpa "feels" like a helpful guide vs a checklist runner
 - Quality of Decision Outcome Taxonomy usage at junctions
 - Whether health signals are delivered at natural moments vs feeling forced
+- Whether decision rationale replay cites specific journal entries and feels like consulting a colleague who was there
 
-Use `docs/sherpa-conversation-rubric.md` for structured manual evaluation of these qualities (11 criteria on a 1-5 scale, including 3 new criteria for intent translation, decision junction reasoning, and proactive health monitoring).
+Use `docs/sherpa-conversation-rubric.md` for structured manual evaluation of these qualities (12 criteria on a 1-5 scale, including criteria for intent translation, decision junction reasoning, proactive health monitoring, and decision rationale accessibility).

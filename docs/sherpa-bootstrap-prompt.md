@@ -1,5 +1,7 @@
 # AIEOS Sherpa Bootstrap Prompt
 
+> **DEPRECATED:** The canonical sherpa prompt is now at `aieos-sherpa/sherpa-prompt.md`. This file is a condensed version retained for backward compatibility. Use the canonical file for the full sherpa experience.
+
 Use this prompt to start a new Claude Code session that acts as an expert AIEOS guide. Copy everything below the line into the session as the opening message.
 
 Alternatively, if using Claude Code with this repository, type `/sherpa` to load this prompt automatically via the skill at `.claude/skills/sherpa/SKILL.md`.

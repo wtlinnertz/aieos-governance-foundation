@@ -70,10 +70,24 @@ def find_aieos_root() -> Path:
 
 
 def discover_kits(aieos_root: Path) -> list[Path]:
-    """Find all kit directories under the AIEOS root."""
+    """Find all governance kit directories under the AIEOS root.
+
+    Only includes directories that are actual governance kits (ending in -kit,
+    -foundation, or explicitly listed). Excludes initiative project directories
+    (e.g., aieos-search, aieos-aicr) and non-kit projects (e.g., aieos-console).
+    """
+    # Suffixes that identify governance kits
+    KIT_SUFFIXES = ("-kit", "-foundation")
+    # Non-kit aieos- directories to always exclude
+    EXCLUDE = {"aieos-console"}
+
     kits = []
     for entry in sorted(aieos_root.iterdir()):
-        if entry.is_dir() and entry.name.startswith("aieos-") and entry.name != "aieos-console":
+        if not entry.is_dir() or not entry.name.startswith("aieos-"):
+            continue
+        if entry.name in EXCLUDE:
+            continue
+        if any(entry.name.endswith(suffix) for suffix in KIT_SUFFIXES):
             kits.append(entry)
     return kits
 

@@ -2,7 +2,7 @@
 
 Single-source tracking for completed work, active initiatives, and planned items across the AIEOS governance framework and ecosystem.
 
-**Last updated:** 2026-03-19 (kit audit findings fixed)
+**Last updated:** 2026-03-19 (aieos-sherpa extracted)
 
 ---
 
@@ -147,6 +147,7 @@ Single-source tracking for completed work, active initiatives, and planned items
 - [x] **FW-050** L-2: DCK — fixed DSR downstream from "EEK" to "REK/RRK"
 - [x] **FW-051** L-3: DKK — added DHR health score default weighting (Coverage 40%, Currency 30%, Accuracy 30%)
 - [x] **FW-052** L-4: QAK — added frozen TM and SAR from SCK as optional VP upstream inputs
+- [x] **SH-025** Extracted `aieos-sherpa` as standalone project with canonical tool-agnostic prompt, Claude Code adapter, generic bootstrap adapter, docs, and test suite
 
 ---
 

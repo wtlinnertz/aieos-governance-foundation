@@ -406,8 +406,8 @@ class TestSherpaSkillCriticalRules:
         """WS2 structured output: Health Check block must be in Critical Rules."""
         assert re.search(r"emit the Health Check block", critical_rules), \
             "Critical Rules missing: Health Check structured output rule"
-        assert re.search(r"#3, #6, #9 ONLY", critical_rules), \
-            "Critical Rules missing: strict Health Check interval (#3, #6, #9 ONLY)"
+        assert re.search(r"#3, #6, #9, #12 ONLY", critical_rules), \
+            "Critical Rules missing: strict Health Check interval (#3, #6, #9, #12 ONLY)"
 
     def test_consistency_rule(self, critical_rules):
         """WS2 structured output: Consistency line must be in Critical Rules."""

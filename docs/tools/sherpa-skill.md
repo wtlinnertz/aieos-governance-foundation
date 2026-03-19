@@ -285,9 +285,12 @@ When detected, ask: "This looks like it might be a framework gap — {descriptio
 
 **Step E: Post-freeze utility check** — After freezing, check whether any utility prompt heuristic triggers are now met by the just-frozen artifact. In particular: after freezing AR, check the Assumption Stress Test trigger (>5 assumptions OR AI-derived assumptions). After freezing SAD/TDD/ORD, check the Adversarial Review trigger. Offer before proceeding to the next artifact — do not skip this step even when the next artifact is a pause point (like EL).
 
-After freezing artifact #3 and every 3rd artifact thereafter:
+After freezing artifact #3, #6, #9, #12 (and ONLY those numbers — not #4, #5, #7, #8, #10, #11):
 1. Read the ER to verify artifact inventory matches your expectations
 2. State: "Position check: ER shows {N} frozen artifacts in {kit}. Next: {artifact}."
+3. Emit the Health Check block (see Phase 4)
+
+Example: WCR(#1) → Intake(#2) → PFD(#3) **emit** → VH(#4) skip → AR(#5) skip → EL(#6) **emit**
 
 ### Freeze protocol:
 - When an artifact passes validation, tell the user: "This artifact is now frozen. That means it's locked — we won't change it unless we go through a formal impact analysis process. Everything downstream depends on this being stable."
@@ -354,7 +357,9 @@ After 3 or more artifacts have been frozen in the initiative, run `position-chec
 3. **Decision velocity** — How many artifacts have been frozen vs. how many decision junctions have been encountered? A high junction-to-freeze ratio may indicate the initiative is stuck in routing.
 4. **Upcoming junctions** — What decision points are coming in the next 2-3 artifacts? Flag these so the user can prepare context.
 
-After freezing artifact #3 and every 3rd artifact thereafter (#6, #9, ...), emit this block before proceeding. Count strictly: #3, #6, #9 — do NOT emit at #4, #5, #7, #8, etc. Maintain a running freeze counter to track this.
+After freezing artifact #3, #6, #9, #12 (and ONLY those — skip #4, #5, #7, #8, #10, #11), emit this block before proceeding. Maintain a running freeze counter.
+
+Example for a P5 flow: WCR(#1) → Intake(#2) → PFD(#3) **emit health check** → VH(#4) no check → AR(#5) no check → EL(#6) **emit health check**
 
 **--- Health Check (after {artifact-id} freeze) ---**
 - Frozen: {N} of ~{M} expected
@@ -478,9 +483,9 @@ When the initiative reaches its natural end point:
 - **Always read version numbers from files** — never cite from memory
 - **Keep a running count** — tell the user "We're on artifact 3 of ~12 for this kit" so they know where they are
 - **Always emit "Risk scan:" before generating** — "Risk scan: {N} signals found in upstream artifacts." (1 line, even when 0)
-- **Always emit the Health Check block at freeze #3, #6, #9 ONLY** — "--- Health Check (after {artifact-id} freeze) ---" with Frozen/Cross-cutting/Overdue/Next junction lines. Do NOT emit at #4, #5, #7, #8, etc.
+- **Always emit the Health Check block at freeze #3, #6, #9, #12 ONLY** — not at #4, #5, #7, #8, #10, #11. Example: PFD(#3) emit → VH(#4) skip → AR(#5) skip → EL(#6) emit
 - **Always emit "Consistency:" after post-validation consistency check** — "Consistency: {upstream} → {new}: {N} of {M} mapped. {gaps or 'complete'}"
-- **Always emit "Position check:" after every 3rd freeze** — "Position check: ER shows {N} frozen artifacts in {kit}. Next: {artifact}."
+- **Always emit "Position check:" at freeze #3, #6, #9, #12 ONLY** — "Position check: ER shows {N} frozen artifacts in {kit}. Next: {artifact}." Same interval as Health Check.
 - **Always emit "Boundary check:" at kit transitions** — "Boundary check: Read entry-from-{upstream}.md. Prerequisites: {list}. All present: {yes/no}."
 - **Never ask permission between sequential artifacts** — no "Ready?", "Shall I…?", "Want me to…?" variants. The user confirmed the path; execute it
 - **Probe thin intake sections BEFORE generating** — review each user answer individually. If stakeholders lack roles/counts, success criteria lack measurable targets, or any section has <2 substantive sentences, probe BEFORE saying "That's plenty" or generating the form. One follow-up per thin section linking the gap to downstream impact, then accept.

@@ -2,7 +2,7 @@
 
 Single-source tracking for completed work, active initiatives, and planned items across the AIEOS governance framework and ecosystem.
 
-**Last updated:** 2026-03-19
+**Last updated:** 2026-03-19 (kit audit findings fixed)
 
 ---
 
@@ -130,6 +130,23 @@ Single-source tracking for completed work, active initiatives, and planned items
 
 - [ ] **INIT-C-006** Layer 6 (RRK): SRER, SRP, first RHR — handoff from RR-CONSOLE-001 §7
 - [ ] **INIT-C-007** Layer 7 (IEK): ES after sufficient RHR observation period
+
+---
+
+### 2026-03-19: Kit Audit — 12 Findings Fixed
+
+- [x] **FW-041** H-1: PIK DPRD spec — added gate 9 `principles_coverage` to match validator
+- [x] **FW-042** H-2: PIK DPRD prompt — removed cross-kit dependency on EEK `product-craftsmanship.md`; references PIK `product-discovery-principles.md` only
+- [x] **FW-043** H-3: QAK — created `qa-principles.md` v1.0 (6 principles)
+- [x] **FW-044** M-1: REK — created `entry-from-qak.md` and `entry-from-sck.md` boundary documents
+- [x] **FW-045** M-2: RRK — SRER spec allows deferred SLO baselines with capture trigger notation
+- [x] **FW-046** M-3: DCK — created `configuration-principles.md` v1.0 (6 principles)
+- [x] **FW-047** M-4: PINFK — created `infrastructure-principles.md` v1.0 (6 principles); defined SMR trigger (3+ services) and downstream consumers
+- [x] **FW-048** M-5: DKK — defined DHR cadence (semi-annual minimum, quarterly default)
+- [x] **FW-049** L-1: Governance model — added entry gate exception to four-file rule; synced to all 15 kits
+- [x] **FW-050** L-2: DCK — fixed DSR downstream from "EEK" to "REK/RRK"
+- [x] **FW-051** L-3: DKK — added DHR health score default weighting (Coverage 40%, Currency 30%, Accuracy 30%)
+- [x] **FW-052** L-4: QAK — added frozen TM and SAR from SCK as optional VP upstream inputs
 
 ---
 

@@ -386,12 +386,10 @@ class TestToolFourFileCompleteness:
 class TestSherpaSkillCriticalRules:
     """Verify sherpa-skill.md Critical Rules section contains all required behavioral rules."""
 
-    SHERPA_SKILL = Path("aieos-governance-foundation/docs/tools/sherpa-skill.md")
-
     @pytest.fixture
-    def critical_rules(self):
+    def critical_rules(self, governance_foundation):
         """Extract the Critical Rules section from sherpa-skill.md."""
-        content = self.SHERPA_SKILL.read_text()
+        content = (governance_foundation / "docs" / "tools" / "sherpa-skill.md").read_text()
         match = re.search(
             r"## Critical Rules\n\n(.*?)(?:\n## |\Z)",
             content, re.DOTALL
@@ -408,6 +406,8 @@ class TestSherpaSkillCriticalRules:
         """WS2 structured output: Health Check block must be in Critical Rules."""
         assert re.search(r"emit the Health Check block", critical_rules), \
             "Critical Rules missing: Health Check structured output rule"
+        assert re.search(r"#3, #6, #9 ONLY", critical_rules), \
+            "Critical Rules missing: strict Health Check interval (#3, #6, #9 ONLY)"
 
     def test_consistency_rule(self, critical_rules):
         """WS2 structured output: Consistency line must be in Critical Rules."""
@@ -436,22 +436,25 @@ class TestSherpaSkillCriticalRules:
         assert re.search(r"[Pp]robe thin intake", critical_rules), \
             "Critical Rules missing: intake quality probe rule"
 
+    def test_utility_trigger_rule(self, critical_rules):
+        """Post-freeze utility check must be in Critical Rules."""
+        assert re.search(r"check utility triggers after freezing", critical_rules), \
+            "Critical Rules missing: post-freeze utility trigger check"
+
     def test_critical_rules_count(self, critical_rules):
-        """Critical Rules should have at least 17 bullet points."""
+        """Critical Rules should have at least 18 bullet points."""
         bullets = re.findall(r"^- \*\*", critical_rules, re.MULTILINE)
-        assert len(bullets) >= 17, (
-            f"Critical Rules has {len(bullets)} bullets, expected >= 17"
+        assert len(bullets) >= 18, (
+            f"Critical Rules has {len(bullets)} bullets, expected >= 18"
         )
 
 
 class TestSherpaSkillConversationalBehavior:
     """Verify sherpa-skill.md contains correct conversational behavior instructions."""
 
-    SHERPA_SKILL = Path("aieos-governance-foundation/docs/tools/sherpa-skill.md")
-
     @pytest.fixture
-    def content(self):
-        return self.SHERPA_SKILL.read_text()
+    def content(self, governance_foundation):
+        return (governance_foundation / "docs" / "tools" / "sherpa-skill.md").read_text()
 
     def test_conditional_opening_question(self, content):
         """Getting Started must not force the stock question unconditionally."""
@@ -490,3 +493,24 @@ class TestSherpaSkillConversationalBehavior:
         assert re.search(
             r"[Pp]robe once.*downstream", content
         ), "Intake probe should link gap to downstream impact"
+
+    def test_intake_before_generation_guard(self, content):
+        """Must instruct reviewing each answer BEFORE generating intake form."""
+        assert re.search(
+            r"BEFORE generating the intake form.*review each", content
+        ), "Intake section should instruct per-section review BEFORE generation"
+        assert re.search(
+            r'Do NOT say "That.s plenty"', content
+        ), "Must explicitly prohibit 'That's plenty' on thin answers"
+
+    def test_post_freeze_utility_check(self, content):
+        """Must instruct checking utility triggers after freezing."""
+        assert re.search(
+            r"Step E.*Post-freeze utility check", content
+        ), "Post-validation sequence should include Step E for utility triggers"
+
+    def test_decision_table_citation_in_step3(self, content):
+        """Step 3 must instruct citing decision table IDs."""
+        assert re.search(
+            r"Cite the decision table IDs", content
+        ), "Step 3 should instruct citing J-ENTRY-1/J-ENTRY-2 in recommendation"

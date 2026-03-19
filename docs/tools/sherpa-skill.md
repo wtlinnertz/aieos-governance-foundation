@@ -96,6 +96,7 @@ This protocol ensures the user understands *why* the framework routes them a cer
 ### Step 3: Present your recommendation with path prediction
 
 Based on the decision table evaluation, explain your recommendation in plain language:
+- **Cite the decision table IDs** — e.g., "Decision table J-ENTRY-1, row 1: this is unscoped work needing discovery → PIK. J-ENTRY-2, row 5: uncertain outcome → P5 Exploratory."
 - What preset you're recommending and why
 - What you'll skip and why (optional layers not relevant to their initiative)
 
@@ -211,6 +212,7 @@ Before presenting an intake form or generating an artifact, scan frozen upstream
 - Pre-fill sections from the routing record and prior user responses where possible
 - Present the pre-populated template: "I've pre-filled {N} of {M} sections from your earlier inputs. Please review the pre-filled content and fill in the remaining sections."
 - Don't rush — intake quality determines everything downstream. If a user-provided section contains fewer than 2 substantive sentences or only generic language, probe once: "The {section} is light — could you add specifics about {what's missing}? This feeds directly into {downstream artifact}." Accept after one probe.
+- **BEFORE generating the intake form, review each user-provided answer individually.** Do NOT say "That's plenty" or proceed to generation if any answer is thin. Evaluate thinness per-section: stakeholder lists with no roles/counts, success criteria with no measurable targets, and timeline/scope answers with no specifics are all thin and must be probed before generation.
 
 **For generated artifacts:**
 - Read the generation prompt (`docs/prompts/{type}-prompt.md`)
@@ -257,6 +259,10 @@ If the user chooses to improve, run one correction cycle targeting the weak area
 
 After each consistency check, emit a one-line summary: "Consistency: {upstream} → {new artifact}: {N} of {M} items mapped. {Gaps: list or 'complete'}"
 
+For artifacts with no upstream in the table (WCR, intake), emit: "Consistency: No upstream artifacts to check. N/A."
+
+This line MUST appear after every validation PASS, regardless of whether the artifact has upstream dependencies.
+
 Example: "Consistency: PRD → SAD: 7 of 7 capabilities mapped. Complete."
 Example: "Consistency: SAD → TDD: 4 of 5 interfaces mapped. Gap: HealthCheck endpoint (SAD §4.3)."
 
@@ -276,6 +282,8 @@ If the user confirms the exclusion, note it in the artifact. If they want to add
 When detected, ask: "This looks like it might be a framework gap — {description}. Want me to log it as a finding?" If yes, append a `finding-detected` entry to the Sherpa Journal and add to ER §6 Framework Findings with: finding ID ({KIT}-FINDING-{N}), artifact context, description, and severity (observation / suggestion / gap).
 
 **Step D: Freeze and record** — Announce the result, explain what passed, and declare the artifact frozen. Update the ER with the artifact ID and completeness score. **Append an `artifact-freeze` entry to the Sherpa Journal** with the artifact ID, validation result, completeness score, convergence iteration count, and 1-2 sentences capturing what the artifact decided or defined. Then proceed directly to the next artifact — do not ask permission.
+
+**Step E: Post-freeze utility check** — After freezing, check whether any utility prompt heuristic triggers are now met by the just-frozen artifact. In particular: after freezing AR, check the Assumption Stress Test trigger (>5 assumptions OR AI-derived assumptions). After freezing SAD/TDD/ORD, check the Adversarial Review trigger. Offer before proceeding to the next artifact — do not skip this step even when the next artifact is a pause point (like EL).
 
 After freezing artifact #3 and every 3rd artifact thereafter:
 1. Read the ER to verify artifact inventory matches your expectations
@@ -346,7 +354,7 @@ After 3 or more artifacts have been frozen in the initiative, run `position-chec
 3. **Decision velocity** — How many artifacts have been frozen vs. how many decision junctions have been encountered? A high junction-to-freeze ratio may indicate the initiative is stuck in routing.
 4. **Upcoming junctions** — What decision points are coming in the next 2-3 artifacts? Flag these so the user can prepare context.
 
-After freezing artifact #3 and every 3rd artifact thereafter (#6, #9, ...), emit this block before proceeding:
+After freezing artifact #3 and every 3rd artifact thereafter (#6, #9, ...), emit this block before proceeding. Count strictly: #3, #6, #9 — do NOT emit at #4, #5, #7, #8, etc. Maintain a running freeze counter to track this.
 
 **--- Health Check (after {artifact-id} freeze) ---**
 - Frozen: {N} of ~{M} expected
@@ -470,12 +478,13 @@ When the initiative reaches its natural end point:
 - **Always read version numbers from files** — never cite from memory
 - **Keep a running count** — tell the user "We're on artifact 3 of ~12 for this kit" so they know where they are
 - **Always emit "Risk scan:" before generating** — "Risk scan: {N} signals found in upstream artifacts." (1 line, even when 0)
-- **Always emit the Health Check block after every 3rd freeze** — "--- Health Check (after {artifact-id} freeze) ---" with Frozen/Cross-cutting/Overdue/Next junction lines
+- **Always emit the Health Check block at freeze #3, #6, #9 ONLY** — "--- Health Check (after {artifact-id} freeze) ---" with Frozen/Cross-cutting/Overdue/Next junction lines. Do NOT emit at #4, #5, #7, #8, etc.
 - **Always emit "Consistency:" after post-validation consistency check** — "Consistency: {upstream} → {new}: {N} of {M} mapped. {gaps or 'complete'}"
 - **Always emit "Position check:" after every 3rd freeze** — "Position check: ER shows {N} frozen artifacts in {kit}. Next: {artifact}."
 - **Always emit "Boundary check:" at kit transitions** — "Boundary check: Read entry-from-{upstream}.md. Prerequisites: {list}. All present: {yes/no}."
 - **Never ask permission between sequential artifacts** — no "Ready?", "Shall I…?", "Want me to…?" variants. The user confirmed the path; execute it
-- **Probe thin intake sections once** — if a section has <2 substantive sentences, ask one follow-up linking the gap to its downstream impact, then accept
+- **Probe thin intake sections BEFORE generating** — review each user answer individually. If stakeholders lack roles/counts, success criteria lack measurable targets, or any section has <2 substantive sentences, probe BEFORE saying "That's plenty" or generating the form. One follow-up per thin section linking the gap to downstream impact, then accept.
+- **Always check utility triggers after freezing** — especially: Assumption Stress Test after AR freeze (>5 assumptions or AI-derived), Adversarial Review after SAD/TDD/ORD freeze. Do not skip even when the next step is a pause point.
 
 ## Decision Rationale Replay
 

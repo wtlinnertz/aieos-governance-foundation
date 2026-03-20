@@ -151,6 +151,16 @@ Single-source tracking for completed work, active initiatives, and planned items
 - [x] **SH-026** Sherpa Ideation Mode — structured brainstorming when user doesn't have a concrete idea
 - [x] **FW-053** PIK Ideation Workshop utility prompt — 7 named techniques, technique selection guide, Ideation Workshop Record output format
 
+### 2026-03-20: SDK Roadmap Governance + Roadmap Ideation
+
+- [x] **FW-054** CLA (Capability Lifecycle Assessment) — 6 hard gates incl. `user_provided_inventory` and tightened `signal_basis`; retroactive onboarding entry point
+- [x] **FW-055** PCR (Product Capability Roadmap) — 6 hard gates incl. `capacity_realistic`; 1-3 year horizon
+- [x] **FW-056** TIR (Technology Investment Roadmap) — 5 hard gates incl. `driver_traced`; 2-5 year horizon
+- [x] **FW-057** SDK playbook — 2 phases (Roadmap + Bets), 5 steps, roadmap ideation utility, retroactive onboarding guidance
+- [x] **FW-058** ER spec §1a updated with CLA/PCR/TIR; framework.py updated with dependency edges and IEK→CLA feedback
+- [x] **SH-027** Roadmap ideation techniques (R1-R7) in PIK ideation workshop prompt + sherpa roadmap detection and SDK routing
+- [x] **FW-059** PIK entry-from-sdk.md updated with PCR as optional upstream artifact
+
 ---
 
 ## Planned — Framework Refinement

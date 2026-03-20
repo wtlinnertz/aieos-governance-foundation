@@ -205,6 +205,7 @@ Ideas not yet prioritized or scoped. Move to Planned when ready to commit.
 | **BL-005** | Initiative portfolio dashboard — active/complete/abandoned across all ERs | Ecosystem | Lightweight version of ECO-006 |
 | **BL-006** | Spec authoring assistant — guided creation of new artifact types with four-file scaffold | Framework | Would help external contributors extend AIEOS |
 | **BL-007** | Adapter library — pre-built adapters for GitHub Issues, Linear, Jira for tool bindings | Ecosystem | Per adapter-conformance-spec.md |
+| **BL-008** | Ideation & Opportunity Kit (IOK) — pre-Layer-1 kit governing structured ideation with OLR, ISR, OB artifacts | Framework | Full four-file system for ideation. Graduate from sherpa ideation mode (SH-026/FW-053) if ideation proves valuable enough to warrant its own governance layer. Flow: Signals → OLR → ISR(s) → OB(s) → SDK or PIK |
 
 ---
 

@@ -171,18 +171,15 @@ Single-source tracking for completed work, active initiatives, and planned items
 | **FR-012** | Verification tier classification — classify validator gates as Structural/Referential/Semantic/Human | Low | — | Inspired by GSD. Tells you which tier caught an issue. Run cheap tiers frequently, reserve expensive tiers for milestones. |
 | **FR-013** | Process forensics template — lightweight root cause analysis when the governance pipeline stalls | Low | — | Inspired by GSD. Distinct from ODK (production incidents). Covers: scope creep, ambiguous spec, wrong preset, missing context. Referenced from healthcheck-playbook.md. |
 
-### Cross-AI Compatibility (target: Copilot CLI at work)
+### Cross-AI Compatibility (2026-03-19) — Complete
 
-| ID | Item | Priority | Dependencies | Notes |
-|----|------|----------|-------------|-------|
-| **XAI-001** | Copilot CLI adapter — `adapters/copilot-cli/` with loading instructions, capability notes, known limitations | High | — | Minimum viable cross-AI: document how to load sherpa into Copilot CLI |
-| **XAI-002** | AI capability matrix — document what sherpa expects from an AI and fallbacks for each capability gap | High | — | Covers: file read/write, context window, parallel sessions, session persistence |
-| **XAI-003** | Cross-AI session handoff protocol — how to move in-progress initiatives between AIs | High | FR-008 | Uses state file + journal + ER. "If switching AIs, new AI reads state.md and presents resumption summary" |
-| **XAI-004** | Compressed prompt variant (~300 lines) — complete but condensed for smaller context windows | Medium | — | Not the lossy bootstrap; a genuinely complete mid-weight version. Section parity verified by smoke test. |
-| **XAI-005** | Validator consistency testing methodology — run same artifact through validators on different AIs, compare results | Medium | — | Test protocol, not code. Identifies AI interpretation variance. |
-| **XAI-006** | Extend smoke test for cross-AI artifacts — adapter directory scan, state file schema, compressed prompt parity | Low | XAI-001, XAI-004 | Ensure new artifacts don't regress |
-
-**Dependency chain:** FR-008 (state file) → XAI-003 (handoff protocol). All others are independent.
+- [x] **FR-008** Machine-readable State Block (§1b) in ER spec — 7-field structured position snapshot
+- [x] **XAI-001** Copilot CLI adapter — loading guide, limitations, workarounds
+- [x] **XAI-002** AI capability matrix — 9 capabilities × 5 platforms with fallbacks
+- [x] **XAI-003** Cross-AI session handoff protocol — checklist, resumption command, troubleshooting
+- [x] **XAI-004** Compressed prompt (267 lines, 57% reduction, all sections preserved)
+- [x] **XAI-005** Validator consistency testing methodology
+- [x] **XAI-006** Smoke test extended to 49 checks (adapter dirs, compact parity, state block)
 
 ---
 

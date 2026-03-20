@@ -23,7 +23,8 @@ Position is derived from ground truth (ER + actual files), not from memory or co
 ## Execution Instructions
 
 1. Read the Engagement Record at the provided path
-1a. If a Sherpa Journal exists at `docs/engagement/sherpa-journal-{INITIATIVE}.md`, read it to enrich the position report with decision context, user preferences, and deferred decisions
+1a. If the ER contains a §1b State Block, use it as the primary position indicator. Cross-validate against the artifact inventory (steps 3-4) to detect drift between the state block and actual artifact status.
+1b. If a Sherpa Journal exists at `docs/engagement/sherpa-journal-{INITIATIVE}.md`, read it to enrich the position report with decision context, user preferences, and deferred decisions
 2. Scan the artifact directory for all artifact files
 3. For each artifact in the initiative's scope (based on preset and kit):
    - Check if the file exists in the artifact directory

@@ -51,6 +51,32 @@ When status changes to `Deprecated` or `Abandoned`, add a `Deprecation Notice` f
 
 ---
 
+### §1b State Block
+
+The state block provides a machine-readable snapshot of initiative position. It is updated by the sherpa (or operator) after every artifact freeze, kit transition, and decision junction. Any AI session can determine exactly where the initiative stands by reading this block alone.
+
+**Format:**
+
+| Field | Value |
+|-------|-------|
+| Current Layer | {layer number — kit name, e.g., "4 — Engineering Execution"} |
+| Current Artifact | {artifact type in progress, or "between artifacts"} |
+| Current Step | {playbook step reference, e.g., "EEK Step 3: TDD"} |
+| Frozen Count | {N} |
+| Next Action | {what should happen next, e.g., "Generate TDD from frozen SAD"} |
+| Blocking On | {dependency description, or "nothing — ready to proceed"} |
+| Last Updated | {YYYY-MM-DD HH:MM} |
+
+**Rules:**
+- The state block is updated AFTER each artifact freeze (not before)
+- The state block is updated AFTER each kit transition
+- The state block is updated AFTER each decision junction (cross-cutting adoption, proceed/pivot/pause)
+- "Current Artifact" is the artifact currently being worked on, not the last frozen one
+- "Next Action" must be specific enough for a new AI session to continue without reading the full ER
+- If the initiative is paused (e.g., waiting for EL experiment results), set Current Artifact to "paused" and Next Action to the resumption condition
+
+---
+
 ### §1a Layer 1 — Strategic Direction (Optional)
 
 This section is present only when the initiative originated from a governed strategic bet (SDK). Omit this section when SDK was not used.

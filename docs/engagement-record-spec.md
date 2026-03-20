@@ -79,22 +79,29 @@ The state block provides a machine-readable snapshot of initiative position. It 
 
 ### §1a Layer 1 — Strategic Direction (Optional)
 
-This section is present only when the initiative originated from a governed strategic bet (SDK). Omit this section when SDK was not used.
+This section is present only when the initiative originated from a governed strategic bet or roadmap (SDK). Omit this section when SDK was not used.
 
 **Artifact table:**
 
 | Artifact Type | ID | Status | Notes |
 |--------------|-----|--------|-------|
+| Capability Lifecycle Assessment | CLA-XXX vN | Frozen | Note current version; omit if no roadmap phase |
+| Product Capability Roadmap | PCR-XXX vN | Frozen | Note horizon (1yr/3yr/5yr); omit if no roadmap phase |
+| Technology Investment Roadmap | TIR-XXX vN | Frozen | Note horizon (2-5yr); omit if no roadmap phase |
 | Strategic Bet Record | SBR-XXX | Frozen | |
 | Portfolio Prioritization Record | PPR-XXX | Frozen | Above/below the line: {above/below} |
 
+If the Roadmap Phase was not used (direct SBR entry), write "Roadmap Phase not used — direct bet entry."
+
 **Key decisions:**
 
-List the strategic prioritization decision. Minimum entry: the PPR ranking position and cut line status.
+List the strategic prioritization decision and any roadmap lifecycle decisions. Minimum entry: the PPR ranking position and cut line status.
 
 Format: `{decision type}: {brief description} — {artifact ID where decision is recorded}`
 
-Example: `Priority: Ranked #2 of 5 bets, above the cut line with 1 team for 1 quarter allocation — PPR-001`
+Examples:
+- `Lifecycle: Authentication service marked "sunset" — timeline Q3 2027 — CLA-ACME-001 v2`
+- `Priority: Ranked #2 of 5 bets, above the cut line with 1 team for 1 quarter allocation — PPR-001`
 
 ---
 

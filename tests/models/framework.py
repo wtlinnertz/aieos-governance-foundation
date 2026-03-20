@@ -47,6 +47,9 @@ KIT_REGISTRY = {
 DEPENDENCY_EDGES: list[tuple[str, str, str]] = [
     # Pipeline sequential dependencies
     # SDK
+    ("SDK:CLA",    "SDK:PCR",    "freeze"),    # CLA must be frozen before PCR
+    ("SDK:PCR",    "SDK:TIR",    "freeze"),    # PCR must be frozen before TIR
+    ("SDK:PCR",    "SDK:SBR",    "freeze"),    # PCR committed entries → SBR extraction
     ("SDK:SBR",    "SDK:PPR",    "freeze"),    # SBRs must be frozen before PPR
     ("SDK:PPR",    "PIK:WCR",    "freeze"),    # PPR → PIK (when SDK engaged, optional)
 
@@ -153,6 +156,7 @@ DEPENDENCY_EDGES: list[tuple[str, str, str]] = [
     ("REK:RR",     "PIK:WCR",    "escalation"),  # T4: rollback wrong feature
     ("RRK:IR",     "ODK:DCR",    "escalation"),  # T5: SEV1/2 → ODK
     ("IEK:ES",     "PIK:WCR",    "escalation"),  # T6: re-discover signal (within existing bet)
+    ("IEK:ES",     "SDK:CLA",    "escalation"),  # T6a: re-discover/watch signal updates CLA lifecycle
     ("IEK:ES",     "SDK:SBR",    "escalation"),  # T6b: re-discover signal (new strategic question)
 ]
 
@@ -160,7 +164,8 @@ DEPENDENCY_EDGES: list[tuple[str, str, str]] = [
 # ─── Entry Points ────────────────────────────────────────────────────────────
 
 ENTRY_POINTS: list[str] = [
-    "SDK:SBR",      # Strategic bet (Layer 1 entry)
+    "SDK:CLA",      # Roadmap planning (Layer 1 entry — retroactive onboarding)
+    "SDK:SBR",      # Strategic bet (Layer 1 entry — direct bet)
     "PIK:WCR",      # New work request
     "EEK:KER",      # Path B enhancement (direct entry)
     "ODK:DCR",      # Production incident
@@ -173,7 +178,7 @@ ENTRY_POINTS: list[str] = [
 
 BOUNDARY_CONTRACTS: dict[tuple[str, str], list[str]] = {
     ("SDK",  "iek"):  ["ES"],
-    ("PIK",  "sdk"):  ["PPR", "SBR"],
+    ("PIK",  "sdk"):  ["PPR", "SBR", "PCR"],
     ("EEK",  "pik"):  ["DPRD"],
     ("SSK",  "pik"):  ["DPRD"],
     ("EEK",  "ssk"):  ["SDR"],

@@ -163,6 +163,13 @@ Single-source tracking for completed work, active initiatives, and planned items
 | **FR-004** | Integration test for cross-initiative awareness | Medium | — | Needs fixture with pre-existing sibling initiative ER |
 | **FR-005** | Integration test for parallel artifact orchestration | Low | — | Verify ACF+SAD parallel generation in P1/P2 driver |
 | **FR-006** | Validate IEK entry-from alignment with retrospective format | Low | INIT-C-007 | Confirm retrospective → ES mapping works end-to-end |
+| **FR-007** | Append-only Decision Register — cross-layer `decision-log.md` alongside ER | High | — | Inspired by GSD. Decisions never edited, only superseded. Structured format: decision ID, layer, artifact context, options, rationale, date. Sherpa appends at every junction. |
+| **FR-008** | Machine-readable initiative state — structured block in ER or separate `state.md` | Medium | — | Inspired by GSD. Current layer, current artifact, blocking deps, next action, frozen count. Position-check reads this instead of reconstructing from scattered files. |
+| **FR-009** | Reassessment gates at layer transitions — check upstream assumptions still valid | Medium | FR-007 | Inspired by GSD. At each kit transition, compare current state against DPRD/PRD assumptions. If material divergence detected, trigger lightweight re-validation. New gate type in flow-reference.md. |
+| **FR-010** | Auto-repair healthchecks — `check-structure.sh --repair` flag | Medium | — | Inspired by GSD. Auto-fix: governance model sync, missing spec versions, broken file refs. Healthcheck playbook gains "Remediation" column (auto-remediable vs. manual). |
+| **FR-011** | Effort ceiling governance — initiative-level thresholds with graduated enforcement | Low | — | Inspired by GSD. Max convergence iterations, max PRK cycles. At 50%: flag. At 75%: sponsor re-auth. At 90%: escalate to SDK for kill/pivot. |
+| **FR-012** | Verification tier classification — classify validator gates as Structural/Referential/Semantic/Human | Low | — | Inspired by GSD. Tells you which tier caught an issue. Run cheap tiers frequently, reserve expensive tiers for milestones. |
+| **FR-013** | Process forensics template — lightweight root cause analysis when the governance pipeline stalls | Low | — | Inspired by GSD. Distinct from ODK (production incidents). Covers: scope creep, ambiguous spec, wrong preset, missing context. Referenced from healthcheck-playbook.md. |
 
 ---
 

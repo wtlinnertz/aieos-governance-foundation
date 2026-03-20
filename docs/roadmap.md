@@ -171,6 +171,17 @@ Single-source tracking for completed work, active initiatives, and planned items
 | **FR-012** | Verification tier classification — classify validator gates as Structural/Referential/Semantic/Human | Low | — | Inspired by GSD. Tells you which tier caught an issue. Run cheap tiers frequently, reserve expensive tiers for milestones. |
 | **FR-013** | Process forensics template — lightweight root cause analysis when the governance pipeline stalls | Low | — | Inspired by GSD. Distinct from ODK (production incidents). Covers: scope creep, ambiguous spec, wrong preset, missing context. Referenced from healthcheck-playbook.md. |
 
+### Organizational Readiness Gaps
+
+| ID | Item | Priority | Kit | Dependencies | Notes |
+|----|------|----------|-----|-------------|-------|
+| **ORG-001** | Skills Gap Assessment — pre-execution check in EEK | High | EEK | — | Before WDD, assess team capabilities vs. required skills (languages, frameworks, domain expertise, ops skills). Identifies training needs or hiring/contracting dependencies. Blocks execution planning if critical gaps unresolved. |
+| **ORG-002** | Service Ownership Record — comprehensive ownership matrix | High | REK or RRK | — | Who owns: code, on-call, L1/L2/L3 support, product decisions, documentation, dependency updates. Frozen before Layer 6 entry. Extends beyond SRER's reliability-only ownership. |
+| **ORG-003** | Extend RRK SRP with support tier definitions | Medium | RRK | ORG-002 | Add L1/L2/L3 support routing, escalation paths, support hours, handoff triggers to SRP spec. Currently SRP covers SLOs but not the human support model. |
+| **ORG-004** | Launch Communications Plan — internal + external messaging | Medium | REK | — | New artifact in REK between RP and RR. Internal: org announcement, stakeholder briefing, support team enablement. External: customer comms, changelog, migration guide (if applicable). |
+| **ORG-005** | Adoption Plan — strategy, metrics, feedback loops | Medium | REK | ORG-004 | Extend RP or add new artifact. Covers: rollout strategy (big bang vs. phased), adoption success metrics, feedback channels, time-to-value targets, what "adopted" means. Goes beyond BPK's process training. |
+| **ORG-006** | Update initiative presets with new artifacts | Low | Governance Foundation | ORG-001 through ORG-005 | Add skills assessment, ownership record, launch comms, adoption plan to P1/P2/P3 preset artifact sequences. Update ER spec with new layer sections. |
+
 ### Cross-AI Compatibility (2026-03-19) — Complete
 
 - [x] **FR-008** Machine-readable State Block (§1b) in ER spec — 7-field structured position snapshot

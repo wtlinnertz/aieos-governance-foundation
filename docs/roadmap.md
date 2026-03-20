@@ -148,6 +148,8 @@ Single-source tracking for completed work, active initiatives, and planned items
 - [x] **FW-051** L-3: DKK — added DHR health score default weighting (Coverage 40%, Currency 30%, Accuracy 30%)
 - [x] **FW-052** L-4: QAK — added frozen TM and SAR from SCK as optional VP upstream inputs
 - [x] **SH-025** Extracted `aieos-sherpa` as standalone project with canonical tool-agnostic prompt, Claude Code adapter, generic bootstrap adapter, docs, and test suite
+- [x] **SH-026** Sherpa Ideation Mode — structured brainstorming when user doesn't have a concrete idea
+- [x] **FW-053** PIK Ideation Workshop utility prompt — 7 named techniques, technique selection guide, Ideation Workshop Record output format
 
 ---
 

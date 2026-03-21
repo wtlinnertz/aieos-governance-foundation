@@ -160,6 +160,7 @@ Single-source tracking for completed work, active initiatives, and planned items
 - [x] **FW-058** ER spec §1a updated with CLA/PCR/TIR; framework.py updated with dependency edges and IEK→CLA feedback
 - [x] **SH-027** Roadmap ideation techniques (R1-R7) in PIK ideation workshop prompt + sherpa roadmap detection and SDK routing
 - [x] **FW-059** PIK entry-from-sdk.md updated with PCR as optional upstream artifact
+- [x] **ECO-003** AIEOS Artifact Store (`aieos-artifact-store`) — LanceDB vector search over frozen artifacts. Chunker, metadata extractor, embedding wrapper, ingest pipeline, query interface. 23 tests, 44 artifacts ingested from aieos-console (431 chunks). 3 sherpa integration points documented.
 
 ---
 
@@ -214,7 +215,7 @@ Documented in detail at `docs/ecosystem-roadmap.md`. These are real software pro
 |----|---------|-----------|---------|--------|-------------|
 | **ECO-001** | AIEOS Schema | `aieos-schema` | Machine-readable spec contracts (YAML/JSON). Strengthens framework Tier 2 tests (spec-template drift, gate enumeration, prompt checklist alignment) AND unlocks all downstream ecosystem projects. | Not started | None — this is the keystone |
 | **ECO-002** | Evaluation Engine | `aieos-evaluation-engine` | Runtime governance enforcement. Consumes schema to validate artifacts programmatically instead of relying solely on AI judgment. | Not started | ECO-001 |
-| **ECO-003** | Artifact Store | `aieos-artifact-store` | Cross-initiative artifact indexing. Query "show me all frozen SADs across all initiatives" or "which initiatives touched the auth module." | Not started | ECO-001 |
+| **ECO-003** | Artifact Store | `aieos-artifact-store` | Cross-initiative artifact indexing. Query "show me all frozen SADs across all initiatives" or "which initiatives touched the auth module." | **Complete** (v1.0.0) | — (built without Schema dependency) |
 
 ### Phase 2: Observe & Integrate
 

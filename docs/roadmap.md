@@ -233,6 +233,43 @@ Documented in detail at `docs/ecosystem-roadmap.md`. These are real software pro
 
 ---
 
+## Planned — Gap Closure (from 2026-03-21 gap analysis)
+
+### Tier 1: Will come up in first real initiative at work
+
+Build these when you hit them during a real initiative — don't build speculatively.
+
+| ID | Gap | Approach | Priority | Notes |
+|----|-----|----------|----------|-------|
+| **GAP-001** | Technical debt governance | Extend EEK or create cross-cutting artifact. New artifact: **Technical Debt Register (TDR)** — append-only log of debt accrued during execution (what, why, interest cost, paydown plan). Updated during EEK code execution and at each RHR. | High | Don't create a new kit. Add TDR as a cross-cutting artifact in EEK with RRK maintenance. Tracked alongside ER. |
+| **GAP-002** | Data privacy / classification | Extend SCK. Add **Data Classification Record (DCL)** as a new SCK artifact — maps all data handled by the initiative to classification levels (PII, PHI, confidential, internal, public). Add hard gate to SAD spec requiring data classification reference. GDPR impact assessment folds into CER. | High | SCK already governs security; privacy is the missing half. DCL triggers after PFD (when data scope is known) and feeds TM + SAR. |
+| **GAP-003** | Accessibility compliance | Don't create a new kit. Add accessibility as hard gates to existing specs: PRD spec gains `accessibility_requirements` gate (WCAG level stated); TDD spec gains `accessibility_test_coverage` gate; QAK VP gains accessibility as a test dimension. | High | Lightest possible touch — 3 spec edits, no new kit. Add when the first initiative has user-facing output. |
+| **GAP-004** | Operational maintenance governance | Extend RRK (Layer 6), not a new kit. Add **Operational Maintenance Plan (OMP)** artifact to RRK — covers: dependency update cadence, patch policy, secret rotation schedule, backup/DR drill schedule, data retention enforcement. Frozen after first SRP, revised at each RHR. | High | RRK already owns production. OMP is the "steady-state care plan" that SRP doesn't cover. |
+| **GAP-005** | Cost governance | Extend SDK. Add cost fields to PCR (budget per capability) and SBR (investment envelope already exists but no tracking). Add **Cost Tracking Record (CTR)** as an optional cross-cutting artifact — actual spend vs. budget at each layer transition. | Medium | Start light: add fields to existing artifacts first. CTR as a full artifact only if cost tracking proves essential. |
+
+### Tier 2: Causes friction at scale
+
+Address when scaling beyond solo/small team use.
+
+| ID | Gap | Approach | Priority | Notes |
+|----|-----|----------|----------|-------|
+| **GAP-006** | Deprecation/sunset lifecycle | Extend REK (Layer 5). CLA already marks capabilities for sunset. Add **Deprecation Execution Plan (DEP)** to REK — covers: migration path execution, communication timeline, dependency notification, data archival, monitoring teardown. Uses RP/RR patterns but for removal instead of deployment. | Medium | Don't create a new kit. REK already handles release mechanics; deprecation is "release in reverse." |
+| **GAP-007** | Customer/support feedback loop | Extend IEK (Layer 7). Add **Feedback Synthesis Record (FSR)** — aggregates support ticket themes, customer feedback, NPS signals into structured input for next ES. Triggered periodically (quarterly) or when support volume spikes. | Medium | IEK's ES is too high-level for granular feedback. FSR is the mid-layer synthesis that's missing. DKK SKA captures individual articles; FSR captures patterns. |
+| **GAP-008** | Cross-team coordination | Extend ER spec with a **Cross-Initiative Dependency Map** section. When multiple initiatives share systems/teams, each ER §Dependencies lists the other ERs it depends on or conflicts with. Sherpa cross-initiative scan (already built) detects these; this formalizes the tracking. | Medium | Don't create a new kit. Extend ER + leverage existing cross-initiative awareness in the sherpa. Only matters at 3+ concurrent initiatives. |
+| **GAP-009** | Decision authority (RACI) | Add to ER §1 Document Control: a **Decision Authority Table** — lists who can approve freeze at each layer (by role, not by name). Replaces ad-hoc "who approves this?" with explicit authority. | Medium | Lightest possible touch: one new section in an existing artifact. No new kit, no new spec. Fill in at initiative start, reference at each freeze. |
+
+### Guidance: What NOT to build yet
+
+These gaps are real but should be demand-driven, not speculative:
+
+- **ML/AI model governance** — Build when you have an ML initiative. Extend EEK TDD with model-specific gates, not a new kit.
+- **Design system / UX patterns** — Build when you have 3+ initiatives sharing UI patterns. Could be a DKK extension.
+- **Team health / burnout signals** — Important but organizational, not framework. Track outside AIEOS unless you find a natural artifact home.
+- **Solo operator preset** — Address friction as you encounter it. The framework already has solo-operator notes in REK.
+- **Async/distributed team support** — Address with process guidance in playbooks, not new artifacts.
+
+---
+
 ## Backlog
 
 Ideas not yet prioritized or scoped. Move to Planned when ready to commit.

@@ -2,7 +2,7 @@
 
 Single-source tracking for completed work, active initiatives, and planned items across the AIEOS governance framework and ecosystem.
 
-**Last updated:** 2026-03-19 (aieos-sherpa extracted)
+**Last updated:** 2026-03-21 (UX improvement roadmap items added)
 
 ---
 
@@ -181,6 +181,33 @@ Single-source tracking for completed work, active initiatives, and planned items
 | **FR-011** | Effort ceiling governance — initiative-level thresholds with graduated enforcement | Low | — | Inspired by GSD. Max convergence iterations, max PRK cycles. At 50%: flag. At 75%: sponsor re-auth. At 90%: escalate to SDK for kill/pivot. |
 | **FR-012** | Verification tier classification — classify validator gates as Structural/Referential/Semantic/Human | Low | — | Inspired by GSD. Tells you which tier caught an issue. Run cheap tiers frequently, reserve expensive tiers for milestones. |
 | **FR-013** | Process forensics template — lightweight root cause analysis when the governance pipeline stalls | Low | — | Inspired by GSD. Distinct from ODK (production incidents). Covers: scope creep, ambiguous spec, wrong preset, missing context. Referenced from healthcheck-playbook.md. |
+
+### User Experience Improvements (2026-03-21)
+
+| ID | Item | Priority | Dependencies | Notes |
+|----|------|----------|-------------|-------|
+| **UX-001** | Onboarding guide — "Your first initiative in 15 minutes" | High | — | Guided walkthrough with a concrete P2 Enhancement example. Progressive disclosure: show only artifacts relevant to the user's preset instead of all 50+ types. Supplement getting-started.md (reference-oriented) with a narrative tutorial. Target: a new user can complete routing + first 2 artifacts without reading any spec files. |
+| **UX-002** | Sherpa standalone hardening — versioning, packaging, test harness | High | SH-025 | SH-025 extracted aieos-sherpa with canonical prompt + adapters. Remaining: version the prompt (semver), add a changelog, build a regression test harness that runs rubric tests automatically (headless driver + scoring), document adapter authoring guide for non-Claude platforms. |
+| **UX-003** | Expanded rubric test coverage — P1/Skeptic, P3/PM, P4/PM | High | FR-001, FR-002 | FR-001 and FR-002 cover P1/Skeptic and P4/PM. Add P3/PM (compliance flow with non-technical persona). Each new persona/preset combination may surface new behavioral issues. Target: 5 of 15 rubric matrix cells tested (currently 3: P5/PM x2, P2/TechLead). |
+| **UX-004** | Convergence loop refinement — targeted correction instead of full re-generation | Medium | — | Current behavior: validation FAIL triggers full artifact re-generation. Improvement: identify the specific failing gate(s), generate a targeted patch addressing only those gates, re-validate. Reduces token cost and preserves content that already passes. Also: graduate the 3-attempt hard limit to a configurable ceiling with sponsor re-auth at threshold (relates to FR-011 effort ceiling governance). |
+| **UX-005** | Progressive disclosure in sherpa — adapt detail level to user expertise | Low | UX-003 | P2/TechLead rubric test showed slight over-probing for expert users. Sherpa could detect expertise signals (technical vocabulary, direct answers, "skip the explanation" cues) and adjust: fewer analogies, terser explanations, faster artifact transitions. Risk: over-engineering. Only pursue if rubric tests consistently show calibration as a gap across multiple expert-persona sessions. |
+
+### External Tool Integration (2026-03-21)
+
+The integration architecture is defined (adapter-conformance-spec v1.0, 13 tool specs, 9 bindings) but no executable adapters exist. This section tracks the path from static documentation to working integrations.
+
+**Existing foundation:**
+- 4 tool specs with external platform bindings: work-item-sync (GitHub Issues), release-tag (GitHub Releases), validation-status (GitHub Issues), artifact-publish (Confluence)
+- Adapter conformance spec with 7 hard gates, three-layer model (spec → binding → adapter), and `push()`/`verify()`/`health()` operations
+- 13 PRK review lenses (governed four-file tools, no external integration needed)
+
+| ID | Item | Priority | Dependencies | Notes |
+|----|------|----------|-------------|-------|
+| **INT-001** | Expand platform bindings — Linear, Jira, Slack, GitLab | Medium | — | Static field-mapping documents (no code). Add bindings for: **Linear** (work-item-sync, validation-status), **Jira** (work-item-sync, validation-status), **Slack** (validation-status as channel notifications, health-check summaries), **GitLab** (work-item-sync to GitLab Issues, release-tag to GitLab Releases). Each binding follows the existing pattern in `docs/bindings/`. Low effort per binding (~1 hour each). Extends coverage without requiring executable code. |
+| **INT-002** | First executable adapter — GitHub Issues (work-item-sync) | High | — | Prove the adapter architecture works end-to-end. Build `aieos-adapter-github` implementing `push()`, `verify()`, `health()` per adapter-conformance-spec. Scope: sync WDD work items to GitHub Issues using the existing `work-item-sync-github-issues.md` binding. Idempotent (search-then-upsert), structured audit logging, circuit breaker on API failures. Test with aieos-search WDD items. Success: sherpa can say "I've synced 8 work items to GitHub Issues" after WDD freeze. |
+| **INT-003** | Second executable adapter — GitHub Releases (release-tag) | Medium | INT-002 | Reuses the `aieos-adapter-github` package. Creates a GitHub Release from a frozen RR artifact using the `release-tag-github.md` binding. Validates that the adapter pattern generalizes beyond a single tool spec. Test with aieos-console RR-CONSOLE-001. |
+| **INT-004** | Sherpa adapter integration — offer sync at freeze points | Medium | INT-002 | After WDD freeze, sherpa checks for configured adapters and offers: "I can sync these work items to GitHub Issues now. Want me to?" After RR freeze: "I can create a GitHub Release for this." Adds adapter awareness to sherpa-skill.md Phase 3 post-freeze sequence (new Step F after Step E). Respects the existing "never ask permission between sequential artifacts" rule — sync is offered as a utility, not a gate. |
+| **INT-005** | Adapter test harness and CI | Low | INT-002 | Automated tests for adapter conformance: mock external APIs, verify idempotency, test circuit breaker, validate audit log format. Reusable across all future adapters. |
 
 ### Organizational Readiness Gaps
 

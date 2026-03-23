@@ -76,9 +76,11 @@ DEPENDENCY_EDGES: list[tuple[str, str, str]] = [
 
     # EEK (KER is the entry gate for EEK)
     ("EEK:KER",    "EEK:PRD",    "freeze"),    # KER gates PRD
-    # EEK (simplified — ACF/SAD can parallel, DCF/TDD can parallel)
+    # EEK (simplified — ACF/SAD can parallel, DCF/TDD can parallel, DKR optional between ACF and SAD)
     ("EEK:PRD",    "EEK:ACF",    "freeze"),
     ("EEK:PRD",    "EEK:SAD",    "freeze"),
+    ("EEK:ACF",    "EEK:DKR",    "freeze"),    # DKR after ACF (optional)
+    ("EEK:DKR",    "EEK:SAD",    "freeze"),    # DKR before SAD (when created)
     ("EEK:ACF",    "EEK:TDD",    "freeze"),
     ("EEK:SAD",    "EEK:TDD",    "freeze"),
     ("EEK:ACF",    "EEK:DCF",    "freeze"),

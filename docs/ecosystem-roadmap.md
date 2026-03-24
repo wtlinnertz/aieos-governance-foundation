@@ -17,6 +17,7 @@ This document captures the adjacent projects identified as high-value additions 
 | Compliance Reporter | `aieos-compliance-reporter` | Software — automated audit packages |
 | System Twin | `aieos-system-twin` | Software — live system topology graph |
 | Playground | `aieos-playground` | Software — interactive learning environment |
+| Engineer Impact | `aieos-engineer-impact` | Documentation — quarterly engineer impact assessment framework |
 
 ---
 
@@ -901,6 +902,23 @@ Again, additive — Twin and Engine each work alone; together they're smarter.
 | Reporter | One audit package for one regulation (e.g., SOC2 Type II) covering one system. Control-to-evidence mapping with gap analysis. Demonstrates: Store query consumption, control mapping, gap detection, package assembly. |
 
 **Phase 3 exit criteria:** Analytics produces actionable framework improvement signals. Reporter produces an audit package that an auditor would accept.
+
+### Phase 4: People & Impact
+
+| ID | Component | Repository | Type | Dependencies |
+|----|-----------|-----------|------|-------------|
+| **ECO-008** | Engineer Impact Framework | `aieos-engineer-impact` | Documentation — quarterly engineer impact assessment | None (standalone; optional ER §16 integration) |
+
+**Why separate from Phase 1–3:** Phases 1–3 make governance *executable and observable* (software tooling). Phase 4 extends AIEOS into *people measurement* — a different domain. The Engineer Impact Framework is documentation (rubrics, templates, process guides), not software. It has no dependency on Schema, Engine, or Store.
+
+**What ECO-008 delivers:**
+- Two-tier assessment framework (Starter ~2hrs/quarter, Advanced ~8hrs/quarter)
+- Four dimensions: Outcome-Driven Impact, Enablement Impact, Operational Excellence, Team Multiplier
+- Contribution Factor rubric (0–1 scale), Complexity Factor rubric (1.0–1.7)
+- Calibration meeting template and gaming detection checklist
+- Optional AIEOS integration: ER §16 Impact Attribution captures contribution data at artifact freeze points; IEK ES/PES can consume this data for execution pattern analysis
+
+**Phase 4 exit criteria:** One team completes a full quarterly assessment cycle using the templates.
 
 ### Phase 2-3 Enhancement: Post-Integration Capabilities
 

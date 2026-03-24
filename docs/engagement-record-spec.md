@@ -38,7 +38,7 @@ This spec is the canonical definition of the ER format. It lives in `aieos-gover
 | Status | Active / Deprecated / Abandoned |
 | Discovery Start | {YYYY-MM-DD — date Discovery Intake was validated in PIK} |
 | Latest ES Date | {YYYY-MM-DD — date of most recent frozen ES, or N/A} |
-| ER Spec Version | 1.5 |
+| ER Spec Version | 1.6 |
 | Current Position | {Navigation map node ID, e.g., N-EEK-TDD — updated by position-check tool. Optional.} |
 | Preset | {P1–P5 or Custom — declared at initiative start} |
 
@@ -369,6 +369,35 @@ If Layer 15 is not adopted for this initiative, write "BPK not adopted for this 
 
 ---
 
+### §16 Impact Attribution (Optional)
+
+This section records who contributed what at each layer boundary. It is observational — it captures artifact ownership and contribution levels as they occur during the initiative, not retroactively at quarter end. It is never used for performance evaluation within the ER itself.
+
+**Contributor table:**
+
+| Layer | Artifact ID | Contributor | Role | Contribution Level | Notes |
+|-------|-------------|-------------|------|-------------------|-------|
+| {layer number} | {artifact-ID} | {name or pseudonym} | {functional role during this artifact} | Primary / Significant / Supporting | {optional context} |
+
+**Contribution Level definitions:**
+
+| Level | Meaning |
+|-------|---------|
+| **Primary** | Drove the artifact — owned the design, made final decisions, accountable for the outcome |
+| **Significant** | Major contributor — owned a subsystem, shaped direction, unblocked the team |
+| **Supporting** | Reviewed, consulted, or assisted — meaningful input without decision authority |
+
+**Rules:**
+
+- Contributor names follow the pseudonym convention from release-entry-spec.md §Release Owner: pseudonyms are acceptable when paired with a traceability note stating where the real-name mapping is maintained.
+- Contribution Levels are observational, not evaluative — they record what happened, not how well it was done.
+- Rows are added at each layer boundary when an artifact is frozen, not retroactively.
+- Multiple contributors can be listed per artifact. Only one contributor per artifact should be "Primary."
+- Tool references (repository URLs, ticket IDs, etc.) must not appear in this table — use role descriptions and artifact IDs only.
+- This section is optional. If impact attribution is not adopted for this initiative, write "Impact attribution not adopted for this initiative."
+
+---
+
 ### §7 Initiative Outcome
 
 | Field | Value |
@@ -404,6 +433,7 @@ Each kit's playbook includes a "Maintaining the Engagement Record" section with 
 | Documentation & Knowledge Kit | Each Layer 13 artifact frozen | Add artifact IDs to §13 table. Note DHR version changes for periodic reviews. |
 | Peer Review Kit | Each PRR frozen | Add PRR IDs to §14 table. Note review point and disposition. |
 | Business Process Kit | Each Layer 15 artifact frozen | Add artifact IDs to §15 table. Note RC readiness declaration. |
+| All kits (if impact attribution adopted) | Each artifact frozen | Add contributor row(s) to §16 table with layer, artifact ID, contributor name/pseudonym, role, and contribution level (Primary / Significant / Supporting). |
 
 **On initiative end:** The operator who declares the initiative Deprecated or Abandoned updates §1 Status and §7 Initiative Outcome, and adds the DN ID reference.
 

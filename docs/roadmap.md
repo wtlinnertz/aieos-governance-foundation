@@ -258,6 +258,12 @@ Documented in detail at `docs/ecosystem-roadmap.md`. These are real software pro
 | **ECO-006** | Governance Analytics | `aieos-governance-analytics` | Cross-initiative intelligence. Quality trends, cycle time, finding patterns, adoption rates. | Not started | ECO-001, ECO-003 |
 | **ECO-007** | Compliance Reporter | `aieos-compliance-reporter` | Automated audit packages. Generate compliance evidence from frozen artifacts + ER history. | Not started | ECO-001, ECO-003 |
 
+### Phase 4: People & Impact
+
+| ID | Project | Repository | Purpose | Status | Dependencies |
+|----|---------|-----------|---------|--------|-------------|
+| **ECO-008** | Engineer Impact Framework | `aieos-engineer-impact` | Quarterly engineer impact assessment. Two tiers (Starter ~2hrs, Advanced ~8hrs), four dimensions, calibration process, gaming detection. Optional ER §16 integration and IEK consumption. | Complete | None |
+
 ---
 
 ## Planned — Gap Closure (from 2026-03-21 gap analysis)

@@ -2,7 +2,7 @@
 
 Single-source tracking for completed work, active initiatives, and planned items across the AIEOS governance framework and ecosystem.
 
-**Last updated:** 2026-03-21 (UX improvement roadmap items added)
+**Last updated:** 2026-03-25 (AI-Native SDLC v3.1 alignment — 6 gap closure items + 8 PA thickening packages added)
 
 ---
 
@@ -181,6 +181,45 @@ Single-source tracking for completed work, active initiatives, and planned items
 | **FR-011** | Effort ceiling governance — initiative-level thresholds with graduated enforcement | Low | — | Inspired by GSD. Max convergence iterations, max PRK cycles. At 50%: flag. At 75%: sponsor re-auth. At 90%: escalate to SDK for kill/pivot. |
 | **FR-012** | Verification tier classification — classify validator gates as Structural/Referential/Semantic/Human | Low | — | Inspired by GSD. Tells you which tier caught an issue. Run cheap tiers frequently, reserve expensive tiers for milestones. |
 | **FR-013** | Process forensics template — lightweight root cause analysis when the governance pipeline stalls | Low | — | Inspired by GSD. Distinct from ODK (production incidents). Covers: scope creep, ambiguous spec, wrong preset, missing context. Referenced from healthcheck-playbook.md. |
+
+### AI-Native SDLC Alignment — Gap Closure (2026-03-25)
+
+Items proposed by the AI-Native SDLC v3.1 alignment assessment (`docs/ai-native-sdlc-alignment.md`). AG items close outright gaps; AL items thicken partial alignment.
+
+| ID | Item | Priority | Dependencies | Notes |
+|----|------|----------|-------------|-------|
+| **FR-014** | Prompt/model regression testing — add as Tier 3 test category and model-update trigger in healthcheck | High | — | Source: AG-002 (P116, PR63, PR68). No governance of prompt regression after model updates. Add prompt regression suite as Tier 3 category. Add model-update review trigger to healthcheck-playbook.md. |
+| **FR-015** | AI adoption maturity model — 4 levels tied to AIEOS adoption depth | Medium | — | Source: AG-003, AG-007 (P120, PR6a, PR6c, PR65, P131). Define maturity levels: L1 preset use → L2 spec customization → L3 finding contribution → L4 kit extension. |
+| **FR-016** | Constraint library tool spec — queryable rejection patterns accessible via MCP | Medium | — | Source: AG-004 (PR32, PR34). Specs serve as distributed constraints but no queryable library. Design for MCP server exposure. Feed from validator FAIL patterns and PRK findings. |
+| **FR-017** | AI pipeline observability guidance — LLM call tracing standards | Medium | — | Source: AG-010 (PR61, P114, P115). No governance of LLM call tracing, prompt drift, or AI-specific observability. Extend RRK or create guidance doc. |
+| **FR-018** | Review capacity estimation in WDD/PRK | Low | — | Source: AG-008 (P156, PR85, PR86). Add review capacity as optional WDD consideration. Document review rotation guidance in PRK playbook. |
+| **FR-019** | Bootstrap file token budget recommendation | Low | — | Source: AG-009 (PR35). Add token budget recommendation to kit-structure-standard.md (advisory, not hard gate). |
+
+### AI-Native SDLC Alignment — PA Thickening (2026-03-25)
+
+Thickening work packages that strengthen existing partial alignment. Each bundles multiple PA items into a coherent deliverable. Full analysis in `docs/ai-native-sdlc-alignment.md` §PA Thickening Analysis.
+
+| ID | Item | Priority | Effort | PA Items | Notes |
+|----|------|----------|--------|----------|-------|
+| **AL-001** | Agent Security Hardening — prompt injection, supply chain, shadow agents, OWASP agentic AI, task-scoped permissions | High | Medium | P49, P50, P51, P55, P87, PA16, PA18, PR20, PR21, PR22 | Update SCK TM spec + DAR spec + adapter-conformance-spec + tool-governance-spec. Add named threat categories, MCP verification, permission model. |
+| **AL-002** | AI-Generated Code Testing Standards — behavioral verification, test skepticism gate, SAST/DAST, anti-mocking | High | Medium | P111, P112, PA9, PR7, PR8, PR9, PR9a, PR9c, PR40 | Update TDD spec + execution-spec + code-craftsmanship.md + QAK VP spec. Add AI-specific testing dimensions and review gates. |
+| **AL-003** | Agent Readiness & Delegation Framework — capability map, readiness checklist, frontier mapping, confidence gating | Medium | Medium | PA3c, PA3d, PA10, PA15b, PA15d, PA19b, PR3, P148, P149, P150 | Update tool-governance-spec + getting-started.md + WDD annotations + QAK playbook. |
+| **AL-004** | Knowledge Currency & Documentation Lifecycle — freshness metadata, AI doc audits, brownfield excavation | Medium | Low | P151, P153, PA41, PR66, PR81, PR82 | Update DKK templates + getting-started.md. Add AI-assisted audit mode to DHR. |
+| **AL-005** | Process & Workflow Hardening — prompt deprecation, staged adoption, IaC gates, canary deploy, cognitive recovery | Medium | Medium | P124, P129, P133, PA12, PA35, PR10, PR13a, PR53, PR60, PR80, PR87, P43 | Update spec-file-standard + getting-started + PINFK ISPEC + REK RP + EEK playbook. |
+| **AL-006** | Enterprise Integration Readiness — NIST AI RMF mapping, A2A/MCP guidance, W3C PROV, tool catalog | Medium | Low | P108, P109, P110, P139, P146, PA6a, PA6b, PA6d, PR64 | Update adapter-conformance-spec + governance-model + ER spec + tool-governance-spec. |
+| **AL-007** | Memory Architecture Formalization — five-layer memory model, canonical facts, context compression protocol | Low | Medium | P8, P57, P60, P62, P64, PA4, PA24, PA25, PA27 | New guidance doc (memory-architecture.md) + philosophy.md + code-craftsmanship.md updates. |
+| **AL-008** | Organizational AI Alignment — senior role redefinition, cognitive load, working modes, adoption guidance | Low | Low | 27 PA items (see alignment doc) | Update philosophy.md + getting-started.md. Single guidance section, not spec changes. Mostly advisory. |
+
+**Cross-references to existing roadmap items validated by alignment assessment:**
+
+| Existing ID | Validated By | Notes |
+|-------------|-------------|-------|
+| GAP-002 | AG-001 (P106, PR78) | Data privacy governance confirmed high priority |
+| GAP-005 | AG-005 (P102, P117) | Extend scope to AI tooling costs |
+| ECO-006 | AG-003 (P120, PR6c) | Governance Analytics addresses adoption quality |
+| ECO-001 | AG-011 (P145) | Schema enables richer provenance (model version, context hash) |
+| INT-002 | AL-006 | First executable adapter proves integration architecture |
+| UX-001 | AL-005 (P129) | Onboarding guide supports staged adoption |
 
 ### User Experience Improvements (2026-03-21)
 

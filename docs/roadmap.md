@@ -2,7 +2,7 @@
 
 Single-source tracking for completed work, active initiatives, and planned items across the AIEOS governance framework and ecosystem.
 
-**Last updated:** 2026-03-25 (AI-Native SDLC v3.1 alignment — 6 gap closure items + 8 PA thickening packages added)
+**Last updated:** 2026-03-25 (ECO-009 Agent Harness added; AI-Native SDLC v3.1 alignment items)
 
 ---
 
@@ -302,6 +302,12 @@ Documented in detail at `docs/ecosystem-roadmap.md`. These are real software pro
 | ID | Project | Repository | Purpose | Status | Dependencies |
 |----|---------|-----------|---------|--------|-------------|
 | **ECO-008** | Engineer Impact Framework | `aieos-engineer-impact` | Quarterly engineer impact assessment. Two tiers (Starter ~2hrs, Advanced ~8hrs), four dimensions, calibration process, gaming detection. Optional ER §16 integration and IEK consumption. | Complete | None |
+
+### Phase 5: Orchestrate & Execute
+
+| ID | Project | Repository | Purpose | Status | Dependencies |
+|----|---------|-----------|---------|--------|-------------|
+| **ECO-009** | Agent Harness | `aieos-agent-harness` | Pluggable multi-agent orchestration engine for AIEOS. Binds different AI providers (and non-AI tools) to artifact lifecycle events. Provides fallback routing, cost-aware routing, multi-provider consensus, and per-invocation observability. Enforces AIEOS invariants (generation/validation separation, human freeze, disk-based state). | Not started | ECO-001 (schema for artifact event contracts), INT-002 (adapter pattern proven) |
 
 ---
 

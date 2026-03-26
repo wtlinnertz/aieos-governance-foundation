@@ -18,6 +18,7 @@ This document captures the adjacent projects identified as high-value additions 
 | System Twin | `aieos-system-twin` | Software — live system topology graph |
 | Playground | `aieos-playground` | Software — interactive learning environment |
 | Engineer Impact | `aieos-engineer-impact` | Documentation — quarterly engineer impact assessment framework |
+| Agent Harness | `aieos-agent-harness` | Software — pluggable multi-agent orchestration engine |
 
 ---
 
@@ -920,6 +921,96 @@ Again, additive — Twin and Engine each work alone; together they're smarter.
 
 **Phase 4 exit criteria:** One team completes a full quarterly assessment cycle using the templates.
 
+### Phase 5: Orchestrate & Execute
+
+| ID | Component | Repository | Type | Dependencies |
+|----|-----------|-----------|------|-------------|
+| **ECO-009** | Agent Harness | `aieos-agent-harness` | Software — pluggable multi-agent orchestration engine | ECO-001 (schema for artifact event contracts), INT-002 (adapter pattern proven) |
+
+**Why a new phase:** Phases 1–3 make governance *observable and measurable*. Phase 4 extends into *people*. Phase 5 extends into *execution orchestration* — the runtime layer that binds AI providers and deterministic tools to AIEOS artifact lifecycle events. This is the most ambitious ecosystem project because it operates at the boundary between governance (Markdown, immutable) and execution (code, dynamic).
+
+**What ECO-009 delivers:**
+
+A pluggable orchestration engine that lets users bind different AI providers (and non-AI tools like SAST scanners) to artifact lifecycle events, while enforcing AIEOS invariants.
+
+**Core components:**
+
+1. **Lifecycle Binder** — Maps artifact lifecycle events to agent invocations. Events include `pre_generation`, `post_generation`, `pre_validation`, `post_validation`, `post_freeze`, and `on_failure`. Users configure which agents handle which events for which artifact types:
+   ```yaml
+   bindings:
+     - event: pre_generation
+       artifact_type: SAD
+       agents: [architecture-context-builder]
+     - event: post_generation
+       artifact_type: SAD
+       agents: [sad-validator]  # Runs in separate session (enforced)
+     - event: post_freeze
+       artifact_type: WDD
+       agents: [github-issues-sync]  # Non-LLM adapter
+   ```
+
+2. **Routing Engine** — Four execution strategies, each governed:
+   - **Parallel consensus** — Multiple agents evaluate the same artifact; configurable agreement threshold. Maps to PRK lens parallelism pattern. Outputs are independent (no shared context between parallel agents).
+   - **Pipeline** — Sequential agent chain where output of one feeds the next. Maps to artifact dependency chains. Each step validates before passing downstream.
+   - **Fallback** — Primary agent fails or is unavailable; secondary agent invoked with same inputs. **New to AIEOS** — requires new routing spec in tool-governance. Circuit breaker prevents repeated failures.
+   - **Cost-aware** — Routes to different providers based on artifact risk level, complexity, or budget constraints. **New to AIEOS** — low-risk artifacts to cheaper models, high-risk to premium. Requires cost-tier classification per provider.
+
+3. **Provider Adapter Layer** — Thin adapters implementing the AIEOS adapter conformance contract (`push()/verify()/health()`) extended for AI invocation:
+   ```
+   interface AgentAdapter {
+     invoke(request: AgentRequest): Promise<AgentResponse>;
+     health(): HealthStatus;         // ok | degraded | down
+     capabilities(): Capability[];    // What this adapter can do
+     costEstimate(request): Cost;     // Estimated cost for this invocation
+   }
+   ```
+   Implementations: `AnthropicAdapter`, `OpenAIAdapter`, `AzureOpenAIAdapter`, `LocalLLMAdapter`, `ToolAdapter` (non-LLM: SAST, linters, dependency scanners).
+
+4. **State Manager** — Reads and writes AIEOS state artifacts on disk (never in a database):
+   - Reads: ER (current position, frozen artifacts), Sherpa Journal (decision history), frozen upstream artifacts (generation context)
+   - Writes: ER state block updates (current position), Sherpa Journal entries (routing decisions, agent invocations, costs), validation results
+   - Invariant: disk is the system of record. The harness may cache in memory for performance, but all authoritative state is files.
+
+5. **Observability Layer** — Per-invocation metrics:
+   - Token usage and cost (per agent, per artifact, per initiative)
+   - Latency (generation time, validation time, total cycle time)
+   - Provider health (availability, error rates, degradation events)
+   - Quality signals (completeness scores over time, convergence iteration counts)
+   - Cost anomaly detection (sudden cost spikes trigger alerts)
+
+**AIEOS invariants enforced by the harness:**
+
+| Invariant | How the harness enforces it |
+|-----------|---------------------------|
+| Generation/validation separation | Lifecycle binder never routes generation and validation to the same agent session. Separate `invoke()` calls with fresh context. |
+| Freeze-before-promote | State manager checks upstream artifact status before invoking downstream generation. Blocks if upstream is not frozen. |
+| Human freeze decision | Harness presents validation results to user. Never autonomously transitions artifact status from Validated → Frozen. |
+| Bounded convergence | Convergence loop counter maintained by state manager. After 3 iterations of Remediate-and-Retry, harness escalates to human with full history. |
+| Validators judge only | Validation agent responses are parsed into standardized JSON output. Non-conforming responses (suggestions, redesigns) are rejected. |
+| Tool-agnostic policy | Provider-specific details live in adapter code, never in AIEOS specs/prompts/validators. The harness reads AIEOS governance as-is. |
+| Disk-based state | All state changes written to ER + Sherpa Journal files. No hidden state in memory or database. |
+
+**What the harness does NOT do:**
+- Does not modify AIEOS governance files (specs, templates, prompts, validators)
+- Does not make freeze decisions (presents results, human decides)
+- Does not choose artifact types (follows the preset/flow defined in AIEOS)
+- Does not replace the sherpa (the sherpa remains the conversational guide; the harness is the execution substrate)
+- Does not maintain its own prompt library (uses AIEOS four-file prompts)
+
+**Relationship to existing components:**
+- **ECO-001 (Schema):** Harness consumes schema for artifact event contracts, gate enumeration, and input/output validation
+- **ECO-002 (Evaluation Engine):** Complementary — Engine validates artifacts programmatically; Harness orchestrates the agents that generate and validate them. Engine could be a validator adapter in the harness.
+- **ECO-003 (Artifact Store):** Harness queries Store for cross-initiative context before generation (existing sherpa integration point)
+- **INT-002–005 (Adapters):** Existing adapters (GitHub Issues, GitHub Releases) become adapter implementations in the harness's provider layer
+- **Sherpa:** Sherpa remains the user-facing guide. Harness operates underneath — when sherpa says "generate SAD," the harness routes to the configured agent, enforces separation, and returns results to sherpa for user presentation.
+
+**Phase 5 exit criteria:**
+1. At least 2 provider adapters working (e.g., Anthropic + OpenAI, or Anthropic + a SAST tool)
+2. One complete artifact lifecycle (generate → validate → present for freeze) running through the harness
+3. Fallback routing demonstrated (primary unavailable → secondary invoked → same result quality)
+4. Cost and latency observability producing per-invocation metrics
+5. All AIEOS invariants verified (generation/validation separation, human freeze, disk state, bounded convergence)
+
 ### Phase 2-3 Enhancement: Post-Integration Capabilities
 
 After Phase 2 components are independently functional and Phase 3 components exist, cross-component integration unlocks capabilities that no single component provides:
@@ -950,9 +1041,11 @@ Schema       Eval Engine ─┐                            Gov Analytics
 | 1 | Schema | Sequential (1 project) | AIEOS Framework (exists) |
 | 2 | Eval Engine, Store, Sys Twin, Playground | 4 projects in parallel | Schema (Phase 1) |
 | 3 | Gov Analytics, Reporter | 2 projects in parallel | Store (Phase 2) |
+| 4 | Engineer Impact | Sequential (1 project) | None (standalone) |
+| 5 | Agent Harness | Sequential (1 project) | Schema (Phase 1), INT-002 (adapter pattern) |
 | 2-3+ | Cross-component integration | Incremental, as components mature | Multiple Phase 2-3 components |
 
-**Total: 3 phases covering 7 projects, with up to 4 projects running in parallel.**
+**Total: 5 phases covering 9 projects, with up to 4 projects running in parallel.**
 
 The original priority ranking (1-7 sequential) assumed each project had to complete before the next started. The phased plan recognizes that low coupling means independent buildability — the same architectural principle that makes the ecosystem maintainable also makes it parallelizable.
 

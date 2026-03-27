@@ -162,6 +162,16 @@ Single-source tracking for completed work, active initiatives, and planned items
 - [x] **FW-059** PIK entry-from-sdk.md updated with PCR as optional upstream artifact
 - [x] **ECO-003** AIEOS Artifact Store (`aieos-artifact-store`) — LanceDB vector search over frozen artifacts. Chunker, metadata extractor, embedding wrapper, ingest pipeline, query interface. 23 tests, 44 artifacts ingested from aieos-console (431 chunks). 3 sherpa integration points documented.
 
+### 2026-03-25 to 2026-03-27: AI-Native SDLC Alignment, New Projects, Governance Enhancements
+
+- [x] **FW-060** AI-Native SDLC v3.1 alignment assessment — 328 items scored (92% FE+PA), 21 gaps, 8 PA thickening packages
+- [x] **FW-061** TOOL-DIAGRAM-EXPORT — Mermaid extraction with 3 bindings (drawio, SVG, PNG) + Python CLI implementation (33 tests)
+- [x] **FW-062** FR-007 Decision Register — ER spec v1.7, append-only decision format, 8 types, 7 Tier 2 tests, console ER backfilled (12 decisions)
+- [x] **FW-063** Sherpa auto-ingest — frozen artifacts automatically indexed in artifact store at freeze time
+- [x] **FW-064** Documentation audit — 15 discrepancies fixed across 8 projects, all 22 projects verified clean
+- [x] **ECO-009** Agent Harness (`aieos-agent-harness`) — 16 source files, 166 tests, 5 components, 4 routing strategies, 7 invariants. Retroactively governed (ER-HARNESS-001, 8 artifacts frozen). AI SDLC Governance Level 2. GitHub: wtlinnertz/aieos-agent-harness.
+- [x] **NEW** AI SDLC Governance (`ai-sdlc-governance`) — Standalone practice governance framework. 38 files, 30 Foundation gates, 94 Standards checklist items, 4 Guidance playbooks, 3 assessment tools. GitHub: wtlinnertz/ai-sdlc-governance.
+
 ---
 
 ## Planned — Framework Refinement

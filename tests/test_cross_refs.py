@@ -514,3 +514,51 @@ class TestSherpaSkillConversationalBehavior:
         assert re.search(
             r"Cite the decision table IDs", content
         ), "Step 3 should instruct citing J-ENTRY-1/J-ENTRY-2 in recommendation"
+
+    def test_decision_register_in_freeze_protocol(self, content):
+        """Freeze protocol must include decision check."""
+        assert re.search(
+            r"[Dd]ecision check", content
+        ), "Freeze protocol should include decision recording check"
+
+
+class TestDecisionRegisterGovernance:
+    """ER spec must define Decision Register governance rules (FR-007)."""
+
+    @pytest.fixture
+    def er_spec(self, aieos_root: Path):
+        er_path = aieos_root / "aieos-governance-foundation" / "docs" / "engagement-record-spec.md"
+        assert er_path.exists(), f"ER spec not found at {er_path}"
+        return er_path.read_text()
+
+    def test_decision_register_section_exists(self, er_spec):
+        """ER spec must have a Decision Register Governance section."""
+        assert "Decision Register Governance" in er_spec
+
+    def test_decision_format_defined(self, er_spec):
+        """ER spec must define the decision entry format with ID, type, description, artifact, date."""
+        assert "DECISION-ID" in er_spec or "DEC-" in er_spec
+        assert re.search(r"\{type\}.*\{description\}.*\{artifact_id\}", er_spec), \
+            "Decision format must include type, description, and artifact_id"
+
+    def test_decision_types_defined(self, er_spec):
+        """ER spec must define standard decision types."""
+        for dtype in ["Architecture", "Pivot", "Priority", "Scope", "Adoption", "Release"]:
+            assert dtype in er_spec, f"Decision type '{dtype}' not defined in ER spec"
+
+    def test_append_only_rule(self, er_spec):
+        """ER spec must state decisions are append-only."""
+        assert re.search(r"[Aa]ppend.only", er_spec), \
+            "ER spec must declare decisions as append-only"
+
+    def test_supersede_rule(self, er_spec):
+        """ER spec must define how decisions are superseded (not edited)."""
+        assert re.search(r"[Ss]upersed", er_spec), \
+            "ER spec must define superseding mechanism"
+
+    def test_er_spec_version_bumped(self, er_spec):
+        """ER spec version must be at least 1.7 (FR-007 bump)."""
+        match = re.search(r"ER Spec Version\s*\|\s*(\d+\.\d+)", er_spec)
+        assert match, "ER Spec Version field not found"
+        version = float(match.group(1))
+        assert version >= 1.7, f"ER spec version {version} < 1.7 (FR-007 requires 1.7+)"

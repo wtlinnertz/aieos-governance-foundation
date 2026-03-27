@@ -38,7 +38,7 @@ This spec is the canonical definition of the ER format. It lives in `aieos-gover
 | Status | Active / Deprecated / Abandoned |
 | Discovery Start | {YYYY-MM-DD — date Discovery Intake was validated in PIK} |
 | Latest ES Date | {YYYY-MM-DD — date of most recent frozen ES, or N/A} |
-| ER Spec Version | 1.6 |
+| ER Spec Version | 1.7 |
 | Current Position | {Navigation map node ID, e.g., N-EEK-TDD — updated by position-check tool. Optional.} |
 | Preset | {P1–P5 or Custom — declared at initiative start} |
 
@@ -436,6 +436,62 @@ Each kit's playbook includes a "Maintaining the Engagement Record" section with 
 | All kits (if impact attribution adopted) | Each artifact frozen | Add contributor row(s) to §16 table with layer, artifact ID, contributor name/pseudonym, role, and contribution level (Primary / Significant / Supporting). |
 
 **On initiative end:** The operator who declares the initiative Deprecated or Abandoned updates §1 Status and §7 Initiative Outcome, and adds the DN ID reference.
+
+---
+
+## Decision Register Governance
+
+The "Key decisions" subsection in each ER layer section constitutes an **append-only decision register**. Decisions are the most valuable content in the ER — they explain *why* the initiative took the shape it did, not just *what* artifacts were produced.
+
+### Decision Format
+
+Every decision entry follows this format:
+
+```
+{DECISION-ID} | {type} | {description} | {artifact_id} | {date}
+```
+
+**Decision ID:** `DEC-{INITIATIVE}-{NNN}` (e.g., `DEC-TASKFLOW-001`). Sequential across all layers — not per-layer.
+
+**Decision types:**
+
+| Type | When Used |
+|------|-----------|
+| `Architecture` | Architectural trade-off, pattern selection, component design choice |
+| `Pivot` | Assumption invalidated, direction changed based on evidence |
+| `Priority` | Ranking, sequencing, above/below cut line |
+| `Scope` | Boundary change — scope added, excluded, or deferred |
+| `Adoption` | Cross-cutting kit adopted or declined with rationale |
+| `Release` | Release strategy, exposure level, rollback decision |
+| `Operational` | SRP revision, error budget invocation, escalation trigger |
+| `Escalation` | Work escalated to upstream layer or external authority |
+
+### Append-Only Rules
+
+1. **Decisions are never edited.** Once recorded, a decision entry is immutable.
+2. **Superseding decisions reference the original.** If a decision is reversed or revised, add a new entry: `DEC-XXX-NNN | Scope | Revised: DEC-XXX-MMM — now includes mobile clients | SAD-XXX | 2026-04-01`
+3. **Every decision traces to an artifact.** The `artifact_id` field identifies where the decision is formally recorded or expressed.
+4. **Decision recording happens at freeze points.** The sherpa (or operator) checks at each artifact freeze whether the artifact represents or influenced a key decision. If yes, a decision entry is appended.
+
+### Minimum Entries Per Layer
+
+| Layer | Minimum Decision Entries |
+|-------|-------------------------|
+| §1a SDK | Priority ranking (PPR position + cut line status) |
+| §2 PIK | Pivot decisions (if any occurred). If no pivots: "No pivots — all assumptions validated." |
+| §3a SSK | Build/Buy/Adopt decision with rationale |
+| §3 EEK | Architectural choices (if any deviate from PRD/SAD). Scope changes (if any). |
+| §4 REK | Release type justification. Deviations from Release Plan (if any). |
+| §5 RRK | SRP revisions (if any). Error budget invocations (if any). |
+| Cross-cutting | Kit adoption/decline decision for each evaluated kit |
+
+Layers with no decisions should state: "No key decisions at this layer."
+
+### Backward Compatibility
+
+Existing ERs with informal "Key decisions" entries (free-text format) remain valid. New entries should follow the standardized format. Existing entries may be backfilled to the standardized format when an ER is actively maintained.
+
+The informal format `{decision type}: {brief description} — {artifact ID}` is accepted as a shorthand. The full format with decision IDs is preferred for traceability.
 
 ---
 

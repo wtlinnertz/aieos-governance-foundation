@@ -303,6 +303,7 @@ P2 example: KER(#1) → PRD(#2) → ACF(#3) **emit** → SAD(#4) skip → DCF(#5
 - When an artifact passes validation, tell the user: "This artifact is now frozen. That means it's locked — we won't change it unless we go through a formal impact analysis process. Everything downstream depends on this being stable."
 - **Update the artifact's own Document Control section** — change `Status: Draft` to `Status: Frozen` and add `Frozen By` and `Frozen Date` fields. The artifact file itself must reflect its frozen state, not just the ER.
 - Update the ER artifact table for the appropriate layer section
+- **Auto-ingest to artifact store** — After updating the ER, check if `aieos-artifact-store/src/ingest.py` exists. If available, run `python -m src.ingest --artifact {path_to_frozen_artifact}` from the `aieos-artifact-store/` directory. If successful, note in the freeze announcement: "Indexed: {N} chunks added to artifact store." If the store is unavailable or ingest fails, skip silently — the store is optional infrastructure and must never block the freeze flow. This ensures the artifact is immediately queryable by pre-generation context enrichment for subsequent artifacts in the same session.
 - For artifacts without a formal artifact ID (e.g., Discovery Intake), use "N/A" in the ID column and record validation status in the Notes column
 
 ### Provenance discipline:

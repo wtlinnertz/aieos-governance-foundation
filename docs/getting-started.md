@@ -390,6 +390,29 @@ Not every initiative affects business processes — but when one does, shipping 
 
 ---
 
+## I want to export diagrams from artifacts
+
+**Starting point:** `diagram-export` tool in `aieos-governance-foundation/docs/tools/`
+
+**What you need:**
+- An artifact containing Mermaid diagram blocks (e.g., a frozen SAD with architecture diagrams)
+- A target format: draw.io (for LeanIX/diagrams.net), SVG, or PNG
+
+**Path:**
+1. Review the tool spec (`diagram-export-spec.md`) to understand preconditions and output naming
+2. Review the binding for your target format (e.g., `docs/bindings/diagram-export-drawio.md`)
+3. Run the CLI: `python -m scripts.diagram_export --input docs/sdlc/05-sad.md --format drawio`
+4. Import the generated `.drawio` file into your target tool (LeanIX Free Draw, diagrams.net, VS Code)
+
+**Available bindings:**
+- `docs/bindings/diagram-export-drawio.md` — draw.io XML for LeanIX import
+- `docs/bindings/diagram-export-svg.md` — SVG for documentation and web
+- `docs/bindings/diagram-export-mermaid-png.md` — PNG for presentations and email
+
+**Quick listing:** `python -m scripts.diagram_export --input docs/sdlc/05-sad.md --list` shows all Mermaid blocks in an artifact without exporting.
+
+---
+
 ## I want to post validation results to my SCM platform
 
 **Starting point:** `validation-status` tool in `aieos-governance-foundation/docs/tools/`

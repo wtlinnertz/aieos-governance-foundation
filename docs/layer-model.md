@@ -85,7 +85,7 @@ Layer 8 is a reactive operational track — triggered by production events, not 
 
 This layer governs how an organization captures, validates, and prioritizes strategic bets. It produces falsifiable bets with measurable signals and a strict-rank-ordered portfolio with explicit capacity constraints. The emphasis is on decision quality — falsifiability, measurability, and prioritization honesty — not comprehensive strategy documentation.
 
-**Kit**: `aieos-strategic-direction-kit` *(built)*
+**Kit**: `aieos-strategic-direction-kit` *(built — not yet activated in standard pipeline flow)*
 
 **Artifacts**: Strategic Bet Record (SBR, 6 hard gates), Portfolio Prioritization Record (PPR, 5 hard gates)
 
@@ -109,11 +109,11 @@ This layer governs the transformation of strategic intent into engineering-ready
 
 **Outputs**: Frozen Discovery PRD (engineering handoff artifact)
 
-**Downstream consumer**: Flow Control / Solution Sourcing (Layer 3) when sourcing evaluation is needed, or Engineering Execution (Layer 4) via Kit Entry Gate when Build is obvious
+**Downstream consumer**: Solution Sourcing (Layer 3) when sourcing evaluation is needed, or Engineering Execution (Layer 4) via Kit Entry Gate when Build is obvious
 
 ---
 
-### Layer 3: Flow Control
+### Layer 3: Solution Sourcing
 
 **Question**: What do we work on next and when?
 
@@ -374,9 +374,9 @@ This layer governs the organizational and process change side of solution delive
 
 | Layer | Kit Repository | Category | Status |
 |-------|---------------|----------|--------|
-| 1. Strategic Direction | `aieos-strategic-direction-kit` | Pipeline | Planned |
+| 1. Strategic Direction | `aieos-strategic-direction-kit` | Pipeline | Built (not yet in standard flow) |
 | 2. Product Intelligence | `aieos-product-intelligence-kit` | Pipeline | Built |
-| 3. Flow Control (Solution Sourcing) | `aieos-solution-sourcing-kit` | Pipeline | Built |
+| 3. Solution Sourcing | `aieos-solution-sourcing-kit` | Pipeline | Built |
 | 4. Engineering Execution | `aieos-engineering-execution-kit` | Pipeline | Built |
 | 5. Release & Exposure | `aieos-release-exposure-kit` | Pipeline | Built |
 | 6. Reliability & Resilience | `aieos-reliability-resilience-kit` | Pipeline | Built |
@@ -438,4 +438,4 @@ As of the current build, Layers 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, and 
 **Entry gate patterns:**
 - The Kit Entry Gate pattern is used at Layers 3, 4, 5, 6, and 9 to enforce upstream verification before artifact generation begins. Layer 3 (SSK) requires a frozen DPRD as its entry gate. Layer 7 uses self-confirming input validation in the ES prompt. Layer 8 uses the Diagnostic Context Record (DCR) as its entry gate. Layers 10–13 and 15 use trigger-based entry rather than sequential gates.
 
-The full pipeline loop (Layers 1–7) is operational. Layer 8 adds a reactive operational track. Layers 9–15 add cross-cutting governance. Layer 1 remains planned.
+The pipeline loop (Layers 2–7) is operational. Layer 1 (Strategic Direction) is built but not yet activated in the standard pipeline flow. Layer 8 adds a reactive operational track. Layers 9–15 add cross-cutting governance.

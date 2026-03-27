@@ -279,6 +279,25 @@ The integration architecture is defined (adapter-conformance-spec v1.0, 13 tool 
 - [x] **XAI-005** Validator consistency testing methodology
 - [x] **XAI-006** Smoke test extended to 49 checks (adapter dirs, compact parity, state block)
 
+### Agent Harness Integrations (2026-03-27)
+
+High-value integrations that mix deterministic tool checks with AI reasoning via the harness pipeline routing strategy.
+
+**Completed:**
+
+- [x] **HI-001** ORD verification pipeline — Tool adapters (test suite, build, lint) → AI assessment of operational readiness
+- [x] **HI-002** Codebase analysis pipeline — SAST/linter/dependency tools → AI interpretation for ACF/DCF/SAD intake (brownfield)
+- [x] **HI-003** RHR health review pipeline — Metrics collection (JSONL, health checks) → AI trend analysis against SLO baselines
+
+**Planned (incremental value):**
+
+| ID | Item | Priority | Dependencies | Notes |
+|----|------|----------|-------------|-------|
+| **HI-004** | Briefing distillation cost-aware routing — route to cheapest model for low-risk compression | Low | ECO-009 | Distillation doesn't need premium models. Use cost_aware routing strategy. |
+| **HI-005** | Cross-artifact consistency as independent validator — separate adapter validates PRD→SAD and SAD→TDD alignment | Medium | ECO-009 | Current: same session checks. With harness: independent context, catches drift that self-review misses. |
+| **HI-006** | Assumption stress testing via different provider — route adversarial review to different AI provider | Medium | ECO-009 | Same AI that generated assumptions shouldn't stress-test them. Use fallback to different provider. |
+| **HI-007** | Cross-initiative awareness via artifact store tool adapter — structured retrieval feeds AI context | Low | ECO-003, ECO-009 | Currently: sherpa queries store ad-hoc. With harness: Tool adapter queries store, AI interprets. Pipeline strategy. |
+
 ---
 
 ## Planned — Ecosystem Projects

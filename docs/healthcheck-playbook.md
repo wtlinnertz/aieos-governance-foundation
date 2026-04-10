@@ -130,6 +130,8 @@ aieos-governance-foundation/tests/run-tier2.sh
 
 **Tool:** `TOOL-KIT-SYNC-AUDIT` (see `docs/tools/kit-sync-audit-spec.md`)
 
+**Playbook:** `docs/sync-audit-playbook.md` — step-by-step procedures for running audits, maintaining the manifest, and common scenarios (adding kits, bumping governance model version, adding artifacts).
+
 **Manifest:** `kit-manifest.yml` (governance-foundation root) is the single source of truth. Prose documents are validated against it.
 
 **Remediation:**

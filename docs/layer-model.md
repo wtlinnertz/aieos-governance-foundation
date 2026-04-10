@@ -438,4 +438,4 @@ As of the current build, Layers 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, and 
 **Entry gate patterns:**
 - The Kit Entry Gate pattern is used at Layers 3, 4, 5, 6, and 9 to enforce upstream verification before artifact generation begins. Layer 3 (SSK) requires a frozen DPRD as its entry gate. Layer 7 uses self-confirming input validation in the ES prompt. Layer 8 uses the Diagnostic Context Record (DCR) as its entry gate. Layers 10–13 and 15 use trigger-based entry rather than sequential gates.
 
-The pipeline loop (Layers 2–7) is operational. Layer 1 (Strategic Direction) is built but not yet activated in the standard pipeline flow. Layer 8 adds a reactive operational track. Layers 9–15 add cross-cutting governance.
+All 16 layer kits are built and operational. Layers 1 (Strategic Direction) and 3 (Solution Sourcing) are optional upstream entry points — initiatives may start at Layer 2 (PIK) when portfolio prioritization isn't needed and skip Layer 3 when Build is obvious. Layer 8 adds a reactive operational track. Layers 9–15 add cross-cutting governance.

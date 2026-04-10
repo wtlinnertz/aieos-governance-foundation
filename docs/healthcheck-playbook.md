@@ -113,7 +113,40 @@ aieos-governance-foundation/tests/run-tier2.sh
 
 ---
 
-### A4. Agent Integration Tests (Tier 3)
+### A4. Cross-Kit Sync Audit (Tier 2)
+
+**What it checks:**
+- Manifest version matches actual governance model version
+- Governance model copies are byte-identical across all 15 kits
+- Kit registry data (names, layers, statuses) is consistent across root CLAUDE.md, README.md, and layer-model.md
+- Boundary contract entry-from files exist and reference correct handoff artifacts
+- Artifact flow sequences in kit CLAUDE.md files match the manifest
+- Cross-cutting trigger definitions are consistent across layer-model.md, flow-reference.md, and kit CLAUDE.md files
+- Artifact four-file completeness per manifest
+- Layer descriptions are consistent across documents
+- Navigation map node IDs correspond to valid kit-artifact pairs
+
+**When to run:** After modifying governance-foundation documents, after adding kits or artifacts, periodically (weekly recommended). Must pass before agent integration tests.
+
+**Tool:** `TOOL-KIT-SYNC-AUDIT` (see `docs/tools/kit-sync-audit-spec.md`)
+
+**Manifest:** `kit-manifest.yml` (governance-foundation root) is the single source of truth. Prose documents are validated against it.
+
+**Remediation:**
+| Failure | Fix |
+|---------|-----|
+| Manifest version mismatch | Update `governance_model_version` in kit-manifest.yml to match governance-model.md |
+| Kit registry mismatch | Update the stale document to match kit-manifest.yml |
+| Boundary contract missing | Create `entry-from-{upstream}.md` in the downstream kit |
+| Boundary contract content mismatch | Update the entry-from file to reference the correct handoff artifacts |
+| Artifact flow drift | Update kit CLAUDE.md or playbook to match manifest |
+| Cross-cutting trigger mismatch | Update layer-model.md or flow-reference.md to match manifest |
+| Four-file gap | Create the missing template, prompt, or validator |
+| Navigation map node invalid | Update navigation-map.md to match manifest artifacts |
+
+---
+
+### A5. Agent Integration Tests (Tier 3)
 
 **What it checks:**
 - An AI agent can generate artifacts from specs, templates, and prompts

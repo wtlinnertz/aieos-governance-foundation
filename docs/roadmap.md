@@ -172,6 +172,14 @@ Single-source tracking for completed work, active initiatives, and planned items
 - [x] **ECO-009** Agent Harness (`aieos-agent-harness`) — 16 source files, 166 tests, 5 components, 4 routing strategies, 7 invariants. Retroactively governed (ER-HARNESS-001, 8 artifacts frozen). AI SDLC Governance Level 2. GitHub: wtlinnertz/aieos-agent-harness.
 - [x] **NEW** AI SDLC Governance (`ai-sdlc-governance`) — Standalone practice governance framework. 38 files, 30 Foundation gates, 94 Standards checklist items, 4 Guidance playbooks, 3 assessment tools. GitHub: wtlinnertz/ai-sdlc-governance.
 
+### 2026-04-10: Kit Sync Agent System
+
+- [x] **FW-065** Kit Manifest (`kit-manifest.yml`) — machine-readable single source of truth for all kit metadata: 15 kits, 63 artifacts, 80 dependency edges, 6 entry points, 5 presets, 21 boundary contracts, cross-cutting triggers with feeds-into model
+- [x] **FW-066** TOOL-KIT-SYNC-AUDIT — cross-kit consistency audit tool (four-file set). 3 CRITICAL checks (manifest version pinning, synchronized file identity, kit registry consistency), 5 HIGH checks (boundary contracts, artifact flow, cross-cutting triggers, dependency edges), 3 MEDIUM checks (artifact inventory, layer descriptions, navigation map). Claude Code binding.
+- [x] **FW-067** TOOL-KIT-SELF-CHECK — per-kit domain expert tool (four-file set). 6 internal consistency checks, 3 pipeline boundary checks, 4 cross-cutting boundary checks. Claude Code binding.
+- [x] **FW-068** Healthcheck A4 — cross-kit sync audit added as Tier 2 check in healthcheck-playbook.md
+- [x] **FW-069** Drift fixes — layer-model.md SDK artifact list corrected (was SBR/PPR only, now includes CLA/PCR/TIR), SDK status text updated, README.md updated to reflect all 16 built kits
+
 ---
 
 ## Planned — Framework Refinement

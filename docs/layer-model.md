@@ -85,9 +85,9 @@ Layer 8 is a reactive operational track — triggered by production events, not 
 
 This layer governs how an organization captures, validates, and prioritizes strategic bets. It produces falsifiable bets with measurable signals and a strict-rank-ordered portfolio with explicit capacity constraints. The emphasis is on decision quality — falsifiability, measurability, and prioritization honesty — not comprehensive strategy documentation.
 
-**Kit**: `aieos-strategic-direction-kit` *(built — not yet activated in standard pipeline flow)*
+**Kit**: `aieos-strategic-direction-kit` *(built — optional upstream entry point)*
 
-**Artifacts**: Strategic Bet Record (SBR, 6 hard gates), Portfolio Prioritization Record (PPR, 5 hard gates)
+**Artifacts**: Capability Lifecycle Assessment (CLA, 6 hard gates, optional), Product Capability Roadmap (PCR, 6 hard gates, optional), Technology Investment Roadmap (TIR, 5 hard gates, optional), Strategic Bet Record (SBR, 6 hard gates), Portfolio Prioritization Record (PPR, 5 hard gates)
 
 **Outputs**: Frozen PPR with above-the-line SBRs routed to Product Intelligence
 

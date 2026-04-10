@@ -25,13 +25,16 @@ AIEOS organizes work into layers. Each layer answers a different question in the
 Work flows top-down for delivery and bottom-up for learning:
 
 ```
+Pipeline Layers (top-down delivery, bottom-up learning)
 ┌─────────────────────────────────────────────────────────────────────┐
-│  Layer 1: Strategic Direction          What are we trying to achieve?│
+│  Layer 1: Strategic Direction       What are we trying to achieve?  │
+│  SBR → PPR                                          (optional)      │
 ├─────────────────────────────────────────────────────────────────────┤
 │  Layer 2: Product Intelligence      What should we build and why?   │
 │  WCR → PFD → VH → AR → EL → DPRD                                   │
 ├─────────────────────────────────────────────────────────────────────┤
-│  Layer 3: Flow Control              What do we work on next?        │
+│  Layer 3: Solution Sourcing         How do we obtain it?            │
+│  SOER → VER → SDR                                   (optional)      │
 ├─────────────────────────────────────────────────────────────────────┤
 │  Layer 4: Engineering Execution     How do we build it correctly?   │
 │  KER → PRD → ACF → SAD → DCF → TDD → WDD → ORD                     │
@@ -44,11 +47,25 @@ Work flows top-down for delivery and bottom-up for learning:
 ├─────────────────────────────────────────────────────────────────────┤
 │  Layer 7: Insight & Evolution       What did we learn?              │
 │  ES → PES                                                            │
-├─────────────────────────────────────────────────────────────────────┤
+└─────────────────────────────────────────────────────────────────────┘
+         ↑ Layer 7 feeds learning back to Layer 2 ↑
+
+Operational Track
+┌─────────────────────────────────────────────────────────────────────┐
 │  Layer 8: Operational Diagnostics   How do we diagnose failures?    │
 │  DCR → INR → PMR → RB                                               │
 └─────────────────────────────────────────────────────────────────────┘
-         ↑ Layer 7 feeds learning back to Layer 2 ↑
+
+Cross-Cutting Governance (Layers 9–15)
+┌─────────────────────────────────────────────────────────────────────┐
+│  Layer 9:  Quality Assurance        Pre-release quality gate        │
+│  Layer 10: Security & Compliance    Threat models, security, audit  │
+│  Layer 11: Data & Configuration     Config mgmt, feature flags      │
+│  Layer 12: Platform & Infrastructure  Infra decisions, environments │
+│  Layer 13: Documentation & Knowledge  User docs, API refs, KB       │
+│  Layer 14: Peer Review              Multi-perspective review lenses │
+│  Layer 15: Business Process         Process impact & readiness      │
+└─────────────────────────────────────────────────────────────────────┘
 ```
 
 Artifacts cross layer boundaries as frozen, validated documents. Each kit validates its own inputs — it does not trust upstream kits blindly. The system is a loop, not a pipeline.
@@ -59,14 +76,21 @@ Each kit is an independent, self-contained repository. A team can adopt one kit 
 
 | Kit | Layer | What It Does |
 |-----|-------|-------------|
+| **Strategic Direction Kit** | 1 | Portfolio-level prioritization — strategic bets, capability roadmaps, and a frozen Portfolio Prioritization Record. Optional; start at Layer 2 when portfolio prioritization isn't needed. |
 | **Product Intelligence Kit** | 2 | Transforms a product problem into validated, engineering-ready requirements through structured discovery — problem framing, value hypotheses, assumption testing, and a frozen Discovery PRD. |
+| **Solution Sourcing Kit** | 3 | Build/Buy/Adopt sourcing decision — evaluates options and produces a frozen Sourcing Decision Record. Optional; skip when Build is obvious. |
 | **Engineering Execution Kit** | 4 | Moves from PRD through architecture, design, test strategy, and work decomposition to a production-ready system with a frozen Operational Readiness Document. |
 | **Release & Exposure Kit** | 5 | Governs deployment strategy, progressive exposure, rollback conditions, and release authorization. Produces evidence-backed Release Records. |
 | **Reliability & Resilience Kit** | 6 | Defines SLOs, error budgets, and burn rate alerts. Records incidents and produces periodic Reliability Health Reports. |
 | **Insight & Evolution Kit** | 7 | Synthesizes production signals into actionable insights. Determines whether to maintain, watch, or re-discover — closing the feedback loop to Layer 2. |
 | **Operational Diagnostics Kit** | 8 | Structured diagnosis for production failures. Produces root cause analysis, postmortems, and codified runbooks. Triggered by incidents, not SDLC progression. |
-
-Layers 1 (Strategic Direction) and 3 (Flow Control) are planned but not yet built.
+| **Quality Assurance Kit** | 9 | Pre-release quality gate between Engineering Execution and Release. Verification plans, test coverage reports, and a frozen Quality Gate Record. |
+| **Security & Compliance Kit** | 10 | Cross-cutting threat modeling, security assessment, compliance evidence, and dependency audit. Triggered at key points across layers. |
+| **Data & Configuration Kit** | 11 | Configuration management, feature flag lifecycle, and data schema governance. Spans Engineering Execution through Reliability. |
+| **Platform & Infrastructure Kit** | 12 | Infrastructure decisions, deployment targets, environment management. Provides foundational inputs to Engineering, Release, and Reliability. |
+| **Documentation & Knowledge Kit** | 13 | User-facing documentation, API references, and support knowledge bases. Triggered from Engineering, Release, and Operational Diagnostics. |
+| **Peer Review Kit** | 14 | Multi-perspective autonomous review at artifact lifecycle points using specialized lenses (security, reliability, cost, compliance, etc.). Optional. |
+| **Business Process Kit** | 15 | Business process impact assessment, transition planning, and readiness confirmation for process-affecting changes. Optional. |
 
 ## AIEOS Console
 
@@ -107,7 +131,7 @@ This repository is the **canonical authority** for the AIEOS governance model an
 |------|---------|
 | `governance-model.md` | Complete structural rules, taxonomy, and invariants for every AIEOS kit |
 | `docs/philosophy.md` | Design philosophy — the "why" behind the governance model |
-| `docs/layer-model.md` | The eight-layer model and how kits map to organizational layers |
+| `docs/layer-model.md` | The sixteen-layer model and how kits map to organizational layers |
 | `docs/kit-structure-standard.md` | Compliance checklist for building and auditing AIEOS-compatible kits |
 | `docs/getting-started.md` | Task-oriented entry guide — find your scenario and follow the path |
 | `docs/initiative-presets.md` | Five golden paths for common initiative types with full artifact routing |
@@ -125,7 +149,7 @@ This means a kit copy of governance-model.md is always correct or behind — nev
 
 ### Governance Model Version
 
-Current: `1.0`
+Current: `1.6`
 
 Changes to the governance model follow the protocol in `governance-model.md` §15.
 
@@ -133,13 +157,20 @@ Changes to the governance model follow the protocol in `governance-model.md` §1
 
 | Layer | Repository | Status |
 |-------|-----------|--------|
-| 1. Strategic Direction | `aieos-strategic-direction-kit` | Planned |
+| 1. Strategic Direction | `aieos-strategic-direction-kit` | Built (optional) |
 | 2. Product Intelligence | `aieos-product-intelligence-kit` | Built |
-| 3. Flow Control | `aieos-flow-control-kit` | Planned |
+| 3. Solution Sourcing | `aieos-solution-sourcing-kit` | Built (optional) |
 | 4. Engineering Execution | `aieos-engineering-execution-kit` | Built |
 | 5. Release & Exposure | `aieos-release-exposure-kit` | Built |
 | 6. Reliability & Resilience | `aieos-reliability-resilience-kit` | Built |
 | 7. Insight & Evolution | `aieos-insight-evolution-kit` | Built |
 | 8. Operational Diagnostics | `aieos-operational-diagnostics-kit` | Built |
+| 9. Quality Assurance | `aieos-quality-assurance-kit` | Built |
+| 10. Security & Compliance | `aieos-security-compliance-kit` | Built |
+| 11. Data & Configuration | `aieos-data-configuration-kit` | Built |
+| 12. Platform & Infrastructure | `aieos-platform-infrastructure-kit` | Built |
+| 13. Documentation & Knowledge | `aieos-documentation-knowledge-kit` | Built |
+| 14. Peer Review | `aieos-peer-review-kit` | Built (optional) |
+| 15. Business Process | `aieos-business-process-kit` | Built (optional) |
 
-Layers 1 and 3 remain planned. All other layers are operational.
+All 16 layer kits (including the Governance Foundation) are built and operational.

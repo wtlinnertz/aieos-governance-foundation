@@ -1,0 +1,4 @@
+# Ignore all generated test output (artifacts, validation results, logs)
+*
+!.gitignore
+!.gitkeep

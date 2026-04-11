@@ -39,21 +39,21 @@ Every governed artifact produced during this initiative, in sequence:
 | 2 | Step 2 | Value Hypothesis | VH-TASKFLOW-NOTIF-001 | PIK |
 | 2 | Step 3 | Assumption Register | AR-TASKFLOW-NOTIF-001 | PIK |
 | 2 | Step 4 | Experiment Log | EL-TASKFLOW-NOTIF-001 | PIK |
-| 2 | Step 5 | Discovery PRD | DPRD-TASKFLOW-NOTIF-001 | PIK → EEK |
+| 2 | Step 5 | Discovery PRD | DPRD-TASKFLOW-NOTIF-001 | PIK > EEK |
 | 4 | Step 0 | Kit Entry Record | KER-TASKFLOW-001 | EEK |
 | 4 | Step 1 | PRD (accepted from PIK) | PRD-TASKFLOW-001 | EEK |
 | 4 | Steps 2–6 | ACF, SAD, DCF, TDD, WDD | ACF/SAD/DCF/TDD/WDD-TASKFLOW-001 | EEK |
-| 4 | Step 7 | Operational Readiness Document | ORD-TASKFLOW-001 | EEK → REK |
+| 4 | Step 7 | Operational Readiness Document | ORD-TASKFLOW-001 | EEK > REK |
 | 5 | Step 0 | Release Entry Record | RER-TASKFLOW-001 | REK |
 | 5 | Step 1 | Release Configuration File | RCF-TASKFLOW-001 | REK |
 | 5 | Step 2 | Release Plan | RP-TASKFLOW-001 | REK |
-| 5 | Step 3 | Release Record | RR-TASKFLOW-001 | REK → RRK |
+| 5 | Step 3 | Release Record | RR-TASKFLOW-001 | REK > RRK |
 | 6 | Step 0 | Service Reliability Entry Record | SRER-TASKFLOW-001 | RRK |
 | 6 | Step 1 | Service Reliability Profile | SRP-NOTIF-001 v1 | RRK |
 | 6 | Step 2 | Incident Record | IR-NOTIF-001 | RRK |
-| 6 | Step 3 | Reliability Health Report | RHR-NOTIF-001 | RRK → Layer 7 |
+| 6 | Step 3 | Reliability Health Report | RHR-NOTIF-001 | RRK > Layer 7 |
 
-**Example artifact files:**
+Example artifact files:
 - PIK: `aieos-product-intelligence-kit/examples/`
 - REK: `aieos-release-exposure-kit/examples/basic-release/`
 - RRK: `aieos-reliability-resilience-kit/examples/basic-operation/`

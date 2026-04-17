@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aieos.dev/schemas/oci-signing-bundle.schema.json",
+  "title": "AIEOS OCI signing bundle (Sigstore Bundle v0.3 subset)",
+  "description": "Canonical findings format for sign.artifact and sign.attestation. Sigstore Bundle v0.3 (application/vnd.dev.sigstore.bundle.v0.3+json) wrapping either a messageSignature (sign.artifact — signing an OCI image) or a dsseEnvelope (sign.attestation — signing an in-toto statement). Exactly one of messageSignature or dsseEnvelope must be present.",
+  "type": "object",
+  "required": ["mediaType", "verificationMaterial"],
+  "properties": {
+    "mediaType": { "const": "application/vnd.dev.sigstore.bundle.v0.3+json" },
+    "verificationMaterial": {
+      "type": "object",
+      "properties": {
+        "publicKey": {
+          "type": "object",
+          "properties": {
+            "hint": { "type": "string" }
+          }
+        },
+        "x509CertificateChain": {
+          "type": "object",
+          "properties": {
+            "certificates": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["rawBytes"],
+                "properties": {
+                  "rawBytes": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "certificate": {
+          "type": "object",
+          "properties": {
+            "rawBytes": { "type": "string" }
+          }
+        },
+        "tlogEntries": {
+          "type": "array"
+        }
+      }
+    },
+    "messageSignature": {
+      "type": "object",
+      "required": ["messageDigest", "signature"],
+      "properties": {
+        "messageDigest": {
+          "type": "object",
+          "required": ["algorithm", "digest"],
+          "properties": {
+            "algorithm": { "enum": ["SHA2_256", "SHA2_384", "SHA2_512"] },
+            "digest": { "type": "string", "minLength": 1 }
+          }
+        },
+        "signature": { "type": "string", "minLength": 1 }
+      }
+    },
+    "dsseEnvelope": {
+      "type": "object",
+      "required": ["payload", "payloadType", "signatures"],
+      "properties": {
+        "payload": { "type": "string", "minLength": 1 },
+        "payloadType": { "type": "string", "minLength": 1 },
+        "signatures": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["sig"],
+            "properties": {
+              "sig": { "type": "string", "minLength": 1 },
+              "keyid": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "oneOf": [
+    { "required": ["messageSignature"], "not": { "required": ["dsseEnvelope"] } },
+    { "required": ["dsseEnvelope"], "not": { "required": ["messageSignature"] } }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aieos.dev/schemas/junit-xml.schema.json",
+  "title": "AIEOS JUnit test report (JSON representation of JUnit 4 structure)",
+  "description": "Canonical findings format for test.unit, test.integration, test.contract, test.e2e. JUnit 4 compatible: testsuites > testsuite > testcase. Adapters emit this JSON shape; raw JUnit XML may be attached as an evidence artifact but is not the canonical schema-validated form.",
+  "type": "object",
+  "required": ["name", "tests", "failures", "errors", "testsuite"],
+  "properties": {
+    "name": { "type": "string" },
+    "tests": { "type": "integer", "minimum": 0 },
+    "failures": { "type": "integer", "minimum": 0 },
+    "errors": { "type": "integer", "minimum": 0 },
+    "time": { "type": "number", "minimum": 0 },
+    "testsuite": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/testsuite" }
+    }
+  },
+  "$defs": {
+    "testsuite": {
+      "type": "object",
+      "required": ["name", "tests", "failures", "errors", "testcase"],
+      "properties": {
+        "name": { "type": "string" },
+        "tests": { "type": "integer", "minimum": 0 },
+        "failures": { "type": "integer", "minimum": 0 },
+        "errors": { "type": "integer", "minimum": 0 },
+        "time": { "type": "number", "minimum": 0 },
+        "testcase": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/testcase" }
+        }
+      }
+    },
+    "testcase": {
+      "type": "object",
+      "required": ["name", "classname"],
+      "properties": {
+        "name": { "type": "string" },
+        "classname": { "type": "string" },
+        "time": { "type": "number", "minimum": 0 },
+        "failure": { "$ref": "#/$defs/outcome" },
+        "error": { "$ref": "#/$defs/outcome" },
+        "skipped": {
+          "type": "object",
+          "properties": {
+            "message": { "type": "string" }
+          }
+        }
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "properties": {
+        "message": { "type": "string" },
+        "type": { "type": "string" },
+        "text": { "type": "string" }
+      }
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aieos.dev/schemas/cyclonedx-1.6-sbom.schema.json",
+  "title": "AIEOS CycloneDX 1.6 SBOM subset",
+  "description": "Canonical findings format for sbom.generate (primary). Subset of OWASP CycloneDX 1.6 SBOM covering the fields AIEOS adapters MUST emit. AIEOS-specific constraint: every components entry must carry bom-ref, type, name, and version. purl is strongly recommended but not required (internal components may not be packaged). SPDX 2.3 is an accepted alternative format without a standalone schema in v1.",
+  "type": "object",
+  "required": ["bomFormat", "specVersion", "components"],
+  "properties": {
+    "bomFormat": { "const": "CycloneDX" },
+    "specVersion": { "const": "1.6" },
+    "serialNumber": { "type": "string" },
+    "version": { "type": "integer", "minimum": 1 },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "timestamp": { "type": "string" },
+        "tools": { "type": "array" },
+        "component": { "$ref": "#/$defs/component" }
+      }
+    },
+    "components": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/component" }
+    }
+  },
+  "$defs": {
+    "component": {
+      "type": "object",
+      "required": ["bom-ref", "type", "name", "version"],
+      "properties": {
+        "bom-ref": { "type": "string", "minLength": 1 },
+        "type": {
+          "enum": [
+            "application",
+            "framework",
+            "library",
+            "container",
+            "platform",
+            "operating-system",
+            "device",
+            "device-driver",
+            "firmware",
+            "file",
+            "machine-learning-model",
+            "data",
+            "cryptographic-asset"
+          ]
+        },
+        "name": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "minLength": 1 },
+        "purl": { "type": "string" },
+        "licenses": { "type": "array" },
+        "hashes": { "type": "array" }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "mediaType": "application/vnd.dev.sigstore.bundle.v0.3+json",
+  "verificationMaterial": {
+    "publicKey": { "hint": "vVtSDXCYsnAxhhgEbXCUx5zoVgIaYMoOao8I2z3PsJY=" },
+    "tlogEntries": []
+  },
+  "messageSignature": {
+    "messageDigest": {
+      "algorithm": "SHA2_256",
+      "digest": "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+    },
+    "signature": "MEUCIQDexampleSignatureValueForSchemaValidation/AiEAExamplePayload=="
+  }
+}

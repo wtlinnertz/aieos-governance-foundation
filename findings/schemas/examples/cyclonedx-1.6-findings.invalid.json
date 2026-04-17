@@ -1,0 +1,20 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "vulnerabilities": [
+    {
+      "id": "CVE-2024-00002",
+      "source": { "name": "nvd" },
+      "ratings": [
+        {
+          "method": "CVSSv2",
+          "score": 5.0,
+          "severity": "medium"
+        }
+      ],
+      "affects": [
+        { "ref": "pkg:npm/example@1.0.0" }
+      ]
+    }
+  ]
+}

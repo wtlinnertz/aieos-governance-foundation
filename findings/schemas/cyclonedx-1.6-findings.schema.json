@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aieos.dev/schemas/cyclonedx-1.6-findings.schema.json",
+  "title": "AIEOS CycloneDX 1.6 vulnerability findings subset",
+  "description": "Canonical findings format for security.sca, security.container-scan, security.license-scan. Subset of OWASP CycloneDX 1.6 covering vulnerability findings. AIEOS-specific additions: each vulnerability must carry at least one ratings entry with method 'CVSSv31' and a numeric score; severity vocabulary is SARIF-aligned (none, info, low, medium, high, critical). License findings report score 0.0 with a severity class that describes the policy decision.",
+  "type": "object",
+  "required": ["bomFormat", "specVersion", "vulnerabilities"],
+  "properties": {
+    "bomFormat": { "const": "CycloneDX" },
+    "specVersion": { "const": "1.6" },
+    "serialNumber": { "type": "string" },
+    "version": { "type": "integer", "minimum": 1 },
+    "vulnerabilities": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/vulnerability" }
+    }
+  },
+  "$defs": {
+    "vulnerability": {
+      "type": "object",
+      "required": ["id", "source", "ratings", "affects"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "source": {
+          "type": "object",
+          "required": ["name"],
+          "properties": {
+            "name": { "type": "string", "minLength": 1 },
+            "url": { "type": "string" }
+          }
+        },
+        "ratings": {
+          "type": "array",
+          "minItems": 1,
+          "contains": {
+            "type": "object",
+            "required": ["method", "score", "severity"],
+            "properties": {
+              "method": { "const": "CVSSv31" },
+              "score": { "type": "number", "minimum": 0.0, "maximum": 10.0 },
+              "severity": { "enum": ["none", "info", "low", "medium", "high", "critical"] }
+            }
+          },
+          "items": {
+            "type": "object",
+            "required": ["method", "score", "severity"],
+            "properties": {
+              "method": { "type": "string" },
+              "score": { "type": "number", "minimum": 0.0, "maximum": 10.0 },
+              "severity": { "enum": ["none", "info", "low", "medium", "high", "critical"] },
+              "vector": { "type": "string" }
+            }
+          }
+        },
+        "description": { "type": "string" },
+        "affects": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["ref"],
+            "properties": {
+              "ref": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    }
+  }
+}

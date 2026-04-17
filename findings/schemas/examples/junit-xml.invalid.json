@@ -1,0 +1,16 @@
+{
+  "name": "unit",
+  "tests": 1,
+  "errors": 0,
+  "testsuite": [
+    {
+      "name": "smoke",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "testcase": [
+        { "name": "test_one", "classname": "smoke.test_basic" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "version": "2.1",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "example-sast"
+        }
+      },
+      "results": [
+        {
+          "ruleId": "EX001",
+          "message": { "text": "Missing level field — AIEOS requires it." }
+        }
+      ]
+    }
+  ]
+}

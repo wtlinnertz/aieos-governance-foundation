@@ -1,0 +1,11 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "components": [
+    {
+      "bom-ref": "pkg:npm/example@1.0.0",
+      "type": "library",
+      "name": "example"
+    }
+  ]
+}

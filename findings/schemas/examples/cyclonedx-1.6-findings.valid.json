@@ -1,0 +1,23 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "version": 1,
+  "vulnerabilities": [
+    {
+      "id": "CVE-2024-00001",
+      "source": { "name": "nvd", "url": "https://nvd.nist.gov/" },
+      "ratings": [
+        {
+          "method": "CVSSv31",
+          "score": 7.5,
+          "severity": "high",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+        }
+      ],
+      "description": "Example high-severity finding for schema validation.",
+      "affects": [
+        { "ref": "pkg:npm/example@1.0.0" }
+      ]
+    }
+  ]
+}

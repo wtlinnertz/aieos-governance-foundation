@@ -1,0 +1,20 @@
+{
+  "name": "unit",
+  "tests": 2,
+  "failures": 0,
+  "errors": 0,
+  "time": 0.015,
+  "testsuite": [
+    {
+      "name": "smoke",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "time": 0.015,
+      "testcase": [
+        { "name": "test_one", "classname": "smoke.test_basic", "time": 0.007 },
+        { "name": "test_two", "classname": "smoke.test_basic", "time": 0.008 }
+      ]
+    }
+  ]
+}

@@ -35,7 +35,7 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 
 - **Identifier:** `test.unit`
 - **Description:** Run unit tests — functions and classes in isolation, no external dependencies.
-- **Expected inputs:** source directory path (string), test config path (string, optional — e.g., `pytest.ini`, `pyproject.toml` section), coverage threshold (number, optional).
+- **Expected inputs:** source directory path (string), test config path (string, optional), coverage threshold (number, optional).
 - **Expected outputs:** JUnit XML test report, optional coverage report (Cobertura or equivalent), exit code.
 - **Canonical findings schema:** `findings/schemas/junit-xml.schema.json` (JUnit XML, JUnit 4 compatible — testsuites/testsuite/testcase structure).
 - **Evidence consumer:** run validator.
@@ -44,7 +44,7 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 
 - **Identifier:** `test.integration`
 - **Description:** Run integration tests — multiple components exercised together against live or containerized dependencies.
-- **Expected inputs:** source directory path (string), test config path (string, optional), dependency fixtures config (object, optional — e.g., docker-compose reference).
+- **Expected inputs:** source directory path (string), test config path (string, optional), dependency fixtures config (object, optional — containerized dependency manifest or equivalent).
 - **Expected outputs:** JUnit XML test report, exit code.
 - **Canonical findings schema:** `findings/schemas/junit-xml.schema.json`.
 - **Evidence consumer:** run validator.
@@ -53,7 +53,7 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 
 - **Identifier:** `test.contract`
 - **Description:** Run contract tests — verify an API or integration point matches its declared contract.
-- **Expected inputs:** source directory path (string), contract definition path (string — e.g., Pact broker URL, OpenAPI spec, Protocol Buffers file).
+- **Expected inputs:** source directory path (string), contract definition path (string — e.g., contract broker URL, OpenAPI spec, Protocol Buffers file).
 - **Expected outputs:** JUnit XML test report, exit code.
 - **Canonical findings schema:** `findings/schemas/junit-xml.schema.json`.
 - **Evidence consumer:** run validator.
@@ -155,7 +155,7 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 
 - **Identifier:** `sign.artifact`
 - **Description:** Sign an artifact (typically an OCI image) with a Sigstore-compatible signature.
-- **Expected inputs:** OCI image reference (string — digest), signing identity reference (string — key path, OIDC identity, or `ambient` for GHA).
+- **Expected inputs:** OCI image reference (string — digest), signing identity reference (string — key path, OIDC identity, or `ambient` when OIDC is supplied by the execution environment).
 - **Expected outputs:** signed image digest (string, unchanged — signature is attached to the registry), Sigstore bundle (JSON — `application/vnd.dev.sigstore.bundle.v0.3+json`).
 - **Canonical findings schema:** `findings/schemas/oci-signing-bundle.schema.json` (OCI image digest + Sigstore bundle).
 - **Evidence consumer:** run validator; signature verifier (at deploy-time admission control, at pull time).
@@ -185,11 +185,11 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 ### publish.manifest
 
 - **Identifier:** `publish.manifest`
-- **Description:** Render and publish a deployment manifest bundle (Kustomize, Helm, raw YAML) to a manifests repository.
-- **Expected inputs:** manifest source path (string — kustomization root, Helm chart, or directory), artifact reference to substitute (string), target repository reference (string), target path (string).
+- **Description:** Render and publish a deployment manifest bundle to a manifests repository.
+- **Expected inputs:** manifest source path (string — overlay root, chart directory, or raw manifest directory), artifact reference to substitute (string), target repository reference (string), target path (string).
 - **Expected outputs:** commit SHA in the manifests repository (string), manifest bundle reference (string), exit code.
 - **Canonical findings schema:** none. Evidence is the commit SHA plus manifest bundle reference.
-- **Evidence consumer:** run validator; GitOps reconciler (e.g., FluxCD); release manager.
+- **Evidence consumer:** run validator; GitOps reconciler; release manager.
 
 ---
 
@@ -199,7 +199,7 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 
 - **Identifier:** `deploy.environment`
 - **Description:** Cause an environment to converge on a published manifest. For GitOps, this commits or promotes manifests and waits for the reconciler to acknowledge.
-- **Expected inputs:** environment name (string), manifest reference (string — commit SHA, chart version, or equivalent), reconciler readiness criteria (object — e.g., Kustomization reconciled status, HealthCheck pass).
+- **Expected inputs:** environment name (string), manifest reference (string — commit SHA, chart version, or equivalent), reconciler readiness criteria (object — e.g., reconciled-status acknowledgement, health-check pass).
 - **Expected outputs:** deployment reference (string — commit SHA that was reconciled), reconciler status (string), exit code.
 - **Canonical findings schema:** none. Evidence is the reconciled commit SHA plus reconciler status. Must include reconcile-verification to satisfy the chaos-test criterion (M6.7 scenario 6).
 - **Evidence consumer:** run validator; release manager; downstream `verify.*` actions.

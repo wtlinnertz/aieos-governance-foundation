@@ -1,0 +1,31 @@
+action: publish.artifact
+contract_version: "1.0.0"
+
+required_inputs:
+  type: object
+  required:
+    - artifact_ref
+    - destination_registry_url
+    - destination_repository_path
+  properties:
+    artifact_ref:
+      type: string
+      description: Local reference to the artifact being published (tag or path).
+    destination_registry_url:
+      type: string
+      format: uri
+      description: URL of the destination registry.
+    destination_repository_path:
+      type: string
+      description: Path within the destination registry (e.g., org/app).
+    credentials_ref:
+      type: string
+      description: Reference to publication credentials (e.g., secret manager key).
+
+output_schema: null
+
+required_evidence:
+  - published-artifact-ref
+  - exit-code
+
+conformance_suite: publish.artifact-suite

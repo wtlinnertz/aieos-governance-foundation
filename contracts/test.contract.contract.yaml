@@ -1,0 +1,23 @@
+action: test.contract
+contract_version: "1.0.0"
+
+required_inputs:
+  type: object
+  required:
+    - source_dir
+    - contract_definition_path
+  properties:
+    source_dir:
+      type: string
+      description: Path to the source directory containing contract tests.
+    contract_definition_path:
+      type: string
+      description: Path or URL to the contract definition (e.g., contract broker URL, OpenAPI spec, Protocol Buffers file).
+
+output_schema: findings/schemas/junit-xml.schema.json
+
+required_evidence:
+  - junit-report
+  - exit-code
+
+conformance_suite: test.contract-suite

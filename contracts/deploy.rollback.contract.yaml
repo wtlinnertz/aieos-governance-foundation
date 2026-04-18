@@ -1,0 +1,28 @@
+action: deploy.rollback
+contract_version: "1.0.0"
+
+required_inputs:
+  type: object
+  required:
+    - environment_name
+    - target_artifact_ref
+    - rollback_reason
+  properties:
+    environment_name:
+      type: string
+      description: Logical name of the environment to roll back.
+    target_artifact_ref:
+      type: string
+      description: Prior known-good artifact reference to roll back to.
+    rollback_reason:
+      type: string
+      description: Short reason the rollback was triggered.
+
+output_schema: null
+
+required_evidence:
+  - rollback-record
+  - reconciler-status
+  - exit-code
+
+conformance_suite: deploy.rollback-suite

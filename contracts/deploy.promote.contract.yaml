@@ -1,0 +1,30 @@
+action: deploy.promote
+contract_version: "1.0.0"
+
+required_inputs:
+  type: object
+  required:
+    - source_env
+    - target_env
+    - artifact_ref
+  properties:
+    source_env:
+      type: string
+      description: Logical name of the source environment.
+    target_env:
+      type: string
+      description: Logical name of the target environment.
+    artifact_ref:
+      type: string
+      description: Artifact reference being promoted (digest form).
+    gate_approval_ref:
+      type: string
+      description: Reference to the approval record for manual-gate-required promotion edges.
+
+output_schema: null
+
+required_evidence:
+  - promotion-record
+  - exit-code
+
+conformance_suite: deploy.promote-suite

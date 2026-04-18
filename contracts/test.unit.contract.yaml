@@ -1,0 +1,28 @@
+action: test.unit
+contract_version: "1.0.0"
+
+required_inputs:
+  type: object
+  required:
+    - source_dir
+  properties:
+    source_dir:
+      type: string
+      description: Path to the source directory containing unit tests.
+    test_config_path:
+      type: string
+      description: Path to the test runner config file.
+    coverage_threshold:
+      type: number
+      minimum: 0
+      maximum: 100
+      description: Minimum coverage percentage the adapter should enforce.
+
+output_schema: findings/schemas/junit-xml.schema.json
+
+required_evidence:
+  - junit-report
+  - coverage-report
+  - exit-code
+
+conformance_suite: test.unit-suite

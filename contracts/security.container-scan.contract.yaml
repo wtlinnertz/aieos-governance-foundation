@@ -1,0 +1,26 @@
+action: security.container-scan
+contract_version: "1.0.0"
+
+required_inputs:
+  type: object
+  required:
+    - image_ref
+  properties:
+    image_ref:
+      type: string
+      description: OCI image reference (digest preferred over tag).
+    severity_threshold:
+      type: string
+      enum: [none, info, low, medium, high, critical]
+      description: Findings at or above this severity fail the action when the spec criterion enforces it.
+    ignore_list:
+      type: string
+      description: Path or reference to a vulnerability-ignore list.
+
+output_schema: findings/schemas/cyclonedx-1.6-findings.schema.json
+
+required_evidence:
+  - cyclonedx-findings
+  - exit-code
+
+conformance_suite: security.container-scan-suite

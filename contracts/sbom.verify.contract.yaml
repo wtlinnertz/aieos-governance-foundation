@@ -1,0 +1,23 @@
+action: sbom.verify
+contract_version: "1.0.0"
+
+required_inputs:
+  type: object
+  required:
+    - sbom_document_path
+  properties:
+    sbom_document_path:
+      type: string
+      description: Path to the SBOM document to verify.
+    expected_signer_identity:
+      type: string
+      description: Expected signing identity reference. Verification fails if the document was not signed by this identity.
+
+output_schema: null
+
+required_evidence:
+  - verification-result
+  - failure-reasons
+  - exit-code
+
+conformance_suite: sbom.verify-suite

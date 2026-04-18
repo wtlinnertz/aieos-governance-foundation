@@ -1,0 +1,25 @@
+action: test.integration
+contract_version: "1.0.0"
+
+required_inputs:
+  type: object
+  required:
+    - source_dir
+  properties:
+    source_dir:
+      type: string
+      description: Path to the source directory containing integration tests.
+    test_config_path:
+      type: string
+      description: Path to the test runner config file.
+    dependency_fixtures:
+      type: object
+      description: Containerized-dependency manifest or equivalent fixture configuration.
+
+output_schema: findings/schemas/junit-xml.schema.json
+
+required_evidence:
+  - junit-report
+  - exit-code
+
+conformance_suite: test.integration-suite

@@ -1,0 +1,28 @@
+action: build.artifact
+contract_version: "1.0.0"
+
+required_inputs:
+  type: object
+  required:
+    - source_dir
+  properties:
+    source_dir:
+      type: string
+      description: Path to the source directory from which to build.
+    build_context:
+      type: string
+      description: Build-context reference (e.g., Containerfile path or build target).
+    build_args:
+      type: object
+      description: Build arguments as key-value pairs.
+      additionalProperties:
+        type: string
+
+output_schema: null
+
+required_evidence:
+  - oci-image-digest
+  - build-log
+  - exit-code
+
+conformance_suite: build.artifact-suite

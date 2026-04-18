@@ -1,0 +1,24 @@
+action: sign.artifact
+contract_version: "1.0.0"
+
+required_inputs:
+  type: object
+  required:
+    - image_ref
+    - signing_identity_ref
+  properties:
+    image_ref:
+      type: string
+      description: OCI image reference to sign (digest form).
+    signing_identity_ref:
+      type: string
+      description: Signing identity reference — key path, OIDC identity URI, or the literal "ambient" when OIDC is supplied by the execution environment.
+
+output_schema: findings/schemas/oci-signing-bundle.schema.json
+
+required_evidence:
+  - signed-image-digest
+  - sigstore-bundle
+  - exit-code
+
+conformance_suite: sign.artifact-suite

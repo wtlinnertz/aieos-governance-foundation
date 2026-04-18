@@ -1,0 +1,26 @@
+action: security.license-scan
+contract_version: "1.0.0"
+
+required_inputs:
+  type: object
+  required:
+    - source_path_or_image_ref
+    - license_allowlist
+  properties:
+    source_path_or_image_ref:
+      type: string
+      description: Path to a dependency manifest or OCI image reference to scan.
+    license_allowlist:
+      type: array
+      minItems: 1
+      items:
+        type: string
+      description: SPDX license identifiers permitted by policy.
+
+output_schema: findings/schemas/cyclonedx-1.6-findings.schema.json
+
+required_evidence:
+  - cyclonedx-findings
+  - exit-code
+
+conformance_suite: security.license-scan-suite

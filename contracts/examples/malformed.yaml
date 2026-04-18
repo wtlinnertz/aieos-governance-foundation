@@ -1,0 +1,9 @@
+# Deliberately malformed contract — used by contracts/validate.py as a negative test.
+# This file must fail meta-schema validation on multiple fields.
+action: INVALID-ACTION      # uppercase, missing namespace — violates action pattern
+contract_version: "1.0"     # not semver (missing patch)
+required_inputs:
+  type: object              # intentionally minimal — valid object, so this field alone passes
+output_schema: "findings/schemas/does-not-exist.schema.json"  # pattern passes but the file does not exist; reference check fails
+required_evidence: []       # empty array — violates minItems: 1
+conformance_suite: wrong-suffix  # missing "-suite" pattern

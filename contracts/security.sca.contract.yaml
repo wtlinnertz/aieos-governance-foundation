@@ -1,0 +1,28 @@
+action: security.sca
+contract_version: "1.0.0"
+
+required_inputs:
+  type: object
+  required:
+    - manifest_path
+  properties:
+    manifest_path:
+      type: string
+      description: Path to the dependency manifest file (e.g., requirements.txt, package.json, go.sum).
+    severity_threshold:
+      type: string
+      enum: [none, info, low, medium, high, critical]
+      description: Findings at or above this severity fail the action when the spec criterion enforces it.
+    cvss_threshold:
+      type: number
+      minimum: 0
+      maximum: 10
+      description: Optional CVSS 3.1 score threshold.
+
+output_schema: findings/schemas/cyclonedx-1.6-findings.schema.json
+
+required_evidence:
+  - cyclonedx-findings
+  - exit-code
+
+conformance_suite: security.sca-suite

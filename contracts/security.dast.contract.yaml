@@ -1,0 +1,26 @@
+action: security.dast
+contract_version: "1.0.0"
+
+required_inputs:
+  type: object
+  required:
+    - target_url
+  properties:
+    target_url:
+      type: string
+      format: uri
+      description: URL of the running application to probe.
+    scan_profile:
+      type: string
+      description: Identifier of the scan profile (e.g., baseline, authenticated).
+    auth_ref:
+      type: string
+      description: Reference to authentication material the scanner needs.
+
+output_schema: findings/schemas/sarif-2.1.0.schema.json
+
+required_evidence:
+  - sarif-report
+  - exit-code
+
+conformance_suite: security.dast-suite

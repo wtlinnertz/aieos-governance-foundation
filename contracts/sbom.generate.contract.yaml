@@ -1,0 +1,24 @@
+action: sbom.generate
+contract_version: "1.0.0"
+
+required_inputs:
+  type: object
+  required:
+    - source_path_or_image_ref
+  properties:
+    source_path_or_image_ref:
+      type: string
+      description: Path to a source directory or an OCI image reference.
+    format_preference:
+      type: string
+      enum: [cyclonedx, spdx]
+      default: cyclonedx
+      description: Preferred SBOM format. SPDX 2.3 is accepted as an alternative; CycloneDX 1.6 is the primary AIEOS format.
+
+output_schema: findings/schemas/cyclonedx-1.6-sbom.schema.json
+
+required_evidence:
+  - cyclonedx-sbom
+  - exit-code
+
+conformance_suite: sbom.generate-suite

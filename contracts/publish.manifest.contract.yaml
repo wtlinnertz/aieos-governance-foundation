@@ -1,0 +1,32 @@
+action: publish.manifest
+contract_version: "1.0.0"
+
+required_inputs:
+  type: object
+  required:
+    - manifest_source_path
+    - artifact_ref_to_substitute
+    - target_repo_ref
+    - target_path
+  properties:
+    manifest_source_path:
+      type: string
+      description: Path to the manifest template source (overlay root, chart directory, or raw manifest directory).
+    artifact_ref_to_substitute:
+      type: string
+      description: Artifact reference the rendered manifests should point to (digest form).
+    target_repo_ref:
+      type: string
+      description: Reference to the target manifests repository.
+    target_path:
+      type: string
+      description: Path within the target repository where rendered manifests are written.
+
+output_schema: null
+
+required_evidence:
+  - manifests-repo-commit-sha
+  - manifest-bundle-ref
+  - exit-code
+
+conformance_suite: publish.manifest-suite

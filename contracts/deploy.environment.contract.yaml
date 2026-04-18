@@ -1,0 +1,28 @@
+action: deploy.environment
+contract_version: "1.0.0"
+
+required_inputs:
+  type: object
+  required:
+    - environment_name
+    - manifest_ref
+    - reconciler_readiness_criteria
+  properties:
+    environment_name:
+      type: string
+      description: Logical name of the target environment (matches a node in the CD spec's environment graph).
+    manifest_ref:
+      type: string
+      description: Manifest reference to converge on (commit SHA, chart version, or equivalent).
+    reconciler_readiness_criteria:
+      type: object
+      description: Criteria the reconciler must meet to consider the environment converged (e.g., reconciled-status acknowledgement, health-check pass).
+
+output_schema: null
+
+required_evidence:
+  - reconciled-commit-sha
+  - reconciler-status
+  - exit-code
+
+conformance_suite: deploy.environment-suite

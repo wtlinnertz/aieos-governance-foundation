@@ -1,0 +1,39 @@
+action: verify.smoke
+contract_version: "1.0.0"
+
+required_inputs:
+  type: object
+  required:
+    - target_url
+    - check_configuration
+  properties:
+    target_url:
+      type: string
+      format: uri
+      description: URL of the deployed environment to probe.
+    check_configuration:
+      type: object
+      description: Smoke check configuration.
+      required:
+        - method
+        - path
+        - expected_status
+      properties:
+        method:
+          type: string
+          enum: [GET, HEAD, POST]
+        path:
+          type: string
+        expected_status:
+          type: integer
+          minimum: 100
+          maximum: 599
+
+output_schema: null
+
+required_evidence:
+  - observed-response
+  - pass-fail
+  - exit-code
+
+conformance_suite: verify.smoke-suite

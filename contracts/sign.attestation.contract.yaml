@@ -1,0 +1,33 @@
+action: sign.attestation
+contract_version: "1.0.0"
+
+required_inputs:
+  type: object
+  required:
+    - subject_ref
+    - predicate_payload
+    - predicate_type
+    - signing_identity_ref
+  properties:
+    subject_ref:
+      type: string
+      description: Subject reference — OCI digest or content hash the attestation is about.
+    predicate_payload:
+      type: object
+      description: Payload describing the predicate (claims, metadata) — in-toto statement predicate body.
+    predicate_type:
+      type: string
+      format: uri
+      description: Predicate type URI (e.g., https://aieos.dev/attestations/conformance/v1).
+    signing_identity_ref:
+      type: string
+      description: Signing identity reference — key path, OIDC identity URI, or the literal "ambient" when OIDC is supplied by the execution environment.
+
+output_schema: findings/schemas/oci-signing-bundle.schema.json
+
+required_evidence:
+  - sigstore-bundle
+  - in-toto-statement
+  - exit-code
+
+conformance_suite: sign.attestation-suite

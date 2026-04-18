@@ -1,0 +1,14 @@
+{
+  "subject": {
+    "adapter_id": "adapter-pytest-unit",
+    "adapter_version": "1.0.0"
+  },
+  "predicate": {
+    "contract_id": "TEST.UNIT",
+    "contract_version": "1.0"
+  },
+  "suite_run_id": "short",
+  "result": "fail",
+  "signing_identity": "",
+  "timestamp": "2026-04-17 18:30:00"
+}

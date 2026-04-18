@@ -1,0 +1,14 @@
+{
+  "subject": {
+    "adapter_id": "adapter-pytest-unit",
+    "adapter_version": "1.0.0"
+  },
+  "predicate": {
+    "contract_id": "test.unit",
+    "contract_version": "1.0.0"
+  },
+  "suite_run_id": "550e8400-e29b-41d4-a716-446655440000",
+  "result": "pass",
+  "signing_identity": "https://github.com/wtlinnertz/adapter-pytest-unit/.github/workflows/adapter-ci.yml@refs/heads/main",
+  "timestamp": "2026-04-17T18:30:00Z"
+}

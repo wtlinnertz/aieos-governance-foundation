@@ -1,0 +1,27 @@
+{
+  "name": "smoke",
+  "tests": 2,
+  "failures": 0,
+  "errors": 0,
+  "testsuite": [
+    {
+      "name": "test_smoke",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "testcase": [
+        {
+          "name": "test_addition_is_correct",
+          "classname": "test_smoke"
+        },
+        {
+          "name": "test_placeholder_skipped",
+          "classname": "test_smoke",
+          "skipped": {
+            "message": "fixture includes a skipped case so adapters handle it"
+          }
+        }
+      ]
+    }
+  ]
+}

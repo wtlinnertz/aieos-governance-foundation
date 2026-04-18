@@ -1,0 +1,49 @@
+# Pass criteria for the test.unit-suite.
+#
+# The M4 conformance harness evaluates each criterion against the adapter's
+# output. A suite passes when every criterion holds for every fixture. The
+# harness produces a signed conformance attestation on pass; on any failure,
+# it emits a diagnostic report and no attestation.
+
+suite: test.unit-suite
+contract: test.unit
+contract_version: "1.0.0"
+
+criteria:
+  - id: schema_conformance
+    type: schema_conformance
+    description: Adapter output must validate against the canonical findings schema for test.*
+    assertion:
+      schema: findings/schemas/junit-xml.schema.json
+      scope: every-fixture
+
+  - id: structural_match
+    type: structural_match
+    description: Adapter output must structurally match the expected JUnit findings for each fixture.
+    assertion:
+      expected_dir: expected/
+      scope: every-fixture
+    tolerances:
+      - path: testsuite[*].testcase[*].time
+        rule: any-non-negative-number
+      - path: testsuite[*].time
+        rule: any-non-negative-number
+      - path: time
+        rule: any-non-negative-number
+
+  - id: exit_code
+    type: exit_code
+    description: Adapter exit code must be 0 on the fixture set (all tests pass).
+    assertion:
+      expected_exit_code: 0
+      scope: every-fixture
+
+  - id: evidence_presence
+    type: evidence_presence
+    description: Every evidence artifact in the contract's required_evidence must be emitted.
+    assertion:
+      required:
+        - junit-report
+        - coverage-report
+        - exit-code
+      scope: every-fixture

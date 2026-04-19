@@ -1,11 +1,11 @@
 {
-  "name": "smoke",
+  "name": "pytest tests",
   "tests": 2,
   "failures": 0,
   "errors": 0,
   "testsuite": [
     {
-      "name": "test_smoke",
+      "name": "smoke",
       "tests": 2,
       "failures": 0,
       "errors": 0,

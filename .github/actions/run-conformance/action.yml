@@ -1,0 +1,98 @@
+name: AIEOS Run Conformance
+description: |
+  Runs an AIEOS conformance suite against an installed adapter Python
+  package and writes the resulting attestation payload to a file.
+  Signing is the calling workflow's responsibility — this action only
+  produces the unsigned predicate.
+
+inputs:
+  adapter-id:
+    description: Adapter identifier (e.g. adapter-pytest-unit)
+    required: true
+  adapter-version:
+    description: Adapter version string (semver)
+    required: true
+  python-import:
+    description: Python import statement that yields the AdapterClass (e.g. "from aieos_adapter_pytest_unit import PytestUnitAdapter as AdapterClass")
+    required: true
+  suite-name:
+    description: Conformance suite directory name (e.g. test.unit-suite)
+    required: true
+  signing-identity:
+    description: Signing identity URI to embed in the attestation payload
+    required: true
+  output-path:
+    description: Where to write the attestation payload JSON
+    required: false
+    default: attestation.json
+  governance-foundation-ref:
+    description: Git ref of aieos-governance-foundation to check out
+    required: false
+    default: main
+
+outputs:
+  attestation-path:
+    description: Path to the produced attestation payload
+    value: ${{ inputs.output-path }}
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout governance-foundation
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+      with:
+        repository: wtlinnertz/aieos-governance-foundation
+        ref: ${{ inputs.governance-foundation-ref }}
+        path: __aieos_gf
+
+    - name: Install harness deps
+      shell: bash
+      run: |
+        python -m pip install --upgrade pip
+        pip install 'jsonschema[format]>=4.20' pyyaml structlog
+
+    - name: Run conformance harness
+      shell: bash
+      env:
+        AIEOS_ADAPTER_ID: ${{ inputs.adapter-id }}
+        AIEOS_ADAPTER_VERSION: ${{ inputs.adapter-version }}
+        AIEOS_SUITE_NAME: ${{ inputs.suite-name }}
+        AIEOS_SIGNING_IDENTITY: ${{ inputs.signing-identity }}
+        AIEOS_OUTPUT_PATH: ${{ inputs.output-path }}
+        AIEOS_PYTHON_IMPORT: ${{ inputs.python-import }}
+      run: |
+        cat > /tmp/aieos_run_conformance.py <<'PYEOF'
+        import json
+        import os
+        import sys
+        from pathlib import Path
+
+        sys.path.insert(0, "__aieos_gf")
+        from conformance.harness.runner import load_suite, run_conformance
+
+        # Execute the user-supplied import in a tiny namespace and pull
+        # AdapterClass out of it.
+        ns = {}
+        exec(os.environ["AIEOS_PYTHON_IMPORT"], ns)
+        AdapterClass = ns["AdapterClass"]
+
+        suite_dir = Path("__aieos_gf") / "conformance" / os.environ["AIEOS_SUITE_NAME"]
+        suite = load_suite(suite_dir)
+        result = run_conformance(
+            suite=suite,
+            adapter=AdapterClass(),
+            adapter_id=os.environ["AIEOS_ADAPTER_ID"],
+            adapter_version=os.environ["AIEOS_ADAPTER_VERSION"],
+            signing_identity=os.environ["AIEOS_SIGNING_IDENTITY"],
+        )
+        if not result.passed:
+            print("CONFORMANCE FAILED:", file=sys.stderr)
+            print(json.dumps(result.diagnostic, indent=2), file=sys.stderr)
+            sys.exit(1)
+
+        Path(os.environ["AIEOS_OUTPUT_PATH"]).write_text(
+            json.dumps(result.attestation, sort_keys=True)
+        )
+        print(f"conformance OK -> {os.environ['AIEOS_OUTPUT_PATH']}")
+        PYEOF
+        python /tmp/aieos_run_conformance.py

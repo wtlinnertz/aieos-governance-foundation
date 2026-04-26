@@ -1,0 +1,18 @@
+{
+  "mediaType": "application/vnd.dev.sigstore.bundle.v0.3+json",
+  "verificationMaterial": {
+    "publicKey": {
+      "hint": "PLACEHOLDER"
+    },
+    "tlogEntries": []
+  },
+  "dsseEnvelope": {
+    "payload": "PLACEHOLDER",
+    "payloadType": "application/vnd.in-toto+json",
+    "signatures": [
+      {
+        "sig": "PLACEHOLDER"
+      }
+    ]
+  }
+}

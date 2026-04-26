@@ -1,0 +1,33 @@
+suite: security.sast-suite
+contract: security.sast
+contract_version: "1.0.0"
+
+# Adapters use different SAST tools (semgrep, CodeQL, Bandit) with different
+# rulesets, so structural_match against a fixed expected file would force a
+# specific tool. This suite asserts schema_conformance — the canonical SARIF
+# 2.1.0 shape — and evidence presence. The fixture is rich enough that
+# any working SAST tool will produce at least one result; expecting a
+# minimum result count would couple to ruleset details and is deferred.
+
+criteria:
+  - id: schema_conformance
+    type: schema_conformance
+    description: Adapter output must validate against the canonical SARIF schema.
+    assertion:
+      schema: findings/schemas/sarif-2.1.0.schema.json
+      scope: every-fixture
+
+  - id: exit_code
+    type: exit_code
+    description: Adapter exit code must be 0 on well-formed output (findings or none).
+    assertion:
+      expected_exit_code: 0
+      scope: every-fixture
+
+  - id: evidence_presence
+    type: evidence_presence
+    assertion:
+      required:
+        - sarif-report
+        - exit-code
+      scope: every-fixture

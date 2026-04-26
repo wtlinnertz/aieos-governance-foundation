@@ -1,0 +1,26 @@
+suite: build.artifact-suite
+contract: build.artifact
+contract_version: "1.0.0"
+
+# build.artifact's contract declares output_schema: null — the action
+# produces no canonical findings, only evidence (oci-image-digest, build-log,
+# exit-code). This suite verifies the evidence shape; structural_match
+# against rendered findings does not apply.
+
+criteria:
+  - id: exit_code
+    type: exit_code
+    description: Adapter exit code must be 0 on a well-formed build.
+    assertion:
+      expected_exit_code: 0
+      scope: every-fixture
+
+  - id: evidence_presence
+    type: evidence_presence
+    description: Evidence must include the OCI image digest and build log.
+    assertion:
+      required:
+        - oci-image-digest
+        - build-log
+        - exit-code
+      scope: every-fixture

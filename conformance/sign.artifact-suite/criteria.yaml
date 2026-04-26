@@ -1,0 +1,34 @@
+suite: sign.artifact-suite
+contract: sign.artifact
+contract_version: "1.0.0"
+
+# Sigstore bundles are non-deterministic by construction: signature bytes,
+# Rekor inclusion timestamps, and public-key hints all vary per run.
+# structural_match doesn't apply. The contract this suite verifies is the
+# bundle's canonical SHAPE — schema_conformance against the OCI signing
+# bundle schema. Whether the signature would actually verify is a separate
+# concern handled at attestation-verification time, not at conformance-test
+# time.
+
+criteria:
+  - id: schema_conformance
+    type: schema_conformance
+    description: Adapter output must validate against the OCI signing bundle schema.
+    assertion:
+      schema: findings/schemas/oci-signing-bundle.schema.json
+      scope: every-fixture
+
+  - id: exit_code
+    type: exit_code
+    assertion:
+      expected_exit_code: 0
+      scope: every-fixture
+
+  - id: evidence_presence
+    type: evidence_presence
+    assertion:
+      required:
+        - signed-image-digest
+        - sigstore-bundle
+        - exit-code
+      scope: every-fixture

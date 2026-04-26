@@ -1,0 +1,33 @@
+suite: sign.attestation-suite
+contract: sign.attestation
+contract_version: "1.0.0"
+
+# Same rationale as sign.artifact-suite: bundles are non-deterministic, so
+# schema_conformance is the contract. sign.attestation-specific: the
+# bundle must carry a dsseEnvelope (DSSE-wrapped in-toto Statement) rather
+# than a messageSignature. The OCI signing bundle schema's oneOf enforces
+# exactly one of dsseEnvelope or messageSignature; v1 sign.attestation
+# adapters that produce messageSignature instead of DSSE pass schema
+# validation but fail predicate_type_expected — that's a separate run
+# validator concern, not a conformance issue.
+
+criteria:
+  - id: schema_conformance
+    type: schema_conformance
+    assertion:
+      schema: findings/schemas/oci-signing-bundle.schema.json
+      scope: every-fixture
+
+  - id: exit_code
+    type: exit_code
+    assertion:
+      expected_exit_code: 0
+      scope: every-fixture
+
+  - id: evidence_presence
+    type: evidence_presence
+    assertion:
+      required:
+        - sigstore-bundle
+        - exit-code
+      scope: every-fixture

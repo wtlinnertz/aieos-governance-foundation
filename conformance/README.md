@@ -111,20 +111,20 @@ Current state — one skeleton suite exists as a structural reference for adapte
 | Suite | Serves contract | Status |
 |---|---|---|
 | `test.unit-suite/` | `contracts/test.unit.contract.yaml` | skeleton — structural reference only; the `run.sh` is a placeholder |
-| `test.integration-suite/` | `contracts/test.integration.contract.yaml` | to be authored in M4a |
+| `test.integration-suite/` | `contracts/test.integration.contract.yaml` | skeleton authored |
 | `test.contract-suite/` | `contracts/test.contract.contract.yaml` | to be authored when a contract-test adapter ships |
 | `test.e2e-suite/` | `contracts/test.e2e.contract.yaml` | to be authored when an e2e adapter ships |
-| `build.artifact-suite/` | `contracts/build.artifact.contract.yaml` | to be authored in M4a |
-| `security.sast-suite/` | `contracts/security.sast.contract.yaml` | to be authored in M4b |
+| `build.artifact-suite/` | `contracts/build.artifact.contract.yaml` | skeleton authored (Track A) |
+| `security.sast-suite/` | `contracts/security.sast.contract.yaml` | skeleton authored (Track A) |
 | `security.dast-suite/` | `contracts/security.dast.contract.yaml` | deferred — no v1 DAST adapter |
-| `security.sca-suite/` | `contracts/security.sca.contract.yaml` | to be authored in M4b |
-| `security.secret-scan-suite/` | `contracts/security.secret-scan.contract.yaml` | to be authored when a secret-scan adapter ships |
-| `security.container-scan-suite/` | `contracts/security.container-scan.contract.yaml` | to be authored in M4b |
+| `security.sca-suite/` | `contracts/security.sca.contract.yaml` | skeleton authored (Track A) |
+| `security.secret-scan-suite/` | `contracts/security.secret-scan.contract.yaml` | skeleton authored (Track A) |
+| `security.container-scan-suite/` | `contracts/security.container-scan.contract.yaml` | skeleton authored (Track A) |
 | `security.license-scan-suite/` | `contracts/security.license-scan.contract.yaml` | deferred |
-| `sbom.generate-suite/` | `contracts/sbom.generate.contract.yaml` | to be authored in M4b |
+| `sbom.generate-suite/` | `contracts/sbom.generate.contract.yaml` | skeleton authored (Track A) |
 | `sbom.verify-suite/` | `contracts/sbom.verify.contract.yaml` | to be authored when a verify adapter ships |
-| `sign.artifact-suite/` | `contracts/sign.artifact.contract.yaml` | to be authored in M4a |
-| `sign.attestation-suite/` | `contracts/sign.attestation.contract.yaml` | to be authored in M4a |
+| `sign.artifact-suite/` | `contracts/sign.artifact.contract.yaml` | skeleton authored (Track A; bundle non-determinism -> schema_conformance only) |
+| `sign.attestation-suite/` | `contracts/sign.attestation.contract.yaml` | skeleton authored (Track A; bundle non-determinism -> schema_conformance only) |
 | `publish.artifact-suite/` | `contracts/publish.artifact.contract.yaml` | to be authored when a publish adapter ships |
 | `publish.manifest-suite/` | `contracts/publish.manifest.contract.yaml` | to be authored in M4b |
 | `deploy.environment-suite/` | `contracts/deploy.environment.contract.yaml` | to be authored in M4b |

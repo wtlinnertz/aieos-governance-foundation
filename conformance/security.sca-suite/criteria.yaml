@@ -1,0 +1,29 @@
+suite: security.sca-suite
+contract: security.sca
+contract_version: "1.0.0"
+
+# Adapter-agnostic shape check — any SCA tool's normalized output must
+# validate against the CycloneDX 1.6 findings schema. Whether specific
+# CVEs surface depends on the tool's vulnerability database; the structural
+# check is the contract.
+
+criteria:
+  - id: schema_conformance
+    type: schema_conformance
+    assertion:
+      schema: findings/schemas/cyclonedx-1.6-findings.schema.json
+      scope: every-fixture
+
+  - id: exit_code
+    type: exit_code
+    assertion:
+      expected_exit_code: 0
+      scope: every-fixture
+
+  - id: evidence_presence
+    type: evidence_presence
+    assertion:
+      required:
+        - cyclonedx-findings
+        - exit-code
+      scope: every-fixture

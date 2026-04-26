@@ -1,0 +1,7 @@
+# Fixture: pinned versions known to carry CVEs at fixture authoring time.
+# The exact CVEs depend on the adapter's vulnerability database; the suite
+# asserts schema_conformance against the CycloneDX 1.6 findings shape and
+# does not require specific CVE IDs.
+requests==2.20.0
+urllib3==1.24.0
+pyyaml==5.1

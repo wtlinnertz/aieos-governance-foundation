@@ -1,0 +1,14 @@
+{
+  "subject": {
+    "adapter_id": "fixture-adapter",
+    "adapter_version": "1.0.0"
+  },
+  "predicate": {
+    "contract_id": "test.unit",
+    "contract_version": "1.0.0"
+  },
+  "suite_run_id": "fixture-runrunrunrunrunrunrunrunrunrunrunrunrun",
+  "result": "pass",
+  "signing_identity": "https://github.com/wtlinnertz/fixture/.github/workflows/ci.yml@refs/heads/main",
+  "timestamp": "2026-04-25T12:00:00Z"
+}

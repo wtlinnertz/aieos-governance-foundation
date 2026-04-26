@@ -1,0 +1,24 @@
+suite: sbom.generate-suite
+contract: sbom.generate
+contract_version: "1.0.0"
+
+criteria:
+  - id: schema_conformance
+    type: schema_conformance
+    assertion:
+      schema: findings/schemas/cyclonedx-1.6-sbom.schema.json
+      scope: every-fixture
+
+  - id: exit_code
+    type: exit_code
+    assertion:
+      expected_exit_code: 0
+      scope: every-fixture
+
+  - id: evidence_presence
+    type: evidence_presence
+    assertion:
+      required:
+        - cyclonedx-sbom
+        - exit-code
+      scope: every-fixture

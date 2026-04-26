@@ -1,0 +1,5 @@
+# Fixture: an image reference. Container scanners need an actual registry
+# image to inspect; this file is a pointer the adapter resolves at runtime.
+# In CI, the harness substitutes a known-vulnerable test image (alpine:3.4
+# or similar) before invoking the adapter.
+docker.io/library/alpine:3.4

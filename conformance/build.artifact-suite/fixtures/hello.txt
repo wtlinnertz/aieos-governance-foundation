@@ -1,0 +1,1 @@
+build.artifact conformance fixture — content packaged into the image

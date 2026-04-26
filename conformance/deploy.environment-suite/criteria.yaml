@@ -1,0 +1,26 @@
+suite: deploy.environment-suite
+contract: deploy.environment
+contract_version: "1.0.0"
+
+# deploy.environment's contract declares output_schema: null. Conformance is
+# evidence-only: the adapter must produce a reconciled-commit-sha and a
+# reconciler-status. Live execution requires the harness to provide a
+# target_repo_ref (an init'd git repo) and the adapter must be wired with
+# a reconciler-check callable. The default reconciler_check returns
+# 'accepted' optimistically; production deployments override.
+
+criteria:
+  - id: exit_code
+    type: exit_code
+    assertion:
+      expected_exit_code: 0
+      scope: every-fixture
+
+  - id: evidence_presence
+    type: evidence_presence
+    assertion:
+      required:
+        - reconciled-commit-sha
+        - reconciler-status
+        - exit-code
+      scope: every-fixture

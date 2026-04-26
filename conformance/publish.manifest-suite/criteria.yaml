@@ -1,0 +1,32 @@
+suite: publish.manifest-suite
+contract: publish.manifest
+contract_version: "1.0.0"
+
+# publish.manifest's contract declares output_schema: null. Conformance is
+# evidence-only: the adapter must emit a manifests-repo-commit-sha and a
+# manifest-bundle-ref so downstream deploy.environment can reference them.
+#
+# Live execution requires the harness to construct a target_repo_ref (a
+# git-initialized directory) at runtime and supply manifest_source_path,
+# artifact_ref_to_substitute, target_path. The harness's adapter_inputs
+# support that wires this is a v1.2 enhancement; v1.1 ships the suite's
+# structural shell so adapter authors have the criteria contract to test
+# against locally.
+
+criteria:
+  - id: exit_code
+    type: exit_code
+    description: Adapter exit code must be 0 on a well-formed publish.
+    assertion:
+      expected_exit_code: 0
+      scope: every-fixture
+
+  - id: evidence_presence
+    type: evidence_presence
+    description: Evidence must include the rendered manifest commit reference.
+    assertion:
+      required:
+        - manifests-repo-commit-sha
+        - manifest-bundle-ref
+        - exit-code
+      scope: every-fixture

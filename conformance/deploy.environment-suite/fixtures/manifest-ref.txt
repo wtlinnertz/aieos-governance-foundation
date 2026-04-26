@@ -1,0 +1,5 @@
+# Fixture: a manifest reference (commit SHA or tag) the adapter promotes
+# to a target environment. The Flux-handoff adapter writes
+# envs/<environment_name>/ref.txt = <manifest_ref> in the target repo
+# and commits, then the reconciler picks it up.
+0123456789abcdef0123456789abcdef01234567

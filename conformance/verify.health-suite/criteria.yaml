@@ -1,0 +1,24 @@
+suite: verify.health-suite
+contract: verify.health
+contract_version: "1.0.0"
+
+# verify.health's contract declares output_schema: null. Live execution
+# requires a reachable target_url with the configured paths responding.
+# The CI workflow stands up a local http.server with route -> status code
+# mappings before invoking the adapter via the harness's adapter_inputs
+# (v1.2). v1.1 ships the structural shell.
+
+criteria:
+  - id: exit_code
+    type: exit_code
+    assertion:
+      expected_exit_code: 0
+      scope: every-fixture
+
+  - id: evidence_presence
+    type: evidence_presence
+    assertion:
+      required:
+        - per-check-results
+        - exit-code
+      scope: every-fixture

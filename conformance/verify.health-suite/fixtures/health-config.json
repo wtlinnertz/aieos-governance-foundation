@@ -1,0 +1,4 @@
+{
+  "paths": ["/healthz", "/readyz"],
+  "expected_status_codes": [200, 200]
+}

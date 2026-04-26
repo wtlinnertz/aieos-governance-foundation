@@ -1,0 +1,5 @@
+{
+  "method": "GET",
+  "path": "/healthz",
+  "expected_status": 200
+}

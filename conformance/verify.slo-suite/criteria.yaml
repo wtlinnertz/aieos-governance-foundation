@@ -1,0 +1,24 @@
+suite: verify.slo-suite
+contract: verify.slo
+contract_version: "1.0.0"
+
+# verify.slo's contract declares output_schema: null. Live execution
+# requires a reachable Prometheus endpoint at target_env_ref. The CI
+# workflow stands up a local http.server impersonating /api/v1/query
+# before invoking the adapter via the harness's adapter_inputs (v1.2).
+# v1.1 ships the structural shell.
+
+criteria:
+  - id: exit_code
+    type: exit_code
+    assertion:
+      expected_exit_code: 0
+      scope: every-fixture
+
+  - id: evidence_presence
+    type: evidence_presence
+    assertion:
+      required:
+        - per-slo-measurements
+        - exit-code
+      scope: every-fixture

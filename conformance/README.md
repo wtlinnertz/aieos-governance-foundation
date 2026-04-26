@@ -126,12 +126,12 @@ Current state — one skeleton suite exists as a structural reference for adapte
 | `sign.artifact-suite/` | `contracts/sign.artifact.contract.yaml` | skeleton authored (Track A; bundle non-determinism -> schema_conformance only) |
 | `sign.attestation-suite/` | `contracts/sign.attestation.contract.yaml` | skeleton authored (Track A; bundle non-determinism -> schema_conformance only) |
 | `publish.artifact-suite/` | `contracts/publish.artifact.contract.yaml` | to be authored when a publish adapter ships |
-| `publish.manifest-suite/` | `contracts/publish.manifest.contract.yaml` | to be authored in M4b |
-| `deploy.environment-suite/` | `contracts/deploy.environment.contract.yaml` | to be authored in M4b |
+| `publish.manifest-suite/` | `contracts/publish.manifest.contract.yaml` | skeleton authored (post-v1.1; structure-only — runs require harness adapter_inputs support, v1.2) |
+| `deploy.environment-suite/` | `contracts/deploy.environment.contract.yaml` | skeleton authored (post-v1.1; structure-only) |
 | `deploy.promote-suite/` | `contracts/deploy.promote.contract.yaml` | to be authored when needed |
 | `deploy.rollback-suite/` | `contracts/deploy.rollback.contract.yaml` | to be authored when needed |
-| `verify.smoke-suite/` | `contracts/verify.smoke.contract.yaml` | to be authored in M4b |
-| `verify.health-suite/` | `contracts/verify.health.contract.yaml` | to be authored when needed |
-| `verify.slo-suite/` | `contracts/verify.slo.contract.yaml` | to be authored when needed |
+| `verify.smoke-suite/` | `contracts/verify.smoke.contract.yaml` | skeleton authored (post-v1.1; structure-only) |
+| `verify.health-suite/` | `contracts/verify.health.contract.yaml` | skeleton authored (post-v1.1; structure-only) |
+| `verify.slo-suite/` | `contracts/verify.slo.contract.yaml` | skeleton authored (post-v1.1; structure-only) |
 
 The v1 framework freeze is about the suite *shape*, not about having every suite authored. Suites land alongside their adapters.

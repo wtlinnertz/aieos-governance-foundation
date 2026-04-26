@@ -1,0 +1,24 @@
+suite: verify.smoke-suite
+contract: verify.smoke
+contract_version: "1.0.0"
+
+# verify.smoke's contract declares output_schema: null. Live execution
+# requires a reachable target_url. The CI workflow that runs this suite
+# spins up a tiny http.server on a known port and supplies target_url
+# via the harness's adapter_inputs (v1.2). v1.1 ships the suite's
+# structural shell — the adapter's evidence shape is what's contracted.
+
+criteria:
+  - id: exit_code
+    type: exit_code
+    assertion:
+      expected_exit_code: 0
+      scope: every-fixture
+
+  - id: evidence_presence
+    type: evidence_presence
+    assertion:
+      required:
+        - http-status
+        - exit-code
+      scope: every-fixture

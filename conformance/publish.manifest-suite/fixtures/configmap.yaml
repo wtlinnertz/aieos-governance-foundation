@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aieos-conformance-fixture
+data:
+  conformance: "publish.manifest-suite"

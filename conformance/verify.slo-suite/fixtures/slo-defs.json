@@ -1,0 +1,10 @@
+{
+  "slo_definitions": [
+    {
+      "metric": "sum(rate(http_requests_total{job=\"aieos-fixture\",status=~\"2..\"}[5m])) / sum(rate(http_requests_total{job=\"aieos-fixture\"}[5m]))",
+      "threshold": 0.99,
+      "window": 600
+    }
+  ],
+  "measurement_window_seconds": 600
+}

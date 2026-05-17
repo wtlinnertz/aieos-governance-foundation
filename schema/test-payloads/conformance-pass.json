@@ -1,0 +1,14 @@
+{
+  "subject": {
+    "adapter_id": "adapter-signing-test",
+    "adapter_version": "0.0.1"
+  },
+  "predicate": {
+    "contract_id": "test.unit",
+    "contract_version": "1.0.0"
+  },
+  "suite_run_id": "m0-validation-placeholder",
+  "result": "pass",
+  "signing_identity": "placeholder-replaced-at-runtime",
+  "timestamp": "2026-05-15T00:00:00Z"
+}

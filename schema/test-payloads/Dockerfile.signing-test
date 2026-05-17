@@ -1,0 +1,7 @@
+# M0 signing test image — no functional content.
+# Used as the OCI subject for conformance attestation validation in M0.
+# Alpine:3.19 chosen over scratch: cosign attest on scratch has edge cases
+# with manifest format across versions.
+FROM alpine:3.19
+RUN echo "aieos-m0-signing-test" > /m0-marker.txt
+CMD ["cat", "/m0-marker.txt"]

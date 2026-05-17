@@ -172,4 +172,4 @@ Changes to the governance model follow the protocol in `governance-model.md` §1
 | 14. Peer Review | `aieos-peer-review-kit` | Built (optional) |
 | 15. Business Process | `aieos-business-process-kit` | Built (optional) |
 
-All 16 layer kits (including the Governance Foundation) are built and operational.
+All 15 layer kits are built and operational. The Governance Foundation is the canonical authority for all kits — it is not a layer kit and has no layer number.

@@ -1,6 +1,6 @@
 # AIEOS Cross-Kit Escalation Protocols
 
-This document defines the four governed escalation triggers in the AIEOS system. Escalation is assessed, not automatic. No incident or pattern automatically triggers cross-kit re-entry. Each trigger produces a structured escalation record; a human authorizes the escalation before any action is taken.
+This document defines the five governed escalation triggers in the AIEOS system. Escalation is assessed, not automatic. No incident or pattern automatically triggers cross-kit re-entry. Each trigger produces a structured escalation record; a human authorizes the escalation before any action is taken.
 
 ---
 
@@ -12,7 +12,7 @@ The escalation assessment prompt (`RRK: docs/prompts/escalation-assessment-promp
 
 ---
 
-## The four escalation triggers
+## The five escalation triggers
 
 ### Trigger 1 — SEV1/2 incident with code defect
 
@@ -83,6 +83,27 @@ The escalation assessment prompt (`RRK: docs/prompts/escalation-assessment-promp
 3. Both the release owner and a product stakeholder agree on this assessment
 
 **Assessment question:** Did we build the wrong thing, or did we build the right thing incorrectly? If the former, escalate to PIK. If the latter, it's a Trigger 3 (EEK defect fix).
+
+---
+
+### Trigger 5 — production SLO rollback
+
+| Field | Value |
+|-------|-------|
+| Source Layer | Layer 5 (Release & Exposure Kit) or Layer 6 (Reliability & Resilience Kit) |
+| Signal | An active deployment has breached SLO burn rate thresholds and the reliability owner assesses that rollback risk is lower than forward-fix risk |
+| Destination Layer | Layer 5 (Release & Exposure Kit) |
+| What Destination Does | Release owner executes rollback procedure; a new Release Record (RR) documents the rollback decision, root cause category, and post-rollback SLO state; root cause is then assessed against Trigger 3 (code defect) or Trigger 4 (wrong feature) criteria for any subsequent re-entry |
+
+**Trigger criteria (all must be true):**
+1. A deployment is active in production and has not yet been absorbed into a stable RHR cycle
+2. SLO burn rate has breached the alert threshold or an error budget has been fully consumed within the deployment window
+3. The breach is traceable to this deployment specifically, not to a pre-existing baseline condition
+4. The reliability owner and release owner have jointly assessed that forward-fix risk exceeds rollback risk
+
+**Assessment question:** Is the SLO breach caused by this specific deployment (Trigger 5 rollback assessment), or is it a pre-existing reliability condition that should stay in Layer 6 (Trigger 1 or 2 path)?
+
+**Note:** Trigger 5 is the only trigger that routes back to a kit the initiative has already passed through (REK). The RR for the rolled-back release is not reopened — a new RR documents the rollback event. After rollback is complete, if root cause analysis identifies a code defect, Trigger 3 criteria are reassessed; if root cause is wrong product scope, Trigger 4 criteria are reassessed.
 
 ---
 

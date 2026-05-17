@@ -39,7 +39,7 @@ SSK (Layer 3) is optional. When engaged, the sub-flow is: `PIK → SSK (SOER →
 1. **PIK:** WCR → Discovery Intake → PFD → VH → AR → EL → DPRD (freeze)
 1a. **SSK** (optional): SOER → VER → SDR (freeze) — evaluates Build/Buy/Adopt
 2. **EEK:** KER (Path A) → PRD (placed DPRD) → ACF → SAD → DCF → TDD → WDD → Execution → ORD (freeze)
-3. **QAK** (optional): QAER → VP → TCR(s) → QGR (freeze)
+3. **QAK** (conditionally required — engage when integration points, external dependencies, or cross-component test scope exist): QAER → VP → TCR(s) → QGR (freeze)
 4. **REK:** RER → RCF → RSA → RP → Release Execution → RR (freeze)
 5. **RRK:** SRER → SRP → IR (per incident) → RHR (periodic)
 6. **IEK:** ES (from 2+ RHRs) → re-entry signal (maintain / watch / re-discover)
@@ -301,7 +301,7 @@ Add an Amendment Log entry. If there is any ambiguity, treat it as material and 
 
 | Layer | Required? | Adoption Criteria |
 |-------|-----------|------------------|
-| QAK (L9) | Optional | Adopt if integration points, external dependencies, or cross-component behavior exist |
+| QAK (L9) | Conditionally required | Required when the initiative has integration points, external dependencies, or cross-component test scope. Optional for single-service changes with no external integration. When adopted, no opt-out path after QAER is frozen. |
 | SCK (L10) | Conditional | Required for security-sensitive or regulated systems; TM mandatory if SAR adopted |
 | DCK (L11) | Conditional | CSPEC: if config exists; FFLR: if feature flags used; DSR: if data schemas exist |
 | PINFK (L12) | Conditional | PDRs: if technology decisions need documentation; ISPEC: if non-trivial infrastructure |
@@ -409,7 +409,7 @@ Six formal outcomes that apply at decision points throughout the framework. Thes
 | **Block** | Critical violation; halt and remediate before proceeding | Validator FAIL with critical findings | Hard gate failure, security block |
 | **Remediate-and-Retry** | Fixable findings; correct and re-validate (max 3 iterations) | Convergence loop (Pattern A/B) | Validator FAIL with correctable issues |
 | **Require-Redesign** | Architecture or design risk too high; return to design phase | Escalation triggers 3/4 | Fundamental approach change needed |
-| **Rollback** | Runtime SLO violation; execute rollback procedure | Escalation trigger 5 (REK/RRK) | Production failure after release |
+| **Rollback** | Runtime SLO violation; execute rollback procedure | Escalation trigger 5 (REK/RRK) | Production SLO breach after release — assessed against Trigger 3/4 after rollback |
 
 ### Relationship to existing mechanisms
 
@@ -418,7 +418,7 @@ Six formal outcomes that apply at decision points throughout the framework. Thes
 - **Approve-with-Conditions** is currently used only at QAK (QGR CONDITIONAL disposition). Other kits may adopt it when risk acceptance is formally documented.
 - **Remediate-and-Retry** is the decision to enter a convergence loop. See [`review-convergence-loop.md`](review-convergence-loop.md) for the bounded correction pattern.
 - **Require-Redesign** applies when the issue cannot be fixed by correcting the current artifact — the problem is upstream. This triggers cross-kit re-entry (§6.2) or within-kit re-entry to a design-phase artifact.
-- **Rollback** applies only after release execution has begun. It triggers the REK abort protocol and escalation paths (T3, T4).
+- **Rollback** applies only after release execution has begun. It triggers the REK rollback procedure (Trigger 5) and a new RR documenting the rollback. Post-rollback root cause determines whether Trigger 3 (code defect → EEK) or Trigger 4 (wrong feature → PIK) applies for any subsequent re-entry. See [`escalation-protocols.md`](escalation-protocols.md) for full Trigger 5 criteria.
 
 ### When to apply
 

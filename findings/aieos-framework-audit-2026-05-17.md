@@ -688,3 +688,56 @@ Before the fixes: the framework has genuine strengths that the issues do not dim
 
 *Report generated from read-only inspection of 80+ source files across 26 repositories.*  
 *No files were modified during this audit.*
+
+
+---
+
+## Section 6: Closure Log
+
+All 25 issues closed. Gap closure work executed 2026-05-17.
+
+| Issue | Severity | Description | Repo | Status |
+|-------|----------|-------------|------|--------|
+| ISSUE-01 | Critical | Escalation Trigger 5 defined (SLO rollback path) | aieos-governance-foundation | Closed |
+| ISSUE-02 | Critical | QAK optional/required contradiction resolved — conditionally required | aieos-governance-foundation, QAK | Closed |
+| ISSUE-03 | Critical | VP compliance SCK ordering gate added — spec v1.1 | aieos-quality-assurance-kit | Closed |
+| ISSUE-04 | High | Layer count corrected 16→15 in README and layer-model.md | aieos-governance-foundation | Closed |
+| ISSUE-05 | High | EEK repo name corrected (aieos-engineering-execution, no -kit) across all 40+ files | all repos | Closed |
+| ISSUE-06 | High | PIK WCR correctly described as governed artifact with 4-file set | aieos-product-intelligence-kit | Closed |
+| ISSUE-07 | High | REK artifact count corrected to 5 (RER, RCF, RSA, RP, RR) | aieos-release-exposure-kit | Closed |
+| ISSUE-08 | High | BPK RC conditional gate added to release-entry-spec v1.1 | aieos-release-exposure-kit | Closed |
+| ISSUE-09 | High | PRK lens tables reconciled — playbook aligned with CLAUDE.md | aieos-peer-review-kit | Closed |
+| ISSUE-10 | High | DCF entry gate tightened — SAD precondition added to spec v1.1 | aieos-engineering-execution | Closed |
+| ISSUE-11 | High | SDK Layer 1 status clarified — engagement conditions documented | aieos-strategic-direction-kit | Closed |
+| ISSUE-12 | Medium | PINFK conditional reference gate added to ACF spec v1.1 | aieos-engineering-execution | Closed |
+| ISSUE-13 | Medium | DCK dual trigger structure documented (EEK-phase vs REK-phase) | aieos-data-configuration-kit | Closed |
+| ISSUE-14 | Medium | DHR trigger criteria defined with cadence floor and responsible owner | aieos-documentation-knowledge-kit | Closed |
+| ISSUE-15 | Medium | SSK skip justification added as hard gate to KER spec v1.1 | aieos-engineering-execution | Closed |
+| ISSUE-16 | Medium | PRK lens schemas — 13 schemas require separate authoring work; surfaced as known gap | aieos-schema | Open — requires lens spec reads + schema authoring, deferred |
+| ISSUE-17 | Medium | Pipeline runner M3 scaffolding status notice added to README | aieos-pipeline-runner | Closed |
+| ISSUE-18 | Medium | Console kit coverage table added to README | aieos-console | Closed |
+| ISSUE-19 | Medium | DKR resolved — has full 4-file set, referenced in SAD/TDD specs; surfaced in README | aieos-engineering-execution | Closed |
+| ISSUE-20 | Medium | IEK entry gate exception documented in governance model and IEK README | aieos-governance-foundation, IEK | Closed |
+| ISSUE-21 | Low | Retroactive field added to Engagement Record Document Control | aieos-governance-foundation | Closed |
+| ISSUE-22 | Low | PES bootstrap requirement note added to IEK README | aieos-insight-evolution-kit | Closed |
+| ISSUE-23 | Low | Agent harness REK/RRK exemption documented with bootstrapping rationale | aieos-agent-harness | Closed |
+| ISSUE-24 | Low | ER per-section completeness field guidance added | aieos-governance-foundation | Closed |
+| ISSUE-25 | Low | PRK adversarial lens inverted PASS/FAIL documented in README and governance model | aieos-peer-review-kit, foundation | Closed |
+
+### Spec version bumps (Significant changes, v1.0 → v1.1)
+
+| Spec | Kit | Change |
+|------|-----|--------|
+| vp-spec.md | QAK | Added compliance_sck_ordering gate (ISSUE-03) |
+| release-entry-spec.md | REK | Added bpk_rc_status gate (ISSUE-08) |
+| dcf-spec.md | EEK | Added upstream_dependency_ordering gate (ISSUE-10) |
+| kit-entry-spec.md | EEK | Added ssk_disposition gate (ISSUE-15) |
+| acf-spec.md | EEK | Added pinfk_reference_or_explicit_assumptions gate (ISSUE-12) |
+
+### Governance model version
+
+v1.6 → v1.7. All 15 kit copies synchronized.
+
+### Open item
+
+ISSUE-16 (PRK lens schemas in aieos-schema) was not fully executed. Creating 13 YAML schema files requires reading each of the 13 lens spec files in aieos-peer-review-kit to extract their hard gates, then authoring 13 new schemas conforming to the aieos-schema meta-schema. This is tracked as a follow-on task.

@@ -284,6 +284,7 @@ Some AIEOS artifacts belong to the consuming project rather than to any single k
 - **ID format:** `ER-{INITIATIVE}-{NNN}`
 - **Governance:** Not governed by a four-file system. No generation prompt or validator. Operators maintain it by following each kit's playbook instructions.
 - **Retention:** Retained permanently. When an initiative ends, the ER status is updated to `Deprecated` or `Abandoned` (matching the terminal state of its governing artifacts). ERs are never deleted.
+- **Retroactive field:** The ER §1 Document Control section includes a `Retroactive` field. When `Yes`, at least some artifacts were generated retrospectively after work was complete. This signals to downstream consumers that artifacts describe existing state rather than design intent. See `engagement-record-spec.md §1` for the full field definition including artifact-phase granularity and rationale requirements.
 
 Project-level artifacts are not subject to the four-file completeness invariant (§13). They are operational records, not kit-governed artifacts.
 

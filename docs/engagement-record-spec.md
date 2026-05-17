@@ -41,6 +41,7 @@ This spec is the canonical definition of the ER format. It lives in `aieos-gover
 | ER Spec Version | 1.7 |
 | Current Position | {Navigation map node ID, e.g., N-EEK-TDD — updated by position-check tool. Optional.} |
 | Preset | {P1–P5 or Custom — declared at initiative start} |
+| Retroactive | [ ] No — all artifacts generated prospectively during the initiative | [ ] Yes — some or all artifacts generated retrospectively after work was complete. If Yes: note which artifact phases are retroactive and the rationale for retroactive governance. |
 
 **Status values:**
 - `Active` — initiative is in progress or in production and under monitoring

@@ -180,7 +180,7 @@ The script `aieos-governance-foundation/tests/check-structure.sh` automates all 
 
 **Example:**
 ```
-./tests/check-structure.sh /path/to/aieos-engineering-execution-kit
+./tests/check-structure.sh /path/to/aieos-engineering-execution
 ```
 
 The script outputs per-check PASS/FAIL results and exits with a non-zero code if any check fails (CI-compatible).

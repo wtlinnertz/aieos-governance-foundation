@@ -16,7 +16,7 @@ All 15 kit repositories and the governance foundation must be cloned as sibling 
   aieos-strategic-direction-kit/
   aieos-product-intelligence-kit/
   aieos-solution-sourcing-kit/
-  aieos-engineering-execution-kit/     # local name; GitHub repo is aieos-engineering-execution
+  aieos-engineering-execution/     # local name; GitHub repo is aieos-engineering-execution
   aieos-release-exposure-kit/
   aieos-reliability-resilience-kit/
   aieos-insight-evolution-kit/

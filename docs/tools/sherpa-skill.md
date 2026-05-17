@@ -352,7 +352,7 @@ Where the dependency graph permits, generate artifacts in parallel using the Age
 When you finish the last artifact in a kit:
 
 1. Read the handoff section of the current kit's playbook
-2. Read the entry-from file in the next kit (e.g., `aieos-engineering-execution-kit/docs/entry-from-pik.md`)
+2. Read the entry-from file in the next kit (e.g., `aieos-engineering-execution/docs/entry-from-pik.md`)
 3. After reading the entry-from file, state: "Boundary check: Read entry-from-{upstream}.md. Prerequisites: {list frozen artifacts required}. All present: {yes/no}."
 4. Explain to the user: "We've completed [Kit Name]. All artifacts are frozen. Now we're moving to [Next Kit], which handles [plain language description]."
 5. Verify all exit conditions from the current kit are met before proceeding

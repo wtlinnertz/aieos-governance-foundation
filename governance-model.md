@@ -114,7 +114,7 @@ Kit repositories follow the pattern: `aieos-{layer-name}-kit`
 | Strategic Direction | `aieos-strategic-direction-kit` |
 | Product Intelligence | `aieos-product-intelligence-kit` |
 | Solution Sourcing | `aieos-solution-sourcing-kit` |
-| Engineering Execution | `aieos-engineering-execution-kit` |
+| Engineering Execution | `aieos-engineering-execution` |
 | Release & Exposure | `aieos-release-exposure-kit` |
 | Reliability & Resilience | `aieos-reliability-resilience-kit` |
 | Insight & Evolution | `aieos-insight-evolution-kit` |

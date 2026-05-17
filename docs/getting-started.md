@@ -151,13 +151,13 @@ Cross-Cutting Governance:
 
 KER → PRD → ACF → SAD → DCF → TDD → WDD → ORD
 
-**Where:** `aieos-engineering-execution-kit/docs/playbook.md`
+**Where:** `aieos-engineering-execution/docs/playbook.md`
 
-**Setup:** `aieos-engineering-execution-kit/docs/session-setup.md`
+**Setup:** `aieos-engineering-execution/docs/session-setup.md`
 
-**From PIK:** Read `aieos-engineering-execution-kit/docs/entry-from-pik.md` first.
+**From PIK:** Read `aieos-engineering-execution/docs/entry-from-pik.md` first.
 
-**From SSK:** Read `aieos-engineering-execution-kit/docs/entry-from-ssk.md` first. Bring the frozen DPRD and frozen SDR.
+**From SSK:** Read `aieos-engineering-execution/docs/entry-from-ssk.md` first. Bring the frozen DPRD and frozen SDR.
 
 ## We are ready to release
 

@@ -26,7 +26,7 @@ You need three things locally:
    pip install git+https://github.com/wtlinnertz/aieos-pipeline-runner.git
    ```
 3. **The two kits' templates** available as reference:
-   - CI: `aieos-engineering-execution-kit/templates/ci-spec/python-k8s-flux.yaml`
+   - CI: `aieos-engineering-execution/templates/ci-spec/python-k8s-flux.yaml`
    - CD: `aieos-release-exposure-kit/templates/cd-spec/python-k8s-flux.yaml`
 
 Copy the CI template into your repo at `.aieos/ci.spec.yaml` and the CD

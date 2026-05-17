@@ -137,7 +137,7 @@ This layer governs work intake, prioritization, sequencing, and capacity managem
 
 This layer governs the full execution lifecycle from PRD through production-ready code. It produces architecture, design, work decomposition, and test-first implementation artifacts. It has two entry paths: discovery output from Layer 2 (Path A) or direct human input for well-understood work (Path B).
 
-**Kit**: `aieos-engineering-execution-kit` *(built)*
+**Kit**: `aieos-engineering-execution` *(built)*
 
 **Inputs**: Frozen PRD (from PIK via Path A, or Product Brief via Path B), Kit Entry Record (gate). When arriving from SSK: frozen DPRD + frozen SDR.
 
@@ -377,7 +377,7 @@ This layer governs the organizational and process change side of solution delive
 | 1. Strategic Direction | `aieos-strategic-direction-kit` | Pipeline | Built (not yet in standard flow) |
 | 2. Product Intelligence | `aieos-product-intelligence-kit` | Pipeline | Built |
 | 3. Solution Sourcing | `aieos-solution-sourcing-kit` | Pipeline | Built |
-| 4. Engineering Execution | `aieos-engineering-execution-kit` | Pipeline | Built |
+| 4. Engineering Execution | `aieos-engineering-execution` | Pipeline | Built |
 | 5. Release & Exposure | `aieos-release-exposure-kit` | Pipeline | Built |
 | 6. Reliability & Resilience | `aieos-reliability-resilience-kit` | Pipeline | Built |
 | 7. Insight & Evolution | `aieos-insight-evolution-kit` | Pipeline | Built |

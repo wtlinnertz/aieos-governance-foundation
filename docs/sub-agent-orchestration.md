@@ -78,7 +78,7 @@ Each lens output is validated in a **separate session** using the lens validator
 
 **When:** The execution plan marks work items within a work group as "parallel-safe" based on file overlap analysis, and the orchestrator is ready to begin the execution loop.
 
-**Reference:** [`aieos-engineering-execution-kit/docs/playbook.md`](../../aieos-engineering-execution-kit/docs/playbook.md) Part 2 — The Execution Loop.
+**Reference:** [`aieos-engineering-execution/docs/playbook.md`](../../aieos-engineering-execution/docs/playbook.md) Part 2 — The Execution Loop.
 
 ### Context package (per work item)
 
@@ -146,7 +146,7 @@ Item C: Phase 1 → Phase 2 → Phase 3 → Phase 4 ─┘
 
 **When:** The WDD identifies a provider/consumer pair — two work items that reference the same TDD §4 interface contract, one as provider and one as consumer.
 
-**Reference:** [`aieos-engineering-execution-kit/docs/playbook.md`](../../aieos-engineering-execution-kit/docs/playbook.md) Step 6 — WDD, Interface Contract Reference.
+**Reference:** [`aieos-engineering-execution/docs/playbook.md`](../../aieos-engineering-execution/docs/playbook.md) Step 6 — WDD, Interface Contract Reference.
 
 ### Context package
 
@@ -213,5 +213,5 @@ The integration step is performed by the orchestrator (or a dedicated integratio
 |----------|-------------|
 | [`flow-reference.md`](flow-reference.md) §4.1 | Defines **what** can run in parallel. This document defines **how**. |
 | [`aieos-peer-review-kit/docs/playbook.md`](../../aieos-peer-review-kit/docs/playbook.md) Step 1 | Pattern 1 operationalizes PRK lens parallelism |
-| [`aieos-engineering-execution-kit/docs/playbook.md`](../../aieos-engineering-execution-kit/docs/playbook.md) Part 2 | Patterns 2 and 3 operationalize EEK execution parallelism |
+| [`aieos-engineering-execution/docs/playbook.md`](../../aieos-engineering-execution/docs/playbook.md) Part 2 | Patterns 2 and 3 operationalize EEK execution parallelism |
 | [`tool-governance-spec.md`](tool-governance-spec.md) | Orchestration is a pattern, not a tool. It does not require a four-file tool set. |

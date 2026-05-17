@@ -163,7 +163,7 @@ Where the dependency graph permits (per `flow-reference.md` §4.1), generate art
 When you finish the last artifact in a kit:
 
 1. Read the handoff section of the current kit's playbook
-2. Read the entry-from file in the next kit (e.g., `aieos-engineering-execution-kit/docs/entry-from-pik.md`)
+2. Read the entry-from file in the next kit (e.g., `aieos-engineering-execution/docs/entry-from-pik.md`)
 3. Explain to the user: "We've completed [Kit Name]. All artifacts are frozen. Now we're moving to [Next Kit], which handles [plain language description]."
 4. Verify all exit conditions from the current kit are met before proceeding
 

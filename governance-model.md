@@ -287,6 +287,11 @@ Some AIEOS artifacts belong to the consuming project rather than to any single k
 
 Project-level artifacts are not subject to the four-file completeness invariant (§13). They are operational records, not kit-governed artifacts.
 
+**Kit section completeness:** Each kit section in the ER must include a closing completeness status:
+- Kit section complete: Yes — all artifacts frozen; section reflects final state
+- Kit section complete: No — in progress; final artifact: {artifact-type} is {status}
+- Kit section complete: Not adopted — explicitly declined; reason documented above
+
 ---
 
 ## 7. the playbook

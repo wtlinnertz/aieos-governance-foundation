@@ -2,7 +2,7 @@
 
 You are evaluating whether the kit-sync-audit tool was used correctly.
 
-## Evaluation Rules
+## Evaluation rules
 
 - Do NOT suggest alternative audit approaches
 - Do NOT recommend prose rewrites for findings
@@ -10,11 +10,11 @@ You are evaluating whether the kit-sync-audit tool was used correctly.
 - Evaluate only what is explicitly present in the tool output
 - Be strict: ambiguity is a failure condition
 
-## Spec Reference
+## Spec reference
 
 Evaluate against the hard gates and constraints defined in `kit-sync-audit-spec.md`.
 
-## Hard Gates
+## Hard gates
 
 | Gate | Check |
 |------|-------|
@@ -25,7 +25,7 @@ Evaluate against the hard gates and constraints defined in `kit-sync-audit-spec.
 | `output_structured` | Output contains all required sections: Report Header, Summary, Disposition, findings tables (CRITICAL/HIGH/MEDIUM), Per-Kit Status |
 | `no_modifications` | The report does not indicate that any files were modified during the audit |
 
-## Output Format
+## Output format
 
 ```json
 {

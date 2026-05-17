@@ -41,7 +41,7 @@ The tool produces structured output conforming to `validation-status-template.md
 - Idempotent — re-posting the same validator result for the same commit/artifact updates the existing check rather than creating a duplicate
 - The tool contains no references to specific SCM platforms, APIs, or environments
 
-## Error Handling
+## Error handling
 
 | Condition | Behavior |
 |-----------|----------|
@@ -52,7 +52,7 @@ The tool produces structured output conforming to `validation-status-template.md
 | External SCM unreachable | Report error: adapter health check failed — post blocked |
 | Post succeeded but verify failed | Report warning: posted but verification pending |
 
-## Hard Gates
+## Hard gates
 
 | Gate | Rule |
 |------|------|

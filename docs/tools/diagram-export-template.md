@@ -1,6 +1,6 @@
 # Diagram Export Output
 
-## Report Header
+## Report header
 
 | Field | Value |
 |-------|-------|
@@ -12,7 +12,7 @@
 | Timestamp | {ISO 8601} |
 | Binding Used | {binding document reference} |
 
-## Extraction Summary
+## Extraction summary
 
 | Field | Value |
 |-------|-------|
@@ -21,14 +21,14 @@
 | Blocks Skipped | {count} |
 | Blocks with Errors | {count} |
 
-## Per-Diagram Results
+## Per-Diagram results
 
 | Index | Heading Context | Output File Path | Concrete Format | File Size (bytes) | Content Hash (SHA256) |
 |-------|-----------------|------------------|-----------------|--------------------|-----------------------|
 | 1 | {nearest ## heading above block} | {output file path} | {concrete format from binding} | {size} | {SHA256 hash} |
 | 2 | {nearest ## heading above block} | {output file path} | {concrete format from binding} | {size} | {SHA256 hash} |
 
-## Source Integrity
+## Source integrity
 
 | Field | Value |
 |-------|-------|
@@ -36,7 +36,7 @@
 | Source File Hash After | {SHA256 hash} |
 | Source Modified | Yes / No |
 
-## Audit Entry
+## Audit entry
 
 | Field | Value |
 |-------|-------|

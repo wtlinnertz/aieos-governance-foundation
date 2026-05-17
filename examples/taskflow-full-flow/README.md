@@ -20,7 +20,7 @@ The narrative covers four topics:
 
 ---
 
-## The Scenario
+## The scenario
 
 TaskFlow is a project management platform. The product team identified a gap: users were missing task assignments because there was no notification system. An internal study found that users who miss assignment notifications for more than two hours are 3× more likely to block a sprint.
 
@@ -28,7 +28,7 @@ The initiative: build and operate a **task notification service** that delivers 
 
 ---
 
-## Part 1: The Full Artifact Chain
+## Part 1: the full artifact chain
 
 Every governed artifact produced during this initiative, in sequence:
 
@@ -60,9 +60,9 @@ Example artifact files:
 
 ---
 
-## Part 2: Forward Flow
+## Part 2: forward flow
 
-### Layer 2 — Product Intelligence Kit
+### Layer 2 — product intelligence kit
 
 **Step 0: Work Classification**
 
@@ -125,7 +125,7 @@ The discovery validation evidence — the EL assumption validation results, the 
 
 ---
 
-### Layer 4 — Engineering Execution Kit
+### Layer 4 — engineering execution kit
 
 **Steps 2–6: Design and Execution**
 
@@ -144,7 +144,7 @@ ORD-TASKFLOW-001 is generated after the service is built, tested, and deployed t
 - Deployment evidence from the staging environment
 - Measured SLO baselines: error rate 99.97%, p99 latency 180ms, notification delivery rate 99.1% under simulated peak load
 - Production readiness checklist — monitoring, alerting, runbook, rollback procedure — each item confirmed
-- **§5 SLO Baseline**: the 30-day pre-release averages become the source of truth for SRP-NOTIF-001's initial SLO targets
+- §5 SLO Baseline: the 30-day pre-release averages become the source of truth for SRP-NOTIF-001's initial SLO targets
 
 *Key traceability link:* The measured baselines in ORD §5 (error rate 0.02% failure, p99 180ms, delivery rate 99.1%) are cited directly in SRP-NOTIF-001 as the basis for the initial SLO targets. This is the technical thread connecting EEK evidence to RRK SLO definitions. The SRP does not invent these numbers — it inherits them from the deployment evidence.
 
@@ -170,7 +170,7 @@ The RER also establishes the authorization baseline: Sarah Chen (senior engineer
 
 ---
 
-### Layer 5 — Release & Exposure Kit
+### Layer 5 — release & exposure kit
 
 **Step 1: Release Configuration**
 
@@ -233,7 +233,7 @@ Once frozen, SRER-TASKFLOW-001 authorizes SRP generation to begin.
 
 ---
 
-### Layer 6 — Reliability & Resilience Kit
+### Layer 6 — reliability & resilience kit
 
 **Step 1: Service Reliability Profile**
 
@@ -294,15 +294,15 @@ All three SLOs met for the period. The delivery rate SLO was met overall, but IR
 
 ---
 
-## Part 3: Re-Entry Scenario — SLO Target Change
+## Part 3: re-Entry scenario — SLO target change
 
 *Scenario: On day 45 of production operation, the product team requests a tighter delivery rate SLO target — 99.5% instead of 99.0% — based on user research showing that even an infrequent 5-minute miss is a usability issue at the reliability tier TaskFlow is targeting.*
 
-### What Triggers
+### What triggers
 
 The SLO target change is a **material change to SRP-NOTIF-001**. Per RRK playbook §SRP Revision Protocol, any change to an SLO target, error budget, or burn rate threshold constitutes a material change. A new SRP version is required. SRP-NOTIF-001 v1 remains frozen and immutable.
 
-### What Happens, In Order
+### What happens, in order
 
 **1. SRP Revision Initiated**
 
@@ -348,17 +348,17 @@ The SLO change is initiated by the product team based on user research, but it d
 
 ---
 
-## Part 4: Escalation Scenario — IR-NOTIF-001 Assessment
+## Part 4: escalation scenario — IR-NOTIF-001 assessment
 
 *After IR-NOTIF-001 is frozen, the reliability owner considers whether an escalation assessment is warranted. The RRK `escalation-assessment-prompt.md` is run to evaluate the four AIEOS escalation triggers.*
 
-### Inputs Provided to the Assessment
+### Inputs provided to the assessment
 
 - IR-NOTIF-001 (frozen)
 - SRP-NOTIF-001 v1 (active SRP during the incident)
 - Prior RHRs for notification-service: none — this is the first operation period
 
-### Trigger 1 Assessment: SEV1/2 Code Defect → EEK
+### Trigger 1 assessment: SEV1/2 code defect → EEK
 
 Trigger 1 applies when an IR records a SEV1 or SEV2 incident whose root cause is a code defect in a system governed by the EEK.
 
@@ -370,7 +370,7 @@ IR-NOTIF-001 §1 records severity as **SEV3**: partial degradation, subset of no
 
 *Additional note for the record:* Even if severity had qualified as SEV1 or SEV2, Criterion 2 would also not be met. The root cause in IR-NOTIF-001 §5 is an **operational configuration gap** — a fixed worker pool with no autoscaling and no queue depth alert. No application code was identified as defective. The notification delivery logic functioned correctly under normal load. The failure mode is a deployment configuration decision that was not updated before a high-volume event occurred. This is not a code defect within the meaning of Trigger 1.
 
-### Trigger 2 Assessment: Recurring Reliability Pattern → PIK
+### Trigger 2 assessment: recurring reliability pattern → PIK
 
 Trigger 2 applies when the same root cause class appears in the systemic issues section of three consecutive RHRs for the same service.
 
@@ -382,13 +382,13 @@ There are **no prior RHRs** for notification-service. RHR-NOTIF-001 is the first
 
 *Note for watch:* The queue saturation pattern (worker pool saturation under bulk load) is explicitly noted as a watch item in RHR-NOTIF-001 §4 for the next period. If the pattern recurs in RHR-NOTIF-002 and again in RHR-NOTIF-003 without being eliminated, Trigger 2 will be assessed with three-period evidence. This assessment record for period 1 provides the starting point for that future evaluation — the pattern was identified and documented, even though it is not yet escalatable.
 
-### Triggers 3 and 4 Assessment
+### Triggers 3 and 4 assessment
 
 Triggers 3 and 4 originate in REK (release rollback scenarios). They apply to Release Records where a rollback was executed, not to Incident Records. IR-NOTIF-001 does not involve a release event or rollback.
 
 **Result: Triggers 3 and 4 — Not applicable** to an IR assessment.
 
-### No-Escalation Summary
+### No-Escalation summary
 
 IR-NOTIF-001 does not warrant escalation on any of the four AIEOS triggers:
 
@@ -403,7 +403,7 @@ The no-escalation assessment is documented and retained. It demonstrates that th
 
 ---
 
-## Cross-Layer Traceability
+## Cross-Layer traceability
 
 Every production decision in this chain is traceable to a governed upstream artifact:
 
@@ -421,7 +421,7 @@ When IR-NOTIF-001 identified the queue depth alert gap as a contributing factor,
 
 ---
 
-## Key Governance Moments
+## Key governance moments
 
 Five points in this flow where AIEOS governance had direct operational consequence:
 

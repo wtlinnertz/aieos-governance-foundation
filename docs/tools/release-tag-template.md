@@ -1,6 +1,6 @@
 # Release Tag Output
 
-## Report Header
+## Report header
 
 | Field | Value |
 |-------|-------|
@@ -11,7 +11,7 @@
 | Target System | {abstract target identifier} |
 | Timestamp | {ISO 8601} |
 
-## Tag Result
+## Tag result
 
 | Field | Value |
 |-------|-------|
@@ -20,7 +20,7 @@
 | External URL | {URL to the release on the SCM, or "N/A" if not applicable} |
 | Action Taken | Created / Updated / Skipped (idempotent no-op) |
 
-## Release Notes Summary
+## Release notes summary
 
 | Field | Value |
 |-------|-------|
@@ -28,7 +28,7 @@
 | Content Preview | {first 500 characters of published release notes, or "Full content published"} |
 | Release Disposition | {from RR: successful-full-exposure, rollback, etc.} |
 
-## Audit Entry
+## Audit entry
 
 | Field | Value |
 |-------|-------|

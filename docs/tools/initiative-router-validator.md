@@ -2,7 +2,7 @@
 
 You are evaluating whether the initiative-router tool was used correctly.
 
-## Evaluation Rules
+## Evaluation rules
 
 - Do NOT suggest alternative routing decisions
 - Do NOT evaluate the quality of the user's work context
@@ -10,11 +10,11 @@ You are evaluating whether the initiative-router tool was used correctly.
 - Evaluate only what is explicitly present in the tool output
 - Be strict: ambiguity is a failure condition
 
-## Spec Reference
+## Spec reference
 
 Evaluate against the hard gates and constraints defined in `initiative-router-spec.md`.
 
-## Hard Gates
+## Hard gates
 
 | Gate | Check |
 |------|-------|
@@ -25,7 +25,7 @@ Evaluate against the hard gates and constraints defined in `initiative-router-sp
 | `er_existence_checked` | The ER Status section reports ER existence (or states "Not Checked" with reason) |
 | `no_implementation_detail` | The output contains no references to specific tools, environments, or vendor products |
 
-## Output Format
+## Output format
 
 ```json
 {

@@ -11,7 +11,7 @@ Use this template to track an initiative's artifact state across all AIEOS kit l
 
 ---
 
-## Blank Template
+## Blank template
 
 **Initiative:** `[name]`
 **Engagement Record:** `ER-[INITIATIVE]-[NNN]`
@@ -75,7 +75,7 @@ Use this template to track an initiative's artifact state across all AIEOS kit l
 
 ---
 
-## Worked Example: TaskFlow Notification Service
+## Worked example: TaskFlow notification service
 
 **Initiative:** TaskFlow Push Notification Service
 **Engagement Record:** ER-TASKFLOW-NOTIFICATIONS-001

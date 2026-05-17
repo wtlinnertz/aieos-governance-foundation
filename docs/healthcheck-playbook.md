@@ -9,7 +9,7 @@ Both scopes are essential. Framework healthchecks ensure the rules are sound; in
 
 ---
 
-## How to Use This Playbook
+## How to use this playbook
 
 1. **Identify which scope applies** — Are you checking the framework itself, or a specific initiative?
 2. **Select the appropriate tier** — Each scope has tiered checks from fast/structural to deep/semantic
@@ -21,11 +21,11 @@ Both scopes are essential. Framework healthchecks ensure the rules are sound; in
 
 ---
 
-## Scope A: Framework Healthchecks
+## Scope a: framework healthchecks
 
 Framework healthchecks validate the AIEOS kit directories (`aieos-*/`). They answer: "Are the kits well-formed, consistent, and correctly interconnected?"
 
-### A1. Structural Validation (Tier 1)
+### A1. structural validation (Tier 1)
 
 **What it checks:**
 - Markdown syntax quality (markdownlint)
@@ -54,7 +54,7 @@ aieos-governance-foundation/tests/run-tier1.sh
 
 ---
 
-### A2. Governance Consistency (Tier 2)
+### A2. governance consistency (Tier 2)
 
 **What it checks:**
 - Dependency graph is a valid DAG (no cycles)
@@ -93,7 +93,7 @@ aieos-governance-foundation/tests/run-tier2.sh
 
 ---
 
-### A3. Spec-Version Drift Detection (Tier 2)
+### A3. spec-Version drift detection (Tier 2)
 
 **What it checks:**
 - Every template's Document Control section references a `Spec Version` placeholder
@@ -113,7 +113,7 @@ aieos-governance-foundation/tests/run-tier2.sh
 
 ---
 
-### A4. Cross-Kit Sync Audit (Tier 2)
+### A4. cross-Kit sync audit (Tier 2)
 
 **What it checks:**
 - Manifest version matches actual governance model version
@@ -148,7 +148,7 @@ aieos-governance-foundation/tests/run-tier2.sh
 
 ---
 
-### A5. Agent Integration Tests (Tier 3)
+### A5. agent integration tests (Tier 3)
 
 **What it checks:**
 - An AI agent can generate artifacts from specs, templates, and prompts
@@ -173,13 +173,13 @@ aieos-governance-foundation/tests/run-all.sh --with-integration
 
 ---
 
-## Scope B: Initiative Healthchecks
+## Scope b: initiative healthchecks
 
 Initiative healthchecks validate a consuming project's SDLC directory and Engagement Record. They answer: "Is this initiative following the AIEOS process correctly?"
 
 These checks run against a specific initiative's artifacts, not against the framework kits.
 
-### B1. Engagement Record Completeness
+### B1. engagement record completeness
 
 **What it checks:**
 - ER file exists at `{project}/docs/engagement/er-{initiative}.md`
@@ -211,7 +211,7 @@ These checks run against a specific initiative's artifacts, not against the fram
 
 ---
 
-### B2. Artifact Dependency Order
+### B2. artifact dependency order
 
 **What it checks:**
 - Upstream artifacts are frozen before downstream artifacts were generated
@@ -238,7 +238,7 @@ These checks run against a specific initiative's artifacts, not against the fram
 
 ---
 
-### B3. Frozen Artifact Immutability
+### B3. frozen artifact immutability
 
 **What it checks:**
 - Files marked as Frozen in the ER have not been modified after freeze date
@@ -247,7 +247,7 @@ These checks run against a specific initiative's artifacts, not against the fram
 **When to run:** Periodically (weekly). Before layer transitions. Before release.
 
 **Manual check procedure:**
-1. For each Frozen artifact in the ER, check `git log --follow -1 -- <file>` for last modification date
+1. For each Frozen artifact in the ER, check `git log --follow -1: <file>` for last modification date
 2. Compare modification date to the freeze date recorded in the ER or artifact's Document Control
 3. If modified after freeze: verify a re-entry record exists explaining the change
 
@@ -259,7 +259,7 @@ These checks run against a specific initiative's artifacts, not against the fram
 
 ---
 
-### B4. Validator Pass Gates
+### B4. validator pass gates
 
 **What it checks:**
 - Every artifact promoted to Frozen has a corresponding PASS validation result
@@ -284,7 +284,7 @@ These checks run against a specific initiative's artifacts, not against the fram
 
 ---
 
-### B5. Cross-Kit Handoff Verification
+### B5. cross-Kit handoff verification
 
 **What it checks:**
 - When entering a new kit, the entry-from contract requirements are met
@@ -312,7 +312,7 @@ These checks run against a specific initiative's artifacts, not against the fram
 
 ---
 
-### B6. Initiative Preset Compliance
+### B6. initiative preset compliance
 
 **What it checks:**
 - The initiative is following a declared preset (or has documented deviations)
@@ -336,7 +336,7 @@ These checks run against a specific initiative's artifacts, not against the fram
 
 ---
 
-### B7. Escalation Tracking
+### B7. escalation tracking
 
 **What it checks:**
 - When a validator returns FAIL, an escalation path was followed
@@ -359,7 +359,7 @@ These checks run against a specific initiative's artifacts, not against the fram
 
 ---
 
-### B8. Navigation Map Consistency
+### B8. navigation map consistency
 
 **What it checks:**
 - Navigation map nodes correspond to known artifact types in the framework dependency model
@@ -386,7 +386,7 @@ These checks run against a specific initiative's artifacts, not against the fram
 
 ---
 
-### B9. Initiative Staleness
+### B9. initiative staleness
 
 **What it checks:**
 - No artifact in the initiative's ER has been frozen in the last 30 days
@@ -412,7 +412,7 @@ These checks run against a specific initiative's artifacts, not against the fram
 
 ---
 
-### B10. Dependency Freshness
+### B10. dependency freshness
 
 **What it checks:**
 - For initiatives with a frozen DAR (Dependency Audit Record from SCK), whether any flagged dependencies have had security advisories, EOL announcements, or major version releases since the DAR was frozen
@@ -436,7 +436,7 @@ These checks run against a specific initiative's artifacts, not against the fram
 
 ---
 
-## Healthcheck Schedule
+## Healthcheck schedule
 
 ### Per-Commit (Automated)
 
@@ -463,7 +463,7 @@ These checks run against a specific initiative's artifacts, not against the fram
 | B3: Frozen Artifact Immutability | Initiative |
 | B4: Validator Pass Gates | Initiative |
 
-### Periodic (Weekly Recommended)
+### Periodic (Weekly recommended)
 
 | Check | Scope |
 |-------|-------|
@@ -471,7 +471,7 @@ These checks run against a specific initiative's artifacts, not against the fram
 | B3: Frozen Artifact Immutability | Initiative |
 | B9: Initiative Staleness | Initiative |
 
-### Periodic (Monthly Recommended)
+### Periodic (Monthly recommended)
 
 | Check | Scope |
 |-------|-------|
@@ -496,9 +496,9 @@ These checks run against a specific initiative's artifacts, not against the fram
 
 ---
 
-## Interpreting Results
+## Interpreting results
 
-### Framework Checks (Scope A)
+### Framework checks (Scope a)
 
 **All pass:** The framework kits are structurally sound, internally consistent, and correctly interconnected. Safe to use for artifact generation and validation.
 
@@ -508,7 +508,7 @@ These checks run against a specific initiative's artifacts, not against the fram
 
 **Tier 3 fails:** Agent compatibility issue — the framework is internally consistent but an AI agent cannot successfully use it. Review prompts, specs, and validator expectations.
 
-### Initiative Checks (Scope B)
+### Initiative checks (Scope b)
 
 **All pass:** The initiative is following the AIEOS process correctly. Artifacts are in order, dependencies are satisfied, and the engagement record is complete.
 
@@ -516,7 +516,7 @@ These checks run against a specific initiative's artifacts, not against the fram
 
 ---
 
-## Adding New Healthchecks
+## Adding new healthchecks
 
 When adding a new healthcheck:
 

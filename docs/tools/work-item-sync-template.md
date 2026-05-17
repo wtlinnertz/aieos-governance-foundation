@@ -1,6 +1,6 @@
 # Work Item Sync Output
 
-## Report Header
+## Report header
 
 | Field | Value |
 |-------|-------|
@@ -10,7 +10,7 @@
 | Target System | {abstract target identifier} |
 | Timestamp | {ISO 8601} |
 
-## Sync Summary
+## Sync summary
 
 | Field | Value |
 |-------|-------|
@@ -20,19 +20,19 @@
 | Groups Synced | {count} |
 | Groups Failed | {count} |
 
-## Item Mapping Table
+## Item mapping table
 
 | WDD Item ID | Item Title | Work Group | External ID | External URL | Action Taken | Result |
 |-------------|------------|------------|-------------|-------------|-------------|--------|
 | {item ID} | {title} | {group name} | {external tracker ID} | {URL or "N/A"} | Created / Updated / Skipped | success / failure |
 
-## Group Mapping Table
+## Group mapping table
 
 | WDD Work Group | External Group ID | External Group URL | Action Taken | Child Items |
 |----------------|-------------------|-------------------|-------------|-------------|
 | {group name} | {external epic/parent ID} | {URL or "N/A"} | Created / Updated / Skipped | {count} |
 
-## Audit Entries
+## Audit entries
 
 | Timestamp | Artifact ID | Item ID | External ID | Action | Result | Duration (ms) | Error |
 |-----------|-------------|---------|-------------|--------|--------|---------------|-------|

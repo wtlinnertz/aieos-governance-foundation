@@ -41,7 +41,7 @@ The tool produces structured output conforming to `dependency-check-template.md`
 - The tool reports what it finds — it does not suggest remediation
 - The tool contains no references to specific implementations, environments, or vendor tools
 
-## Error Handling
+## Error handling
 
 | Condition | Behavior |
 |-----------|----------|
@@ -50,7 +50,7 @@ The tool produces structured output conforming to `dependency-check-template.md`
 | Artifact directory does not exist | Report error: directory not found |
 | Upstream artifact file exists but status field is missing | Report as UNFROZEN (ambiguity is a failure condition) |
 
-## Hard Gates
+## Hard gates
 
 | Gate | Rule |
 |------|------|

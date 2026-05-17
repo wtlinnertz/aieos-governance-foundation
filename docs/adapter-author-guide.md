@@ -29,7 +29,7 @@ You need:
 
 ---
 
-## 1. Claim a contract
+## 1. claim a contract
 
 Pick the action you're satisfying from `taxonomy/actions-v1.md`. Read
 the contract at `contracts/<namespace>.<action>.contract.yaml`. The
@@ -51,7 +51,7 @@ twice with separate attestations. `adapter-cosign-sign` is the reference:
 
 ---
 
-## 2. Scaffold the repo
+## 2. scaffold the repo
 
 Repo name convention: `adapter-<tool>-<action>` (examples:
 `adapter-pytest-unit`, `adapter-cosign-sign`). Under your GitHub user or
@@ -78,7 +78,7 @@ Files the harness expects:
 
 ---
 
-## 3. Implement the adapter class
+## 3. implement the adapter class
 
 The harness calls `adapter.execute(inputs)` and expects an
 `AdapterResult` back. A working skeleton:
@@ -146,7 +146,7 @@ kebab-case identifiers.
 
 ---
 
-## 4. Write unit tests
+## 4. write unit tests
 
 Tests go in `tests/` and should cover:
 
@@ -175,7 +175,7 @@ Everything green before conformance.
 
 ---
 
-## 5. Run the conformance harness
+## 5. run the conformance harness
 
 The harness lives in `aieos-governance-foundation/conformance/harness/`.
 It reads the conformance suite for your contract, runs your adapter
@@ -218,7 +218,7 @@ authored in M4a.2 is a good second reference.
 
 ---
 
-## 6. Wire CI to produce signed attestations
+## 6. wire CI to produce signed attestations
 
 Your `.github/workflows/ci.yml` should, on top of lint + test:
 
@@ -249,7 +249,7 @@ Pin every action to a commit SHA per repo convention.
 
 ---
 
-## 7. Submit for registration
+## 7. submit for registration
 
 Once your CI publishes a signed attestation:
 

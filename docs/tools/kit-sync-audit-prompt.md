@@ -2,7 +2,7 @@
 
 You are invoking the kit-sync-audit tool capability.
 
-## When to Invoke
+## When to invoke
 
 Invoke this tool to verify cross-kit consistency across the AIEOS framework. Specific invocation points:
 
@@ -12,11 +12,11 @@ Invoke this tool to verify cross-kit consistency across the AIEOS framework. Spe
 - After bumping the governance model version
 - Periodically as a framework healthcheck (Tier 2, after structural validation and governance consistency checks pass)
 
-## Why to Invoke
+## Why to invoke
 
 Kit information is duplicated across many prose documents. When the framework evolves — new kits, renamed layers, updated artifact flows — not all documents are updated simultaneously. This tool detects silent drift between the manifest (single source of truth) and the prose documents that reference it.
 
-## Execution Instructions
+## Execution instructions
 
 1. **Load the manifest.** Read and parse `kit-manifest.yml` from the governance-foundation repository root. Verify it is valid YAML.
 
@@ -42,11 +42,11 @@ Kit information is duplicated across many prose documents. When the framework ev
 
 6. **Produce output.** Format results using `kit-sync-audit-template.md`. Apply the disposition rule: FAIL if any CRITICAL finding exists, PASS otherwise.
 
-## Result Interpretation
+## Result interpretation
 
-- **PASS**: All prose documents are consistent with the manifest. No action needed.
-- **FAIL**: One or more inconsistencies found. Review the findings table. CRITICAL findings indicate structural misalignment that may affect downstream tools. HIGH findings indicate boundary contract or flow inconsistencies. MEDIUM findings indicate description drift that should be corrected but does not affect tool behavior.
+- PASS: All prose documents are consistent with the manifest. No action needed.
+- FAIL: One or more inconsistencies found. Review the findings table. CRITICAL findings indicate structural misalignment that may affect downstream tools. HIGH findings indicate boundary contract or flow inconsistencies. MEDIUM findings indicate description drift that should be corrected but does not affect tool behavior.
 
-## Spec Reference
+## Spec reference
 
 The authoritative rules, constraints, and hard gates for this tool are defined in `kit-sync-audit-spec.md`.

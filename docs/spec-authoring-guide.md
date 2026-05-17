@@ -36,12 +36,12 @@ template at `.aieos/cd.spec.yaml`. Open both in your editor.
 
 ## Authoring the CI spec
 
-### 1. Code repo reference
+### 1. code repo reference
 
 Set `code_repo` to your `<owner>/<repo>` slug. The pipeline runner uses
 this string in logs, not for cloning.
 
-### 2. Pick your actions
+### 2. pick your actions
 
 The template lists eleven actions — the ten v1 adapters plus
 `security.secret-scan`. Keep every action that applies to your service;
@@ -62,7 +62,7 @@ Common overrides:
 | `security.container-scan` | `ignore_list` path if you have tolerated CVEs |
 | `security.secret-scan` | `expect_zero_findings: true` is strict; switch to severity gating if you have allowlisted test fixtures |
 
-### 3. Review the dependency graph
+### 3. review the dependency graph
 
 The template's `depends_on` graph is correct for most Python-K8s-Flux
 services:
@@ -89,7 +89,7 @@ test.unit        test.integration    security.sast    security.sca    security.s
 The spec validator refuses cycles and dangling references, so a mistake
 shows up in the report, not at runtime.
 
-### 4. Pick adapter preferences
+### 4. pick adapter preferences
 
 Under `policies.adapter_preferences`, map each action to an adapter. The
 v1 catalog:
@@ -107,7 +107,7 @@ v1 catalog:
 The resolver refuses ambiguous bindings, so if two adapters claim the
 same action in your harness registry you have to pick one explicitly.
 
-### 5. Validate locally
+### 5. validate locally
 
 ```bash
 # Compute the sha256 hash the runner will expect
@@ -126,7 +126,7 @@ You should see five event types on stdout (`run.start`, `task.start`,
 in `"result": "PASS"`. If it FAILs, the check-level diagnostic in the
 report names the failing criterion.
 
-### 6. Freeze
+### 6. freeze
 
 Commit `.aieos/ci.spec.yaml`. The commit SHA plus the content hash are
 the spec's identity — the runner refuses any spec whose hash doesn't
@@ -142,14 +142,14 @@ The template assumes three environments (`dev` → `staging` → `prod`) with
 auto-promote `dev → staging` and a manual gate before `prod`. Start there
 and adjust.
 
-### 1. Artifact ref
+### 1. artifact ref
 
 `artifact_ref` must be a full OCI digest from your CI pipeline's
 `publish.artifact` evidence. Tag-only refs are refused. The CD authoring
 flow re-freezes the spec with the real digest after each CI run produces
 one; until then, use a placeholder.
 
-### 2. Environment graph
+### 2. environment graph
 
 Each environment has a `name`, a `lifetime` (leave as `persistent` in
 v1), and an `actions` array. Every environment needs at least
@@ -157,7 +157,7 @@ v1), and an `actions` array. Every environment needs at least
 `verify.health`, and `verify.slo` with a dependency on
 `deploy.environment`.
 
-### 3. Promotion edges
+### 3. promotion edges
 
 Edges go in the `promotions` array with a `type`:
 
@@ -170,13 +170,13 @@ The reserved extension fields (`bake_duration`, `verification_interval`,
 `rollback_on_degradation`) are present in the schema but unused in v1.
 Leave them `null` or omit them.
 
-### 4. Rollback conditions
+### 4. rollback conditions
 
 The template triggers `deploy.rollback` on any `verify.*` FAIL. Tune if
 you want finer-grained rules (for example, rollback only on `verify.slo`
 but not on `verify.smoke`).
 
-### 5. Validate
+### 5. validate
 
 Same flow as CI:
 

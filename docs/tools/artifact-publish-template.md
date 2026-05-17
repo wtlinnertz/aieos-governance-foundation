@@ -1,6 +1,6 @@
 # Artifact Publish Output
 
-## Report Header
+## Report header
 
 | Field | Value |
 |-------|-------|
@@ -10,7 +10,7 @@
 | Target System | {abstract target identifier} |
 | Timestamp | {ISO 8601} |
 
-## Publish Result
+## Publish result
 
 | Field | Value |
 |-------|-------|
@@ -19,7 +19,7 @@
 | Action Taken | Created / Updated / Skipped (idempotent no-op) |
 | Content Hash | {hash of the artifact content at time of publish} |
 
-## Audit Entry
+## Audit entry
 
 | Field | Value |
 |-------|-------|

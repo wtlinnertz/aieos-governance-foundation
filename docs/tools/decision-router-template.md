@@ -1,6 +1,6 @@
 # Decision Router Output
 
-## Decision Record Header
+## Decision record header
 
 | Field | Value |
 |-------|-------|
@@ -11,11 +11,11 @@
 | Current Node | {navigation map node ID} |
 | Timestamp | {ISO 8601} |
 
-## Context Summary
+## Context summary
 
 {Brief summary of the user-provided context and relevant ER/artifact evidence.}
 
-## Options Evaluated
+## Options evaluated
 
 | # | Option | Condition (from decision table) | Condition Met | Evidence |
 |---|--------|--------------------------------|---------------|----------|
@@ -32,7 +32,7 @@
 | Rationale | {evidence-grounded justification} |
 | Confidence | {High / Medium / Low} |
 
-## Consequences of This Path
+## Consequences of this path
 
 | Downstream Effect | Description |
 |-------------------|-------------|
@@ -40,7 +40,7 @@
 | Cascade impact | {which downstream artifacts are affected} |
 | ER update | {what should be recorded in the ER} |
 
-## Human Approval Required
+## Human approval required
 
 **This is a recommendation, not a decision.** The operator must confirm this path before proceeding. If the recommendation does not feel right, provide additional context and re-evaluate, or invoke `position-check` to re-orient.
 

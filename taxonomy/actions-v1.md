@@ -16,9 +16,9 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 
 ---
 
-## build
+## Build
 
-### build.artifact
+### Build.artifact
 
 - **Identifier:** `build.artifact`
 - **Description:** Produce a deployable artifact (OCI image, binary, package) from source.
@@ -29,9 +29,9 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 
 ---
 
-## test
+## Test
 
-### test.unit
+### Test.unit
 
 - **Identifier:** `test.unit`
 - **Description:** Run unit tests — functions and classes in isolation, no external dependencies.
@@ -40,7 +40,7 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 - **Canonical findings schema:** `findings/schemas/junit-xml.schema.json` (JUnit XML, JUnit 4 compatible — testsuites/testsuite/testcase structure).
 - **Evidence consumer:** run validator.
 
-### test.integration
+### Test.integration
 
 - **Identifier:** `test.integration`
 - **Description:** Run integration tests — multiple components exercised together against live or containerized dependencies.
@@ -49,7 +49,7 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 - **Canonical findings schema:** `findings/schemas/junit-xml.schema.json`.
 - **Evidence consumer:** run validator.
 
-### test.contract
+### Test.contract
 
 - **Identifier:** `test.contract`
 - **Description:** Run contract tests — verify an API or integration point matches its declared contract.
@@ -58,7 +58,7 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 - **Canonical findings schema:** `findings/schemas/junit-xml.schema.json`.
 - **Evidence consumer:** run validator.
 
-### test.e2e
+### Test.e2e
 
 - **Identifier:** `test.e2e`
 - **Description:** Run end-to-end tests against a deployed environment — full user-flow validation.
@@ -69,9 +69,9 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 
 ---
 
-## security
+## Security
 
-### security.sast
+### Security.sast
 
 - **Identifier:** `security.sast`
 - **Description:** Static application security testing — scan source for security vulnerabilities.
@@ -80,7 +80,7 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 - **Canonical findings schema:** `findings/schemas/sarif-2.1.0.schema.json`.
 - **Evidence consumer:** run validator; security team; compliance auditor.
 
-### security.dast
+### Security.dast
 
 - **Identifier:** `security.dast`
 - **Description:** Dynamic application security testing — probe a running application for vulnerabilities.
@@ -89,7 +89,7 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 - **Canonical findings schema:** `findings/schemas/sarif-2.1.0.schema.json`.
 - **Evidence consumer:** run validator; security team; compliance auditor.
 
-### security.sca
+### Security.sca
 
 - **Identifier:** `security.sca`
 - **Description:** Software composition analysis — scan declared dependencies for known vulnerabilities.
@@ -98,7 +98,7 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 - **Canonical findings schema:** `findings/schemas/cyclonedx-1.6-findings.schema.json`.
 - **Evidence consumer:** run validator; security team; compliance auditor.
 
-### security.secret-scan
+### Security.secret-scan
 
 - **Identifier:** `security.secret-scan`
 - **Description:** Scan source for committed secrets (credentials, tokens, private keys).
@@ -107,7 +107,7 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 - **Canonical findings schema:** `findings/schemas/sarif-2.1.0.schema.json`.
 - **Evidence consumer:** run validator; security team; incident responders.
 
-### security.container-scan
+### Security.container-scan
 
 - **Identifier:** `security.container-scan`
 - **Description:** Scan a container image for vulnerabilities in OS packages and application dependencies.
@@ -116,7 +116,7 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 - **Canonical findings schema:** `findings/schemas/cyclonedx-1.6-findings.schema.json`.
 - **Evidence consumer:** run validator; security team; compliance auditor.
 
-### security.license-scan
+### Security.license-scan
 
 - **Identifier:** `security.license-scan`
 - **Description:** Scan dependencies for license compliance — flag licenses outside the allowlist.
@@ -127,9 +127,9 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 
 ---
 
-## sbom
+## Sbom
 
-### sbom.generate
+### Sbom.generate
 
 - **Identifier:** `sbom.generate`
 - **Description:** Generate a software bill of materials for a source tree or container image.
@@ -138,7 +138,7 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 - **Canonical findings schema:** `findings/schemas/cyclonedx-1.6-sbom.schema.json` (primary). SPDX 2.3 accepted as alternative with separate schema.
 - **Evidence consumer:** run validator; vulnerability scanner (`security.sca`, `security.container-scan`); security team; compliance auditor.
 
-### sbom.verify
+### Sbom.verify
 
 - **Identifier:** `sbom.verify`
 - **Description:** Verify an SBOM's signature and structural integrity against the canonical schema.
@@ -149,9 +149,9 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 
 ---
 
-## sign
+## Sign
 
-### sign.artifact
+### Sign.artifact
 
 - **Identifier:** `sign.artifact`
 - **Description:** Sign an artifact (typically an OCI image) with a Sigstore-compatible signature.
@@ -160,7 +160,7 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 - **Canonical findings schema:** `findings/schemas/oci-signing-bundle.schema.json` (OCI image digest + Sigstore bundle).
 - **Evidence consumer:** run validator; signature verifier (at deploy-time admission control, at pull time).
 
-### sign.attestation
+### Sign.attestation
 
 - **Identifier:** `sign.attestation`
 - **Description:** Produce a signed in-toto attestation over a predicate (e.g., conformance claim, SBOM, build provenance).
@@ -171,9 +171,9 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 
 ---
 
-## publish
+## Publish
 
-### publish.artifact
+### Publish.artifact
 
 - **Identifier:** `publish.artifact`
 - **Description:** Publish a built artifact to a downstream registry (OCI registry, package repository).
@@ -182,7 +182,7 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 - **Canonical findings schema:** none. Evidence is the published reference plus exit code.
 - **Evidence consumer:** run validator; downstream `deploy.*` actions; release manager.
 
-### publish.manifest
+### Publish.manifest
 
 - **Identifier:** `publish.manifest`
 - **Description:** Render and publish a deployment manifest bundle to a manifests repository.
@@ -193,9 +193,9 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 
 ---
 
-## deploy
+## Deploy
 
-### deploy.environment
+### Deploy.environment
 
 - **Identifier:** `deploy.environment`
 - **Description:** Cause an environment to converge on a published manifest. For GitOps, this commits or promotes manifests and waits for the reconciler to acknowledge.
@@ -204,7 +204,7 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 - **Canonical findings schema:** none. Evidence is the reconciled commit SHA plus reconciler status. Must include reconcile-verification to satisfy the chaos-test criterion (M6.7 scenario 6).
 - **Evidence consumer:** run validator; release manager; downstream `verify.*` actions.
 
-### deploy.promote
+### Deploy.promote
 
 - **Identifier:** `deploy.promote`
 - **Description:** Promote a deployment from one environment to the next along the promotion graph declared in the CD spec.
@@ -213,7 +213,7 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 - **Canonical findings schema:** none. Evidence is the promotion record.
 - **Evidence consumer:** run validator; release manager.
 
-### deploy.rollback
+### Deploy.rollback
 
 - **Identifier:** `deploy.rollback`
 - **Description:** Roll an environment back to a prior known-good artifact reference.
@@ -224,9 +224,9 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 
 ---
 
-## verify
+## Verify
 
-### verify.smoke
+### Verify.smoke
 
 - **Identifier:** `verify.smoke`
 - **Description:** Run a minimal liveness check against a deployed environment — does the application respond at all.
@@ -235,7 +235,7 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 - **Canonical findings schema:** none. Evidence is the observed response plus pass/fail.
 - **Evidence consumer:** run validator; release manager; on-call.
 
-### verify.health
+### Verify.health
 
 - **Identifier:** `verify.health`
 - **Description:** Run deeper health checks — application-specific readiness, dependency reachability, self-reported health endpoints.
@@ -244,7 +244,7 @@ Findings-schema version pins come from `findings/findings-schemas.md`. Do not re
 - **Canonical findings schema:** none. Evidence is the per-check results.
 - **Evidence consumer:** run validator; on-call; SRE.
 
-### verify.slo
+### Verify.slo
 
 - **Identifier:** `verify.slo`
 - **Description:** Verify that live service-level objectives are being met in a running environment over a measurement window.

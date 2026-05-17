@@ -4,13 +4,13 @@ Version: v1.0
 
 This document defines the interface contract that adapter implementations must satisfy when connecting AIEOS artifacts and tools to external systems.
 
-## What an Adapter Is
+## What an adapter is
 
 An adapter is executable code that implements a binding's field mapping against a concrete external API. Adapters translate AIEOS tool operations into API calls against specific platforms (e.g., Confluence, Jira, GitHub Issues).
 
 An adapter is **not** an AIEOS artifact. It is not governed by the four-file system. It does not live inside an AIEOS kit. Adapter code is owned by the consuming project or a dedicated adapter repository.
 
-## The Three-Layer Integration Model
+## The three-Layer integration model
 
 AIEOS integration follows a three-layer separation of concerns:
 
@@ -44,7 +44,7 @@ AIEOS integration follows a three-layer separation of concerns:
 When the platform changes, the binding and adapter change. The tool spec does not.
 When the tool's rules change, the spec changes. The binding and adapter may need updating.
 
-## Interface Contract
+## Interface contract
 
 Every adapter must implement the following operations:
 
@@ -62,13 +62,13 @@ Reports the adapter's ability to communicate with the external system. This is a
 
 Not all operations apply to all adapters. Push-only adapters implement `push` and `health`. Pull-only adapters implement `verify` and `health`. Bidirectional adapters implement all three.
 
-## Idempotency Requirements
+## Idempotency requirements
 
 Repeated calls with the same input must produce the same outcome. If the resource already exists in the external system, the adapter updates rather than duplicates.
 
 Adapters must derive a deterministic external ID from the AIEOS artifact ID. The binding documents the ID derivation formula (e.g., `{ARTIFACT_ID}` → Confluence page title prefix, or `{ITEM_ID}` → GitHub issue title prefix). This ensures that re-running a push for the same artifact always targets the same external resource.
 
-## Authentication Handling
+## Authentication handling
 
 Credentials must never appear in AIEOS files — not in specs, bindings, templates, or any governed document.
 
@@ -78,7 +78,7 @@ Adapters accept credentials via:
 
 The binding is the authoritative source for which credentials the adapter requires and how they are provided. The adapter is responsible for reading them at runtime.
 
-## Error Handling
+## Error handling
 
 Adapters must implement:
 
@@ -90,7 +90,7 @@ Adapters must implement:
 
 Adapters must not swallow errors silently. Every failure is logged via the audit logging mechanism.
 
-## Audit Logging
+## Audit logging
 
 Every adapter operation produces a structured log entry:
 
@@ -118,13 +118,13 @@ Each adapter declares its directionality:
 
 The binding documents which direction the adapter supports. The tool spec constrains which directions are valid for the capability (e.g., artifact-publish is push-only).
 
-## Conformance Verification
+## Conformance verification
 
 AIEOS defines the hard gates; it does not define the test harness.
 
 Conformance verification is the responsibility of the consuming project's test suite. The adapter's tests must exercise each hard gate below and produce evidence that the gate is satisfied. How the tests are structured, run, and reported is outside AIEOS scope.
 
-## Hard Gates
+## Hard gates
 
 | Gate | Rule |
 |------|------|
@@ -136,7 +136,7 @@ Conformance verification is the responsibility of the consuming project's test s
 | `health_check_implemented` | `health()` returns `ok`, `degraded`, or `down` based on external system connectivity |
 | `payload_format_compliant` | The adapter accepts input conforming to the integration tool's template structure |
 
-## What This Spec Does Not Define
+## What this spec does not define
 
 - **Adapter code** — implementation is owned by the consuming project or adapter repository
 - **Test harnesses** — how conformance is verified is the consuming project's concern

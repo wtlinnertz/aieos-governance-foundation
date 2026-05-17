@@ -1,6 +1,6 @@
 # Validation Status Output
 
-## Report Header
+## Report header
 
 | Field | Value |
 |-------|-------|
@@ -11,7 +11,7 @@
 | Target System | {abstract target identifier} |
 | Timestamp | {ISO 8601} |
 
-## Status Check Result
+## Status check result
 
 | Field | Value |
 |-------|-------|
@@ -21,13 +21,13 @@
 | AIEOS Status | {PASS / FAIL from the validator output} |
 | Action Taken | Created / Updated / Skipped (idempotent no-op) |
 
-## Gate Summary
+## Gate summary
 
 | Gate Name | Result |
 |-----------|--------|
 | {gate name from validator output} | {PASS / FAIL} |
 
-## Audit Entry
+## Audit entry
 
 | Field | Value |
 |-------|-------|

@@ -14,10 +14,9 @@ AI can generate engineering documents. Without structure, the output drifts: sco
 
 AIEOS solves this by enforcing three things:
 
-1. **Separation of concerns**: Rules (specs), structure (templates), generation behavior (prompts), and judgment (validators) live in separate files. Changing one doesn't break the others.
-2. **Freeze-before-promote**: Upstream artifacts are frozen (immutable) before downstream work begins. The architecture document can't shift under the execution plan.
-3. **Validators judge, they don't help**: Validation produces PASS or FAIL, not suggestions. This prevents the AI from rationalizing its own output.
-
+1. Separation of concerns: Rules (specs), structure (templates), generation behavior (prompts), and judgment (validators) live in separate files. Changing one doesn't break the others.
+2. Freeze-before-promote: Upstream artifacts are frozen (immutable) before downstream work begins. The architecture document can't shift under the execution plan.
+3. Validators judge, they don't help: Validation produces PASS or FAIL, not suggestions. This prevents the AI from rationalizing its own output.
 ## How work flows through AIEOS
 
 AIEOS organizes work into layers. Each layer answers a different question in the value-delivery lifecycle. A kit governs each layer: providing specs, templates, prompts, and validators for that layer's artifacts.
@@ -92,7 +91,7 @@ Each kit is an independent, self-contained repository. A team can adopt one kit 
 | Peer Review Kit | 14 | Multi-perspective autonomous review at artifact lifecycle points using specialized lenses (security, reliability, cost, compliance). Optional. |
 | Business Process Kit | 15 | Business process impact assessment, transition planning, and readiness confirmation for process-affecting changes. Optional. |
 
-## AIEOS Console
+## AIEOS console
 
 **[aieos-console](https://github.com/your-org/aieos-console)** is a browser-based guided wizard for running AIEOS processes. Currently under active development.
 
@@ -137,23 +136,23 @@ This repository is the canonical authority for the AIEOS governance model and sy
 | `docs/initiative-presets.md` | Five golden paths for common initiative types with full artifact routing |
 | `docs/initiative-state-view.md` | Template for tracking initiative state across all kit layers |
 
-### How Kits Relate to This Repo
+### How kits relate to this repo
 
 Every AIEOS kit:
 
-1. **Carries a synchronized copy** of `governance-model.md` in its own `docs/` directory. This copy exists so the kit is self-contained and usable without this repo.
-2. **Treats this repo as canonical.** When the governance model changes, this repo is updated first. Kits are updated to match. Kits do not update governance-model.md independently.
-3. **References this repo** in their CLAUDE.md to declare the authority source.
+1. Carries a synchronized copy of `governance-model.md` in its own `docs/` directory. This copy exists so the kit is self-contained and usable without this repo.
+2. Treats this repo as canonical. When the governance model changes, this repo is updated first. Kits are updated to match. Kits do not update governance-model.md independently.
+3. References this repo in their CLAUDE.md to declare the authority source.
 
 This means a kit copy of governance-model.md is always correct or behind: never ahead.
 
-### Governance Model Version
+### Governance model version
 
 Current: `1.6`
 
 Changes to the governance model follow the protocol in `governance-model.md` §15.
 
-### Kit Registry
+### Kit registry
 
 | Layer | Repository | Status |
 |-------|-----------|--------|

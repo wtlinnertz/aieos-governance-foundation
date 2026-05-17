@@ -5,7 +5,7 @@
 - Preset: P1 (New Feature)
 - Topic: Push notification system for mobile app — new capability requiring discovery
 
-## User Responses (in conversation order)
+## User responses (in conversation order)
 
 ### Initial request
 We want to add push notifications to our mobile app. Users have been asking for reminders about upcoming deadlines and status changes on their tasks, but we've never had any notification capability. This is a brand new feature area for us.
@@ -22,22 +22,22 @@ Yes, P1 New Feature is right. This needs full discovery before we start building
 ### Initiative name
 PUSHNOTIFY
 
-### Intake Section 1: Problem Context
+### Intake section 1: problem context
 Users miss critical updates because our mobile app has no notification system. The app is a project management tool used by teams of 10-50 people. Key pain points: (1) deadline reminders — 34% of tasks are completed late, and users say they forgot about them, (2) assignment notifications — when a task is assigned or reassigned, the new owner doesn't know until they open the app, (3) comment replies — discussions stall because participants don't see new comments. We surveyed 200 users and 78% ranked notifications as their top feature request. Monthly churn is 8% and exit surveys cite "lack of timely updates" as the #2 reason after pricing.
 
-### Intake Section 2: Users and Stakeholders
-Primary users: project team members who use the mobile app daily. Secondary: project managers who need their teams to be responsive. Stakeholders: product VP (sponsor), mobile team lead (technical), customer success (will handle notification preference support). The mobile app has 12,000 MAU across iOS and Android.
+### Intake section 2: users and teams
+Primary users: project team members who use the mobile app daily. Secondary: project managers who need their teams to be responsive. teams: product VP (sponsor), mobile team lead (technical), customer success (will handle notification preference support). The mobile app has 12,000 MAU across iOS and Android.
 
-### Intake Section 3: Opportunity
+### Intake section 3: opportunity
 The opportunity is to transform our app from pull-based to proactive. If we can notify users about the right events at the right time, we expect to: (1) reduce late task completion from 34% to under 15%, (2) increase daily active usage by 20%+ as users return to the app in response to notifications, (3) reduce churn by addressing the #2 exit reason. The uncertain part: we don't know which notification types will be valuable vs annoying. Too many notifications = users disable them entirely. Too few = no behavior change. We need to discover the right balance through user research and experimentation.
 
-### Intake Section 4: Current State
+### Intake section 4: current state
 No notification infrastructure exists. The mobile app is React Native, with a Node.js/Express backend and PostgreSQL database. We have no message queue or event bus — everything is synchronous request/response. The app currently polls for updates every 60 seconds when in the foreground, which partially masks the problem for active users but does nothing for backgrounded sessions. We considered push notifications 6 months ago but deprioritized it for a billing feature. No prior technical spikes.
 
-### Intake Section 5: Scope and Boundaries
+### Intake section 5: scope and boundaries
 In scope: discovering which notification events are valuable, validating with users, designing the notification strategy. Also in scope for the eventual build: the notification service, APNs/FCM integration, user preference management, and a notification center in the app. Out of scope: email notifications (separate initiative), SMS/text (cost prohibitive at our scale), in-app chat (different feature area). Constraints: must work on both iOS and Android, must comply with platform notification guidelines, must have per-notification-type opt-out.
 
-### Intake Section 6: Assumptions and Risks
+### Intake section 6: assumptions and risks
 Assumptions: users will enable push notifications (industry average is ~60% opt-in for non-gaming apps). React Native has mature libraries for push notification handling. Our backend can be extended with an event bus without major refactoring. Risks: notification fatigue could actually increase churn if we get the frequency wrong. APNs/FCM token management adds operational complexity. Privacy implications — some users may not want coworkers to see notification previews on their lock screen. Platform rate limits could be an issue at scale.
 
 ### Confirm intake accuracy

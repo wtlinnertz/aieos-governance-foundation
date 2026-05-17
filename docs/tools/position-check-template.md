@@ -1,6 +1,6 @@
 # Position Check Output
 
-## Position Report Header
+## Position report header
 
 | Field | Value |
 |-------|-------|
@@ -11,7 +11,7 @@
 | Artifact Directory | {path} |
 | Timestamp | {ISO 8601} |
 
-## Current Position
+## Current position
 
 | Field | Value |
 |-------|-------|
@@ -20,7 +20,7 @@
 | Current Kit | {kit name} |
 | Status at Current Node | {In Progress / Awaiting Validation / Awaiting Freeze / Awaiting Decision} |
 
-## Next Action
+## Next action
 
 | Field | Value |
 |-------|-------|
@@ -28,13 +28,13 @@
 | Next Node | {navigation map node ID for the next state} |
 | Blocking On | {what must happen before the next action can proceed, or "Nothing — ready to proceed"} |
 
-## Artifact Inventory
+## Artifact inventory
 
 | Artifact | Node ID | Expected | File Found | ER Status | File Status | Match |
 |----------|---------|----------|------------|-----------|-------------|-------|
 | {name} | {node ID} | {Yes/No/N/A} | {Yes/No} | {Frozen/Draft/Not Listed} | {Frozen/Draft/Missing} | {OK/Mismatch/Missing} |
 
-## Pending Decisions
+## Pending decisions
 
 | Junction | Node ID | Description | Options |
 |----------|---------|-------------|---------|
@@ -42,7 +42,7 @@
 
 *(If no pending decisions: "None — next action is artifact generation or handoff.")*
 
-## Cross-Cutting Kit Status
+## Cross-Cutting kit status
 
 | Kit | Activation Expected | Activated | Trigger | Status |
 |-----|--------------------|-----------|---------|---------|
@@ -60,7 +60,7 @@
 
 *(If no anomalies: "None detected — position is consistent with navigation map.")*
 
-## Health Signals
+## Health signals
 
 | # | Signal | Severity | Description | Recommendation |
 |---|--------|----------|-------------|----------------|
@@ -69,7 +69,7 @@
 *(If fewer than 3 artifacts frozen: "Health signals not yet applicable — fewer than 3 artifacts frozen.")*
 *(If 3+ artifacts and no signals: "No health signals — initiative is on track.")*
 
-## Cross-Initiative Signals
+## Cross-Initiative signals
 
 | # | Other Initiative | Status | Overlap | Recommendation |
 |---|-----------------|--------|---------|----------------|

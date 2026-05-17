@@ -46,7 +46,7 @@ The tool produces structured output conforming to `handoff-navigator-template.md
 - The tool does not generate artifacts in the destination kit
 - The tool contains no references to specific implementations, environments, or vendor tools
 
-## Error Handling
+## Error handling
 
 | Condition | Behavior |
 |-----------|----------|
@@ -55,7 +55,7 @@ The tool produces structured output conforming to `handoff-navigator-template.md
 | Preset path does not include stated destination | Report: destination not in preset path — may indicate wrong preset or custom flow |
 | Cross-cutting kit should have been activated but was not | Report advisory: missed activation |
 
-## Hard Gates
+## Hard gates
 
 | Gate | Rule |
 |------|------|

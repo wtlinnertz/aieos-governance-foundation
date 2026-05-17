@@ -2,12 +2,12 @@
 
 This binding maps the abstract `TOOL-ARTIFACT-PUBLISH` capability to Atlassian Confluence.
 
-## Tool Reference
+## Tool reference
 
 - **Tool Spec:** `docs/tools/artifact-publish-spec.md`
 - **Tool Template:** `docs/tools/artifact-publish-template.md`
 
-## Input Mapping
+## Input mapping
 
 | Tool Input | Confluence Mapping |
 |------------|-------------------|
@@ -15,7 +15,7 @@ This binding maps the abstract `TOOL-ARTIFACT-PUBLISH` capability to Atlassian C
 | `artifact_path` | Markdown content is converted to Confluence storage format (XHTML) |
 | `target_system` | Resolved to Confluence space key + parent page ID |
 
-## Field Mapping
+## Field mapping
 
 | AIEOS Field | Confluence Field | Notes |
 |-------------|-----------------|-------|
@@ -26,11 +26,11 @@ This binding maps the abstract `TOOL-ARTIFACT-PUBLISH` capability to Atlassian C
 | Content body | Page body (storage format) | Full Markdown → Confluence storage format conversion |
 | Artifact status | Page label | `aieos-frozen`, `aieos-draft`, etc. |
 
-## ID Derivation
+## ID derivation
 
 The external ID is derived deterministically: the adapter searches for an existing page whose title starts with `{ARTIFACT_ID}:` in the configured space. If found, the page is updated. If not found, a new page is created under the configured parent page.
 
-## Adapter Environment Variables
+## Adapter environment variables
 
 | Variable | Required | Description |
 |----------|----------|-------------|
@@ -40,11 +40,11 @@ The external ID is derived deterministically: the adapter searches for an existi
 | `CONFLUENCE_API_TOKEN` | Yes | API token for authentication (user email + token for Confluence Cloud) |
 | `CONFLUENCE_USER_EMAIL` | Yes | Email address associated with the API token (Confluence Cloud) |
 
-## Adapter Conformance Reference
+## Adapter conformance reference
 
 The adapter implementing this binding must satisfy all hard gates defined in `docs/adapter-conformance-spec.md`. The adapter is push-only (publishes content to Confluence; does not sync Confluence changes back to AIEOS).
 
-## What This Binding Does Not Define
+## What this binding does not define
 
 This binding does not define policy. The rules for what constitutes a valid artifact publish operation (preconditions, postconditions, constraints, hard gates) are defined in `artifact-publish-spec.md`. The interface contract for adapter implementations is defined in `adapter-conformance-spec.md`. This file only describes how abstract fields map to Confluence-specific fields and configuration.
 

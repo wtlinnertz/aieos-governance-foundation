@@ -4,14 +4,14 @@ This document defines the rules and procedures for retiring AIEOS artifacts when
 
 ---
 
-## Terminal Lifecycle States
+## Terminal lifecycle states
 
 Two terminal states are defined in the governance model §6 Lifecycle States:
 
 - **Deprecated** — The artifact was Frozen. The system or service it governed is no longer active (decommissioned, replaced, or sunset).
 - **Abandoned** — The artifact did not complete its lifecycle. The initiative was cancelled before the artifact reached a freeze.
 
-### Key Distinctions
+### Key distinctions
 
 | State | Completed? | System still active? | Why terminal |
 |-------|-----------|---------------------|-------------|
@@ -24,11 +24,11 @@ Two terminal states are defined in the governance model §6 Lifecycle States:
 
 ---
 
-## Deprecation Notice (DN)
+## Deprecation notice (DN)
 
 A **Deprecation Notice** is a non-governed record that formally records the transition to a terminal state. It is not an AIEOS artifact (no spec, validator, or prompt). It is a lightweight administrative record.
 
-### DN Format
+### DN format
 
 ```
 DN ID: DN-{SERVICE-OR-INITIATIVE}-{NNN}
@@ -39,15 +39,15 @@ Reason: {one of: service decommission / initiative cancelled / discovery abandon
 Authorized By: {name and role}
 ```
 
-### DN Placement
+### DN placement
 
 Deprecation Notices are stored in the project repository alongside the governed artifacts, typically at `docs/sdlc/dn-{identifier}.md`. They are not subject to AIEOS validation.
 
 ---
 
-## Use Cases
+## Use cases
 
-### Use Case 1: Service Decommission
+### Use case 1: service decommission
 
 A service that has gone through the full AIEOS lifecycle (Layers 4–6) is being shut down. All frozen artifacts for that service transition to Deprecated.
 
@@ -70,7 +70,7 @@ Authorized By: Jane Smith, Engineering Lead
 
 ---
 
-### Use Case 2: Initiative Cancelled in Product Intelligence (PIK)
+### Use case 2: initiative cancelled in product intelligence (PIK)
 
 A discovery engagement is cancelled mid-flow — for example, after the PFD and VH are frozen but before the Experiment Log is completed. Artifacts that were never frozen are Abandoned. Artifacts that were frozen are Deprecated (the initiative ended).
 
@@ -94,7 +94,7 @@ Authorized By: Priya Patel, Product Director
 
 ---
 
-### Use Case 3: Engineering Work Abandoned (EEK)
+### Use case 3: engineering work abandoned (EEK)
 
 Engineering execution begins (Kit Entry Record issued), but the work is abandoned before the ORD is frozen — for example, due to a technical blocker, resourcing change, or scope change that invalidates the PRD.
 

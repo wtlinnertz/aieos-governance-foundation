@@ -2,7 +2,7 @@
 
 You are evaluating whether the dependency-check tool was used correctly.
 
-## Evaluation Rules
+## Evaluation rules
 
 - Do NOT suggest alternative approaches
 - Do NOT redesign the dependency chain
@@ -10,11 +10,11 @@ You are evaluating whether the dependency-check tool was used correctly.
 - Evaluate only what is explicitly present in the tool output
 - Be strict: ambiguity is a failure condition
 
-## Spec Reference
+## Spec reference
 
 Evaluate against the hard gates and constraints defined in `dependency-check-spec.md`.
 
-## Hard Gates
+## Hard gates
 
 | Gate | Check |
 |------|-------|
@@ -24,7 +24,7 @@ Evaluate against the hard gates and constraints defined in `dependency-check-spe
 | `no_content_validation` | The tool output does not contain any evaluation of artifact content — only freeze status |
 | `no_remediation` | The tool output does not contain suggestions, fixes, or recommended next steps |
 
-## Output Format
+## Output format
 
 ```json
 {

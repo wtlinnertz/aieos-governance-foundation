@@ -4,7 +4,7 @@
 
 This repository contains documentation, governance standards, and reference materials — no executable code, no running services, and no stored credentials. Security concerns are most likely to involve sensitive information inadvertently included in example content.
 
-## Reporting a Vulnerability
+## Reporting a vulnerability
 
 If you discover a security or privacy concern in this repository (for example, an example file containing real credentials, internal URLs, or identifiable personal information), please report it responsibly.
 
@@ -22,6 +22,6 @@ Include:
 
 We will acknowledge reports within 48 hours and address confirmed issues promptly.
 
-## Supported Versions
+## Supported versions
 
 Only the current `main` branch is supported.

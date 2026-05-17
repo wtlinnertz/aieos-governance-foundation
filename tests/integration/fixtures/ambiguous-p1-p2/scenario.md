@@ -5,7 +5,7 @@
 - Preset: Ambiguous (should trigger clarifying question)
 - Topic: "Add notifications" — could be new feature or enhancement depending on context
 
-## User Responses (in conversation order)
+## User responses (in conversation order)
 
 ### Initial request
 I want to add notifications to our app. We have a rough idea but haven't validated it with users yet.

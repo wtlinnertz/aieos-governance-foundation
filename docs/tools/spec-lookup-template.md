@@ -1,6 +1,6 @@
 # Spec Lookup Output
 
-## Lookup Header
+## Lookup header
 
 | Field | Value |
 |-------|-------|
@@ -11,13 +11,13 @@
 | Spec Version | {version or "NOT FOUND"} |
 | Timestamp | {ISO 8601} |
 
-## Hard Gates Found
+## Hard gates found
 
 | Gate Name | Description |
 |-----------|-------------|
 | {gate_name} | {brief description from spec} |
 
-## Spec Content
+## Spec content
 
 ```markdown
 {full content of the spec file, unmodified}

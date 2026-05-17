@@ -2,12 +2,12 @@
 
 This binding maps the abstract `TOOL-VALIDATION-STATUS` capability to GitHub Check Runs.
 
-## Tool Reference
+## Tool reference
 
 - **Tool Spec:** `docs/tools/validation-status-spec.md`
 - **Tool Template:** `docs/tools/validation-status-template.md`
 
-## Input Mapping
+## Input mapping
 
 | Tool Input | GitHub Mapping |
 |------------|---------------|
@@ -16,7 +16,7 @@ This binding maps the abstract `TOOL-VALIDATION-STATUS` capability to GitHub Che
 | `commit_ref` | Check run `head_sha` (for commit SHA) or resolved from PR number via GitHub API |
 | `target_system` | Resolved to GitHub repository (owner/repo) |
 
-## Field Mapping
+## Field mapping
 
 | AIEOS Field | GitHub Check Runs Field | Notes |
 |-------------|------------------------|-------|
@@ -29,22 +29,22 @@ This binding maps the abstract `TOOL-VALIDATION-STATUS` capability to GitHub Che
 | Completeness score | Check run output title | Format: `{ARTIFACT_ID} — {PASS/FAIL} ({score}%)` |
 | Artifact ID | Check run `external_id` | Used for idempotent matching |
 
-## ID Derivation
+## ID derivation
 
 The external ID is derived deterministically: the adapter searches for an existing check run with `external_id` matching the artifact ID on the given commit SHA. If found, the check run is updated. If not found, a new check run is created.
 
-## Adapter Environment Variables
+## Adapter environment variables
 
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `GITHUB_TOKEN` | Yes | GitHub App token or PAT with `checks:write` scope |
 | `GITHUB_REPO` | Yes | Target repository in `owner/repo` format (e.g., `acme/taskflow`) |
 
-## Adapter Conformance Reference
+## Adapter conformance reference
 
 The adapter implementing this binding must satisfy all hard gates defined in `docs/adapter-conformance-spec.md`. The adapter is push-only (posts check runs to GitHub; does not sync check run status back to AIEOS).
 
-## What This Binding Does Not Define
+## What this binding does not define
 
 This binding does not define policy. The rules for what constitutes a valid validation status post (preconditions, postconditions, constraints, hard gates) are defined in `validation-status-spec.md`. The interface contract for adapter implementations is defined in `adapter-conformance-spec.md`. This file only describes how validator JSON fields map to GitHub Check Runs fields and configuration.
 

@@ -36,7 +36,7 @@ The tool produces structured output conforming to `kit-self-check-template.md`.
 
 ## Checks
 
-### Internal Consistency
+### Internal consistency
 
 | Check | Description |
 |-------|-------------|
@@ -47,7 +47,7 @@ The tool produces structured output conforming to `kit-self-check-template.md`.
 | `governance_model_sync` | `docs/governance-model.md` in the kit is byte-identical to the canonical copy in governance-foundation. |
 | `spec_files_exist` | Every `spec_file` value in the manifest for this kit resolves to an existing file at `docs/specs/{spec_file}`. |
 
-### Boundary Contracts — Pipeline Kits (Layers 1–8)
+### Boundary contracts — pipeline kits (Layers 1–8)
 
 | Check | Description |
 |-------|-------------|
@@ -55,7 +55,7 @@ The tool produces structured output conforming to `kit-self-check-template.md`.
 | `entry_from_content` | Each `entry-from-{upstream}.md` file references the correct handoff artifact(s) listed in the manifest's `expected_artifacts` for that boundary. |
 | `upstream_exit_alignment` | The handoff artifact mentioned in this kit's `entry-from-{upstream}.md` matches what the upstream kit's playbook declares as its exit artifact. |
 
-### Boundary Contracts — Cross-Cutting Kits (Layers 9–15)
+### Boundary contracts — cross-Cutting kits (Layers 9–15)
 
 | Check | Description |
 |-------|-------------|
@@ -72,7 +72,7 @@ The tool produces structured output conforming to `kit-self-check-template.md`.
 - When checking boundary contracts, the tool reads upstream/downstream kits but does not modify them
 - The tool contains **no vendor or tool references**
 
-## Error Handling
+## Error handling
 
 | Condition | Behavior |
 |-----------|----------|
@@ -82,7 +82,7 @@ The tool produces structured output conforming to `kit-self-check-template.md`.
 | Spec file listed in manifest does not exist | Report as internal check FAIL: spec file missing |
 | Playbook not found | Report as internal check FAIL: playbook missing |
 
-## Hard Gates
+## Hard gates
 
 | Gate | Rule |
 |------|------|

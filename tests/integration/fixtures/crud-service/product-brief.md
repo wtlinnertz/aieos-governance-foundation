@@ -8,7 +8,7 @@ A REST API for managing tasks (create, read, update, delete) with status trackin
 
 Small teams need a self-hosted task tracker that is simple, fast, and under their control.
 
-## Proposed Solution
+## Proposed solution
 
 A Node.js/TypeScript REST API with:
 - CRUD endpoints for tasks (/api/tasks)
@@ -17,7 +17,7 @@ A Node.js/TypeScript REST API with:
 - Docker deployment
 - No authentication (internal network use)
 
-## Acceptance Criteria
+## Acceptance criteria
 
 1. POST /api/tasks creates a task and returns 201
 2. GET /api/tasks returns all tasks with filtering by status

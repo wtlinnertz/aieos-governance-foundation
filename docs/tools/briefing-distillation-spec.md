@@ -50,14 +50,14 @@ Produce a structured, compressed briefing from a frozen artifact. Extracts key d
 
 ---
 
-## Error Handling
+## Error handling
 
 - Source artifact too short for meaningful distillation → return source as-is with note "Source artifact is already concise; no distillation needed"
 - Source artifact type unknown → produce generic briefing using all template sections
 
 ---
 
-## Hard Gates
+## Hard gates
 
 | # | Gate | Rule |
 |---|------|------|

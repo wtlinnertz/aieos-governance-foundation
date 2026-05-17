@@ -6,14 +6,14 @@
 - Topic: AI Code Review — returning with experiment results
 - Special: Two-phase test. Phase 1 generates artifacts to EL Draft. Phase 2 resumes with results.
 
-## Phase 1 User Responses (generate to EL Draft)
+## Phase 1 user responses (generate to EL draft)
 
 These are identical to the aicr-exploratory fixture. Phase 1 generates:
 WCR, Discovery Intake, PFD, VH, AR, EL (Draft)
 
 Use the aicr-exploratory/scenario.md fixture for Phase 1.
 
-## Phase 2 User Responses (session resumption with results)
+## Phase 2 user responses (session resumption with results)
 
 ### Resumption request
 I'm back with the experiment results for the AI Code Review initiative (AICR). We ran the experiments defined in the Exploration List.

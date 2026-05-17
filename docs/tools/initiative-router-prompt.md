@@ -2,7 +2,7 @@
 
 You are invoking the initiative-router tool capability.
 
-## When to Invoke
+## When to invoke
 
 Invoke this tool **when a new initiative, work request, incident, or decision needs to enter the AIEOS framework**. This is the first tool to use — it determines where to start.
 
@@ -11,11 +11,11 @@ Also invoke when:
 - A work request has been received but not yet classified
 - An escalation from a downstream kit needs routing to the correct upstream entry
 
-## Why to Invoke
+## Why to invoke
 
 AIEOS has 4 entry points and 5 presets. Choosing the wrong one wastes effort — e.g., entering EEK Path B when discovery was needed, or running full PIK when the problem is already well-understood. This tool applies the navigation map's routing criteria systematically.
 
-## Execution Instructions
+## Execution instructions
 
 1. Read the navigation map decision tables J-ENTRY-1 and J-ENTRY-2
 2. Ask each routing question from J-ENTRY-1, evaluating the user's context against each condition
@@ -28,10 +28,10 @@ AIEOS has 4 entry points and 5 presets. Choosing the wrong one wastes effort —
 
 The tool recommends — it does not decide. Present the routing decision and wait for human confirmation before the operator proceeds.
 
-## Result Interpretation
+## Result interpretation
 
-- **PASS**: A clear entry point and preset have been identified. Operator should confirm and proceed to the named first artifact.
-- **FAIL**: Routing is ambiguous. Present all matching options. If no options match, recommend refining the work context or invoking `position-check` if an initiative is already in progress.
+- PASS: A clear entry point and preset have been identified. Operator should confirm and proceed to the named first artifact.
+- FAIL: Routing is ambiguous. Present all matching options. If no options match, recommend refining the work context or invoking `position-check` if an initiative is already in progress.
 
 ## Self-Correction
 
@@ -40,6 +40,6 @@ If the user indicates the routing doesn't feel right, re-evaluate by:
 2. Re-running the decision table evaluation with refined answers
 3. If still ambiguous, recommend starting with `position-check` to assess current state
 
-## Spec Reference
+## Spec reference
 
 The authoritative rules, constraints, and hard gates for this tool are defined in `initiative-router-spec.md`.

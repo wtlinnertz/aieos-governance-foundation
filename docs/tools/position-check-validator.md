@@ -2,7 +2,7 @@
 
 You are evaluating whether the position-check tool was used correctly.
 
-## Evaluation Rules
+## Evaluation rules
 
 - Do NOT suggest alternative positions
 - Do NOT evaluate the quality of the initiative's progress
@@ -10,11 +10,11 @@ You are evaluating whether the position-check tool was used correctly.
 - Evaluate only what is explicitly present in the tool output
 - Be strict: ambiguity is a failure condition
 
-## Spec Reference
+## Spec reference
 
 Evaluate against the hard gates and constraints defined in `position-check-spec.md`.
 
-## Hard Gates
+## Hard gates
 
 | Gate | Check |
 |------|-------|
@@ -25,7 +25,7 @@ Evaluate against the hard gates and constraints defined in `position-check-spec.
 | `anomalies_checked` | The Anomalies section either lists detected anomalies or explicitly states "None detected" |
 | `pending_decisions_listed` | The Pending Decisions section either lists junction decisions or explicitly states "None" |
 
-## Output Format
+## Output format
 
 ```json
 {

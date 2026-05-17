@@ -1,12 +1,12 @@
-# AIEOS Ecosystem Roadmap
+# AIEOS system Roadmap
 
-This document captures the adjacent projects identified as high-value additions to the AIEOS ecosystem. AIEOS itself is a governance framework (all Markdown, no runtime). These projects would make that governance executable, observable, and measurable at organizational scale.
+This document captures the adjacent projects identified as high-value additions to the AIEOS system. AIEOS itself is a governance framework (all Markdown, no runtime). These projects would make that governance executable, observable, and measurable at organizational scale.
 
 **Origin:** An "AIEOS Implementation Master Plan" proposed making AIEOS a software platform. That was rejected as architecturally incompatible (governance framework, not runtime system). Five ideas were extracted and implemented as governance enhancements (WS-1 through WS-5, 2026-03-16). The remaining ideas, plus newly identified gaps, form this roadmap.
 
-**Relationship to AIEOS:** AIEOS defines *what* good looks like (specs, hard gates, decision tables). These projects *execute, observe, and measure* that definition. AIEOS remains the source of truth; ecosystem projects are consumers.
+**Relationship to AIEOS:** AIEOS defines *what* good looks like (specs, hard gates, decision tables). These projects *execute, observe, and measure* that definition. AIEOS remains the source of truth; system projects are consumers.
 
-**Naming Convention:** AIEOS governance units use `aieos-{descriptor}-kit` (e.g., `aieos-peer-review-kit`). Ecosystem software components use `aieos-{descriptor}` without the `-kit` suffix. The presence or absence of `-kit` distinguishes governance Markdown from software projects at a glance.
+**Naming Convention:** AIEOS governance units use `aieos-{descriptor}-kit` (e.g., `aieos-peer-review-kit`). system software components use `aieos-{descriptor}` without the `-kit` suffix. The presence or absence of `-kit` distinguishes governance Markdown from software projects at a glance.
 
 | Component | Repository | Type |
 |-----------|-----------|------|
@@ -22,7 +22,7 @@ This document captures the adjacent projects identified as high-value additions 
 
 ---
 
-## Ecosystem Map
+## system map
 
 ```
                     ┌─────────────────────────────────┐
@@ -51,19 +51,19 @@ This document captures the adjacent projects identified as high-value additions 
    └──────────────┘    └──────────────┘    └──────────────────┘
 ```
 
-Schema has a dual role: it strengthens the existing AIEOS framework (deeper testing, drift detection) AND unlocks all downstream ecosystem projects (machine-consumable specs).
+Schema has a dual role: it strengthens the existing AIEOS framework (deeper testing, drift detection) AND unlocks all downstream system projects (machine-consumable specs).
 
 ---
 
-## Critical Path (Priority Order)
+## Critical path (Priority order)
 
-### 1. AIEOS Schema (`aieos-schema`)
+### 1. AIEOS schema (`aieos-schema`)
 
 **What:** A machine-readable format (YAML or JSON) that coexists alongside Markdown specs. Each spec's hard gates, required sections, and content rules become parseable by automated systems.
 
-**Why first:** Schema serves two distinct purposes — it strengthens the existing AIEOS framework *and* unlocks the ecosystem projects. It's the keystone for both.
+**Why first:** Schema serves two distinct purposes — it strengthens the existing AIEOS framework *and* unlocks the system projects. It's the keystone for both.
 
-#### Value to the Existing Framework (Before Any Ecosystem Project)
+#### Value to the existing framework (Before any system project)
 
 Today, AIEOS specs are Markdown prose. The four-file system works because AI reads the prose and applies judgment. But this creates gaps that Schema closes:
 
@@ -105,9 +105,9 @@ Different AI sessions may interpret the same Markdown spec differently. One vali
 
 To verify that a PRK lens spec's review points match the prr-spec's Review Point Mapping table, you currently need to read both Markdown files and compare. With Schema, both files declare their review point data in a parseable format, and a test validates consistency.
 
-#### Concrete Tier 2 Test Gains
+#### Concrete tier 2 test gains
 
-With Schema in place, these tests become possible without any ecosystem project:
+With Schema in place, these tests become possible without any system project:
 
 | Test | What it validates |
 |------|-------------------|
@@ -122,7 +122,7 @@ With Schema in place, these tests become possible without any ecosystem project:
 
 This is 8+ new tests that validate *semantic correctness*, not just structural existence. The existing 90 tests verify the framework's skeleton; these would verify its muscles.
 
-#### Value to Ecosystem Projects (After Schema Exists)
+#### Value to system projects (After schema exists)
 
 Everything downstream needs machine-readable specs to avoid building custom parsers:
 
@@ -148,13 +148,13 @@ Building the Engine without Schema means building artifact-type-specific parsers
 
 ---
 
-### 2. AIEOS Evaluation Engine (`aieos-evaluation-engine`)
+### 2. AIEOS evaluation engine (`aieos-evaluation-engine`)
 
 **What:** A runtime system that consumes AIEOS schemas as evaluation rules, wraps existing tools (SAST, container scan, linters, test runners) via an Adapter SDK, and produces evidence in AIEOS normalized format.
 
 **Origin:** Combines the Lens Engine concept (original plan §7) and Tool Adapter Specification (original plan §16). Filtered to remove autonomous promotion — the Evaluation Engine *produces evidence*, it doesn't *make deployment decisions*.
 
-#### Value to the Existing Framework
+#### Value to the existing framework
 
 Today, every AIEOS validation is performed by an AI session reading a spec and applying judgment. This works but has limitations:
 
@@ -166,7 +166,7 @@ Today, every AIEOS validation is performed by an AI session reading a spec and a
 
 **Problem 4: The sherpa can't observe real artifacts.** The sherpa generates and validates Markdown documents, but it can't run Semgrep against actual code, Trivy against a container, or pytest against a test suite. The Engine bridges this gap — it operates on real software artifacts and translates results into AIEOS evidence format.
 
-#### Relationships to Other Ecosystem Components
+#### Relationships to other system components
 
 | Component | Relationship |
 |-----------|-------------|
@@ -197,11 +197,11 @@ Today, every AIEOS validation is performed by an AI session reading a spec and a
 
 ---
 
-### 3. AIEOS Artifact Store (`aieos-artifact-store`)
+### 3. AIEOS artifact store (`aieos-artifact-store`)
 
 **What:** An indexing and query layer over AIEOS artifacts across all initiatives. Enables search, lineage tracing, cross-referencing, and dependency analysis.
 
-#### Value to the Existing Framework
+#### Value to the existing framework
 
 Today, AIEOS artifacts are Markdown files in git directories. The ER (Engagement Record) serves as the per-initiative index. This works for small scale but creates real problems:
 
@@ -215,7 +215,7 @@ Today, AIEOS artifacts are Markdown files in git directories. The ER (Engagement
 
 **Problem 5: The healthcheck can't verify cross-initiative consistency.** Healthcheck playbook Scope B checks individual initiatives. But "does every initiative using ISPEC-PLATFORM-001 have a compatible EM?" is a cross-initiative consistency question that requires indexing.
 
-#### Relationships to Other Ecosystem Components
+#### Relationships to other system components
 
 | Component | Relationship |
 |-----------|-------------|
@@ -238,11 +238,11 @@ Today, AIEOS artifacts are Markdown files in git directories. The ER (Engagement
 
 ---
 
-### 4. AIEOS Governance Analytics (`aieos-governance-analytics`)
+### 4. AIEOS governance analytics (`aieos-governance-analytics`)
 
 **What:** Cross-initiative intelligence derived from artifact data. Pattern detection, bottleneck identification, governance effectiveness measurement, and predictive signals.
 
-#### Value to the Existing Framework
+#### Value to the existing framework
 
 AIEOS already has a per-initiative learning loop: IEK (Layer 7) synthesizes RHR data into Evolution Signals that feed back to PIK. But there's no cross-initiative learning — and the most valuable insights come from patterns across initiatives, not within a single one.
 
@@ -256,7 +256,7 @@ AIEOS already has a per-initiative learning loop: IEK (Layer 7) synthesizes RHR 
 
 **Problem 5: Preset optimization is guesswork.** The 5 presets (P1-P5) define which kits and artifacts are required vs optional. But are they right? Maybe P2 Enhancements should require QAK based on historical rollback data. Analytics provides the evidence for preset tuning.
 
-#### Relationships to Other Ecosystem Components
+#### Relationships to other system components
 
 | Component | Relationship |
 |-----------|-------------|
@@ -264,7 +264,7 @@ AIEOS already has a per-initiative learning loop: IEK (Layer 7) synthesizes RHR 
 | **Engine** | Engine is the primary data producer for Analytics. Every Engine evaluation generates timestamped, structured results (gate pass/fail, finding counts, tool execution time) that Analytics aggregates. |
 | **Artifact Store** | Analytics queries run against the Store. Store provides the indexed data; Analytics provides the intelligence layer on top. |
 | **Twin** | Twin provides runtime data (incidents, deployments, SLO metrics) that Analytics correlates with governance data (artifact quality, review findings). "Do initiatives with more PRK findings have fewer production incidents?" requires both. |
-| **Compliance Reporter** | Analytics can measure compliance posture trends: "compliance gap count is decreasing quarter over quarter." Reporter handles individual audits; Analytics tracks the trajectory. |
+| **Compliance Reporter** | Analytics can measure compliance posture trends: "compliance gap count is decreasing quarter over quarter." Reporter handles individual audits; Analytics tracks the path. |
 | **Playground** | Analytics identifies which governance steps teams struggle with most, informing Playground scenario design ("teams need more practice with SAD→TDD transitions"). |
 | **AIEOS Framework** | Analytics is the feedback mechanism that AIEOS currently lacks at the framework level. IEK provides per-initiative feedback. Analytics provides framework-level feedback: "this spec is too strict," "this prompt consistently produces artifacts that fail gate X," "this preset should require SCK." Analytics findings would be the primary input to framework revision decisions. |
 
@@ -279,11 +279,11 @@ AIEOS already has a per-initiative learning loop: IEK (Layer 7) synthesizes RHR 
 
 ---
 
-### 5. AIEOS Compliance Reporter (`aieos-compliance-reporter`)
+### 5. AIEOS compliance reporter (`aieos-compliance-reporter`)
 
 **What:** Automated assembly of audit-ready evidence packages from AIEOS artifacts, mapped to regulatory control frameworks.
 
-#### Value to the Existing Framework
+#### Value to the existing framework
 
 AIEOS already produces all the evidence an auditor needs — CERs, SARs, DARs, QGRs, PRRs, RRs. SCK (Layer 10) is specifically designed for compliance evidence. But the evidence is scattered across dozens of artifacts per initiative, across multiple initiatives per system.
 
@@ -295,14 +295,14 @@ AIEOS already produces all the evidence an auditor needs — CERs, SARs, DARs, Q
 
 **Problem 4: Multi-initiative compliance is fragmented.** A system may span multiple AIEOS initiatives (initial build, enhancement, performance fix). The compliance evidence for that system is spread across multiple ERs. Assembling the complete evidence chain requires tracing across initiatives.
 
-#### Relationships to Other Ecosystem Components
+#### Relationships to other system components
 
 | Component | Relationship |
 |-----------|-------------|
 | **Schema** | Reporter uses schemas to identify which artifact sections map to which regulatory controls. Schema makes the mapping maintainable — when a spec adds a new section, the control mapping can be updated. |
 | **Engine** | Engine ensures evidence artifacts (SAR, DAR, QGR) are always produced when required. Without Engine, evidence collection depends on human discipline. With Engine, evidence is automatically generated and the Reporter can guarantee completeness. |
 | **Artifact Store** | Reporter queries the Store for all evidence artifacts within an audit scope. Store's lineage tracing enables evidence chain assembly (CER → SAR → TM → SAD → PRD). |
-| **Analytics** | Analytics tracks compliance posture trends over time. Reporter handles point-in-time audits; Analytics measures trajectory ("our SOC2 coverage has improved from 72% to 94% over 6 months"). |
+| **Analytics** | Analytics tracks compliance posture trends over time. Reporter handles point-in-time audits; Analytics measures path ("our SOC2 coverage has improved from 72% to 94% over 6 months"). |
 | **Twin** | Twin provides the system inventory that scopes the audit. "Which systems are in scope for PCI-DSS?" requires knowing what's running — that's the Twin's live topology. |
 | **Playground** | Reporter's control-to-artifact mapping could be used in Playground scenarios to teach teams *why* each artifact matters for compliance ("skipping the DAR means we can't satisfy CC6.8"). |
 | **AIEOS Framework** | SCK (Layer 10) produces the evidence; Reporter assembles it. The CER spec already defines what evidence looks like. Reporter adds the external dimension — mapping AIEOS's internal evidence structure to external regulatory control frameworks. This could inform SCK spec improvements: "auditors consistently ask for X, but no AIEOS artifact covers it — add a gate to the CER spec." |
@@ -319,13 +319,13 @@ AIEOS already produces all the evidence an auditor needs — CERs, SARs, DARs, Q
 
 ---
 
-### 6. AIEOS System Twin (`aieos-system-twin`)
+### 6. AIEOS system twin (`aieos-system-twin`)
 
 **What:** An event-sourced system model that tracks service topology, dependencies, and deployments in real time.
 
 **Origin:** Original plan §9 (SDLC Digital Twin). Filtered to remove vendor-specific prescriptions (Neo4j, Kafka). The entity model is valuable; the implementation is a tool binding.
 
-#### Value to the Existing Framework
+#### Value to the existing framework
 
 AIEOS governs the decision process but has limited visibility into what's actually running. The SMR (System Model Record, built in WS-2) captures a point-in-time snapshot of system topology. But snapshots go stale.
 
@@ -337,7 +337,7 @@ AIEOS governs the decision process but has limited visibility into what's actual
 
 **Problem 4: Environment drift is invisible.** The EM (Environment Matrix) defines what environments should look like. But nobody is continuously checking whether the actual deployment state matches the EM. The Twin provides the live state that the EM can be validated against.
 
-#### Relationships to Other Ecosystem Components
+#### Relationships to other system components
 
 | Component | Relationship |
 |-----------|-------------|
@@ -359,15 +359,15 @@ AIEOS governs the decision process but has limited visibility into what's actual
 - Change correlation (deployment X happened, then incident Y — related?)
 - Environment drift detection (live state vs. EM definition)
 
-**Why deferred to #6:** High infrastructure cost (event store + graph DB + materialization layer). The SMR covers the snapshot use case adequately. The Twin's value multiplies when the Engine and Store exist — without them, the Twin is an isolated operational tool rather than an integrated part of the governance ecosystem.
+**Why deferred to #6:** High infrastructure cost (event store + graph DB + materialization layer). The SMR covers the snapshot use case adequately. The Twin's value multiplies when the Engine and Store exist — without them, the Twin is an isolated operational tool rather than an integrated part of the governance system.
 
 ---
 
-### 7. AIEOS Playground (`aieos-playground`)
+### 7. AIEOS playground (`aieos-playground`)
 
 **What:** An interactive learning environment where teams practice AIEOS flows with simulated scenarios.
 
-#### Value to the Existing Framework
+#### Value to the existing framework
 
 AIEOS has a steep learning curve — 15 layers, 40+ artifact types, decision tables, presets, convergence loops. The sherpa helps during real work, but real work has real consequences. Teams need a way to build muscle memory without risk.
 
@@ -379,7 +379,7 @@ AIEOS has a steep learning curve — 15 layers, 40+ artifact types, decision tab
 
 **Problem 4: New team members can't practice decision junctions.** The navigation map has 28 decision junctions. In real work, a team might encounter 5-8 of them. The Playground would expose all junction types with practice scenarios.
 
-#### Relationships to Other Ecosystem Components
+#### Relationships to other system components
 
 | Component | Relationship |
 |-----------|-------------|
@@ -403,11 +403,11 @@ AIEOS has a steep learning curve — 15 layers, 40+ artifact types, decision tab
 
 **Bootstrap opportunity:** The integration test fixtures already have 10 scenarios with pre-scripted interactions. The Playground could reuse these as interactive tutorials.
 
-**Why #7:** Independent of the critical path — can be built at any point. But its value increases as other ecosystem components come online (Engine for real validation, Store for real examples, Analytics for scenario prioritization).
+**Why #7:** Independent of the critical path — can be built at any point. But its value increases as other system components come online (Engine for real validation, Store for real examples, Analytics for scenario prioritization).
 
 ---
 
-## Dependency Graph
+## Dependency graph
 
 ```
 AIEOS Framework (exists)
@@ -432,16 +432,16 @@ Playground (independent — can be built at any point)
 ```
 
 Schema delivers value in two phases:
-1. **Immediate** (no ecosystem projects needed): deeper Tier 2 tests, spec/template/validator drift detection, `framework.py` consistency validation
-2. **Enabling** (unlocks ecosystem): machine-readable specs for Engine, Store, Analytics, and Compliance Reporter
+1. **Immediate** (no system projects needed): deeper Tier 2 tests, spec/template/validator drift detection, `framework.py` consistency validation
+2. **Enabling** (unlocks system): machine-readable specs for Engine, Store, Analytics, and Compliance Reporter
 
 ---
 
-## Integration Flows
+## Integration flows
 
-32 integration points connecting the 15 AIEOS kits and 7 ecosystem modules. Organized by direction: what kits send to modules, what modules send back to kits, and what modules exchange with each other.
+32 integration points connecting the 15 AIEOS kits and 7 system modules. Organized by direction: what kits send to modules, what modules send back to kits, and what modules exchange with each other.
 
-### Kit → Module Flows (Kits Produce, Modules Consume)
+### Kit → module flows (Kits produce, modules consume)
 
 Every kit produces frozen Markdown artifacts. The modules consume them for different purposes.
 
@@ -458,7 +458,7 @@ Every kit produces frozen Markdown artifacts. The modules consume them for diffe
 | K9 | Review lens definitions | PRK (Layer 14) — lens specs | `aieos-evaluation-engine` | Lens evaluation categories and hard gates | Engine automates the deterministic subset of lens checks (field presence, format compliance) |
 | K10 | Framework files → training content | All 15 kits | `aieos-playground` | Playbooks, specs, templates, navigation map, integration test fixtures | Playground reads framework files to build interactive training scenarios |
 
-### Module → Kit Flows (Modules Produce, Kits Consume)
+### Module → kit flows (Modules produce, kits consume)
 
 Modules feed evidence, intelligence, and live state back into the governance process. Humans remain the decision-makers — modules produce inputs, not decisions.
 
@@ -476,7 +476,7 @@ Modules feed evidence, intelligence, and live state back into the governance pro
 | M10 | Framework improvement signals → governance-foundation | `aieos-governance-analytics` | governance-foundation | "Gate X fails 80% on first pass"; "P2 initiatives that skip QAK have 2x rollback rate" | Humans evaluate insights and apply spec, prompt, or preset changes through normal governance process |
 | M11 | Compliance gaps → SCK | `aieos-compliance-reporter` | SCK (Layer 10) | "Control X.Y has no covering evidence artifact" | Informs CER scope — identifies what compliance evidence needs to be produced in the next initiative cycle |
 
-### Module → Module Flows (Ecosystem Internal)
+### Module → module flows (system internal)
 
 | # | Flow | Source | Target | What Flows | Contract |
 |---|------|--------|--------|------------|----------|
@@ -492,7 +492,7 @@ Modules feed evidence, intelligence, and live state back into the governance pro
 | I10 | Scenario prioritization → training | `aieos-governance-analytics` | `aieos-playground` | "Teams struggle most with SAD→TDD transition" | Analytics insight format |
 | I11 | Reference artifacts → training | `aieos-artifact-store` | `aieos-playground` | Well-formed artifacts from completed initiatives as examples | Store query API |
 
-### Flow Diagram
+### Flow diagram
 
 ```
                                     ┌──────────────────────┐
@@ -533,7 +533,7 @@ Modules feed evidence, intelligence, and live state back into the governance pro
                                  └──────────────┘
 ```
 
-### Flow Inventory Summary
+### Flow inventory summary
 
 | Direction | Count | Examples |
 |-----------|-------|---------|
@@ -542,7 +542,7 @@ Modules feed evidence, intelligence, and live state back into the governance pro
 | Module → Module | 11 | Schema → Engine/Store/Twin, Engine → Store, Store → Analytics/Reporter, Twin → Engine |
 | **Total** | **32** | |
 
-### Kit-Level Flow Summary
+### Kit-Level flow summary
 
 Which kits interact with which modules, and in what direction:
 
@@ -566,9 +566,9 @@ Which kits interact with which modules, and in what direction:
 
 ---
 
-## Operational Layer: Lenses, Tools, and Skills
+## Operational layer: lenses, tools, and skills
 
-The integration flows above show data moving between kits and modules. But data doesn't move itself — **lenses**, **tools**, and **skills** are the mechanisms that do the actual work. They form a third architectural layer that bridges governance (source of truth) and ecosystem (runtime infrastructure).
+The integration flows above show data moving between kits and modules. But data doesn't move itself — **lenses**, **tools**, and **skills** are the mechanisms that do the actual work. They form a third architectural layer that bridges governance (source of truth) and system (runtime infrastructure).
 
 ```
 ┌──────────────────────────────────────────────────────┐
@@ -602,15 +602,15 @@ The integration flows above show data moving between kits and modules. But data 
 └──────────────────────────────────────────────────────┘
 ```
 
-The governance layer defines *what*. The ecosystem layer provides *infrastructure*. The operational layer is *how work actually happens* — and it's the layer that touches both.
+The governance layer defines *what*. The system layer provides *infrastructure*. The operational layer is *how work actually happens* — and it's the layer that touches both.
 
-### Lenses (12 PRK Review Lenses)
+### Lenses (12 PRK review lenses)
 
 Currently: Each lens runs as an independent AI session. The AI reads the artifact, reads the lens spec, applies judgment, produces findings. Human provides the artifact; AI evaluates it.
 
-With the ecosystem, lenses gain three integration points:
+With the system, lenses gain three integration points:
 
-#### L-1: Evidence Pre-Population (Engine → Lenses)
+#### L-1: evidence pre-Population (Engine → lenses)
 
 Today the security lens reads a SAD and makes judgments based on prose descriptions of security measures. With Engine, the security lens receives *actual* SAST/DAST findings from the Semgrep adapter alongside the artifact. The lens still applies semantic judgment — but it's evaluating real evidence, not just descriptions of intent.
 
@@ -627,7 +627,7 @@ Today the security lens reads a SAD and makes judgments based on prose descripti
 
 Lenses that are purely design-evaluative (maintainability, devex, business-value, accessibility) gain less from Engine evidence — they primarily evaluate artifact content, not tool output. They benefit more from Store context (L-3).
 
-#### L-2: Deterministic Pre-Screening (Engine → Lenses)
+#### L-2: deterministic pre-Screening (Engine → lenses)
 
 Some lens checks are mechanical: "does this SAD have a section on authentication?" is field-presence, not judgment. Engine runs the deterministic subset via Schema (section headings, required fields, enumerated values) and passes results to the AI lens session as pre-screened gates. The AI focuses on semantic evaluation where it adds unique value.
 
@@ -640,7 +640,7 @@ Some lens checks are mechanical: "does this SAD have a section on authentication
 
 This split preserves the AIEOS principle that validators (and lenses) judge — but acknowledges that some judgment is mechanical and some requires AI reasoning.
 
-#### L-3: Finding Pattern Analysis (Store + Analytics → Lens Improvement)
+#### L-3: finding pattern analysis (Store + analytics → lens improvement)
 
 "The security lens flags missing rate limiting on 70% of SADs" is a cross-initiative insight that individual lens sessions can't see. This flow works through Analytics:
 
@@ -649,13 +649,13 @@ This split preserves the AIEOS principle that validators (and lenses) judge — 
 3. Patterns inform lens improvement: "if 70% of SADs fail this check, either the SAD prompt needs to emphasize rate limiting, or the security lens spec needs to make it a named evaluation category rather than an implicit check"
 4. Humans evaluate the Analytics insight and update the lens spec/prompt through normal governance process
 
-### Tools (Governed Capabilities)
+### Tools (Governed capabilities)
 
 Currently: Tools are invoked by the sherpa during guided sessions or by humans following playbooks. Each tool's four-file set defines what it does (spec), outputs (template), how to invoke it (prompt), and how to judge its output (validator). Framework-level tools: initiative-router, position-check, decision-router, handoff-navigator, dependency-check, spec-lookup. Kit-level tools: BAT (EEK), 12 review lenses (PRK).
 
-With the ecosystem, tools gain four integration points:
+With the system, tools gain four integration points:
 
-#### T-1: Machine-Readable Tool Contracts (Schema → Tools)
+#### T-1: machine-Readable tool contracts (Schema → tools)
 
 Today, tool specs are Markdown prose. Schema gives tool specs machine-readable contracts — preconditions, postconditions, hard gates, input/output fields become parseable. This means the Engine can understand tool requirements programmatically rather than requiring an AI session to interpret prose.
 
@@ -666,7 +666,7 @@ Today, tool specs are Markdown prose. Schema gives tool specs machine-readable c
 | Input fields | Markdown table with field/required/description | `inputs: [{name: "artifact", required: true, type: "artifact_reference"}]` |
 | Output format | "conforming to {tool}-template.md" | `output_schema: "review-security-template.yaml"` |
 
-#### T-2: Programmatic Tool Invocation (Engine → Tools)
+#### T-2: programmatic tool invocation (Engine → tools)
 
 Tools like dependency-check and spec-lookup currently require an AI session. Engine could invoke them as automated checks:
 
@@ -679,11 +679,11 @@ Tools like dependency-check and spec-lookup currently require an AI session. Eng
 
 Not all tools benefit from programmatic invocation. Decision-router and initiative-router require human context (user intent, organizational knowledge) that the Engine doesn't have — these remain sherpa-invoked.
 
-#### T-3: Ground-Truth Enrichment (Store + Twin → Tools)
+#### T-3: ground-Truth enrichment (Store + twin → tools)
 
 The position-check tool currently reads the ER and artifact directory for ground truth. With Store and Twin, ground truth becomes richer:
 
-| Ground Truth Source | Current | With Ecosystem |
+| Ground Truth Source | Current | With system |
 |--------------------|---------|---------------|
 | Artifact inventory | Local filesystem: `docs/sdlc/*.md` | Store: all artifacts across all initiatives, with lineage and cross-references |
 | Artifact status | ER §N artifact table | Store: verified against actual file content, with timestamp of last freeze |
@@ -693,7 +693,7 @@ The position-check tool currently reads the ER and artifact directory for ground
 
 Position-check evolves from "you are HERE in this initiative" to "you are HERE in context of everything your organization is doing."
 
-#### T-4: Tool Output Indexing (Tools → Store)
+#### T-4: tool output indexing (Tools → store)
 
 Tool outputs (routing records, position-check reports, BAT results, handoff records) are currently ephemeral — they exist in the session transcript but aren't systematically captured. Store indexes tool outputs, making them queryable:
 
@@ -704,13 +704,13 @@ Tool outputs (routing records, position-check reports, BAT results, handoff reco
 | "What's the average position-check anomaly count across initiatives?" | Framework health — high anomaly counts indicate systematic process gaps |
 | "How often does handoff-navigator find missing exit conditions?" | Kit boundary quality — frequent failures suggest playbook or entry-from file gaps |
 
-### Skills (The Sherpa)
+### Skills (The sherpa)
 
 Currently: The sherpa is the sole user-facing interface to AIEOS. It reads framework files, guides users through decision tables, generates artifacts, validates them, maintains the ER. It operates entirely within the governance layer.
 
-With the ecosystem, the sherpa becomes the **orchestration control plane** that coordinates across all three layers:
+With the system, the sherpa becomes the **orchestration control plane** that coordinates across all three layers:
 
-#### S-1: Evidence-Informed Artifact Generation (Engine → Sherpa)
+#### S-1: evidence-Informed artifact generation (Engine → sherpa)
 
 Today when the sherpa generates an RSA, it asks the human for quality and security evidence. With Engine:
 
@@ -729,7 +729,7 @@ With Engine: Sherpa queries Engine → Engine returns evidence → sherpa pre-po
 
 The sherpa's generation prompts don't change — they still reference the spec and template. What changes is the *input quality*. Instead of "tell me about your security posture," the sherpa says "the Engine found 3 high-severity SAST findings and 0 critical dependency vulnerabilities — I'll incorporate these into the SAR."
 
-#### S-2: Cross-Initiative Awareness (Store → Sherpa)
+#### S-2: cross-Initiative awareness (Store → sherpa)
 
 Today the sherpa sees only the current initiative's ER and artifacts. With Store:
 
@@ -745,7 +745,7 @@ With Store: Sherpa queries Store → gains organizational context → generates 
 | Kit transition explanation | "We're moving from PIK to EEK" | "We're moving from PIK to EEK. Your team's last P1 initiative spent 60% of its time in EEK — the SAD→TDD transition was the bottleneck" |
 | Artifact generation | Template-driven only | Template + reference: "here's how a similar initiative structured their SAD §3" (from Store) |
 
-#### S-3: Live Context (Twin → Sherpa)
+#### S-3: live context (Twin → sherpa)
 
 Today the sherpa generates infrastructure artifacts from human-provided descriptions. With Twin:
 
@@ -761,7 +761,7 @@ With Twin: Sherpa queries Twin → Twin returns live topology → sherpa generat
 | ODK incident context | "What changed recently?" | "The Twin shows a deployment 2 hours before the incident to service X, which service Y depends on" |
 | RHR health picture | "How are SLOs?" | "The Twin shows SLO compliance at 99.2% with a burn rate trend that will breach error budget in 4 days" |
 
-#### S-4: Data-Driven Recommendations (Analytics → Sherpa)
+#### S-4: data-Driven recommendations (Analytics → sherpa)
 
 Today the sherpa recommends presets and kit adoption based on navigation map decision tables. With Analytics:
 
@@ -773,7 +773,7 @@ With Analytics: Sherpa cites decision table + evidence: "J-EEK-PATH says Path A,
 
 The Decision Explanation Protocol (WS-5) evolves from rule-citing to evidence-citing. The decision tables remain authoritative — Analytics provides supporting evidence, not overrides.
 
-#### S-5: Training Mode (Playground → Sherpa)
+#### S-5: training mode (Playground → sherpa)
 
 The sherpa skill could operate in two modes with identical behavior but different context:
 
@@ -784,7 +784,7 @@ The sherpa skill could operate in two modes with identical behavior but differen
 
 Same skill definition, same playbook adherence, same decision table routing. The Playground provides the sandboxed environment; the sherpa provides the guided experience. A trainee interacts with the sherpa identically in both modes — they learn the real process, not a simplified version.
 
-#### S-6: Schema-Accelerated Validation (Schema → Sherpa)
+#### S-6: schema-Accelerated validation (Schema → sherpa)
 
 Today the sherpa generates an artifact and then validates via a separate AI session reading the spec. With Schema:
 
@@ -796,22 +796,22 @@ With Schema: Generate artifact → instant Schema check (structural) → flag st
 
 Structural validation (required sections present, field formats correct, enumeration values valid, cross-references resolve) happens instantly against the Schema. The heavier AI validation session focuses on semantic evaluation — is the content *meaningful*, not just *present*? This is a faster feedback loop: structural issues are caught in seconds, not after a full validation session.
 
-### Operational Layer Flow Summary
+### Operational layer flow summary
 
-| Mechanism | Current Integration Points | Ecosystem Integration Points | Total |
+| Mechanism | Current Integration Points | system Integration Points | Total |
 |-----------|---------------------------|------------------------------|-------|
 | **Lenses** (12) | AI session reads spec + artifact | L-1 Engine evidence, L-2 deterministic pre-screening, L-3 Analytics patterns | +3 |
 | **Tools** (18) | Sherpa invokes in AI sessions | T-1 Schema contracts, T-2 Engine invocation, T-3 Store+Twin enrichment, T-4 Store indexing | +4 |
 | **Skills** (sherpa) | Reads framework files, guides humans | S-1 Engine evidence, S-2 Store context, S-3 Twin live state, S-4 Analytics insights, S-5 Playground training, S-6 Schema validation | +6 |
-| **Total** | 3 mechanisms, framework-only | +13 ecosystem integration points | |
+| **Total** | 3 mechanisms, framework-only | +13 system integration points | |
 
 ---
 
-## Phased Execution Plan
+## Phased execution plan
 
 The low-coupling design means components that share only the Schema contract can be built in parallel. Tracing the interface contract table produces three phases, not seven sequential steps.
 
-### Phase 1: Schema (Sequential — Must Be First)
+### Phase 1: schema (Sequential — must be first)
 
 ```
 ┌──────────────┐
@@ -819,13 +819,13 @@ The low-coupling design means components that share only the Schema contract can
 └──────────────┘
 ```
 
-**Duration:** Smallest project in the ecosystem. The format design is the hard decision; individual schemas are mechanical.
+**Duration:** Smallest project in the system. The format design is the hard decision; individual schemas are mechanical.
 
 **What blocks on this:** Engine, Store, Twin (for SMR schema alignment), Analytics (indirectly via Store), Reporter (indirectly via Store). Everything except Playground.
 
 **Why it can't be parallelized:** Schema defines the contracts that Phase 2 components consume. Building Engine or Store without Schema means building custom parsers that will be thrown away when Schema arrives. The whole point of Schema is to avoid that waste.
 
-**Deliverables:**
+**outputs:**
 1. Schema format specification (the meta-schema — how specs are expressed as YAML/JSON)
 2. ~40 individual schema files (one per spec across all kits)
 3. Schema sync tests (Tier 2 tests validating Markdown ↔ Schema consistency)
@@ -833,7 +833,7 @@ The low-coupling design means components that share only the Schema contract can
 
 **Exit criteria:** All existing specs have corresponding schema files. Tier 2 tests validate semantic consistency (hard gate counts, template section alignment, validator gate coverage). Schema format is documented and stable enough for Phase 2 consumers to build against.
 
-### Phase 2: Engine + Store + Twin + Playground (Parallel)
+### Phase 2: engine + store + twin + playground (Parallel)
 
 ```
 ┌─────────────────────┐  ┌─────────────────┐  ┌──────────────┐  ┌──────────────┐
@@ -853,7 +853,7 @@ The low-coupling design means components that share only the Schema contract can
 | Engine | Schema (Phase 1) | Produces evidence in AIEOS validator JSON format — this format already exists today. Engine doesn't need Store to function; it writes evidence artifacts to the filesystem just like the sherpa does now. |
 | Store | Schema (Phase 1) | Indexes artifacts from the filesystem. Doesn't need Engine — it can index the manually-produced artifacts that already exist from completed initiatives (e.g., aieos-console). |
 | Twin | SMR schema concept (Phase 1) | Consumes deployment events from external systems (CI/CD, Kubernetes). Doesn't need Engine or Store — it builds the topology graph independently. |
-| Playground | AIEOS Framework (exists) | Consumes specs, templates, playbooks, and integration test fixtures. Doesn't need any other ecosystem component. |
+| Playground | AIEOS Framework (exists) | Consumes specs, templates, playbooks, and integration test fixtures. Doesn't need any other system component. |
 
 **The key insight:** Engine and Store are independent to *build* but more valuable *together*. Their interface is the AIEOS validator JSON format, which already exists. They agree on the contract up front (Schema's job, done in Phase 1), then each team builds to that contract without needing the other's code.
 
@@ -869,7 +869,7 @@ This integration is additive — neither component changes its core; they just b
 
 Again, additive — Twin and Engine each work alone; together they're smarter.
 
-**Phase 2 deliverables per component:**
+**Phase 2 outputs per component:**
 
 | Component | Minimum Viable Deliverable |
 |-----------|---------------------------|
@@ -880,7 +880,7 @@ Again, additive — Twin and Engine each work alone; together they're smarter.
 
 **Phase 2 exit criteria:** Each component delivers its core value independently. Integration between components is demonstrated but not required for individual operation.
 
-### Phase 3: Analytics + Reporter (Parallel, After Store)
+### Phase 3: analytics + reporter (Parallel, after store)
 
 ```
 ┌───────────────────────┐  ┌───────────────────────┐
@@ -895,7 +895,7 @@ Again, additive — Twin and Engine each work alone; together they're smarter.
 
 **Why these two can run in parallel:** Analytics and Reporter both consume the Store but don't consume each other. Analytics produces trend insights; Reporter produces audit packages. Different outputs, same input source, no dependency between them.
 
-**Phase 3 deliverables per component:**
+**Phase 3 outputs per component:**
 
 | Component | Minimum Viable Deliverable |
 |-----------|---------------------------|
@@ -904,7 +904,7 @@ Again, additive — Twin and Engine each work alone; together they're smarter.
 
 **Phase 3 exit criteria:** Analytics produces actionable framework improvement signals. Reporter produces an audit package that an auditor would accept.
 
-### Phase 4: People & Impact
+### Phase 4: people & impact
 
 | ID | Component | Repository | Type | Dependencies |
 |----|-----------|-----------|------|-------------|
@@ -921,13 +921,13 @@ Again, additive — Twin and Engine each work alone; together they're smarter.
 
 **Phase 4 exit criteria:** One team completes a full quarterly assessment cycle using the templates.
 
-### Phase 5: Orchestrate & Execute
+### Phase 5: orchestrate & execute
 
 | ID | Component | Repository | Type | Dependencies |
 |----|-----------|-----------|------|-------------|
 | **ECO-009** | Agent Harness | `aieos-agent-harness` | Software — pluggable multi-agent orchestration engine | ECO-001 (schema for artifact event contracts), INT-002 (adapter pattern proven) |
 
-**Why a new phase:** Phases 1–3 make governance *observable and measurable*. Phase 4 extends into *people*. Phase 5 extends into *execution orchestration* — the runtime layer that binds AI providers and deterministic tools to AIEOS artifact lifecycle events. This is the most ambitious ecosystem project because it operates at the boundary between governance (Markdown, immutable) and execution (code, dynamic).
+**Why a new phase:** Phases 1–3 make governance *observable and measurable*. Phase 4 extends into *people*. Phase 5 extends into *execution orchestration* — the runtime layer that binds AI providers and deterministic tools to AIEOS artifact lifecycle events. This is the most ambitious system project because it operates at the boundary between governance (Markdown, immutable) and execution (code, dynamic).
 
 **What ECO-009 delivers:**
 
@@ -1011,7 +1011,7 @@ A pluggable orchestration engine that lets users bind different AI providers (an
 4. Cost and latency observability producing per-invocation metrics
 5. All AIEOS invariants verified (generation/validation separation, human freeze, disk state, bounded convergence)
 
-### Phase 2-3 Enhancement: Post-Integration Capabilities
+### Phase 2-3 enhancement: post-Integration capabilities
 
 After Phase 2 components are independently functional and Phase 3 components exist, cross-component integration unlocks capabilities that no single component provides:
 
@@ -1025,7 +1025,7 @@ After Phase 2 components are independently functional and Phase 3 components exi
 
 These are not separate projects — they emerge from connecting Phase 2-3 components through their existing contracts.
 
-### Timeline Summary
+### Timeline summary
 
 ```
 Phase 1 ──►  Phase 2 (parallel) ─────────────────►  Phase 3 (parallel)
@@ -1047,11 +1047,11 @@ Schema       Eval Engine ─┐                            Gov Analytics
 
 **Total: 5 phases covering 9 projects, with up to 4 projects running in parallel.**
 
-The original priority ranking (1-7 sequential) assumed each project had to complete before the next started. The phased plan recognizes that low coupling means independent buildability — the same architectural principle that makes the ecosystem maintainable also makes it parallelizable.
+The original priority ranking (1-7 sequential) assumed each project had to complete before the next started. The phased plan recognizes that low coupling means independent buildability — the same architectural principle that makes the system maintainable also makes it parallelizable.
 
 ---
 
-## Cross-Reference Matrix
+## Cross-Reference matrix
 
 How every component relates to every other. Read rows as "how {row} relates to {column}."
 
@@ -1062,17 +1062,17 @@ How every component relates to every other. Read rows as "how {row} relates to {
 | **Engine** | Governed by tool-governance-spec; each adapter has a bindings file | Requires Schema to be generic | — | Produces evidence artifacts that Store indexes; queries Store for upstream dependencies | Primary data producer (timestamps, gate results, findings) | Ensures evidence artifacts are always produced (automated collection) | Queries Twin for runtime context during evaluation | Powers "real feedback" mode with actual tool checks |
 | **Store** | Indexes framework artifacts; cross-initiative ER | Uses schemas for structured queries | Indexes Engine evidence; provides upstream context to Engine | — | Provides indexed data that Analytics queries | Provides evidence artifacts within audit scope; enables lineage tracing | Store = governed state; Twin = live state; together enable drift detection | Provides real artifact examples for training reference |
 | **Analytics** | Feedback loop: framework-level improvement signals | Uses schemas to normalize cross-type data | Correlates Engine results across initiatives | Runs all queries against Store index | — | Tracks compliance posture trends over time | Correlates governance data (Store) with runtime data (Twin) | Identifies struggling areas to prioritize scenarios |
-| **Reporter** | SCK produces evidence; Reporter assembles | Uses schemas for control-to-field mapping | Engine ensures evidence is always current | Queries Store for evidence within audit scope | Analytics tracks compliance trajectory | — | Twin provides system inventory for audit scoping | Control mappings enrich compliance training scenarios |
+| **Reporter** | SCK produces evidence; Reporter assembles | Uses schemas for control-to-field mapping | Engine ensures evidence is always current | Queries Store for evidence within audit scope | Analytics tracks compliance path | — | Twin provides system inventory for audit scoping | Control mappings enrich compliance training scenarios |
 | **Twin** | Feeds SMR (governed snapshot from live state) | Uses SMR schema for data model alignment | Provides runtime context to Engine evaluations | Complements Store (planned vs running vs recorded) | Provides runtime data for correlation with governance data | Provides system inventory for audit scoping | — | Provides realistic topologies for advanced scenarios |
 | **Playground** | Consumes framework files; reuses integration test fixtures | Uses schemas for instant practice feedback | Uses Engine for realistic validation | Uses Store for reference examples | Informed by Analytics on what to prioritize | Uses control mappings for compliance scenarios | Uses topologies for realistic complexity | — |
 
 ---
 
-## Ecosystem Design Principles
+## system design principles
 
-### Overarching Constraint: High Cohesion, Low Coupling
+### Overarching constraint: high cohesion, low coupling
 
-The ecosystem must be a **coherent system**, not a collection of tools that happen to share a name. Coherence means every component serves a clear, focused purpose (high cohesion) while depending on other components only through narrow, well-defined interfaces (low coupling).
+The system must be a **coherent system**, not a collection of tools that happen to share a name. Coherence means every component serves a clear, focused purpose (high cohesion) while depending on other components only through narrow, well-defined interfaces (low coupling).
 
 **High cohesion** means each component does one thing completely:
 
@@ -1106,21 +1106,21 @@ Each arrow is a **contract**, not a function call into another component's inter
 
 **The coupling test:** *Can you replace one component's implementation without modifying any other component's code?* If yes, coupling is low. If replacing the Store requires Engine changes, something crossed a boundary it shouldn't have.
 
-**The coherence test across the ecosystem:** *Can someone new look at the component list and immediately understand what each one does and why it's separate?* If two components seem like they should be one, either the boundary is wrong or the naming is unclear. If one component seems like it should be two, it's absorbed a responsibility it shouldn't have.
+**The coherence test across the system:** *Can someone new look at the component list and immediately understand what each one does and why it's separate?* If two components seem like they should be one, either the boundary is wrong or the naming is unclear. If one component seems like it should be two, it's absorbed a responsibility it shouldn't have.
 
-This constraint is not aspirational — it's architectural. Every design decision, API boundary, and data flow should be evaluated against it. The ecosystem will evolve over years; components will be rebuilt, replaced, and extended. Low coupling means any component can be rebuilt without cascading changes. High cohesion means the rebuild is scoped and comprehensible.
+This constraint is not aspirational — it's architectural. Every design decision, API boundary, and data flow should be evaluated against it. The system will evolve over years; components will be rebuilt, replaced, and extended. Low coupling means any component can be rebuilt without cascading changes. High cohesion means the rebuild is scoped and comprehensible.
 
 ---
 
-The AIEOS governance framework is built on 9 design philosophies (see `philosophy.md`). These aren't just governance rules — they're engineering principles that apply whenever structured systems make decisions that affect software delivery. Each ecosystem component should inherit the applicable principles and, where the runtime context introduces new concerns, extend them.
+The AIEOS governance framework is built on 9 design philosophies (see `philosophy.md`). These aren't just governance rules — they're engineering principles that apply whenever structured systems make decisions that affect software delivery. Each system component should inherit the applicable principles and, where the runtime context introduces new concerns, extend them.
 
-### Principles That Transfer Directly
+### Principles that transfer directly
 
-#### P1. Structure Enables Speed (Philosophy §1)
+#### P1. structure enables speed (Philosophy §1)
 
 **In the framework:** Structure is in the documents, not in gatekeepers.
 
-**In the ecosystem:** Structure is in the schemas, not in custom parsers. Every ecosystem component should consume structured contracts (schemas, evidence format, query interfaces) rather than parsing prose or inferring structure from conventions. An Engine adapter that works by regex-parsing tool output is the ecosystem equivalent of a spec whose rules live in the prompt — it works until it doesn't, and when it breaks, the failure is silent.
+**In the system:** Structure is in the schemas, not in custom parsers. Every system component should consume structured contracts (schemas, evidence format, query interfaces) rather than parsing prose or inferring structure from conventions. An Engine adapter that works by regex-parsing tool output is the system equivalent of a spec whose rules live in the prompt — it works until it doesn't, and when it breaks, the failure is silent.
 
 | Component | Application |
 |-----------|------------|
@@ -1130,11 +1130,11 @@ The AIEOS governance framework is built on 9 design philosophies (see `philosoph
 | Analytics | Schema-driven normalization — comparing findings across artifact types works because schemas define what "a finding" is for each type. |
 | Twin | Entity model aligned with SMR schema — the Twin's data model is structured by governance, not invented independently. |
 
-#### P2. AI-Native, Not AI-Replaced (Philosophy §2)
+#### P2. AI-Native, not AI-Replaced (Philosophy §2)
 
 **In the framework:** Every freeze point is a human decision. AI generates; humans approve.
 
-**In the ecosystem:** Every *action* point is a human decision. Components produce evidence and recommendations; humans (or sherpa-guided humans) act on them. This is the principle that prevents the Engine from becoming an autonomous promotion system and prevents Analytics from auto-modifying specs.
+**In the system:** Every *action* point is a human decision. Components produce evidence and recommendations; humans (or sherpa-guided humans) act on them. This is the principle that prevents the Engine from becoming an autonomous promotion system and prevents Analytics from auto-modifying specs.
 
 | Component | Application |
 |-----------|------------|
@@ -1144,11 +1144,11 @@ The AIEOS governance framework is built on 9 design philosophies (see `philosoph
 | Twin | Produces system state and drift alerts. Does NOT auto-correct drift or auto-update the EM. Drift is a finding, not an auto-fix trigger. |
 | Playground | Provides feedback during practice. Does NOT auto-advance trainees or certify competency. Learning assessment is human judgment. |
 
-#### P3. Explicit Over Implicit (Philosophy §3)
+#### P3. explicit over implicit (Philosophy §3)
 
 **In the framework:** Rules are in specs. Routing is in records. Missing information is marked.
 
-**In the ecosystem:** Configuration is in schemas. Decisions are in audit logs. Failures are in structured error output. No ecosystem component should silently swallow errors, infer missing configuration, or make decisions without recording why.
+**In the system:** Configuration is in schemas. Decisions are in audit logs. Failures are in structured error output. No system component should silently swallow errors, infer missing configuration, or make decisions without recording why.
 
 | Component | Application |
 |-----------|------------|
@@ -1158,11 +1158,11 @@ The AIEOS governance framework is built on 9 design philosophies (see `philosoph
 | Reporter | Every control mapping is explicit: "SOC2 CC6.1 → SAR §3 (access control findings) + EM §4 (security groups)." No implicit coverage claims. Gaps are gaps, not "probably covered by..." |
 | Twin | Every state change is an event with a source: "service X version changed from v2.1 to v2.3 at 2026-03-16T14:30Z, source: deployment event from ArgoCD." No "current state" without provenance of how it got there. |
 
-#### P4. Separation of Concerns (Philosophy §4)
+#### P4. separation of concerns (Philosophy §4)
 
 **In the framework:** The four-file system separates rules (spec), structure (template), generation behavior (prompt), and quality judgment (validator).
 
-**In the ecosystem:** Each component has a clear, non-overlapping responsibility. No component should absorb another's concern. This is the cohesion dimension of the overarching High Cohesion, Low Coupling constraint — P4 provides the *why* (rule drift), the overarching constraint provides the *test* (can you describe it in one sentence without "and"?).
+**In the system:** Each component has a clear, non-overlapping responsibility. No component should absorb another's concern. This is the cohesion dimension of the overarching High Cohesion, Low Coupling constraint — P4 provides the *why* (rule drift), the overarching constraint provides the *test* (can you describe it in one sentence without "and"?).
 
 | Concern | Owner | NOT the job of |
 |---------|-------|---------------|
@@ -1175,11 +1175,11 @@ The AIEOS governance framework is built on 9 design philosophies (see `philosoph
 
 The most important separation: **the Engine enforces rules but does not define them.** If the Engine team needs a stricter check, they propose a spec change through the normal AIEOS governance process — they don't add it as Engine-level logic. This prevents rule drift between the framework and its runtime enforcement.
 
-#### P5. Validators Judge, Not Help (Philosophy §5)
+#### P5. validators judge, not help (Philosophy §5)
 
 **In the framework:** Validators produce PASS/FAIL with blocking issues. No suggestions, no redesign.
 
-**In the ecosystem:** Every evaluation component (Engine, Analytics, Reporter) reports findings — it does not fix them.
+**In the system:** Every evaluation component (Engine, Analytics, Reporter) reports findings — it does not fix them.
 
 | Component | Judges | Does NOT |
 |-----------|--------|----------|
@@ -1188,13 +1188,13 @@ The most important separation: **the Engine enforces rules but does not define t
 | Reporter | "Gap: SOC2 CC6.8 has no covering evidence artifact" | "Generate a DAR to fill this gap" (that's a human + sherpa action) |
 | Twin | "Drift: Production has v2.3 but EM specifies v2.1" | Auto-deploying v2.1 to fix the drift |
 
-This principle prevents ecosystem components from becoming "helpful" in ways that obscure what actually needs human attention. A Reporter that auto-generates evidence to fill gaps is hiding compliance problems, not solving them.
+This principle prevents system components from becoming "helpful" in ways that obscure what actually needs human attention. A Reporter that auto-generates evidence to fill gaps is hiding compliance problems, not solving them.
 
-#### P6. Immutability Is the Source of Reliability (Philosophy §6)
+#### P6. immutability is the source of reliability (Philosophy §6)
 
 **In the framework:** Frozen artifacts are immutable. Changes go through re-entry.
 
-**In the ecosystem:** Indexed data is append-only. Evaluations are immutable once recorded. Historical state is never overwritten.
+**In the system:** Indexed data is append-only. Evaluations are immutable once recorded. Historical state is never overwritten.
 
 | Component | Application |
 |-----------|------------|
@@ -1203,11 +1203,11 @@ This principle prevents ecosystem components from becoming "helpful" in ways tha
 | Analytics | Analytics insights are timestamped snapshots. When a new analysis runs, it produces a new snapshot — it doesn't modify the previous one. Trend analysis depends on comparing snapshots over time. |
 | Twin | The Twin is event-sourced. Every state change is an appended event. The current state is a materialized view of the event stream. Historical state can always be reconstructed by replaying events to a point in time. |
 
-#### P7. Tool-Agnostic Policy (Philosophy §7)
+#### P7. tool-Agnostic policy (Philosophy §7)
 
 **In the framework:** Specs never reference vendor tools. Tool details live in bindings files.
 
-**In the ecosystem:** Core component interfaces never reference vendor implementations. Integration details live in adapters and configuration.
+**In the system:** Core component interfaces never reference vendor implementations. Integration details live in adapters and configuration.
 
 | Component | Application |
 |-----------|------------|
@@ -1217,11 +1217,11 @@ This principle prevents ecosystem components from becoming "helpful" in ways tha
 | Reporter | Reporter knows about controls and evidence schemas. It does NOT know about specific audit platforms (Vanta, Drata, AuditBoard) — those are output format adapters. |
 | Playground | Playground knows about AIEOS flows and schemas. It does NOT know about specific LMS platforms — those are integration adapters. |
 
-#### P8. Independent Components, Compatible System (Philosophy §8)
+#### P8. independent components, compatible system (Philosophy §8)
 
 **In the framework:** Each kit is standalone. An organization can start with just one kit.
 
-**In the ecosystem:** Each component is independently deployable. An organization can adopt Schema alone (for better testing), then add Engine later, then Store later — without requiring the full ecosystem on day one. This is the coupling dimension of the overarching High Cohesion, Low Coupling constraint — P8 provides the *why* (incremental adoption), the overarching constraint provides the *test* (can you replace one component without modifying another?).
+**In the system:** Each component is independently deployable. An organization can adopt Schema alone (for better testing), then add Engine later, then Store later — without requiring the full system on day one. This is the coupling dimension of the overarching High Cohesion, Low Coupling constraint — P8 provides the *why* (incremental adoption), the overarching constraint provides the *test* (can you replace one component without modifying another?).
 
 | Adoption level | What you get |
 |---------------|-------------|
@@ -1229,15 +1229,15 @@ This principle prevents ecosystem components from becoming "helpful" in ways tha
 | Schema + Engine | Automated evidence collection, deterministic gate checks on real artifacts |
 | Schema + Engine + Store | Cross-initiative search, lineage tracing, reuse tracking |
 | Schema + Engine + Store + Analytics | Governance effectiveness measurement, framework improvement signals |
-| Full ecosystem | All of the above plus compliance automation, live topology, and training |
+| Full system | All of the above plus compliance automation, live topology, and training |
 
 No component should require another component to deliver its core value (except Schema, which everything requires). The Engine works without the Store — it just can't do cross-initiative queries. The Store works without the Twin — it just tracks governed artifacts, not live state. Each layer adds value on top of the previous one.
 
-#### P9. Adapt the Edges, Not the Core (Philosophy §9)
+#### P9. adapt the edges, not the core (Philosophy §9)
 
 **In the framework:** Core invariants (four-file system, freeze-before-promote, validators-as-gates) are non-negotiable. Kit-specific artifacts, principles, and tool bindings are customizable.
 
-**In the ecosystem:** Core interfaces (schema format, evidence format, query API, event API) are non-negotiable. Adapters, backends, and UI are customizable.
+**In the system:** Core interfaces (schema format, evidence format, query API, event API) are non-negotiable. Adapters, backends, and UI are customizable.
 
 | Core (don't change) | Edges (customize freely) |
 |---------------------|------------------------|
@@ -1248,37 +1248,37 @@ No component should require another component to deliver its core value (except 
 | Analytics insight format (how findings are structured) | Analytics algorithms (what patterns to look for) |
 | Reporter control mapping format (how controls map to evidence) | Individual control mappings (SOC2 CC6.1 → SAR §3) |
 
-### Principles That Extend for the Ecosystem
+### Principles that extend for the system
 
-The AIEOS framework operates in a single-session, single-initiative context. The ecosystem introduces new concerns — runtime operation, cross-initiative data, live systems — that require new principles built on the same philosophical foundation.
+The AIEOS framework operates in a single-session, single-initiative context. The system introduces new concerns — runtime operation, cross-initiative data, live systems — that require new principles built on the same philosophical foundation.
 
-#### E1. Evidence Provenance Is Non-Negotiable
+#### E1. evidence provenance is non-Negotiable
 
 **Derived from:** Philosophy §3 (Explicit Over Implicit) + AI Transparency Principles §2 (AI Output Integrity)
 
 **In the framework:** AI-generated artifacts must not present inferred information as established fact.
 
-**Extended for ecosystem:** Every piece of evidence in the ecosystem must carry provenance: what produced it, when, from what inputs, using what tool version. An Engine evaluation without provenance is as untrustworthy as an AI-generated artifact without provenance.
+**Extended for system:** Every piece of evidence in the system must carry provenance: what produced it, when, from what inputs, using what tool version. An Engine evaluation without provenance is as untrustworthy as an AI-generated artifact without provenance.
 
 This matters most for the Compliance Reporter — an audit package with evidence that can't be traced to its source is worthless. And for Analytics — an insight derived from data of unknown provenance is a guess, not an analysis.
 
-#### E2. Graceful Degradation Over Hard Dependencies
+#### E2. graceful degradation over hard dependencies
 
 **Derived from:** Philosophy §8 (Independent Kits, Compatible System)
 
-**New for ecosystem:** When a downstream component is unavailable, upstream components continue operating with reduced capability rather than failing entirely.
+**New for system:** When a downstream component is unavailable, upstream components continue operating with reduced capability rather than failing entirely.
 
 - If the Twin is down, the Engine still evaluates — it just can't provide blast radius context. The RSA notes "Twin unavailable — deployment risk assessed without live dependency data."
 - If the Store is down, Analytics can't run — but the Engine and Twin continue independently.
 - If the Engine is down, the sherpa workflow continues manually — the framework works without runtime enforcement, as it does today.
 
-No component's outage should prevent software delivery. The ecosystem enhances the governance process; it must not become a bottleneck to it.
+No component's outage should prevent software delivery. The system enhances the governance process; it must not become a bottleneck to it.
 
-#### E3. Framework Authority Is Upstream
+#### E3. framework authority is upstream
 
 **Derived from:** Philosophy §4 (Separation of Concerns) + Philosophy §9 (Adapt Edges, Not Core)
 
-**New for ecosystem:** The AIEOS governance framework is always the source of truth. Ecosystem components consume the framework's rules — they never override, extend, or contradict them.
+**New for system:** The AIEOS governance framework is always the source of truth. system components consume the framework's rules — they never override, extend, or contradict them.
 
 - If the Engine adds a check that isn't in any spec, that check is invalid — it must be proposed as a spec change first.
 - If Analytics recommends a threshold change, the change goes through the governance process (human reviews, spec updated, schema updated, Engine picks up the new schema).
@@ -1286,21 +1286,21 @@ No component's outage should prevent software delivery. The ecosystem enhances t
 
 The information flow is: Framework → Schema → Components. Never: Component → Schema → Framework. The feedback loop (Analytics → framework improvement) goes through humans, not through automated schema modification.
 
-#### E4. Cross-Initiative Data Requires Consent and Scoping
+#### E4. cross-Initiative data requires consent and scoping
 
-**New for ecosystem:** The Store, Analytics, and Reporter operate on data from multiple initiatives, potentially across teams. This introduces data governance concerns that single-initiative AIEOS doesn't have.
+**New for system:** The Store, Analytics, and Reporter operate on data from multiple initiatives, potentially across teams. This introduces data governance concerns that single-initiative AIEOS doesn't have.
 
 - The Store must respect access boundaries — a team's initiative artifacts are not automatically visible to other teams.
 - Analytics aggregations must be scoped — "your team's rollback rate" vs "the organization's rollback rate" are different queries with different authorization requirements.
 - The Reporter must scope audit packages to authorized systems — an auditor for System A should not see evidence from System B unless scoped.
 
-This principle doesn't exist in AIEOS because the framework operates within a single project directory. The ecosystem operates across projects, which requires explicit data governance.
+This principle doesn't exist in AIEOS because the framework operates within a single project directory. The system operates across projects, which requires explicit data governance.
 
 ---
 
-## What Was Explicitly Rejected (Not in Roadmap)
+## What was explicitly rejected (Not in roadmap)
 
-These ideas from the original Implementation Master Plan are not in the ecosystem roadmap because they conflict with AIEOS philosophy:
+These ideas from the original Implementation Master Plan are not in the system roadmap because they conflict with AIEOS philosophy:
 
 | Idea | Why Rejected |
 |------|-------------|
@@ -1312,25 +1312,25 @@ These ideas from the original Implementation Master Plan are not in the ecosyste
 
 ---
 
-## Risks, Tradeoffs, and Recommendations
+## Risks, tradeoffs, and recommendations
 
-### Strengths of This Plan
+### Strengths of this plan
 
 **Schema delivers immediate, measurable value with minimal risk.** The existing test suite has 90 tests that verify structural correctness. Schema adds semantic correctness — spec/template drift, gate consistency, prompt alignment. These are real gaps we encountered during WS-1 (renaming `failure_mode_analysis` → `failure_mode_identification` required manually updating the prompt and validator). Schema catches that automatically. Measurable by: test count increase and drift detection rate.
 
-**Low coupling means low commitment.** You don't have to build all 7 projects. Schema alone is valuable. Schema + Engine is valuable. You can stop at any phase and still have delivered something useful. The architecture was explicitly designed for independent deployability — the same principle that makes the ecosystem maintainable also means partial adoption isn't a waste.
+**Low coupling means low commitment.** You don't have to build all 7 projects. Schema alone is valuable. Schema + Engine is valuable. You can stop at any phase and still have delivered something useful. The architecture was explicitly designed for independent deployability — the same principle that makes the system maintainable also means partial adoption isn't a waste.
 
 **Compliance Reporter has a direct business case.** For regulated organizations, audit preparation costs real money — staff time, consultant fees, deadline pressure. AIEOS already produces the evidence (CER, SAR, DAR, QGR). The Reporter assembles it. Measurable by: hours spent on audit prep before vs. after.
 
-**Engine solves a demonstrated pain point.** The sherpa session for aieos-console required manually collecting test results, coverage data, and deployment evidence. The human gathered it and pasted it in. Engine automates this. Measurable by: time from code complete to QGR generated.
+**Engine solves a demonstrated problem.** The sherpa session for aieos-console required manually collecting test results, coverage data, and deployment evidence. The human gathered it and pasted it in. Engine automates this. Measurable by: time from code complete to QGR generated.
 
-**The three-layer architecture is clean.** Governance (Markdown), ecosystem (runtime), and operational (lenses/tools/skills) each have clear boundaries and can evolve independently. No layer pollutes another.
+**The three-layer architecture is clean.** Governance (Markdown), system (runtime), and operational (lenses/tools/skills) each have clear boundaries and can evolve independently. No layer pollutes another.
 
-### Risks and Weaknesses
+### Risks and weaknesses
 
 **Risk 1: The framework is validated by exactly one initiative.**
 
-aieos-console is the only initiative that has gone through the full pipeline (PIK → EEK → REK). All 15 kits are built but most have never been exercised by a real project. We're designing ecosystem infrastructure for a governance framework with limited production mileage.
+aieos-console is the only initiative that has gone through the full pipeline (PIK → EEK → REK). All 15 kits are built but most have never been exercised by a real project. We're designing system infrastructure for a governance framework with limited production mileage.
 
 *Why this matters:* Schema, Engine, Store — they all assume specs are stable enough to formalize as machine-readable contracts. If running 5 more initiatives reveals that 30% of specs need major revision, every schema is wrong and every Engine rule is wrong.
 
@@ -1340,7 +1340,7 @@ aieos-console is the only initiative that has gone through the full pipeline (PI
 
 Each integration point is a contract between independent projects. When a spec changes, the cascade is: Markdown spec → Schema → Engine rules → Store indexing → Analytics normalization. That's 5 touchpoints for one spec change. Low coupling mitigates this (contracts, not internals), but doesn't eliminate it.
 
-*Why this matters:* Framework evolution slows down as more ecosystem components depend on spec stability.
+*Why this matters:* Framework evolution slows down as more system components depend on spec stability.
 
 *Severity:* **Medium.** Manageable with Schema as the single source of machine-readable truth — but only if Schema versioning and backward compatibility are treated as first-class concerns.
 
@@ -1366,11 +1366,11 @@ The entire operational layer flows through the sherpa. If organizations want a d
 
 *Why this matters:* The sherpa is Claude Code-specific. Organizations using different AI assistants or wanting non-AI interfaces need an alternative orchestration path.
 
-*Severity:* **Low-Medium.** Mitigated by the fact that ecosystem modules have their own APIs — the sherpa is one consumer, not the only possible consumer. But the operational layer documentation currently assumes sherpa as the sole orchestrator.
+*Severity:* **Low-Medium.** Mitigated by the fact that system modules have their own APIs — the sherpa is one consumer, not the only possible consumer. But the operational layer documentation currently assumes sherpa as the sole orchestrator.
 
 **Risk 6: Premature infrastructure before product-market fit.**
 
-The framework works today. Artifacts get generated, validated, and frozen. The ecosystem makes it *better* — but the question is whether the current pain points justify the investment, or whether the priority should be running more initiatives to find the real problems.
+The framework works today. Artifacts get generated, validated, and frozen. The system makes it *better* — but the question is whether the current pain points justify the investment, or whether the priority should be running more initiatives to find the real problems.
 
 *Why this matters:* Building Schema for specs that will change significantly is premature optimization. Building Analytics for a single-initiative dataset is premature investment.
 
@@ -1378,11 +1378,11 @@ The framework works today. Artifacts get generated, validated, and frozen. The e
 
 **Risk 7: No external demand signal.**
 
-This ecosystem isn't being built in response to user demand. It's designed because the architecture suggests it. Design-forward approaches can produce elegant solutions to problems nobody has.
+This system isn't being built in response to user demand. It's designed because the architecture suggests it. Design-forward approaches can produce elegant solutions to problems nobody has.
 
 *Severity:* **Low-Medium.** Mitigated by the fact that each component addresses a real gap identified during aieos-console. But "identified during one initiative" is a thin signal.
 
-### Will It Make a Meaningful and Measurable Improvement?
+### Will it make a meaningful and measurable improvement?
 
 Yes — but the timing of value delivery depends on framework adoption.
 
@@ -1398,25 +1398,25 @@ Yes — but the timing of value delivery depends on framework adoption.
 
 **Schema and Engine deliver measurable improvement quickly. Everything else requires organizational adoption at a scale that doesn't exist yet.**
 
-### Recommendations: Adoption-Gated Execution
+### Recommendations: adoption-Gated execution
 
 The phased plan is architecturally correct — the dependency graph and parallelism analysis are sound. But the *timing* should be driven by adoption milestones, not by the dependency graph alone.
 
-#### Phase 0 (Before Any Ecosystem Work): Validate the Framework
+#### Phase 0 (Before any system work): validate the framework
 
 **Run 3-5 more initiatives through the existing framework.** Each initiative will surface framework findings (aieos-console surfaced 10). Those findings will stabilize the specs.
 
 **Adoption milestone:** Two consecutive initiatives produce zero spec-level findings. This signals specs are stable enough to formalize as schemas.
 
-*Why this matters:* Schema on unstable specs creates maintenance burden. Every schema revision cascades to every ecosystem consumer. Wait for stability.
+*Why this matters:* Schema on unstable specs creates maintenance burden. Every schema revision cascades to every system consumer. Wait for stability.
 
-#### Phase 1 (After Specs Stabilize): Schema
+#### Phase 1 (After specs stabilize): schema
 
-Build Schema as designed. Immediate Tier 2 test improvements. No adoption dependency — Schema benefits the framework regardless of whether ecosystem modules are ever built.
+Build Schema as designed. Immediate Tier 2 test improvements. No adoption dependency — Schema benefits the framework regardless of whether system modules are ever built.
 
 **Adoption milestone for next phase:** Schema exists and Tier 2 tests validate spec/template/validator semantic consistency across all kits.
 
-#### Phase 2 (After Schema): Engine First, Others as Justified
+#### Phase 2 (After schema): engine first, others as justified
 
 **Start with one adapter, not five.** Prove the concept with a single adapter (e.g., pytest for test evidence) feeding a single artifact (QGR). If that works, add adapters incrementally.
 
@@ -1432,7 +1432,7 @@ Build Schema as designed. Immediate Tier 2 test improvements. No adoption depend
 - Twin trigger: Team reports SMR assembly taking >1 hour
 - Playground trigger: Third team onboards to AIEOS (enough "new user" signal)
 
-#### Phase 3 (After Store + Adoption): Analytics and Reporter
+#### Phase 3 (After store + adoption): analytics and reporter
 
 **Analytics:** Only after the Store has indexed 10+ initiatives across multiple teams. Before that, the sample size is too small for meaningful patterns.
 
@@ -1442,20 +1442,20 @@ Build Schema as designed. Immediate Tier 2 test improvements. No adoption depend
 - Analytics trigger: 10+ initiatives indexed in Store, across 3+ teams
 - Reporter trigger: Organization has a scheduled audit and SCK evidence in Store
 
-### Summary Assessment
+### Summary assessment
 
 | Verdict | Detail |
 |---------|--------|
 | **Architecture** | Sound. Low coupling, high cohesion, clean layer separation, incremental adoption. |
-| **Timing risk** | High. The framework needs more real-world mileage before ecosystem investment is justified. |
+| **Timing risk** | High. The framework needs more real-world mileage before system investment is justified. |
 | **Recommendation** | Run more initiatives first. Build Schema when specs stabilize. Build Engine with one adapter as proof-of-concept. Gate everything else on adoption milestones. |
 | **Measurable improvement** | Yes for Schema (immediate) and Engine (near-term). Uncertain for the rest until adoption exists. |
 | **Biggest risk** | Building infrastructure for a framework that hasn't been validated at scale. |
-| **Biggest opportunity** | If adoption materializes, the ecosystem turns AIEOS from "a process teams follow" into "an organizational capability that measures and improves itself." |
+| **Biggest opportunity** | If adoption materializes, the system turns AIEOS from "a process teams follow" into "an organizational capability that measures and improves itself." |
 
 ---
 
-## Implementation Notes
+## Implementation notes
 
 ### WS-1 through WS-5 (Completed 2026-03-16)
 
@@ -1469,4 +1469,4 @@ Five ideas from the original plan were extracted and implemented as AIEOS govern
 | WS-4 | Decision Outcome Taxonomy (6 outcomes) | Plan §8.1 Decision Outcomes |
 | WS-5 | Sherpa cognitive enhancements (intent resolution, decision explanation, health dashboard) | Plan §12 Cognitive Control Plane |
 
-These are governance framework changes (Markdown + test model). The ecosystem projects above are the runtime/tooling complement.
+These are governance framework changes (Markdown + test model). The system projects above are the runtime/tooling complement.

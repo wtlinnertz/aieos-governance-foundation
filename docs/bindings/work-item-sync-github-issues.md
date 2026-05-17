@@ -2,12 +2,12 @@
 
 This binding maps the abstract `TOOL-WORK-ITEM-SYNC` capability to GitHub Issues.
 
-## Tool Reference
+## Tool reference
 
 - **Tool Spec:** `docs/tools/work-item-sync-spec.md`
 - **Tool Template:** `docs/tools/work-item-sync-template.md`
 
-## Input Mapping
+## Input mapping
 
 | Tool Input | GitHub Issues Mapping |
 |------------|----------------------|
@@ -15,7 +15,7 @@ This binding maps the abstract `TOOL-WORK-ITEM-SYNC` capability to GitHub Issues
 | `wdd_path` | Not mapped to GitHub — used by the adapter to read WDD content |
 | `target_system` | Resolved to GitHub repository (owner/repo) |
 
-## Field Mapping
+## Field mapping
 
 | AIEOS Field | GitHub Issues Field | Notes |
 |-------------|-------------------|-------|
@@ -29,22 +29,22 @@ This binding maps the abstract `TOOL-WORK-ITEM-SYNC` capability to GitHub Issues
 | Acceptance criteria | Checklist in issue body | Rendered as GitHub task list (`- [ ]`) |
 | Work group → item relationship | Milestone membership | Items in the same group share a milestone |
 
-## ID Derivation
+## ID derivation
 
 The external ID is derived deterministically: the adapter searches for an existing issue whose title starts with `[{ITEM_ID}]` in the configured repository. If found, the issue is updated. If not found, a new issue is created. Milestones are matched by name (work group name); created if missing.
 
-## Adapter Environment Variables
+## Adapter environment variables
 
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `GITHUB_TOKEN` | Yes | Personal access token or GitHub App token with `issues:write` and `project:write` scope |
 | `GITHUB_REPO` | Yes | Target repository in `owner/repo` format (e.g., `acme/taskflow`) |
 
-## Adapter Conformance Reference
+## Adapter conformance reference
 
 The adapter implementing this binding must satisfy all hard gates defined in `docs/adapter-conformance-spec.md`. The adapter is push-only (creates/updates GitHub Issues; does not sync issue status changes back to the WDD).
 
-## What This Binding Does Not Define
+## What this binding does not define
 
 This binding does not define policy. The rules for what constitutes a valid work item sync operation (preconditions, postconditions, constraints, hard gates) are defined in `work-item-sync-spec.md`. The interface contract for adapter implementations is defined in `adapter-conformance-spec.md`. This file only describes how WDD fields map to GitHub Issues fields and configuration.
 

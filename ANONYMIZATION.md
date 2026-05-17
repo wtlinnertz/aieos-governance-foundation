@@ -13,7 +13,7 @@ These rules apply to **all files**, including governance model text, examples, d
 
 ---
 
-## Core Rule
+## Core rule
 
 > **No content may reference a real employer, internal system, or proprietary environment.**
 
@@ -21,11 +21,11 @@ If there is any doubt, **anonymize**.
 
 ---
 
-## Prohibited Content (Must NOT Appear)
+## Prohibited content (Must NOT appear)
 
 The following must never appear in this repository:
 
-### Employer & Organization Identifiers
+### Employer & organization identifiers
 - Company names (current or former)
 - Business unit names
 - Internal team names
@@ -34,7 +34,7 @@ The following must never appear in this repository:
 
 ---
 
-### Internal Systems & Tooling
+### Internal systems & tooling
 - Internal platform names
 - Proprietary service names
 - Internal dashboards or portals
@@ -44,7 +44,7 @@ The following must never appear in this repository:
 
 ---
 
-### Identifiers & Metadata
+### Identifiers & metadata
 - Internal URLs or domains
 - IP addresses (internal or external)
 - Email addresses
@@ -56,7 +56,7 @@ The following must never appear in this repository:
 
 ---
 
-### Configuration & Secrets
+### Configuration & secrets
 - API keys or tokens (even redacted)
 - Certificates
 - Credentials
@@ -65,18 +65,18 @@ The following must never appear in this repository:
 
 ---
 
-### Logs, Screenshots, and Output
+### Logs, screenshots, and output
 - Screenshots containing identifiers
 - Logs with timestamps, IDs, or hostnames tied to a real environment
 - Command output revealing environment details
 
 ---
 
-## Required Anonymization Patterns
+## Required anonymization patterns
 
 When examples require realism, use **explicit placeholders**.
 
-### Approved Placeholder Conventions
+### Approved placeholder conventions
 
 Use ALL CAPS placeholders consistently:
 
@@ -92,7 +92,7 @@ Use ALL CAPS placeholders consistently:
 
 ---
 
-### Domains & URLs
+### Domains & uRLs
 Use:
 - `example.com`
 - `api.example.com`
@@ -117,7 +117,7 @@ Avoid:
 
 ---
 
-### Cloud & Platform References
+### Cloud & platform references
 Allowed:
 - Generic cloud provider references (e.g., "a managed Kubernetes cluster")
 - Open-source project names

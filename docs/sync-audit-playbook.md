@@ -6,7 +6,7 @@ This playbook documents how to run the kit sync audit, how to maintain the kit m
 
 ## Prerequisites
 
-### Workspace Layout
+### Workspace layout
 
 All 15 kit repositories and the governance foundation must be cloned as sibling directories under a single workspace root:
 
@@ -38,9 +38,9 @@ The canonical manifest is `aieos-governance-foundation/kit-manifest.yml`. It mus
 
 ---
 
-## Running a Sync Audit
+## Running a sync audit
 
-### Full Audit
+### Full audit
 
 In a Claude Code session, with your working directory at the workspace root:
 
@@ -52,7 +52,7 @@ In a Claude Code session, with your working directory at the workspace root:
 Example prompt:
 > Run TOOL-KIT-SYNC-AUDIT against this workspace. Full scope. Follow the instructions in `aieos-governance-foundation/docs/tools/kit-sync-audit-prompt.md`.
 
-### Scoped Audit
+### Scoped audit
 
 To check only a subset:
 
@@ -63,7 +63,7 @@ To check only a subset:
 | `sync-files-only` | Governance model copy sync | After governance model changes |
 | `single-kit:EEK` | All checks for one kit only | After modifying a specific kit |
 
-### Single-Kit Self-Check
+### Single-Kit self-Check
 
 To validate one kit in depth:
 
@@ -75,9 +75,9 @@ Example prompt:
 
 ---
 
-## Maintaining the Manifest
+## Maintaining the manifest
 
-### When to Update
+### When to update
 
 Update `kit-manifest.yml` **before** updating prose documents. The manifest is the source of truth — prose is validated against it.
 
@@ -97,7 +97,7 @@ Update `kit-manifest.yml` **before** updating prose documents. The manifest is t
 | Entry point added/removed | Yes — update `entry_points` section and kit's `entry_points` list |
 | Spec file renamed | Yes — update `spec_file` in the artifact entry |
 
-### How to Update
+### How to update
 
 1. Open `kit-manifest.yml` in the governance-foundation repo.
 2. Make the change in the manifest.
@@ -115,9 +115,9 @@ python3 -c "import yaml; yaml.safe_load(open('kit-manifest.yml')); print('YAML v
 
 ---
 
-## Common Scenarios
+## Common scenarios
 
-### Adding a New Kit
+### Adding a new kit
 
 1. Create the kit repository with standard structure (per `kit-structure-standard.md`).
 2. Run `check-structure.sh` on the new kit — fix any failures.
@@ -140,7 +140,7 @@ python3 -c "import yaml; yaml.safe_load(open('kit-manifest.yml')); print('YAML v
 7. Run Tier 2 tests (`run-tier2.sh`).
 8. Commit and push all changes.
 
-### Bumping the Governance Model Version
+### Bumping the governance model version
 
 1. Update the version in `governance-model.md` (the `Current version:` line in §15 and the `Current value:` in §Artifact Provenance).
 2. Update `governance_model_version` in `kit-manifest.yml`.
@@ -148,7 +148,7 @@ python3 -c "import yaml; yaml.safe_load(open('kit-manifest.yml')); print('YAML v
 4. Run `TOOL-KIT-SYNC-AUDIT` with scope `sync-files-only` to verify all copies match.
 5. Commit and push governance-foundation first, then each kit.
 
-### Adding an Artifact to an Existing Kit
+### Adding an artifact to an existing kit
 
 1. Create the four-file set (spec, template, prompt, validator) in the kit.
 2. Update the kit's `CLAUDE.md` and `playbook.md` with the new artifact.
@@ -160,7 +160,7 @@ python3 -c "import yaml; yaml.safe_load(open('kit-manifest.yml')); print('YAML v
 5. If the artifact creates a new boundary contract, update the downstream kit's `entry_from` in the manifest and create the `entry-from-{upstream}.md` file.
 6. Run `TOOL-KIT-SYNC-AUDIT` to verify cross-kit alignment.
 
-### Renaming a Kit or Artifact
+### Renaming a kit or artifact
 
 1. Update `kit-manifest.yml` first (all references: `kits`, `dependency_edges`, `entry_from`, `triggers`, `feeds_into`, `presets`, `entry_points`).
 2. Update all prose documents that reference the old name.
@@ -168,7 +168,7 @@ python3 -c "import yaml; yaml.safe_load(open('kit-manifest.yml')); print('YAML v
 
 ---
 
-## Recommended Schedule
+## Recommended schedule
 
 | Frequency | Action |
 |-----------|--------|
@@ -179,7 +179,7 @@ python3 -c "import yaml; yaml.safe_load(open('kit-manifest.yml')); print('YAML v
 
 ---
 
-## Relationship to Other Healthchecks
+## Relationship to other healthchecks
 
 This playbook covers the **A4 Cross-Kit Sync Audit** check in `docs/healthcheck-playbook.md`. It sits at Tier 2 in the healthcheck hierarchy:
 
@@ -195,11 +195,11 @@ Lower tiers gate higher tiers. Do not run the sync audit until Tier 1 passes for
 
 ---
 
-## Future Automation
+## Future automation
 
 The following are planned but not yet built:
 
-- **CI integration**: GitHub Action on governance-foundation PRs that validates the manifest against all kit repos.
-- **Scheduled agent**: Weekly cron via Claude Code that runs a full audit and reports findings.
-- **Sherpa integration**: Sherpa offers a sync audit before starting new initiatives if the last audit is stale.
-- **framework.py migration**: The Tier 2 test suite's `KIT_REGISTRY` in `models/framework.py` will be migrated to consume `kit-manifest.yml` directly, eliminating one duplication point.
+- CI integration: GitHub Action on governance-foundation PRs that validates the manifest against all kit repos.
+- Scheduled agent: Weekly cron via Claude Code that runs a full audit and reports findings.
+- Sherpa integration: Sherpa offers a sync audit before starting new initiatives if the last audit is stale.
+- framework.py migration: The Tier 2 test suite's `KIT_REGISTRY` in `models/framework.py` will be migrated to consume `kit-manifest.yml` directly, eliminating one duplication point.

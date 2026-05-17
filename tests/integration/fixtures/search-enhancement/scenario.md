@@ -5,7 +5,7 @@
 - Preset: P2 (Enhancement)
 - Topic: Add full-text search to existing task management REST API
 
-## User Responses (in conversation order)
+## User responses (in conversation order)
 
 ### Initial request
 We have a task management API that currently only supports filtering by status and assignee. I want to add full-text search so users can search tasks by title and description. I know exactly what I need — it's a bounded enhancement to our existing API.
@@ -22,10 +22,10 @@ Yes, P2 Enhancement is correct.
 ### Initiative name
 TASKSEARCH
 
-### KER Path B justification
+### KER path b justification
 We're choosing Path B (direct EEK entry) because: (1) the feature scope is bounded — single endpoint addition to an existing API, (2) user need is validated through support ticket volume — 23 requests in the last quarter, (3) solution approach is known — PostgreSQL full-text search with tsvector/tsquery, (4) no architectural ambiguity — extends existing REST patterns. No PIK discovery is needed.
 
-### Product Brief responses
+### Product brief responses
 **Problem:** Users cannot find tasks without knowing the exact status or assignee. The API only supports structured filters, not free-text search. This forces users to scroll through task lists manually or use workarounds like browser find on the UI. 23 support tickets in Q4 requested search functionality.
 
 **Solution:** Add a full-text search endpoint using PostgreSQL's built-in tsvector/tsquery. Index task titles and descriptions. Return results ranked by relevance with highlighted match snippets.

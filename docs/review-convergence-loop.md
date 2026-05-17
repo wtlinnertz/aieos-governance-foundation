@@ -20,7 +20,7 @@ These are workflow patterns, not tool definitions. No four-file tool set is requ
 
 ---
 
-## Core Invariants
+## Core invariants
 
 These rules apply to both patterns:
 
@@ -34,7 +34,7 @@ These rules apply to both patterns:
 
 ---
 
-## Pattern A: Validator Convergence Loop
+## Pattern a: validator convergence loop
 
 **Scope:** Any artifact, any kit. Applies whenever a validator returns FAIL.
 
@@ -42,7 +42,7 @@ These rules apply to both patterns:
 
 A validator returns `status: FAIL` with one or more entries in `blocking_issues`.
 
-### Correction Session Inputs
+### Correction session inputs
 
 | Item | Source |
 |------|--------|
@@ -53,7 +53,7 @@ A validator returns `status: FAIL` with one or more entries in `blocking_issues`
 | Blocking issues | `blocking_issues` array from the validator output |
 | Generation prompt (correction mode) | The original `docs/prompts/{type}-prompt.md` with correction preamble |
 
-### Correction Mode
+### Correction mode
 
 The generation prompt is re-invoked with a constraint preamble prepended to the normal inputs. The preamble contains:
 
@@ -73,7 +73,7 @@ The loop converges when all hard gates return PASS. The corrected artifact proce
 
 This pattern corresponds to the **Remediate-and-Retry** outcome in the Decision Outcome Taxonomy (see `flow-reference.md` §11). The decision to enter a convergence loop — rather than blocking or escalating — is made by the operator or orchestrating agent when validator findings are judged to be correctable within the current artifact scope.
 
-### Stopping Rules
+### Stopping rules
 
 The loop stops — without convergence — under any of these conditions:
 
@@ -98,7 +98,7 @@ The escalation report is delivered to the human operator. The artifact remains i
 
 ---
 
-## Pattern B: PRK Review Convergence Loop
+## Pattern b: PRK review convergence loop
 
 **Scope:** Artifacts that undergo peer review via the Peer Review Kit (Layer 14). Applies when a PRR returns FAIL disposition.
 
@@ -106,7 +106,7 @@ The escalation report is delivered to the human operator. The artifact remains i
 
 A frozen PRR has `FAIL` disposition. PRR §6 Required Remediations lists the blocking findings that must be addressed.
 
-### Correction Session Inputs
+### Correction session inputs
 
 | Item | Source |
 |------|--------|
@@ -117,7 +117,7 @@ A frozen PRR has `FAIL` disposition. PRR §6 Required Remediations lists the blo
 | Required remediations | PRR §6 Required Remediations (blocking findings from all lenses) |
 | Generation prompt (correction mode) | The original prompt with correction preamble (same structure as Pattern A) |
 
-### Correction Flow
+### Correction flow
 
 1. **Correct** — Run a correction session with PRR §6 Required Remediations as the correction constraint set. Produce a corrected artifact.
 2. **Own validator** — Validate the corrected artifact against its own validator. If FAIL, run Pattern A (validator convergence) before proceeding. The artifact must pass its own validator before re-entering PRK.
@@ -130,15 +130,15 @@ The loop converges when the new PRR returns PASS disposition. The corrected arti
 
 Pattern B also maps to **Remediate-and-Retry** in the Decision Outcome Taxonomy. When PRR findings are correctable without redesign, the artifact enters this bounded correction loop. If convergence fails (3 iterations), the outcome escalates to **Block** (human must intervene) or **Require-Redesign** (upstream artifact must change).
 
-### Affected Lens Determination
+### Affected lens determination
 
 A lens is "affected" if it contributed at least one finding at critical or high severity in the original PRR. Unaffected lenses carry forward their original outputs without re-execution. This prevents redundant work while ensuring all blocking concerns are re-evaluated.
 
-### Conflict Handling
+### Conflict handling
 
 If two lenses oscillate across iterations — lens A's remediation creates a finding for lens B, and lens B's remediation creates a finding for lens A — the loop stops and escalates to a human with both lens perspectives. The human resolves the conflict by making a design decision that satisfies both concerns, or by accepting one lens's finding as a known tradeoff.
 
-### Stopping Rules
+### Stopping rules
 
 | Condition | Detection | Action |
 |-----------|-----------|--------|
@@ -152,11 +152,11 @@ When Pattern B fails to converge, the escalation report includes:
 
 - Everything from Pattern A's escalation format
 - PRR version history (all PRR IDs generated during the convergence attempt)
-- Lens-by-lens finding trajectory (how each lens's findings changed across iterations)
+- Lens-by-lens finding path (how each lens's findings changed across iterations)
 
 ---
 
-## Iteration Ledger
+## Iteration ledger
 
 The iteration ledger tracks each correction attempt within a convergence loop. It is created on the first FAIL and updated each cycle.
 
@@ -176,7 +176,7 @@ The iteration ledger tracks each correction attempt within a convergence loop. I
 
 ---
 
-## Convergence Criteria Hierarchy
+## Convergence criteria hierarchy
 
 Multiple levels of convergence criteria exist. Higher levels subsume lower levels.
 
@@ -206,7 +206,7 @@ The convergence loop operates at Level 1 by default. Levels 2–4 are advisory �
 
 ---
 
-## Relationship to Other Documents
+## Relationship to other documents
 
 | Document | Relationship |
 |----------|-------------|

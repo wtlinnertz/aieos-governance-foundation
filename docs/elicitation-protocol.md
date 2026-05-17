@@ -8,7 +8,7 @@ Named reasoning techniques applied before artifact generation to surface gaps, c
 
 ---
 
-## When to Apply
+## When to apply
 
 - Before generating any artifact with 5+ hard gates
 - When upstream artifacts contain assumptions marked "Untested" or "Partially Confirmed"
@@ -18,37 +18,37 @@ Named reasoning techniques applied before artifact generation to surface gaps, c
 
 ## Techniques
 
-### 1. Pre-Mortem Analysis
+### 1. pre-Mortem analysis
 
 "Assume this artifact already failed its hard gates or caused a downstream failure. Work backward: what are the 3 most likely causes?"
 
 - Best for: SAD, RP, QGR (high-consequence artifacts)
 
-### 2. First Principles Decomposition
+### 2. first principles decomposition
 
 "Strip away inherited context from upstream artifacts. What must be independently true for this artifact to be valid?"
 
 - Best for: DPRD, TDD (artifacts that synthesize multiple inputs)
 
-### 3. Inversion
+### 3. inversion
 
 "List the 5 surest ways to make this artifact fail validation. Verify none exist."
 
 - Best for: Any artifact entering validation for the first time
 
-### 4. Stakeholder Lens Rotation
+### 4. stakeholder lens rotation
 
 "Re-read upstream inputs from 3 perspectives: end user, operator, security auditor. Note what each would flag as missing."
 
 - Best for: DPRD, SAD, RP (multi-stakeholder artifacts)
 
-### 5. Constraint Removal
+### 5. constraint removal
 
 "Temporarily remove the most restrictive constraint. What changes? Does the constraint deserve its weight, or is it over-constraining the solution space?"
 
 - Best for: SAD, VER (design/evaluation artifacts with inherited constraints)
 
-### 6. Assumption Surfacing
+### 6. assumption surfacing
 
 "List every implicit assumption this artifact makes that is NOT explicitly stated in any upstream artifact."
 
@@ -56,7 +56,7 @@ Named reasoning techniques applied before artifact generation to surface gaps, c
 
 ---
 
-## Output Convention
+## Output convention
 
 After applying a technique, include a brief Markdown comment at the end of the generated artifact:
 
@@ -66,7 +66,7 @@ After applying a technique, include a brief Markdown comment at the end of the g
 
 ---
 
-## Relationship to Existing Mechanisms
+## Relationship to existing mechanisms
 
 - Complements (does not replace) Intent Verification
 - Complements (does not replace) `assumption-stress-test-prompt.md` (PIK utility)

@@ -4,7 +4,7 @@ Manual evaluation criteria for sherpa conversation quality. Use this rubric for 
 
 ---
 
-## Scoring Scale
+## Scoring scale
 
 | Score | Label | Meaning |
 |-------|-------|---------|
@@ -16,9 +16,9 @@ Manual evaluation criteria for sherpa conversation quality. Use this rubric for 
 
 ---
 
-## Evaluation Criteria
+## Evaluation criteria
 
-### 1. Question Relevance
+### 1. question relevance
 
 Does the sherpa ask questions that are relevant to the current flow step, or does it ask irrelevant, premature, or redundant questions?
 
@@ -30,7 +30,7 @@ Does the sherpa ask questions that are relevant to the current flow step, or doe
 | 4 | Questions are well-targeted and adapt to prior responses |
 | 5 | Questions demonstrate deep understanding of the user's context; asks exactly the right thing at the right time |
 
-### 2. Intent-to-Framework Translation
+### 2. intent-to-Framework translation
 
 Does the sherpa visibly map the user's natural language to AIEOS concepts before consulting decision tables? This goes beyond plain language — it evaluates whether the sherpa shows its translation work.
 
@@ -42,7 +42,7 @@ Does the sherpa visibly map the user's natural language to AIEOS concepts before
 | 4 | Explicitly maps user's description to framework vocabulary ("this sounds like X, which maps to Y") |
 | 5 | Translation feels effortless and educational — user learns the framework vocabulary naturally through the mapping |
 
-### 3. Plain Language
+### 3. plain language
 
 Does the sherpa translate governance concepts into accessible language, or does it use jargon and acronyms without explanation?
 
@@ -54,7 +54,7 @@ Does the sherpa translate governance concepts into accessible language, or does 
 | 4 | Consistently clear; governance concepts contextualized naturally |
 | 5 | Governance is invisible — the user experiences a natural problem-solving conversation, not a framework exercise |
 
-### 4. Builds on Prior Context
+### 4. builds on prior context
 
 Does each response demonstrate awareness of what the user has already said, or does the sherpa repeat questions or ignore earlier context?
 
@@ -66,7 +66,7 @@ Does each response demonstrate awareness of what the user has already said, or d
 | 4 | Weaves prior context into new questions and explanations naturally |
 | 5 | Maintains a running mental model of the user's situation; each interaction clearly builds on everything before |
 
-### 5. Appropriate Pauses
+### 5. appropriate pauses
 
 Does the sherpa pause at natural decision points (freeze gates, kit transitions, cross-cutting adoption), or does it barrel through without giving the user time to think?
 
@@ -78,7 +78,7 @@ Does the sherpa pause at natural decision points (freeze gates, kit transitions,
 | 4 | Pauses at all natural decision points; user always has agency |
 | 5 | Pause points feel natural and well-timed; includes brief "here's what just happened and what's next" context |
 
-### 6. Running Count / Progress Awareness
+### 6. running count / progress awareness
 
 Does the sherpa maintain and communicate a sense of progress — artifact count, flow position, what's next?
 
@@ -90,7 +90,7 @@ Does the sherpa maintain and communicate a sense of progress — artifact count,
 | 4 | Consistent progress updates with count and position context |
 | 5 | Natural progress narration — "We've completed 3 of 6 PIK artifacts; the next step is..." — that feels helpful, not mechanical |
 
-### 7. Kit Transition Clarity
+### 7. kit transition clarity
 
 When moving between kits (PIK→EEK, ODK→EEK, etc.), does the sherpa explain why the transition is happening and what changes?
 
@@ -102,7 +102,7 @@ When moving between kits (PIK→EEK, ODK→EEK, etc.), does the sherpa explain w
 | 4 | Explains what triggered the transition, what the new kit does, and what to expect |
 | 5 | Transition feels like a natural milestone; the user understands the progression without feeling lectured |
 
-### 8. Utility Prompt Surfacing
+### 8. utility prompt surfacing
 
 Does the sherpa offer optional utility prompts (assumption stress test, brownfield analysis, stakeholder map) at appropriate moments?
 
@@ -114,7 +114,7 @@ Does the sherpa offer optional utility prompts (assumption stress test, brownfie
 | 4 | Offers utility prompts with clear "why now" reasoning; respects user's decision |
 | 5 | Utility prompt offers feel like helpful suggestions from an experienced colleague, not checkbox items |
 
-### 9. Decision Junction Reasoning
+### 9. decision junction reasoning
 
 At decision junctions (preset selection, path choice, kit adoption, disposition), does the sherpa provide structured reasoning that cites the decision table?
 
@@ -126,7 +126,7 @@ At decision junctions (preset selection, path choice, kit adoption, disposition)
 | 4 | Cites the decision table (e.g., "J-EEK-PATH"), evaluates criteria against evidence, and names the outcome (Approve, Block, etc.) |
 | 5 | Junction reasoning feels like expert coaching — "Here's the decision, here's why based on your specifics, and here's what the framework says" |
 
-### 10. Proactive Health Monitoring
+### 10. proactive health monitoring
 
 After 3+ artifact freezes, does the sherpa proactively surface health signals (staleness, cross-cutting gaps, decision velocity, upcoming junctions)?
 
@@ -138,7 +138,7 @@ After 3+ artifact freezes, does the sherpa proactively surface health signals (s
 | 4 | Runs a health check after 3+ freezes; surfaces overdue kits and upcoming decisions |
 | 5 | Health signals feel like a natural part of the guide experience — "Quick checkpoint: here's where we are and what might need attention" |
 
-### 11. Error Handling and Recovery
+### 11. error handling and recovery
 
 When something goes wrong (validation failure, missing input, ambiguous response), does the sherpa handle it gracefully?
 
@@ -150,7 +150,7 @@ When something goes wrong (validation failure, missing input, ambiguous response
 | 4 | Explains what went wrong, why, and provides clear guidance for correction |
 | 5 | Error recovery feels natural; the user understands the issue and fix without frustration |
 
-### 12. Risk Awareness
+### 12. risk awareness
 
 Before generating artifacts, does the sherpa scan upstream frozen artifacts for risk patterns (high assumption count, TBD items, missing cross-references, conflicting constraints) and surface them as brief advisories?
 
@@ -162,9 +162,9 @@ Before generating artifacts, does the sherpa scan upstream frozen artifacts for 
 | 4 | Systematically scans, surfaces risks with specific artifact/section citations, lets user decide |
 | 5 | Risk surfacing feels like an experienced colleague reviewing your inputs — catches things you'd miss, presents them without alarm |
 
-### 13. Efficiency of Cross-Cutting Decisions
+### 13. efficiency of cross-Cutting decisions
 
-Does the sherpa use fast-path detection to streamline obvious cross-cutting kit adoption decisions, reducing unnecessary Q&A?
+Does the sherpa use fast-path detection to simplify obvious cross-cutting kit adoption decisions, reducing unnecessary Q&A?
 
 | Score | Description |
 |-------|-------------|
@@ -174,7 +174,7 @@ Does the sherpa use fast-path detection to streamline obvious cross-cutting kit 
 | 4 | Uses fast-path for obvious decisions with clear reasoning; falls back to full explanation when ambiguous |
 | 5 | Cross-cutting decisions feel effortless — obvious skips are confirmed in one sentence, only genuinely ambiguous decisions get discussion |
 
-### 14. Quality Coaching
+### 14. quality coaching
 
 After validation PASS, does the sherpa surface completeness scores, offer improvement for borderline artifacts, and run cross-artifact consistency checks?
 
@@ -186,7 +186,7 @@ After validation PASS, does the sherpa surface completeness scores, offer improv
 | 4 | Surfaces score, offers improvement for borderline artifacts, runs consistency checks and reports mismatches with section references |
 | 5 | Quality coaching feels like a senior reviewer — catches thin areas, spots cross-artifact inconsistencies, and presents improvement as helpful rather than critical |
 
-### 15. Decision Rationale Accessibility
+### 15. decision rationale accessibility
 
 Does the sherpa maintain a journal of decisions and their reasoning? Can the user ask "why did we decide X?" and get a clear, cited answer?
 
@@ -200,25 +200,25 @@ Does the sherpa maintain a journal of decisions and their reasoning? Can the use
 
 ---
 
-## Test Personas
+## Test personas
 
 Use these personas to evaluate how the sherpa adapts to different user types.
 
-### Persona A: Technical Lead (experienced, direct)
+### Persona a: technical lead (experienced, direct)
 
 - **Background:** 10+ years software engineering, familiar with SDLC processes
 - **Communication style:** Brief, direct answers; doesn't need hand-holding
 - **What to watch:** Does the sherpa calibrate its explanations? Does it avoid over-explaining to someone who clearly knows the domain?
 - **Sample opening:** "I need to add full-text search to our API. I know exactly what I need — let's get through the intake quickly."
 
-### Persona B: Product Manager (non-technical, detail-oriented)
+### Persona b: product manager (non-technical, detail-oriented)
 
 - **Background:** Product management background, not deeply technical
 - **Communication style:** Asks "why" frequently; wants to understand the purpose of each step
 - **What to watch:** Does the sherpa explain governance concepts in business terms? Does it translate technical artifacts into value language?
 - **Sample opening:** "We want to explore whether AI code review could help our team. I'm the product sponsor but I'm not an engineer — can you walk me through what we need to do?"
 
-### Persona C: Skeptic / Pushback (questions the process)
+### Persona c: skeptic / pushback (questions the process)
 
 - **Background:** Senior IC who views process as overhead
 - **Communication style:** Pushes back on steps that feel bureaucratic; asks "why do I need this?"
@@ -227,7 +227,7 @@ Use these personas to evaluate how the sherpa adapts to different user types.
 
 ---
 
-## Manual Test Script
+## Manual test script
 
 Step-by-step procedure for running a manual sherpa evaluation session.
 
@@ -308,7 +308,7 @@ Save the completed scoring sheet to `tests/integration/output/manual-{preset}-{p
 
 ---
 
-## Observation Log Template
+## Observation log template
 
 Use this template when conducting manual sherpa tests. One entry per observation.
 
@@ -326,7 +326,7 @@ Use this template when conducting manual sherpa tests. One entry per observation
 
 ---
 
-## Scoring Sheet Template
+## Scoring sheet template
 
 ```markdown
 # Sherpa Test Scoring Sheet

@@ -10,7 +10,7 @@ This file applies to **all kits** — it is cross-cutting input material referen
 
 ---
 
-## 1. AI-Generated Output Identification
+## 1. AI-Generated output identification
 
 ### Provenance must be traceable
 
@@ -26,7 +26,7 @@ An AI-generated artifact that is subsequently edited by a human is a human-revie
 
 ---
 
-## 2. AI Output Integrity
+## 2. AI output integrity
 
 ### AI must not present inferred information as established fact
 
@@ -44,7 +44,7 @@ When an AI generation prompt produces analysis, risk assessments, or recommendat
 
 ---
 
-## 3. AI Provider Neutrality
+## 3. AI provider neutrality
 
 ### Artifacts must be AI-portable
 
@@ -68,7 +68,7 @@ The canonical sherpa prompt (`aieos-sherpa/sherpa-prompt.md`) must not contain r
 
 ---
 
-## Enforcement Mapping
+## Enforcement mapping
 
 | Rule Category | Enforced By | Status |
 |---------------|-------------|--------|

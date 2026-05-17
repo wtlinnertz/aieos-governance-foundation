@@ -6,7 +6,7 @@ This standard defines the minimum versioning requirements for spec files across 
 
 ---
 
-## Version Field
+## Version field
 
 Every spec file must carry a version field immediately after its title line, before any content sections:
 
@@ -20,7 +20,7 @@ The version field identifies which revision of the spec's rules was active when 
 
 New spec files start at `v1.0`. Retrofitted files that are receiving their first version field also start at `v1.0` — the retrofit is not a content change.
 
-### Change Categories
+### Change categories
 
 | Category | Version Bump | Definition | Downstream Impact |
 |----------|-------------|------------|-------------------|
@@ -32,7 +32,7 @@ New spec files start at `v1.0`. Retrofitted files that are receiving their first
 
 ---
 
-## Recording Spec Versions in Generated Artifacts
+## Recording spec versions in generated artifacts
 
 Every generated artifact's Document Control section must include a `Spec Version` field recording the version of the spec that was active when the artifact was generated. This field is populated at generation time and becomes part of the frozen artifact's provenance record.
 
@@ -52,7 +52,7 @@ When a spec version changes (Significant or Breaking), artifacts generated under
 
 ---
 
-## Recording Principles Versions in Generated Artifacts
+## Recording principles versions in generated artifacts
 
 When a generation prompt uses principles files as input (as required by the `principles_coverage` hard gate in applicable kits), the generated artifact's Document Control section must include a `Principles Version` field recording the version(s) of the principles file(s) that were active at generation time.
 
@@ -72,7 +72,7 @@ The value should list each principles file and its version (e.g., `security-prin
 
 ---
 
-## What Belongs in a Spec vs. Other Files
+## What belongs in a spec vs. other files
 
 | Belongs in Spec | Belongs Elsewhere |
 |-----------------|------------------|

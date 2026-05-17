@@ -47,7 +47,7 @@ The tool produces structured output conforming to `position-check-template.md`.
 - The tool does not modify the ER or any artifacts
 - The tool contains no references to specific implementations, environments, or vendor tools
 
-## Error Handling
+## Error handling
 
 | Condition | Behavior |
 |-----------|----------|
@@ -57,7 +57,7 @@ The tool produces structured output conforming to `position-check-template.md`.
 | Current state maps to no valid node | Report anomaly: unrecognized position — recommend invoking decision-router |
 | Preset unknown and not derivable from ER | Report warning: preset unknown — position report is best-effort |
 
-## Anomaly Detection
+## Anomaly detection
 
 The tool checks for anomalies defined in navigation-map.md Section 4:
 
@@ -71,9 +71,9 @@ The tool checks for anomalies defined in navigation-map.md Section 4:
 | Cross-cutting kit not activated when expected | Advisory |
 | Stale position (no activity beyond expected cadence) | Advisory |
 
-## Health Signals
+## Health signals
 
-When invoked after 3+ artifacts have been frozen, the position check additionally surfaces these health signals:
+When invoked after 3+ artifacts have been frozen, the position check Also, surfaces these health signals:
 
 | Signal | Detection | Severity |
 |--------|-----------|----------|
@@ -85,7 +85,7 @@ When invoked after 3+ artifacts have been frozen, the position check additionall
 
 Health signals are advisory — they do not affect the PASS/FAIL disposition of the position check. They are surfaced to help the operator maintain initiative momentum and prevent cross-cutting kits from being silently forgotten.
 
-## Hard Gates
+## Hard gates
 
 | Gate | Rule |
 |------|------|

@@ -1,6 +1,6 @@
 # Kit Sync Audit Report
 
-## Report Header
+## Report header
 
 | Field | Value |
 |-------|-------|
@@ -29,25 +29,25 @@
 
 Disposition rule: FAIL if any CRITICAL finding exists. Otherwise PASS.
 
-## CRITICAL Findings
+## CRITICAL findings
 
 | ID | Check | Kit | Location | Expected | Actual | Detail |
 |----|-------|-----|----------|----------|--------|--------|
 | C-{NNN} | {check name} | {kit abbreviation or "—"} | {file:line} | {value from manifest} | {value found in file} | {factual description} |
 
-## HIGH Findings
+## HIGH findings
 
 | ID | Check | Kit | Location | Expected | Actual | Detail |
 |----|-------|-----|----------|----------|--------|--------|
 | H-{NNN} | {check name} | {kit abbreviation} | {file:line} | {value from manifest} | {value found in file} | {factual description} |
 
-## MEDIUM Findings
+## MEDIUM findings
 
 | ID | Check | Kit | Location | Expected | Actual | Detail |
 |----|-------|-----|----------|----------|--------|--------|
 | M-{NNN} | {check name} | {kit abbreviation} | {file:line} | {value from manifest} | {value found in file} | {factual description} |
 
-## Per-Kit Status
+## Per-Kit status
 
 | Kit | Layer | CRITICAL | HIGH | MEDIUM | Status |
 |-----|-------|----------|------|--------|--------|

@@ -28,7 +28,7 @@ Five schemas serve all thirteen findings-producing actions.
 
 Each row carries: action identifier, upstream schema + version, AIEOS extension points (fields AIEOS adds or constrains beyond upstream), minimal example snippet (5–10 lines showing the smallest valid document).
 
-### test.unit / test.integration / test.contract / test.e2e
+### Test.unit / test.integration / test.contract / test.e2e
 
 - **Upstream:** JUnit 4 test-report structure, canonically encoded as JSON (`testsuites` root with nested `testsuite` and `testcase` entries).
 - **Version pin:** JUnit 4 structure; JSON encoding defined in `findings/schemas/junit-xml.schema.json`.
@@ -55,7 +55,7 @@ Each row carries: action identifier, upstream schema + version, AIEOS extension 
 }
 ```
 
-### security.sast / security.dast / security.secret-scan
+### Security.sast / security.dast / security.secret-scan
 
 - **Upstream:** OASIS SARIF (Static Analysis Results Interchange Format).
 - **Version pin:** 2.1.0.
@@ -75,7 +75,7 @@ Each row carries: action identifier, upstream schema + version, AIEOS extension 
 }
 ```
 
-### security.sca / security.container-scan / security.license-scan
+### Security.sca / security.container-scan / security.license-scan
 
 - **Upstream:** OWASP CycloneDX vulnerability findings (CVSS 3.1 scored).
 - **Version pin:** CycloneDX 1.6.
@@ -99,7 +99,7 @@ Each row carries: action identifier, upstream schema + version, AIEOS extension 
 }
 ```
 
-### sbom.generate
+### Sbom.generate
 
 - **Upstream:** OWASP CycloneDX SBOM (primary).
 - **Version pin:** CycloneDX 1.6 (primary). SPDX 2.3 accepted as alternative without a standalone schema in v1.
@@ -121,7 +121,7 @@ Each row carries: action identifier, upstream schema + version, AIEOS extension 
 }
 ```
 
-### sign.artifact / sign.attestation
+### Sign.artifact / sign.attestation
 
 - **Upstream:** Sigstore Bundle.
 - **Version pin:** `v0.3` (media type `application/vnd.dev.sigstore.bundle.v0.3+json`).

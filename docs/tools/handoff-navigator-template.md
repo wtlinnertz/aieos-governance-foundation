@@ -1,6 +1,6 @@
 # Handoff Navigator Output
 
-## Handoff Record Header
+## Handoff record header
 
 | Field | Value |
 |-------|-------|
@@ -11,7 +11,7 @@
 | Preset | {P1–P5} |
 | Timestamp | {ISO 8601} |
 
-## Exit Condition Verification
+## Exit condition verification
 
 | Condition | Status | Evidence |
 |-----------|--------|----------|
@@ -22,13 +22,13 @@
 | Exit Conditions Met | {Yes / No} |
 | Blocking Items | {list of unmet conditions, or "None"} |
 
-## Handoff Artifacts
+## Handoff artifacts
 
 | Artifact | Artifact ID | Freeze Status | File Path | Required By Destination |
 |----------|-------------|---------------|-----------|------------------------|
 | {artifact name} | {ID} | {Frozen / Unfrozen / Missing} | {path} | {Yes / No} |
 
-## Entry-From Reference
+## Entry-From reference
 
 | Field | Value |
 |-------|-------|
@@ -36,7 +36,7 @@
 | Required Artifacts | {list from entry-from file} |
 | First Artifact in Destination | {name of first artifact to produce} |
 
-## Cross-Cutting Kit Activations
+## Cross-Cutting kit activations
 
 | Kit | Trigger Condition | Triggered | Status | Action Needed |
 |-----|-------------------|-----------|--------|---------------|
@@ -46,14 +46,14 @@
 | PINFK | {trigger or "N/A"} | {Yes/No} | {Active/Not Started/Complete/N/A} | {what to do, or "None"} |
 | DKK | {trigger or "N/A"} | {Yes/No} | {Active/Not Started/Complete/N/A} | {what to do, or "None"} |
 
-## Next Steps in Destination Kit
+## Next steps in destination kit
 
 | # | Action | Description |
 |---|--------|-------------|
 | 1 | {first action} | {e.g., "Complete RER (human-authored gate)"} |
 | 2 | {second action} | {e.g., "Decide: reuse existing RCF or generate new"} |
 
-## ER Update Instructions
+## ER update instructions
 
 | Field | Update |
 |-------|--------|

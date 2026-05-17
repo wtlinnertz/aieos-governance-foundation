@@ -72,7 +72,7 @@ Verification is offline once the bundle is in hand (no network needed to validat
 
 ---
 
-## GitHub Actions keyless OIDC path (production)
+## GitHub actions keyless OIDC path (production)
 
 Use when producing a real conformance attestation from an adapter's CI pipeline. Ambient OIDC from GitHub's provider supplies the identity; there are no long-lived keys to manage or rotate.
 

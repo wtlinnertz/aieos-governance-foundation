@@ -12,9 +12,9 @@ The escalation assessment prompt (`RRK: docs/prompts/escalation-assessment-promp
 
 ---
 
-## The Four Escalation Triggers
+## The four escalation triggers
 
-### Trigger 1 — SEV1/2 Incident with Code Defect
+### Trigger 1 — SEV1/2 incident with code defect
 
 | Field | Value |
 |-------|-------|
@@ -32,7 +32,7 @@ The escalation assessment prompt (`RRK: docs/prompts/escalation-assessment-promp
 
 ---
 
-### Trigger 2 — Recurring Reliability Pattern
+### Trigger 2 — recurring reliability pattern
 
 | Field | Value |
 |-------|-------|
@@ -50,7 +50,7 @@ The escalation assessment prompt (`RRK: docs/prompts/escalation-assessment-promp
 
 ---
 
-### Trigger 3 — Release Rollback (Code/Build Defect)
+### Trigger 3 — release rollback (Code/Build defect)
 
 | Field | Value |
 |-------|-------|
@@ -68,7 +68,7 @@ The escalation assessment prompt (`RRK: docs/prompts/escalation-assessment-promp
 
 ---
 
-### Trigger 4 — Release Rollback Revealing Wrong Feature
+### Trigger 4 — release rollback revealing wrong feature
 
 | Field | Value |
 |-------|-------|
@@ -86,7 +86,7 @@ The escalation assessment prompt (`RRK: docs/prompts/escalation-assessment-promp
 
 ---
 
-## Escalation Record Format
+## Escalation record format
 
 An escalation record is a lightweight, non-governed document (no spec, validator, or freeze point). It exists to make the escalation decision traceable. File it alongside the triggering artifact in the working project directory.
 
@@ -120,7 +120,7 @@ An escalation record is a lightweight, non-governed document (no spec, validator
 
 ---
 
-## Receiving Protocol
+## Receiving protocol
 
 When a kit receives an escalation record:
 
@@ -134,7 +134,7 @@ When a kit receives an escalation record:
 
 ---
 
-## What Escalation Is Not
+## What escalation is not
 
 - Escalation is **not** automatic. An IR being filed does not automatically trigger Trigger 1.
 - Escalation is **not** a blame assignment. The purpose is to route work to the right kit, not to assign fault.
@@ -143,7 +143,7 @@ When a kit receives an escalation record:
 
 ---
 
-## Relationship to Re-Entry Protocols
+## Relationship to re-Entry protocols
 
 Escalation triggers cross-kit boundaries. Each kit's playbook documents:
 - For REK and RRK: the "Escalation Paths" section covers when and how to send escalations

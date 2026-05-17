@@ -1,18 +1,18 @@
 # Discovery Intake — TaskTracker CRUD Service
 
-## Initiative Description
+## Initiative description
 
 Build a simple task tracking REST API that allows users to create, read, update, and delete tasks. Each task has a title, description, status (open/in-progress/done), priority (low/medium/high), and timestamps. The API serves a single-page frontend.
 
-## Target Users
+## Target users
 
 Small development teams (5-15 people) managing work items without heavyweight project management tools.
 
-## Problem Statement
+## Problem statement
 
 Teams need a lightweight, self-hosted task tracker that they control. Existing solutions are either too complex (Jira) or too limited (text files). The gap is a simple CRUD API with just enough structure to be useful.
 
-## Success Criteria
+## Success criteria
 
 - REST API supports full CRUD on tasks
 - Tasks have status, priority, timestamps
@@ -28,7 +28,7 @@ Teams need a lightweight, self-hosted task tracker that they control. Existing s
 - Node.js/TypeScript runtime
 - Budget: 1 developer, 2 weeks
 
-## Known Risks
+## Known risks
 
 - Scope creep into features like user management, notifications, or reporting
 - PostgreSQL schema evolution if requirements change after initial deployment

@@ -2,7 +2,7 @@
 
 You are evaluating whether the spec-lookup tool was used correctly.
 
-## Evaluation Rules
+## Evaluation rules
 
 - Do NOT suggest alternative lookups
 - Do NOT evaluate the quality of the spec itself
@@ -10,11 +10,11 @@ You are evaluating whether the spec-lookup tool was used correctly.
 - Evaluate only what is explicitly present in the tool output
 - Be strict: ambiguity is a failure condition
 
-## Spec Reference
+## Spec reference
 
 Evaluate against the hard gates and constraints defined in `spec-lookup-spec.md`.
 
-## Hard Gates
+## Hard gates
 
 | Gate | Check |
 |------|-------|
@@ -24,7 +24,7 @@ Evaluate against the hard gates and constraints defined in `spec-lookup-spec.md`
 | `version_extracted` | The Lookup Header includes a Spec Version value (or explicitly states "NOT FOUND") |
 | `hard_gates_extracted` | The Hard Gates Found table lists gate names from the spec (or explicitly states none found) |
 
-## Output Format
+## Output format
 
 ```json
 {

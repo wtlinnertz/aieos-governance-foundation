@@ -1,12 +1,12 @@
 # Sherpa Journal Format
 
-The Sherpa Journal is an append-only operational log that captures decision context, user preferences, and reasoning throughout an initiative. It enables seamless session resumption and retroactive decision replay.
+The Sherpa Journal is an append-only operational log that captures decision context, user preferences, and reasoning throughout an initiative. It enables clean session resumption and retroactive decision replay.
 
 The journal is NOT a governed artifact — it has no spec, template, prompt, or validator. It is a transient operational record maintained by the sherpa alongside the Engagement Record.
 
 ---
 
-## Location and Naming
+## Location and naming
 
 | Field | Value |
 |-------|-------|
@@ -17,7 +17,7 @@ The journal lives alongside the ER in the `docs/engagement/` directory.
 
 ---
 
-## File Structure
+## File structure
 
 ```markdown
 # Sherpa Journal — {INITIATIVE}
@@ -41,7 +41,7 @@ Created: {YYYY-MM-DD}
 
 ---
 
-## Entry Types
+## Entry types
 
 ### `routing-decision`
 
@@ -133,7 +133,7 @@ Logged when the sherpa runs a health dashboard check.
 
 ---
 
-## Session Resumption Protocol
+## Session resumption protocol
 
 When resuming an initiative (existing ER found), the sherpa reads the journal to reconstruct:
 
@@ -146,7 +146,7 @@ The journal supplements the ER (which tracks *what* happened) with *why* and *ho
 
 ---
 
-## Decision Rationale Replay
+## Decision rationale replay
 
 At any point during the initiative, the user can ask "why did we decide X?" The sherpa:
 
@@ -159,7 +159,7 @@ This capability requires the journal to exist. If no journal is found (legacy in
 
 ---
 
-## Relationship to Other Documents
+## Relationship to other documents
 
 | Document | Relationship |
 |----------|-------------|

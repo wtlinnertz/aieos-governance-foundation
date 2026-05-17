@@ -6,7 +6,7 @@ This is an integration scenario. Each step references the governing files from t
 
 ---
 
-## Scenario Overview
+## Scenario overview
 
 **What:** A frozen, PIK-validated Discovery PRD is handed off to the EEK. The EEK team completes a Kit Entry Record, runs the PRD acceptance check, and begins the EEK artifact chain.
 
@@ -34,16 +34,16 @@ This is an integration scenario. Each step references the governing files from t
 
 ---
 
-## Failure Paths
+## Failure paths
 
-### Scenario A: Kit Entry Record FAIL
+### Scenario a: kit entry record FAIL
 
 If the Kit Entry validator returns FAIL (e.g., EL references field is blank for Path A):
 - EEK team corrects the Kit Entry Record
 - Re-runs validation in a new session
 - Does not proceed to PRD acceptance check until Kit Entry Record passes
 
-### Scenario B: PRD Acceptance Check FAIL
+### Scenario b: PRD acceptance check FAIL
 
 If the EEK `prd-validator.md` returns FAIL on `01-prd.md`:
 - The issue belongs in the DPRD — EEK does NOT modify the DPRD
@@ -52,7 +52,7 @@ If the EEK `prd-validator.md` returns FAIL on `01-prd.md`:
 - PIK team re-delivers the corrected DPRD
 - EEK team re-runs the PRD acceptance check from step 6
 
-### Scenario C: EL References Absent (Kit Entry Path A — No field)
+### Scenario c: EL references absent (Kit entry path a — no field)
 
 If the Kit Entry Record Path A section has the EL references field blank (neither Yes checked nor No with explanation):
 - Kit Entry validator FAILs `path_selected` gate
@@ -62,7 +62,7 @@ If the Kit Entry Record Path A section has the EL references field blank (neithe
 
 ---
 
-## Key Verifications for the Cross-Kit Interface
+## Key verifications for the cross-Kit interface
 
 1. **DPRD is not regenerated** — the EEK `prd-prompt.md` is not invoked for Path A; the DPRD is placed directly as `01-prd.md`
 2. **Kit Entry Record gates artifact generation** — the acceptance check may not run until the Kit Entry Record is frozen and validated
@@ -72,7 +72,7 @@ If the Kit Entry Record Path A section has the EL references field blank (neithe
 
 ---
 
-## Governing Files by Kit
+## Governing files by kit
 
 | File | Kit | Role in this scenario |
 |------|-----|-----------------------|

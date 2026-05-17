@@ -1,6 +1,6 @@
 # Kit Self-Check Report
 
-## Report Header
+## Report header
 
 | Field | Value |
 |-------|-------|
@@ -13,7 +13,7 @@
 | Manifest Version | {manifest_version from kit-manifest.yml} |
 | Timestamp | {ISO 8601} |
 
-## Internal Consistency
+## Internal consistency
 
 | Check | Status | Detail |
 |-------|--------|--------|
@@ -24,7 +24,7 @@
 | Governance model sync | PASS / FAIL | {detail} |
 | Spec files exist | PASS / FAIL | {detail} |
 
-## Boundary Contracts
+## Boundary contracts
 
 | Direction | Neighbor Kit | Contract File | Status | Detail |
 |-----------|-------------|---------------|--------|--------|

@@ -8,7 +8,7 @@ This map is a **projection** of the kit playbooks — not a replacement. When th
 
 ---
 
-## Section 1: Nodes
+## Section 1: nodes
 
 Every node represents a state the initiative can be in. Node types:
 
@@ -22,13 +22,13 @@ Every node represents a state the initiative can be in. Node types:
 | `escalation` | An escalation trigger to another kit |
 | `utility` | An optional utility prompt/tool invocation |
 
-### Framework Entry
+### Framework entry
 
 | Node ID | Kit | Type | Name |
 |---------|-----|------|------|
 | N-START | — | entry | Framework Entry |
 
-### PIK (Layer 2) Nodes
+### PIK (Layer 2) nodes
 
 | Node ID | Kit | Type | Name |
 |---------|-----|------|------|
@@ -43,7 +43,7 @@ Every node represents a state the initiative can be in. Node types:
 | N-PIK-PIVOT | PIK | junction | Pivot Pattern Selection |
 | N-PIK-EXIT | PIK | exit | DPRD Frozen — Handoff to EEK |
 
-### SSK (Layer 3) Nodes
+### SSK (Layer 3) nodes
 
 | Node ID | Kit | Type | Name |
 |---------|-----|------|------|
@@ -53,7 +53,7 @@ Every node represents a state the initiative can be in. Node types:
 | N-SSK-ROUTE | SSK | junction | Sourcing Decision Routing |
 | N-SSK-EXIT | SSK | exit | SDR Frozen — Handoff to EEK |
 
-### EEK (Layer 4) Nodes
+### EEK (Layer 4) nodes
 
 | Node ID | Kit | Type | Name |
 |---------|-----|------|------|
@@ -75,7 +75,7 @@ Every node represents a state the initiative can be in. Node types:
 | N-EEK-ORD | EEK | artifact | Operational Readiness Document |
 | N-EEK-EXIT | EEK | exit | ORD Frozen — Handoff to QAK/REK |
 
-### QAK (Layer 9) Nodes
+### QAK (Layer 9) nodes
 
 | Node ID | Kit | Type | Name |
 |---------|-----|------|------|
@@ -86,7 +86,7 @@ Every node represents a state the initiative can be in. Node types:
 | N-QAK-DISPOSITION | QAK | junction | QGR Disposition Decision |
 | N-QAK-EXIT | QAK | exit | QGR Frozen (PASS/CONDITIONAL) |
 
-### REK (Layer 5) Nodes
+### REK (Layer 5) nodes
 
 | Node ID | Kit | Type | Name |
 |---------|-----|------|------|
@@ -101,7 +101,7 @@ Every node represents a state the initiative can be in. Node types:
 | N-REK-DISPOSITION | REK | junction | Release Disposition |
 | N-REK-EXIT | REK | exit | RR Frozen — Handoff to RRK |
 
-### RRK (Layer 6) Nodes
+### RRK (Layer 6) nodes
 
 | Node ID | Kit | Type | Name |
 |---------|-----|------|------|
@@ -114,7 +114,7 @@ Every node represents a state the initiative can be in. Node types:
 | N-RRK-ESCALATION | RRK | junction | Escalation Assessment |
 | N-RRK-EXIT | RRK | exit | 2+ RHRs Frozen — Feeds IEK |
 
-### IEK (Layer 7) Nodes
+### IEK (Layer 7) nodes
 
 | Node ID | Kit | Type | Name |
 |---------|-----|------|------|
@@ -123,7 +123,7 @@ Every node represents a state the initiative can be in. Node types:
 | N-IEK-SIGNAL | IEK | junction | Re-Entry Signal Decision |
 | N-IEK-EXIT | IEK | exit | ES Frozen — Signal Declared |
 
-### ODK (Layer 8) Nodes
+### ODK (Layer 8) nodes
 
 | Node ID | Kit | Type | Name |
 |---------|-----|------|------|
@@ -135,7 +135,7 @@ Every node represents a state the initiative can be in. Node types:
 | N-ODK-ESCALATION | ODK | junction | Escalation Assessment |
 | N-ODK-EXIT | ODK | exit | PMR Frozen — Cross-Kit Outputs |
 
-### SCK (Layer 10) Nodes — Cross-Cutting
+### SCK (Layer 10) nodes — cross-Cutting
 
 | Node ID | Kit | Type | Name |
 |---------|-----|------|------|
@@ -144,7 +144,7 @@ Every node represents a state the initiative can be in. Node types:
 | N-SCK-DAR | SCK | artifact | Dependency Audit Record |
 | N-SCK-CER | SCK | artifact | Compliance Evidence Record |
 
-### DCK (Layer 11) Nodes — Cross-Cutting
+### DCK (Layer 11) nodes — cross-Cutting
 
 | Node ID | Kit | Type | Name |
 |---------|-----|------|------|
@@ -152,7 +152,7 @@ Every node represents a state the initiative can be in. Node types:
 | N-DCK-FFLR | DCK | artifact | Feature Flag Lifecycle Record |
 | N-DCK-DSR | DCK | artifact | Data Schema Record |
 
-### PINFK (Layer 12) Nodes — Foundational
+### PINFK (Layer 12) nodes — foundational
 
 | Node ID | Kit | Type | Name |
 |---------|-----|------|------|
@@ -161,7 +161,7 @@ Every node represents a state the initiative can be in. Node types:
 | N-PINFK-EM | PINFK | artifact | Environment Matrix |
 | N-PINFK-SMR | PINFK | artifact | System Model Record |
 
-### DKK (Layer 13) Nodes — Cross-Cutting
+### DKK (Layer 13) nodes — cross-Cutting
 
 | Node ID | Kit | Type | Name |
 |---------|-----|------|------|
@@ -170,7 +170,7 @@ Every node represents a state the initiative can be in. Node types:
 | N-DKK-SKA | DKK | artifact | Support Knowledge Article(s) |
 | N-DKK-DHR | DKK | artifact | Documentation Health Review |
 
-### PRK (Layer 14) Nodes — Cross-Cutting
+### PRK (Layer 14) nodes — cross-Cutting
 
 | Node ID | Kit | Type | Name |
 |---------|-----|------|------|
@@ -184,7 +184,7 @@ Every node represents a state the initiative can be in. Node types:
 | N-PRK-PRR-RHR | PRK | artifact | Peer Review Record (Post-Deployment Review) |
 | N-PRK-PRR-PMR | PRK | artifact | Peer Review Record (Incident Review) |
 
-### BPK (Layer 15) Nodes — Cross-Cutting
+### BPK (Layer 15) nodes — cross-Cutting
 
 | Node ID | Kit | Type | Name |
 |---------|-----|------|------|
@@ -192,7 +192,7 @@ Every node represents a state the initiative can be in. Node types:
 | N-BPK-TP | BPK | artifact | Transition Plan |
 | N-BPK-RC | BPK | artifact | Readiness Confirmation |
 
-### Shared Utility Nodes
+### Shared utility nodes
 
 | Node ID | Kit | Type | Name |
 |---------|-----|------|------|
@@ -200,19 +200,19 @@ Every node represents a state the initiative can be in. Node types:
 
 ---
 
-## Section 2: Edges
+## Section 2: edges
 
 Every valid transition in the framework. Conditions describe what must be true for the transition to occur.
 
-### Preset Applicability Key
+### Preset applicability key
 
-- **P1**: New Feature
-- **P2**: Enhancement
-- **P3**: Compliance & Regulatory
-- **P4**: Performance & Reliability Fix
-- **P5**: Exploratory Research
+- P1: New Feature
+- P2: Enhancement
+- P3: Compliance & Regulatory
+- P4: Performance & Reliability Fix
+- P5: Exploratory Research
 
-### Framework Entry Edges
+### Framework entry edges
 
 | Edge ID | From | To | Condition | Presets |
 |---------|------|----|-----------|--------|
@@ -221,7 +221,7 @@ Every valid transition in the framework. Conditions describe what must be true f
 | E-003 | N-START | N-ODK-DCR | SEV1/2 incident declared | P4 |
 | E-004 | N-START | N-PINFK-PDR | Technology/infrastructure decision needed | Any |
 
-### PIK Internal Edges
+### PIK internal edges
 
 | Edge ID | From | To | Condition | Presets |
 |---------|------|----|-----------|--------|
@@ -239,7 +239,7 @@ Every valid transition in the framework. Conditions describe what must be true f
 | E-021 | N-PIK-DPRD | N-PIK-EXIT | DPRD frozen (all 8 hard gates PASS) | P1, P3 |
 | E-022 | N-PIK-EXIT | N-EEK-KER | DPRD handoff to EEK (Path A) | P1, P3 |
 
-### SSK Internal Edges
+### SSK internal edges
 
 | Edge ID | From | To | Condition | Presets |
 |---------|------|----|-----------|--------|
@@ -250,7 +250,7 @@ Every valid transition in the framework. Conditions describe what must be true f
 | E-029 | N-SSK-ROUTE | N-SSK-EXIT | Decision routed | P1, P3 |
 | E-029a | N-SSK-EXIT | N-EEK-KER | SDR handoff to EEK (Build/Buy/Adopt) | P1, P3 |
 
-### EEK Internal Edges
+### EEK internal edges
 
 | Edge ID | From | To | Condition | Presets |
 |---------|------|----|-----------|--------|
@@ -274,14 +274,14 @@ Every valid transition in the framework. Conditions describe what must be true f
 | E-047 | N-EEK-EXECUTION | N-EEK-ORD | All work groups complete | All |
 | E-048 | N-EEK-ORD | N-EEK-EXIT | ORD frozen (all 8 hard gates PASS) | All |
 
-### EEK to Downstream Edges
+### EEK to downstream edges
 
 | Edge ID | From | To | Condition | Presets |
 |---------|------|----|-----------|--------|
 | E-050 | N-EEK-EXIT | N-QAK-QAER | QAK adopted (integration/cross-component testing needed) | P1, P3 |
 | E-051 | N-EEK-EXIT | N-REK-RER | QAK not adopted (direct to REK) | P2, P4 |
 
-### QAK Internal Edges
+### QAK internal edges
 
 | Edge ID | From | To | Condition | Presets |
 |---------|------|----|-----------|--------|
@@ -293,7 +293,7 @@ Every valid transition in the framework. Conditions describe what must be true f
 | E-065 | N-QAK-DISPOSITION | N-EEK-ORD | FAIL — return to EEK for remediation | P1, P3 |
 | E-066 | N-QAK-EXIT | N-REK-RER | QGR frozen; proceed to REK | P1, P3 |
 
-### REK Internal Edges
+### REK internal edges
 
 | Edge ID | From | To | Condition | Presets |
 |---------|------|----|-----------|--------|
@@ -308,7 +308,7 @@ Every valid transition in the framework. Conditions describe what must be true f
 | E-077 | N-REK-RR | N-REK-EXIT | RR frozen | All |
 | E-078 | N-REK-EXIT | N-RRK-SRER | RR handoff to RRK | All |
 
-### RRK Internal Edges
+### RRK internal edges
 
 | Edge ID | From | To | Condition | Presets |
 |---------|------|----|-----------|--------|
@@ -321,7 +321,7 @@ Every valid transition in the framework. Conditions describe what must be true f
 | E-086 | N-RRK-ESCALATION | N-RRK-ACTIVE | No escalation needed; continue | All |
 | E-087 | N-RRK-RHR | N-RRK-EXIT | 2+ RHRs frozen; IEK eligible | All |
 
-### IEK Internal Edges
+### IEK internal edges
 
 | Edge ID | From | To | Condition | Presets |
 |---------|------|----|-----------|--------|
@@ -330,7 +330,7 @@ Every valid transition in the framework. Conditions describe what must be true f
 | E-092 | N-IEK-ES | N-IEK-SIGNAL | ES frozen | P1, P3 |
 | E-093 | N-IEK-SIGNAL | N-IEK-EXIT | Signal declared (maintain/watch/re-discover) | P1, P3 |
 
-### ODK Internal Edges
+### ODK internal edges
 
 | Edge ID | From | To | Condition | Presets |
 |---------|------|----|-----------|--------|
@@ -343,7 +343,7 @@ Every valid transition in the framework. Conditions describe what must be true f
 | E-106 | N-ODK-ESCALATION | N-ODK-EXIT | Escalation assessed | P4 |
 | E-107 | N-ODK-EXIT | N-EEK-KER | Code defect identified → EEK Path B | P4 |
 
-### Cross-Cutting Trigger Edges
+### Cross-Cutting trigger edges
 
 | Edge ID | From | To | Condition | Presets |
 |---------|------|----|-----------|--------|
@@ -363,7 +363,7 @@ Every valid transition in the framework. Conditions describe what must be true f
 | E-122 | N-SCK-TM | N-QAK-VP | Compliance: TM/SAR feed VP (optional input) | P3 |
 | E-123 | N-SCK-SAR | N-QAK-VP | Compliance: SAR feeds VP (optional input) | P3 |
 
-### PRK Cross-Cutting Trigger Edges
+### PRK cross-Cutting trigger edges
 
 | Edge ID | From | To | Condition | Presets |
 |---------|------|----|-----------|--------|
@@ -377,21 +377,21 @@ Every valid transition in the framework. Conditions describe what must be true f
 | E-147 | N-RRK-RHR | N-PRK-PRR-RHR | RHR validated; PRK adopted | All |
 | E-148 | N-ODK-PMR | N-PRK-PRR-PMR | PMR validated; PRK adopted | P4 |
 
-### BPK Cross-Cutting Trigger Edges
+### BPK cross-Cutting trigger edges
 
 | Edge ID | From | To | Condition | Presets |
 |---------|------|----|-----------|--------|
 | E-150 | N-EEK-SAD | N-BPK-PIA | SAD frozen; process-affecting changes identified | P1, P2, P3 |
 | E-151 | N-EEK-TDD | N-BPK-PIA | TDD frozen; process-affecting changes identified (alternative trigger) | P1, P2, P3 |
 
-### BPK Internal Edges
+### BPK internal edges
 
 | Edge ID | From | To | Condition | Presets |
 |---------|------|----|-----------|--------|
 | E-152 | N-BPK-PIA | N-BPK-TP | PIA frozen | P1, P2, P3 |
 | E-153 | N-BPK-TP | N-BPK-RC | TP frozen; evidence collected | P1, P2, P3 |
 
-### Escalation Edges (reverse direction)
+### Escalation edges (reverse direction)
 
 | Edge ID | From | To | Condition | Presets |
 |---------|------|----|-----------|--------|
@@ -407,11 +407,11 @@ Every valid transition in the framework. Conditions describe what must be true f
 
 ---
 
-## Section 3: Decision Tables
+## Section 3: decision tables
 
 For each junction node, the structured routing criteria. At every junction, if **none of the conditions match**, invoke `position-check` to re-establish position.
 
-### J-ENTRY-1: Framework Entry Point (N-START)
+### J-ENTRY-1: framework entry point (N-START)
 
 | # | Routing Question | If Yes | Route To | Rationale |
 |---|-----------------|--------|----------|-----------|
@@ -421,7 +421,7 @@ For each junction node, the structured routing criteria. At every junction, if *
 | 4 | Is this a technology or infrastructure decision? | Yes | N-PINFK-PDR | Foundational input needed |
 | — | None of the above match | — | Invoke position-check | Re-evaluate context |
 
-### J-ENTRY-2: Preset Selection (after entry point chosen)
+### J-ENTRY-2: preset selection (after entry point chosen)
 
 | # | Context | Preset | First Kit |
 |---|---------|--------|-----------|
@@ -431,15 +431,15 @@ For each junction node, the structured routing criteria. At every junction, if *
 | 4 | Production incident or performance degradation | P4: Performance Fix | ODK or RRK |
 | 5 | Research/exploration with uncertain outcome | P5: Exploratory | PIK |
 
-### J-PIK-WCR: Work Classification Routing (N-PIK-WCR)
+### J-PIK-WCR: work classification routing (N-PIK-WCR)
 
 | # | WCR Depth | Condition | Route To |
 |---|-----------|-----------|----------|
-| 1 | Full | Complex problem, multiple stakeholders, uncertain solution | N-PIK-INTAKE (full discovery) |
+| 1 | Full | Complex problem, multiple teams, uncertain solution | N-PIK-INTAKE (full discovery) |
 | 2 | Targeted | Partially understood problem, needs focused investigation | N-PIK-INTAKE (targeted discovery) |
 | 3 | None | Problem understood, no discovery needed | N-EEK-KER (Path B) |
 
-### J-PIK-EL: EL Outcome Decision (N-PIK-EL-DECISION)
+### J-PIK-EL: EL outcome decision (N-PIK-EL-DECISION)
 
 | # | EL Outcome | Evidence Required | Route To |
 |---|------------|-------------------|----------|
@@ -447,7 +447,7 @@ For each junction node, the structured routing criteria. At every junction, if *
 | 2 | Pivot | EL reveals wrong problem framing or wrong hypothesis | N-PIK-PIVOT |
 | 3 | Pause | Blocking issue, insufficient evidence, market shift | Exit (initiative paused) |
 
-### J-PIK-PIVOT: Pivot Pattern Selection (N-PIK-PIVOT)
+### J-PIK-PIVOT: pivot pattern selection (N-PIK-PIVOT)
 
 | # | Pattern | Trigger | Route To | Cascade Impact |
 |---|---------|---------|----------|----------------|
@@ -455,7 +455,7 @@ For each junction node, the structured routing criteria. At every junction, if *
 | 2 | Hypothesis Revision | Value mechanism wrong but problem correct | N-PIK-VH | VH, AR, EL, DPRD revised; PFD unchanged |
 | 3 | Assumption Invalidation | Assumption invalid but direction holds | N-PIK-EL (mark invalid) | EL updated, DPRD reflects constraints |
 
-### J-SSK-ENTRY: SSK Engagement Decision (N-PIK-EXIT)
+### J-SSK-ENTRY: SSK engagement decision (N-PIK-EXIT)
 
 | # | Condition | Route To |
 |---|-----------|----------|
@@ -463,7 +463,7 @@ For each junction node, the structured routing criteria. At every junction, if *
 | 2 | Buy or Adopt candidates may exist; sourcing evaluation warranted | N-SSK-SOER |
 | — | Uncertain | Invoke position-check |
 
-### J-SSK-ROUTE: Sourcing Decision Routing (N-SSK-ROUTE)
+### J-SSK-ROUTE: sourcing decision routing (N-SSK-ROUTE)
 
 | # | Decision | Route To | EEK Scope Impact |
 |---|----------|----------|-----------------|
@@ -471,21 +471,21 @@ For each junction node, the structured routing criteria. At every junction, if *
 | 2 | Buy {vendor} | N-EEK-KER (Path A, reduced scope) | EEK scoped to integration + customization |
 | 3 | Adopt {project} | N-EEK-KER (Path A, reduced scope) | EEK scoped to integration + configuration |
 
-### J-EEK-PATH: Path A vs Path B (N-EEK-PATH-SELECT)
+### J-EEK-PATH: path a vs path b (N-EEK-PATH-SELECT)
 
 | # | Condition | Path | Route To |
 |---|-----------|------|----------|
 | 1 | Frozen DPRD received from PIK (with or without frozen SDR from SSK) | Path A | N-EEK-PRD-A (place DPRD as 01-prd.md) |
 | 2 | No PIK engagement; scope justifiable without discovery | Path B | N-EEK-PRD-B (Product Brief → generate PRD) |
 
-### J-EEK-QAK: QAK Adoption (N-EEK-EXIT)
+### J-EEK-QAK: QAK adoption (N-EEK-EXIT)
 
 | # | Condition | Route To |
 |---|-----------|----------|
 | 1 | Integration points, external dependencies, cross-component behavior exist | N-QAK-QAER (adopt QAK) |
 | 2 | Single-component, no integration testing needed | N-REK-RER (skip QAK) |
 
-### J-EEK-BAT: BAT Outcome (N-EEK-BAT)
+### J-EEK-BAT: BAT outcome (N-EEK-BAT)
 
 | # | Outcome | Condition | Route To |
 |---|---------|-----------|----------|
@@ -493,7 +493,7 @@ For each junction node, the structured routing criteria. At every junction, if *
 | 2 | Path A (fixable) | Issues fixable within current scope | N-EEK-EXECUTION (add fix items) |
 | 3 | Path B (escalation) | Scope change needed | N-EEK-BAT-ESC (escalation record) |
 
-### J-QAK-DISPOSITION: QGR Disposition (N-QAK-DISPOSITION)
+### J-QAK-DISPOSITION: QGR disposition (N-QAK-DISPOSITION)
 
 | # | Disposition | Condition | Route To | Outcome |
 |---|------------|-----------|----------|---------|
@@ -501,14 +501,14 @@ For each junction node, the structured routing criteria. At every junction, if *
 | 2 | CONDITIONAL | Quality gates met with documented risks | N-QAK-EXIT → N-REK-RER (with conditions) | Approve-with-Conditions |
 | 3 | FAIL | Blocking quality issues | N-EEK-ORD (return to EEK) | Block or Remediate-and-Retry |
 
-### J-REK-RCF: RCF Reuse Decision (N-REK-RCF-DECISION)
+### J-REK-RCF: RCF reuse decision (N-REK-RCF-DECISION)
 
 | # | Condition | Route To |
 |---|-----------|----------|
 | 1 | Existing frozen RCF covers this release's scope | N-REK-RP (reuse existing RCF) |
 | 2 | No RCF exists or scope not covered | N-REK-RCF (generate new RCF) |
 
-### J-REK-DISPOSITION: Release Disposition (N-REK-DISPOSITION)
+### J-REK-DISPOSITION: release disposition (N-REK-DISPOSITION)
 
 | # | Release Result | Route To | Escalation | Decision Outcome |
 |---|---------------|----------|------------|-----------------|
@@ -517,14 +517,14 @@ For each junction node, the structured routing criteria. At every junction, if *
 | 3 | Rolled back — wrong feature | N-REK-RR | Trigger 4 → PIK | Rollback → Require-Redesign |
 | 4 | Abandoned | N-REK-RR | None (document reason) | Block |
 
-### J-RRK-SRP-REVISION: SRP Revision (N-RRK-SRP-REVISION)
+### J-RRK-SRP-REVISION: SRP revision (N-RRK-SRP-REVISION)
 
 | # | Condition | Route To |
 |---|-----------|----------|
 | 1 | SLO targets, error budget, or methodology need change | Generate new SRP version |
 | 2 | Current SRP still valid | Continue with current SRP |
 
-### J-RRK-ESCALATION: Escalation Assessment (N-RRK-ESCALATION)
+### J-RRK-ESCALATION: escalation assessment (N-RRK-ESCALATION)
 
 | # | Trigger | Condition | Route To | Decision Outcome |
 |---|---------|-----------|----------|-----------------|
@@ -533,7 +533,7 @@ For each junction node, the structured routing criteria. At every junction, if *
 | 3 | Trigger 5 | SEV1/2 incident declared | N-ODK-DCR (parallel) | Rollback |
 | 4 | None | No escalation criteria met | N-RRK-ACTIVE (continue) | Approve |
 
-### J-IEK-SIGNAL: Re-Entry Signal (N-IEK-SIGNAL)
+### J-IEK-SIGNAL: re-Entry signal (N-IEK-SIGNAL)
 
 | # | Signal | Condition | Route To | Action |
 |---|--------|-----------|----------|--------|
@@ -541,14 +541,14 @@ For each junction node, the structured routing criteria. At every junction, if *
 | 2 | Watch | Emerging trend, not yet critical | N-IEK-EXIT | Elevate monitoring |
 | 3 | Re-discover | Persistent/new pattern requires product investigation | N-PIK-WCR (advisory) | Product owner decides |
 
-### J-ODK-RB: Runbook Decision (N-ODK-RB-DECISION)
+### J-ODK-RB: runbook decision (N-ODK-RB-DECISION)
 
 | # | Condition | Route To |
 |---|-----------|----------|
 | 1 | PMR §8 identifies repeatable failure class with known procedure | N-ODK-RB (generate runbook) |
 | 2 | One-time, novel, or non-repeatable failure | N-ODK-ESCALATION (skip runbook) |
 
-### J-ODK-ESCALATION: ODK Escalation Assessment (N-ODK-ESCALATION)
+### J-ODK-ESCALATION: ODK escalation assessment (N-ODK-ESCALATION)
 
 | # | Finding | Route To |
 |---|---------|----------|
@@ -556,14 +556,14 @@ For each junction node, the structured routing criteria. At every junction, if *
 | 2 | Recurring pattern (3+ occurrences) | N-PIK-WCR |
 | 3 | No cross-kit action needed | N-ODK-EXIT |
 
-### J-SCK-TIMING: SCK Timing for Compliance (cross-cutting)
+### J-SCK-TIMING: SCK timing for compliance (cross-cutting)
 
 | # | Preset | Condition | Ordering |
 |---|--------|-----------|----------|
 | 1 | P3 (Compliance) | Compliance mandate | SCK completes before QAK; TM+SAR feed VP |
 | 2 | All others | Security-sensitive system | SCK parallel with QAK or independent |
 
-### J-REENTRY: Re-Entry Decision (applicable at any frozen artifact)
+### J-REENTRY: re-Entry decision (applicable at any frozen artifact)
 
 | # | Change Type | Condition | Action |
 |---|------------|-----------|--------|
@@ -573,7 +573,7 @@ For each junction node, the structured routing criteria. At every junction, if *
 
 ---
 
-## Section 4: Anomaly Patterns
+## Section 4: anomaly patterns
 
 When `position-check` runs, it should flag these anomalies:
 

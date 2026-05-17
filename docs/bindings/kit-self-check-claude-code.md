@@ -2,7 +2,7 @@
 
 This binding maps the abstract `TOOL-KIT-SELF-CHECK` capability to a concrete implementation using Claude Code.
 
-## Tool Reference
+## Tool reference
 
 - **Tool Spec:** `docs/tools/kit-self-check-spec.md`
 - **Tool Template:** `docs/tools/kit-self-check-template.md`
@@ -11,7 +11,7 @@ This binding maps the abstract `TOOL-KIT-SELF-CHECK` capability to a concrete im
 
 In a Claude Code session, the kit-self-check capability is exercised as follows:
 
-### Input Mapping
+### Input mapping
 
 | Tool Input | Claude Code Action |
 |------------|-------------------|
@@ -19,7 +19,7 @@ In a Claude Code session, the kit-self-check capability is exercised as follows:
 | `workspace_root` | The parent directory containing all `aieos-*` kit repositories |
 | `check_scope` | Provided by the operator. Defaults to `full` if not specified |
 
-### Execution Steps
+### Execution steps
 
 1. **Load manifest.** Read `kit-manifest.yml` from the governance-foundation repository root. Locate the entry for the specified `kit_abbreviation`.
 
@@ -45,14 +45,14 @@ In a Claude Code session, the kit-self-check capability is exercised as follows:
 
 6. **Produce output.** Format results following the template.
 
-### Environment Notes
+### Environment notes
 
 - Claude Code reads files directly via the Read tool
 - File comparisons use the Bash tool (`diff`) for byte-identical checks
 - Pattern matching uses the Glob and Grep tools
 - When invoked as a sub-agent by TOOL-KIT-SYNC-AUDIT, the agent receives a self-contained context package and returns the complete report
 
-## What This Binding Does Not Define
+## What this binding does not define
 
 This binding does not define policy. The rules for what constitutes a valid self-check (checks, hard gates) are defined in `kit-self-check-spec.md`. This file only describes how those rules are implemented in the Claude Code environment.
 

@@ -6,11 +6,11 @@
 - Topic: AI Code Review — returning with negative experiment results
 - Special: Two-phase test. Phase 1 generates artifacts to EL Draft. Phase 2 resumes with results that hit falsification thresholds.
 
-## Phase 1 User Responses
+## Phase 1 user responses
 
 Use the aicr-exploratory/scenario.md fixture for Phase 1 (identical to standard P5).
 
-## Phase 2 User Responses (session resumption with negative results)
+## Phase 2 user responses (session resumption with negative results)
 
 ### Resumption request
 I'm back with the experiment results for the AI Code Review initiative (AICR). Unfortunately, the results weren't good.

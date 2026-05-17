@@ -2,7 +2,7 @@
 
 You are invoking the handoff-navigator tool capability.
 
-## When to Invoke
+## When to invoke
 
 Invoke this tool **when a kit's exit condition is met and the initiative must transition to the next kit**. Specific situations:
 
@@ -18,11 +18,11 @@ Also invoke when:
 - position-check indicates the next action is a handoff
 - The operator asks "what do I need to do to move to the next kit?"
 
-## Why to Invoke
+## Why to invoke
 
 Cross-kit handoffs are where context gets lost. This tool ensures: exit conditions are actually met (not assumed), the right artifacts cross the boundary, the destination kit's entry requirements are checked, and cross-cutting kit activations are not missed.
 
-## Execution Instructions
+## Execution instructions
 
 1. Verify the source kit's exit conditions:
    - Read the source kit's playbook exit section
@@ -43,12 +43,12 @@ Cross-kit handoffs are where context gets lost. This tool ensures: exit conditio
 7. Provide ER update instructions for both kits
 8. Produce output conforming to `handoff-navigator-template.md`
 
-## Result Interpretation
+## Result interpretation
 
-- **PASS (Handoff Ready: Yes)**: All exit conditions met, all handoff artifacts frozen, entry requirements satisfied. Proceed to destination kit.
-- **PASS (Handoff Ready: No)**: Exit conditions partially met. Blocking items listed. Resolve before proceeding.
-- **FAIL**: Cannot determine handoff readiness. Invoke position-check to re-orient.
+- PASS (Handoff Ready: Yes): All exit conditions met, all handoff artifacts frozen, entry requirements satisfied. Proceed to destination kit.
+- PASS (Handoff Ready: No): Exit conditions partially met. Blocking items listed. Resolve before proceeding.
+- FAIL: Cannot determine handoff readiness. Invoke position-check to re-orient.
 
-## Spec Reference
+## Spec reference
 
 The authoritative rules, constraints, and hard gates for this tool are defined in `handoff-navigator-spec.md`.

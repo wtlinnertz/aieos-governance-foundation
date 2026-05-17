@@ -41,7 +41,7 @@ The tool produces structured output conforming to `artifact-publish-template.md`
 - Idempotent — re-publishing the same artifact to the same target produces the same external resource (update, not duplicate)
 - The tool contains no references to specific platforms, APIs, or environments
 
-## Error Handling
+## Error handling
 
 | Condition | Behavior |
 |-----------|----------|
@@ -51,7 +51,7 @@ The tool produces structured output conforming to `artifact-publish-template.md`
 | External system unreachable | Report error: adapter health check failed — publish blocked |
 | Publish succeeded but verify failed | Report warning: published but verification pending |
 
-## Hard Gates
+## Hard gates
 
 | Gate | Rule |
 |------|------|

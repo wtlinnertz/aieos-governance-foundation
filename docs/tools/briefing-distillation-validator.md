@@ -10,7 +10,7 @@ Evaluate the output of the briefing distillation tool against the hard gates def
 2. `docs/tools/briefing-distillation-spec.md` — the authoritative rules
 3. The source artifact that was distilled (for cross-reference)
 
-## Evaluation Process
+## Evaluation process
 
 Evaluate each hard gate independently.
 
@@ -48,7 +48,7 @@ Evaluate each hard gate independently.
 - Word count does not exceed stated budget
 - Word count is accurately reported in the briefing header
 
-## Output Format
+## Output format
 
 ```json
 {

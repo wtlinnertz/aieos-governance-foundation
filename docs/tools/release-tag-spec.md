@@ -43,7 +43,7 @@ The tool produces structured output conforming to `release-tag-template.md`.
 - Idempotent — re-tagging the same version updates the existing release rather than creating a duplicate
 - The tool contains no references to specific SCM platforms, APIs, or environments
 
-## Error Handling
+## Error handling
 
 | Condition | Behavior |
 |-----------|----------|
@@ -54,7 +54,7 @@ The tool produces structured output conforming to `release-tag-template.md`.
 | External SCM unreachable | Report error: adapter health check failed — tag blocked |
 | Tag already exists with different content | Report warning: existing tag found — adapter will update release body per idempotency rules |
 
-## Hard Gates
+## Hard gates
 
 | Gate | Rule |
 |------|------|

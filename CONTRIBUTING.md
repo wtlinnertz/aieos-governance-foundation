@@ -6,7 +6,7 @@ This repository is the **canonical authority** for the AIEOS governance model an
 
 ---
 
-## Guiding Principles
+## Guiding principles
 
 All contributions must uphold these principles:
 
@@ -19,28 +19,28 @@ If a contribution weakens these principles, it will not be accepted.
 
 ---
 
-## What You Can Contribute
+## What you can contribute
 
-### Governance Model (`governance-model.md`)
+### Governance model (`governance-model.md`)
 - Clarifications that resolve genuine ambiguity
 - New invariants addressing gaps in the current model
 - Corrections to stated rules that conflict with actual kit behavior
 
 All governance model changes require a version bump and changelog entry per §15.
 
-### Foundation Guides
+### Foundation guides
 - Improvements to `docs/getting-started.md`, `docs/initiative-presets.md`, `docs/initiative-state-view.md`
 - Corrections to layer descriptions or kit registry entries in `docs/layer-model.md`
 - Clarifications to `docs/philosophy.md` or `docs/kit-structure-standard.md`
 
-### Layer Model
+### Layer model
 - Updates to kit registry status (Planned → Built)
 - Corrections to inter-layer handoff descriptions
 - New layer documentation when layers are added
 
 ---
 
-## What You Should NOT Contribute
+## What you should NOT contribute
 
 The following will be rejected:
 
@@ -51,7 +51,7 @@ The following will be rejected:
 
 ---
 
-## Anonymization Requirements (MANDATORY)
+## Anonymization requirements (MANDATORY)
 
 All contributions must comply with **`ANONYMIZATION.md`**.
 
@@ -65,7 +65,7 @@ Violations may result in immediate rejection or removal.
 
 ---
 
-## Governance Model Sync Requirement
+## Governance model sync requirement
 
 If your contribution modifies `governance-model.md`, you are responsible for:
 
@@ -77,9 +77,9 @@ Kit maintainers are responsible for syncing their copies after governance model 
 
 ---
 
-## Contribution Workflow
+## Contribution workflow
 
-### 1. Fork and Branch
+### 1. fork and branch
 - Fork the repository
 - Create a branch from `main`
 - Use a descriptive branch name:
@@ -87,18 +87,18 @@ Kit maintainers are responsible for syncing their copies after governance model 
   - `docs/…`
   - `layer-model/…`
 
-### 2. Make Your Changes
+### 2. make your changes
 - Keep changes small and focused
 - One logical improvement per PR
 - Do not bundle governance model changes with foundation guide changes
 
-### 3. Validate Your Contribution
+### 3. validate your contribution
 Before opening a PR, ensure:
 - Content is kit-agnostic
 - No employer-specific content
 - Governance model changes include version bump and changelog
 
-### 4. Open a Pull Request
+### 4. open a pull request
 Use the PR template. Your description should include:
 - What problem this change solves
 - Which documents are affected
@@ -107,7 +107,7 @@ Use the PR template. Your description should include:
 
 ---
 
-## Review Expectations
+## Review expectations
 
 Maintainers will review contributions for:
 
@@ -118,7 +118,7 @@ Maintainers will review contributions for:
 
 ---
 
-## Style & Formatting
+## Style & formatting
 
 - Use Markdown
 - Prefer bullet points over long prose
@@ -128,7 +128,7 @@ Maintainers will review contributions for:
 
 ---
 
-## AI Usage in Contributions
+## AI usage in contributions
 
 You may use AI tools to assist in drafting content, provided that:
 
@@ -139,12 +139,12 @@ You may use AI tools to assist in drafting content, provided that:
 
 ---
 
-## Code of Conduct
+## Code of conduct
 
 This project follows the **Code of Conduct** defined in `CODE_OF_CONDUCT.md`.
 
 ---
 
-## Final Note
+## Final note
 
 This repository defines the foundation that all AIEOS kits build on. Changes here have cascading effects. When in doubt, open an issue first and discuss before submitting a PR.

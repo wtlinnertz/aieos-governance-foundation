@@ -45,7 +45,7 @@ The tool produces structured output conforming to `initiative-router-template.md
 - The tool does not skip routing questions — all questions from J-ENTRY-1 and J-ENTRY-2 are evaluated
 - The tool contains no references to specific implementations, environments, or vendor tools
 
-## Error Handling
+## Error handling
 
 | Condition | Behavior |
 |-----------|----------|
@@ -54,7 +54,7 @@ The tool produces structured output conforming to `initiative-router-template.md
 | Initiative ID provided but no ER found | Report: ER missing — recommend creating ER before proceeding |
 | Navigation map not accessible | Report error: cannot route without navigation map |
 
-## Hard Gates
+## Hard gates
 
 | Gate | Rule |
 |------|------|

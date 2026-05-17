@@ -6,7 +6,7 @@ For initiative-specific routing (which layers to use for a given type of work), 
 
 ---
 
-## 1. Entry Points Into AIEOS
+## 1. entry points into AIEOS
 
 There are four valid ways to enter the AIEOS framework. Each leads to a different starting kit.
 
@@ -21,9 +21,9 @@ All other kits are entered via downstream handoff or trigger, not directly from 
 
 ---
 
-## 2. Pipeline Flows
+## 2. pipeline flows
 
-### 2.1 Full Pipeline (New Feature / Compliance)
+### 2.1 full pipeline (New feature / compliance)
 
 The complete pipeline for initiatives that begin with discovery:
 
@@ -53,7 +53,7 @@ SSK (Layer 3) is optional. When engaged, the sub-flow is: `PIK → SSK (SOER →
 - REK → RRK: RR frozen with §7 Handoff to Layer 6 complete
 - RRK → IEK: 2+ frozen RHRs covering sufficient observation period
 
-### 2.2 Enhancement Pipeline (Path B)
+### 2.2 enhancement pipeline (Path b)
 
 For well-understood enhancements that bypass discovery:
 
@@ -67,7 +67,7 @@ EEK (Path B) → [QAK] → REK → RRK → IEK
 - QAK remains optional
 - All downstream layers identical
 
-### 2.3 Exploratory Research (Terminal at PIK)
+### 2.3 exploratory research (Terminal at PIK)
 
 Research that may not lead to a build:
 
@@ -79,7 +79,7 @@ PIK → EL decision: proceed → DPRD → EEK (continues as §2.1)
 
 Research terminates at PIK if the EL decision is "pause." No DPRD is generated.
 
-### 2.4 Incident-Triggered Fix
+### 2.4 incident-Triggered fix
 
 For performance or reliability fixes triggered by production incidents:
 
@@ -92,7 +92,7 @@ ODK → EEK (Path B) → [QAK] → REK → RRK
 2. **EEK:** KER (Path B, citing PMR) → PRD → TDD → WDD → Execution → ORD (freeze)
 3. Continue through QAK (optional), REK, RRK as normal
 
-### 2.5 RHR-Triggered Fix
+### 2.5 rHR-Triggered fix
 
 For fixes triggered by reliability health review findings:
 
@@ -102,11 +102,11 @@ RRK (SRP revision) → EEK (Path B) → REK → RRK (next RHR cycle)
 
 ---
 
-## 3. Cross-Cutting Kit Activation
+## 3. cross-Cutting kit activation
 
 Cross-cutting kits (Layers 9–14) do not follow the pipeline sequence. They activate at trigger points and run in parallel with pipeline layers.
 
-### 3.1 Trigger Points
+### 3.1 trigger points
 
 | Kit | Artifact | Trigger | Upstream Dependency |
 |-----|----------|---------|-------------------|
@@ -139,7 +139,7 @@ Cross-cutting kits (Layers 9–14) do not follow the pipeline sequence. They act
 | **BPK (L15)** | TP | PIA frozen | Frozen PIA |
 | **BPK (L15)** | RC | TP frozen + evidence collected | Frozen TP + readiness evidence |
 
-### 3.2 Cross-Cutting Feeds Into Pipeline
+### 3.2 cross-Cutting feeds into pipeline
 
 Cross-cutting artifacts feed back into the pipeline at specific points:
 
@@ -159,7 +159,7 @@ Cross-cutting artifacts feed back into the pipeline at specific points:
 | BPK RC | REK RER | Process readiness declaration |
 | BPK TP | REK RP | Cutover schedule alignment |
 
-### 3.3 Special Ordering: Compliance Initiatives
+### 3.3 special ordering: compliance initiatives
 
 For compliance-driven work (Preset 3), SCK must complete before QAK:
 
@@ -171,9 +171,9 @@ Frozen SCK artifacts feed into QAK's Verification Plan as security test inputs. 
 
 ---
 
-## 4. Parallelism Rules
+## 4. parallelism rules
 
-### 4.1 What Can Run in Parallel
+### 4.1 what can run in parallel
 
 **Within EEK:**
 - ACF and SAD can generate in parallel (both depend on frozen PRD)
@@ -199,7 +199,7 @@ Frozen SCK artifacts feed into QAK's Verification Plan as security test inputs. 
 **Multiple initiatives:**
 - Different projects' entire cycles run in parallel with independent Engagement Records
 
-### 4.2 What Cannot Run in Parallel
+### 4.2 what cannot run in parallel
 
 These transitions are strictly sequential — the upstream artifact must be frozen before the downstream kit begins:
 
@@ -216,17 +216,17 @@ These transitions are strictly sequential — the upstream artifact must be froz
 | SCK TM | SCK SAR | SAR uses TM as verification input |
 | PRK PRR | Artifact freeze (reviewed artifact) | PRR must pass before artifact can freeze |
 
-### 4.3 Sub-Agent Orchestration
+### 4.3 sub-Agent orchestration
 
 The parallelism rules in §4.1 define **what** can run in parallel. For operational guidance on **how** an orchestrating agent should fan out to sub-agents, package self-contained context, track completion, and reconverge validated outputs, see [`sub-agent-orchestration.md`](sub-agent-orchestration.md). That document defines three patterns: independent lens parallelism (PRK), parallel-safe work item execution (EEK), and provider/consumer contract development (EEK).
 
-### 4.4 Convergence Loops
+### 4.4 convergence loops
 
 Flow validation rule 3 (FAIL blocks promotion) is operationalized by the convergence loop pattern for autonomous agents. When an artifact fails validation, the convergence loop automates the correction-revalidation cycle with bounded iteration (max 3 attempts), structured feedback from validator findings, and escalation to a human when convergence is not achieved. See [`review-convergence-loop.md`](review-convergence-loop.md) for the full pattern specification. Convergence loops operate within the Draft → Validated transition — they do not affect freeze-before-promote or cross-kit handoffs.
 
 ---
 
-## 5. Escalation Paths
+## 5. escalation paths
 
 Escalation paths move work upstream (against the normal pipeline direction) when downstream evidence reveals issues.
 
@@ -241,11 +241,11 @@ Escalation paths move work upstream (against the normal pipeline direction) when
 
 ---
 
-## 6. Re-Entry Protocols
+## 6. re-Entry protocols
 
 When a frozen artifact must change after downstream work has begun:
 
-### 6.1 Within-Kit Re-Entry
+### 6.1 within-Kit re-Entry
 
 1. Identify the artifact to change
 2. Identify all downstream artifacts that reference it
@@ -255,7 +255,7 @@ When a frozen artifact must change after downstream work has begun:
 6. Re-validate all affected downstream artifacts
 7. Document the change with reference to original
 
-### 6.2 Cross-Kit Re-Entry (PIK → EEK)
+### 6.2 cross-Kit re-Entry (PIK → EEK)
 
 When a PIK DPRD must change after EEK artifacts exist:
 
@@ -264,7 +264,7 @@ When a PIK DPRD must change after EEK artifacts exist:
 3. Joint decision: accept changes or negotiate scope
 4. If accepted: new DPRD version placed in EEK, cascade re-validation
 
-### 6.3 QAK FAIL Re-Entry
+### 6.3 QAK FAIL re-Entry
 
 When QGR disposition is FAIL:
 
@@ -273,7 +273,7 @@ When QGR disposition is FAIL:
 3. ORD re-validated
 4. New QAK cycle: QAER → VP (reuse if scope unchanged) → TCR → QGR
 
-### 6.4 Non-Material Amendments
+### 6.4 non-Material amendments
 
 A frozen artifact may be corrected in place (no new version) when **all** of:
 - Does not affect any hard gate field
@@ -284,9 +284,9 @@ Add an Amendment Log entry. If there is any ambiguity, treat it as material and 
 
 ---
 
-## 7. Optional vs. Required Layers
+## 7. optional vs. required layers
 
-### 7.1 Pipeline Layers
+### 7.1 pipeline layers
 
 | Layer | Required? | Skip Condition |
 |-------|-----------|---------------|
@@ -297,7 +297,7 @@ Add an Amendment Log entry. If there is any ambiguity, treat it as material and 
 | RRK (L6) | Required in production | Required once system is deployed; not applicable until release |
 | IEK (L7) | Required when eligible | Required once 2+ RHRs exist |
 
-### 7.2 Cross-Cutting Layers
+### 7.2 cross-Cutting layers
 
 | Layer | Required? | Adoption Criteria |
 |-------|-----------|------------------|
@@ -309,7 +309,7 @@ Add an Amendment Log entry. If there is any ambiguity, treat it as material and 
 | PRK (L14) | Optional | Adopt when multi-perspective quality assurance is valuable; recommended for SAD and TDD at minimum |
 | BPK (L15) | Conditional | Adopt when the initiative changes, adds, or removes business processes or user workflows |
 
-### 7.3 Operational Track
+### 7.3 operational track
 
 | Layer | Required? | Trigger |
 |-------|-----------|--------|
@@ -317,7 +317,7 @@ Add an Amendment Log entry. If there is any ambiguity, treat it as material and 
 
 ---
 
-## 8. Late Adoption and Mid-Initiative Entry
+## 8. late adoption and mid-Initiative entry
 
 Any cross-cutting kit can be adopted mid-initiative when its trigger conditions are met. Pipeline kits support mid-initiative entry through escalation.
 
@@ -338,7 +338,7 @@ Any cross-cutting kit can be adopted mid-initiative when its trigger conditions 
 
 ---
 
-## 9. Maximum Parallelism Timeline
+## 9. maximum parallelism timeline
 
 For a large initiative adopting all kits, the maximum parallelism looks like:
 
@@ -381,7 +381,7 @@ Phase 6 — Learning (IEK):                                         ▼
 
 ---
 
-## 10. Flow Validation Rules
+## 10. flow validation rules
 
 These invariants must hold for any valid flow through the framework:
 
@@ -398,7 +398,7 @@ These invariants must hold for any valid flow through the framework:
 
 ---
 
-## 11. Decision Outcome Taxonomy
+## 11. decision outcome taxonomy
 
 Six formal outcomes that apply at decision points throughout the framework. These outcomes operate at the decision layer above validators — validators still output PASS/FAIL; the taxonomy classifies the human or orchestrator decision that follows.
 
@@ -411,7 +411,7 @@ Six formal outcomes that apply at decision points throughout the framework. Thes
 | **Require-Redesign** | Architecture or design risk too high; return to design phase | Escalation triggers 3/4 | Fundamental approach change needed |
 | **Rollback** | Runtime SLO violation; execute rollback procedure | Escalation trigger 5 (REK/RRK) | Production failure after release |
 
-### Relationship to Existing Mechanisms
+### Relationship to existing mechanisms
 
 - **Validators** continue to output `PASS` or `FAIL`. The taxonomy does not change validator behavior.
 - **Approve** and **Block** map directly to validator PASS and FAIL respectively when no additional context applies.
@@ -420,7 +420,7 @@ Six formal outcomes that apply at decision points throughout the framework. Thes
 - **Require-Redesign** applies when the issue cannot be fixed by correcting the current artifact — the problem is upstream. This triggers cross-kit re-entry (§6.2) or within-kit re-entry to a design-phase artifact.
 - **Rollback** applies only after release execution has begun. It triggers the REK abort protocol and escalation paths (T3, T4).
 
-### When to Apply
+### When to apply
 
 The taxonomy applies at every junction node in the navigation map and at every artifact freeze decision. It does not apply within validator execution (validators remain PASS/FAIL).
 

@@ -2,7 +2,7 @@
 
 You are evaluating whether the work-item-sync tool was used correctly.
 
-## Evaluation Rules
+## Evaluation rules
 
 - Do NOT suggest alternative trackers or field mappings
 - Do NOT redesign the work breakdown structure
@@ -10,11 +10,11 @@ You are evaluating whether the work-item-sync tool was used correctly.
 - Evaluate only what is explicitly present in the tool output
 - Be strict: ambiguity is a failure condition
 
-## Spec Reference
+## Spec reference
 
 Evaluate against the hard gates and constraints defined in `work-item-sync-spec.md`.
 
-## Hard Gates
+## Hard gates
 
 | Gate | Check |
 |------|-------|
@@ -26,7 +26,7 @@ Evaluate against the hard gates and constraints defined in `work-item-sync-spec.
 | `source_unmodified` | The Disposition section confirms Source Modified: No |
 | `idempotent_behavior` | If this is a re-sync (Action Taken: Updated or Skipped), no duplicate tracker items were created |
 
-## Output Format
+## Output format
 
 ```json
 {

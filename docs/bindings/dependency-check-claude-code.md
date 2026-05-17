@@ -2,7 +2,7 @@
 
 This binding maps the abstract `TOOL-DEPENDENCY-CHECK` capability to a concrete implementation using Claude Code.
 
-## Tool Reference
+## Tool reference
 
 - **Tool Spec:** `docs/tools/dependency-check-spec.md`
 - **Tool Template:** `docs/tools/dependency-check-template.md`
@@ -11,7 +11,7 @@ This binding maps the abstract `TOOL-DEPENDENCY-CHECK` capability to a concrete 
 
 In a Claude Code session, the dependency-check capability is exercised as follows:
 
-### Input Mapping
+### Input mapping
 
 | Tool Input | Claude Code Action |
 |------------|-------------------|
@@ -19,14 +19,14 @@ In a Claude Code session, the dependency-check capability is exercised as follow
 | `kit_name` | Determined from the current working kit |
 | `artifact_directory` | The project's `docs/sdlc/` directory |
 
-### Execution Steps
+### Execution steps
 
 1. Read the target artifact's spec file (`docs/specs/{type}-spec.md`) to identify the "Upstream Dependencies" section
 2. For each listed upstream artifact type, search the project's artifact directory for the corresponding file
 3. Read each upstream artifact's Document Control section and check the `Status` field
 4. Produce output following the template format
 
-### Status Determination
+### Status determination
 
 | Document Control Status Value | Reported Freeze Status |
 |------------------------------|----------------------|
@@ -37,13 +37,13 @@ In a Claude Code session, the dependency-check capability is exercised as follow
 | Field missing or unrecognizable | Unfrozen |
 | File not found | Missing |
 
-### Environment Notes
+### Environment notes
 
 - Claude Code reads files directly via the `Read` tool
 - No external API calls or database queries are needed
 - The binding assumes the standard AIEOS directory layout
 
-## What This Binding Does Not Define
+## What this binding does not define
 
 This binding does not define policy. The rules for what constitutes a valid dependency check (preconditions, postconditions, constraints, hard gates) are defined in `dependency-check-spec.md`. This file only describes how those rules are implemented in the Claude Code environment.
 

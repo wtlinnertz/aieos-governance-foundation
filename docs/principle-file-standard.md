@@ -6,7 +6,7 @@ An unstructured principle file is nearly useless as generation input. This stand
 
 ---
 
-## Version Field
+## Version field
 
 Every principle file must carry a version field in its header, before any content sections:
 
@@ -20,7 +20,7 @@ The version field identifies which revision of the organizational policy was act
 
 New principle files start at `v1.0`. Retrofitted files that are receiving their first version field also start at `v1.0` — the retrofit is not a content change.
 
-### Change Categories
+### Change categories
 
 | Category | Version Bump | Definition | Downstream Impact |
 |----------|-------------|------------|-------------------|
@@ -32,7 +32,7 @@ New principle files start at `v1.0`. Retrofitted files that are receiving their 
 
 ---
 
-## What Principle Files Are
+## What principle files are
 
 Principle files answer: **"What standards does this organization hold in this domain?"**
 
@@ -40,11 +40,11 @@ They are read by AI generation prompts to constrain artifact output. A principle
 
 ---
 
-## Required Structure
+## Required structure
 
 Every principle file must have these three sections:
 
-### 1. Scope
+### 1. scope
 
 One paragraph stating:
 - What domain this file covers (e.g., "Backend API development in Python and Go")
@@ -53,7 +53,7 @@ One paragraph stating:
 
 Without a scope statement, the AI cannot determine whether a principle applies to a given artifact or work item.
 
-### 2. Rules
+### 2. rules
 
 The substantive content of the file. Each rule must be:
 
@@ -71,7 +71,7 @@ The substantive content of the file. Each rule must be:
 
 Rules may be grouped into subsections for readability. Each subsection should have a name that identifies the constraint category (e.g., "API Design", "Testing", "Security").
 
-### 3. Enforcement Mapping
+### 3. enforcement mapping
 
 A table or list identifying which kit specs enforce each rule category.
 
@@ -87,7 +87,7 @@ This mapping serves two purposes:
 
 ---
 
-## What Belongs in a Principle File vs. a Spec
+## What belongs in a principle file vs. a spec
 
 | Belongs in Principle File | Belongs in Spec |
 |--------------------------|-----------------|
@@ -99,7 +99,7 @@ Principle files define **what the organization requires**. Specs define **what a
 
 ---
 
-## Principle File Quality Indicators
+## Principle file quality indicators
 
 A well-written principle file:
 - Has a scope statement that would let a new team member know in 30 seconds whether it applies to their work

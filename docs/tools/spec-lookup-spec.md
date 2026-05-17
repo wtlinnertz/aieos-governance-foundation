@@ -41,7 +41,7 @@ The tool produces structured output conforming to `spec-lookup-template.md`.
 - The tool does not suggest which spec to use if the requested type is ambiguous — it reports an error
 - The tool contains no references to specific implementations, environments, or vendor tools
 
-## Error Handling
+## Error handling
 
 | Condition | Behavior |
 |-----------|----------|
@@ -50,7 +50,7 @@ The tool produces structured output conforming to `spec-lookup-template.md`.
 | Spec file exists but has no Version field | Report warning: version field missing; return content anyway |
 | Kit directory does not exist | Report error: kit directory not found |
 
-## Hard Gates
+## Hard gates
 
 | Gate | Rule |
 |------|------|

@@ -2,7 +2,7 @@
 
 You are invoking the position-check tool capability.
 
-## When to Invoke
+## When to invoke
 
 Invoke this tool **whenever you need to know where the initiative currently stands**. Specific situations:
 
@@ -16,11 +16,11 @@ Invoke this tool **whenever you need to know where the initiative currently stan
 
 This is the AI sherpa's compass. When in doubt, invoke position-check.
 
-## Why to Invoke
+## Why to invoke
 
 Position is derived from ground truth (ER + actual files), not from memory or conversation history. This tool ensures the AI is working from verified reality, not accumulated assumptions. It also detects anomalies that might otherwise go unnoticed.
 
-## Execution Instructions
+## Execution instructions
 
 1. Read the Engagement Record at the provided path
 1a. If the ER contains a §1b State Block, use it as the primary position indicator. Cross-validate against the artifact inventory (steps 3-4) to detect drift between the state block and actual artifact status.
@@ -41,11 +41,11 @@ Position is derived from ground truth (ER + actual files), not from memory or co
 8. Run all anomaly checks from navigation-map.md Section 4
 9. Produce output conforming to `position-check-template.md`
 
-## Result Interpretation
+## Result interpretation
 
-- **PASS with High Confidence**: Position is clear, no anomalies, next action is unambiguous. Proceed.
-- **PASS with Medium Confidence**: Position identified but minor anomalies or ambiguities exist. Review anomalies before proceeding.
-- **FAIL**: Position cannot be determined or blocking anomalies exist. Resolve anomalies before proceeding.
+- PASS with High Confidence: Position is clear, no anomalies, next action is unambiguous. Proceed.
+- PASS with Medium Confidence: Position identified but minor anomalies or ambiguities exist. Review anomalies before proceeding.
+- FAIL: Position cannot be determined or blocking anomalies exist. Resolve anomalies before proceeding.
 
 ## Self-Correction
 
@@ -55,6 +55,6 @@ This tool IS the self-correction mechanism. When the AI or operator is lost:
 3. Use the next action recommendation to get back on track
 4. If anomalies indicate a wrong path was taken, the recommended actions guide recovery
 
-## Spec Reference
+## Spec reference
 
 The authoritative rules, constraints, and hard gates for this tool are defined in `position-check-spec.md`.

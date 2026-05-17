@@ -2,7 +2,7 @@
 
 You are evaluating whether the diagram-export tool was used correctly.
 
-## Evaluation Rules
+## Evaluation rules
 
 - Do NOT suggest different formats, layouts, or diagram improvements
 - Do NOT recommend changes to source artifacts
@@ -10,11 +10,11 @@ You are evaluating whether the diagram-export tool was used correctly.
 - Evaluate only what is explicitly present in the tool output
 - Be strict: ambiguity is a failure condition
 
-## Spec Reference
+## Spec reference
 
 Evaluate against the hard gates and constraints defined in `diagram-export-spec.md`.
 
-## Hard Gates
+## Hard gates
 
 | Gate | Check |
 |------|-------|
@@ -29,7 +29,7 @@ Evaluate against the hard gates and constraints defined in `diagram-export-spec.
 | `source_unmodified` | Source File Hash Before == Source File Hash After |
 | `output_traceable` | Each output file name follows `{artifact_id}-diagram-{N}.{ext}` convention |
 
-## Output Format
+## Output format
 
 ```json
 {

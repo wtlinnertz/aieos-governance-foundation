@@ -44,7 +44,7 @@ The tool produces structured output conforming to `work-item-sync-template.md`.
 - Preserves work item dependencies — if the WDD declares dependencies between items, these are represented as links in the tracker
 - The tool contains no references to specific trackers, APIs, or environments
 
-## Error Handling
+## Error handling
 
 | Condition | Behavior |
 |-----------|----------|
@@ -55,7 +55,7 @@ The tool produces structured output conforming to `work-item-sync-template.md`.
 | Partial sync (some items synced, others failed) | Report partial: list successful and failed items; overall status is FAIL |
 | Work group creation failed | Report error: group structure could not be established — item sync continues but group mapping shows failure |
 
-## Hard Gates
+## Hard gates
 
 | Gate | Rule |
 |------|------|

@@ -4,7 +4,7 @@ AIEOS organizes an organization's operating system into layers. Each layer gover
 
 ---
 
-## Getting Started
+## Getting started
 
 If you are new to AIEOS or starting a new initiative:
 
@@ -15,11 +15,11 @@ If you are new to AIEOS or starting a new initiative:
 
 ---
 
-## Layer Architecture
+## Layer architecture
 
 AIEOS layers are organized into three categories:
 
-### Pipeline Layers (1–7)
+### Pipeline layers (1–7)
 
 Sequential value delivery from strategy to production learning. The flow is top-down for delivery and bottom-up for learning. Layer 7 feeds insight back to Layer 1. The system is a loop, not a pipeline.
 
@@ -41,7 +41,7 @@ Sequential value delivery from strategy to production learning. The flow is top-
 └─────────────────────────────────────────┘
 ```
 
-### Operational Tracks (8)
+### Operational tracks (8)
 
 Reactive tracks triggered by production events, not SDLC progression.
 
@@ -51,7 +51,7 @@ Reactive tracks triggered by production events, not SDLC progression.
 └─────────────────────────────────────────┘
 ```
 
-### Cross-Cutting Governance (9–15)
+### Cross-Cutting governance (9–15)
 
 Kits that interact with multiple pipeline layers. Each has defined trigger points rather than a fixed position in the sequence. They can be adopted independently.
 
@@ -77,13 +77,13 @@ Layer 8 is a reactive operational track — triggered by production events, not 
 
 ---
 
-## Layer Descriptions
+## Layer descriptions
 
-### Layer 1: Strategic Direction
+### Layer 1: strategic direction
 
 **Question**: What are we trying to achieve?
 
-This layer governs how an organization captures, validates, and prioritizes strategic bets. It produces falsifiable bets with measurable signals and a strict-rank-ordered portfolio with explicit capacity constraints. The emphasis is on decision quality — falsifiability, measurability, and prioritization honesty — not comprehensive strategy documentation.
+This layer governs how an organization captures, validates, and prioritizes strategic bets. It produces falsifiable bets with measurable signals and a strict-rank-ordered portfolio with explicit capacity constraints. The emphasis is on decision quality — falsifiability, measurability, and prioritization honesty — not complete strategy documentation.
 
 **Kit**: `aieos-strategic-direction-kit` *(built — optional upstream entry point)*
 
@@ -97,7 +97,7 @@ This layer governs how an organization captures, validates, and prioritizes stra
 
 ---
 
-### Layer 2: Product Intelligence
+### Layer 2: product intelligence
 
 **Question**: What should we build and why?
 
@@ -113,7 +113,7 @@ This layer governs the transformation of strategic intent into engineering-ready
 
 ---
 
-### Layer 3: Solution Sourcing
+### Layer 3: solution sourcing
 
 **Question**: What do we work on next and when?
 
@@ -131,7 +131,7 @@ This layer governs work intake, prioritization, sequencing, and capacity managem
 
 ---
 
-### Layer 4: Engineering Execution
+### Layer 4: engineering execution
 
 **Question**: How do we build it correctly?
 
@@ -147,7 +147,7 @@ This layer governs the full execution lifecycle from PRD through production-read
 
 ---
 
-### Layer 5: Release & Exposure
+### Layer 5: release & exposure
 
 **Question**: How do we ship it safely?
 
@@ -163,7 +163,7 @@ This layer governs deployment policy, progressive delivery, feature exposure man
 
 ---
 
-### Layer 6: Reliability & Resilience
+### Layer 6: reliability & resilience
 
 **Question**: How do we keep it running?
 
@@ -179,7 +179,7 @@ This layer governs SLOs, incident management, error budgets, and the operational
 
 ---
 
-### Layer 7: Insight & Evolution
+### Layer 7: insight & evolution
 
 **Question**: What did we learn and what changes?
 
@@ -195,7 +195,7 @@ This layer synthesizes operational signals from production into actionable insig
 
 ---
 
-### Layer 8: Operational Diagnostics
+### Layer 8: operational diagnostics
 
 **Question**: How do we diagnose and resolve operational failures?
 
@@ -215,7 +215,7 @@ This layer governs structured investigation, hypothesis tracking, and postmortem
 
 ---
 
-### Layer 9: Quality Assurance
+### Layer 9: quality assurance
 
 **Question**: Is it verified beyond unit scope?
 
@@ -235,7 +235,7 @@ This layer governs verification campaigns, integration testing, system testing, 
 
 ---
 
-### Layer 10: Security & Compliance
+### Layer 10: security & compliance
 
 **Question**: Is it secure and compliant?
 
@@ -258,7 +258,7 @@ This layer governs threat modeling, security assessment, compliance evidence, an
 
 ---
 
-### Layer 11: Data & Configuration
+### Layer 11: data & configuration
 
 **Question**: Is configuration governed and are feature flags managed?
 
@@ -279,7 +279,7 @@ This layer governs configuration management, feature flag lifecycle, and data sc
 
 ---
 
-### Layer 12: Platform & Infrastructure
+### Layer 12: platform & infrastructure
 
 **Question**: What infrastructure supports it?
 
@@ -300,7 +300,7 @@ This layer governs infrastructure decisions, deployment targets, and environment
 
 ---
 
-### Layer 13: Documentation & Knowledge
+### Layer 13: documentation & knowledge
 
 **Question**: Is user-facing documentation governed?
 
@@ -322,7 +322,7 @@ This layer governs user-facing documentation, API references, support knowledge 
 
 ---
 
-### Layer 14: Peer Review
+### Layer 14: peer review
 
 **Question**: Has this artifact been evaluated from multiple expert perspectives?
 
@@ -347,7 +347,7 @@ This layer governs autonomous multi-perspective peer review. It replicates the r
 
 **Downstream consumers**: The producing kit — PRR findings inform artifact revision before freeze. Portfolio synthesis (IEK) — PRR patterns across initiatives surface systematic quality gaps.
 
-### Layer 15: Business Process
+### Layer 15: business process
 
 **Question**: Are affected business processes governed through the change?
 
@@ -370,7 +370,7 @@ This layer governs the organizational and process change side of solution delive
 
 ---
 
-## Kit Registry
+## Kit registry
 
 | Layer | Kit Repository | Category | Status |
 |-------|---------------|----------|--------|
@@ -392,14 +392,14 @@ This layer governs the organizational and process change side of solution delive
 
 ---
 
-## Inter-Layer Handoff Rules
+## Inter-Layer handoff rules
 
 1. **Artifacts cross layer boundaries as frozen, validated documents.** No layer accepts in-progress work from an upstream layer.
 2. **Handoff artifacts must satisfy the downstream layer's intake gate.** The downstream kit validates its inputs — it does not trust upstream kits blindly.
 3. **Layer skipping is permitted only with explicit justification.** A team with a well-understood bug fix may enter Engineering Execution directly (Path B) without a discovery engagement. The Kit Entry Record captures and justifies the skip.
 4. **Layer re-entry is defined in each kit's playbook.** When upstream artifacts change after downstream work has begun, the cross-kit re-entry protocol determines what gets re-validated.
 
-## Cross-Layer Project Artifacts
+## Cross-Layer project artifacts
 
 **Engagement Records (ERs)** are project-level artifacts that span all layers. Unlike kit artifacts, they are not owned by any single layer — they are maintained in the consuming project at `docs/engagement/er-{initiative}.md` and updated by each kit's operators as work passes through that layer.
 
@@ -411,7 +411,7 @@ The ER spec lives in `aieos-governance-foundation/docs/engagement-record-spec.md
 
 ---
 
-## Current Build State
+## Current build state
 
 As of the current build, Layers 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, and 15 are operational:
 

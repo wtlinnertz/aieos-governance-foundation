@@ -2,12 +2,12 @@
 
 This binding maps the abstract `TOOL-RELEASE-TAG` capability to GitHub Releases.
 
-## Tool Reference
+## Tool reference
 
 - **Tool Spec:** `docs/tools/release-tag-spec.md`
 - **Tool Template:** `docs/tools/release-tag-template.md`
 
-## Input Mapping
+## Input mapping
 
 | Tool Input | GitHub Mapping |
 |------------|---------------|
@@ -16,7 +16,7 @@ This binding maps the abstract `TOOL-RELEASE-TAG` capability to GitHub Releases.
 | `release_version` | Tag name, prefixed with `v` (e.g., `1.0.0` → `v1.0.0`) |
 | `target_system` | Resolved to GitHub repository (owner/repo) |
 
-## Field Mapping
+## Field mapping
 
 | AIEOS Field | GitHub Releases Field | Notes |
 |-------------|----------------------|-------|
@@ -27,11 +27,11 @@ This binding maps the abstract `TOOL-RELEASE-TAG` capability to GitHub Releases.
 | RR Artifact ID + version | Release name | Format: `{RR_ARTIFACT_ID} — v{release_version}` |
 | Pre-release flag | `prerelease` field | Set to `true` if RR disposition is not `successful-full-exposure` |
 
-## ID Derivation
+## ID derivation
 
 The external ID is derived deterministically: the adapter searches for an existing release with the tag name `v{release_version}` in the configured repository. If found, the release is updated. If not found, a new release is created.
 
-## Adapter Environment Variables
+## Adapter environment variables
 
 | Variable | Required | Description |
 |----------|----------|-------------|
@@ -39,11 +39,11 @@ The external ID is derived deterministically: the adapter searches for an existi
 | `GITHUB_REPO` | Yes | Target repository in `owner/repo` format (e.g., `acme/taskflow`) |
 | `GITHUB_TARGET_COMMITISH` | No | Target commitish for the tag (defaults to default branch). Use to tag a specific commit. |
 
-## Adapter Conformance Reference
+## Adapter conformance reference
 
 The adapter implementing this binding must satisfy all hard gates defined in `docs/adapter-conformance-spec.md`. The adapter is push-only (creates tags and releases on GitHub; does not sync GitHub release changes back to AIEOS).
 
-## What This Binding Does Not Define
+## What this binding does not define
 
 This binding does not define policy. The rules for what constitutes a valid release tag operation (preconditions, postconditions, constraints, hard gates) are defined in `release-tag-spec.md`. The interface contract for adapter implementations is defined in `adapter-conformance-spec.md`. This file only describes how RR fields map to GitHub Releases fields and configuration.
 

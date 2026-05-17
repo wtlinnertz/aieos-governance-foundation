@@ -2,7 +2,7 @@
 
 You are evaluating whether the validation-status tool was used correctly.
 
-## Evaluation Rules
+## Evaluation rules
 
 - Do NOT suggest alternative SCM platforms
 - Do NOT redesign the status check mapping
@@ -10,11 +10,11 @@ You are evaluating whether the validation-status tool was used correctly.
 - Evaluate only what is explicitly present in the tool output
 - Be strict: ambiguity is a failure condition
 
-## Spec Reference
+## Spec reference
 
 Evaluate against the hard gates and constraints defined in `validation-status-spec.md`.
 
-## Hard Gates
+## Hard gates
 
 | Gate | Check |
 |------|-------|
@@ -25,7 +25,7 @@ Evaluate against the hard gates and constraints defined in `validation-status-sp
 | `source_unmodified` | The Disposition section confirms Source Modified: No |
 | `idempotent_behavior` | If this is a re-post (Action Taken: Updated or Skipped), no duplicate check was created |
 
-## Output Format
+## Output format
 
 ```json
 {

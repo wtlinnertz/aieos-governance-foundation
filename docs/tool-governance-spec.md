@@ -4,7 +4,7 @@ Version: v1.0
 
 This document defines the governance rules for tools within the AIEOS framework. Tools are abstract capabilities that AI agents or human operators may invoke during artifact production. They are governed by the same four-file system that governs artifacts, but they govern a **capability** rather than a **document**.
 
-## What a Tool Is
+## What a tool is
 
 A tool is a named, reusable capability with a defined interface contract. It has:
 
@@ -16,7 +16,7 @@ A tool is a named, reusable capability with a defined interface contract. It has
 
 A tool is **not** an implementation. The tool definition describes what the capability does and when to use it. How the capability executes in a specific environment is a binding concern (see §Relationship to Bindings).
 
-## The Four-File System for Tools
+## The four-File system for tools
 
 Every tool type is governed by exactly four files, following the same separation of concerns as artifact four-files.
 
@@ -27,7 +27,7 @@ Every tool type is governed by exactly four files, following the same separation
 | **Prompt** | When and why should the AI invoke this? | Invocation intent, execution instructions, result interpretation |
 | **Validator** | Was the tool used correctly? | Judgment on whether the tool produced compliant output and was invoked appropriately |
 
-### Separation of Concerns
+### Separation of concerns
 
 - **Tool specs are the single source of truth** for what the tool must do. Prompts and validators reference tool specs — they never inline their own rules.
 - **Tool templates define output structure, not behavior.** A tool template contains the output schema and field definitions. It does not contain invocation rules or constraints.
@@ -44,7 +44,7 @@ Tool Validator → references → Tool Spec (for hard gates to evaluate)
 
 No other cross-references are permitted.
 
-## Directory Convention
+## Directory convention
 
 Tool four-file sets live in `docs/tools/` within each kit:
 
@@ -62,7 +62,7 @@ The `docs/tools/` directory is **optional**. Not all kits will define tools. Whe
 
 All four tool files live in the same directory (`docs/tools/`), unlike artifact files which are distributed across `docs/specs/`, `docs/artifacts/`, `docs/prompts/`, and `docs/validators/`. This physical co-location reflects the fact that tool files describe a single cohesive capability.
 
-## Naming Convention
+## Naming convention
 
 Tool files follow the pattern: `{tool-name}-{role}.md`
 
@@ -75,7 +75,7 @@ Tool files follow the pattern: `{tool-name}-{role}.md`
 
 Tool names use lowercase kebab-case and describe capabilities (verbs or verb-noun phrases), not artifact types. This naming distinction prevents confusion with artifact four-file sets.
 
-## Tool ID Format
+## Tool ID format
 
 `TOOL-{TOOL-NAME}`
 
@@ -84,14 +84,14 @@ Tool names use lowercase kebab-case and describe capabilities (verbs or verb-nou
 
 Example: `TOOL-DEPENDENCY-CHECK`, `TOOL-SPEC-LOOKUP`
 
-## Shared vs. Kit-Specific Tools
+## Shared vs. kit-Specific tools
 
 - **Shared tools** live in `aieos-governance-foundation/docs/tools/`. These are cross-kit capabilities used across multiple layers (e.g., dependency checking, spec lookup, engagement record updates).
 - **Kit-specific tools** live in the respective kit's `docs/tools/`. These are capabilities specific to one layer's artifact production workflow.
 
 When a kit-specific tool is later found useful across multiple kits, it should be promoted to governance-foundation following the same governance model change protocol (§15 of the governance model).
 
-## Relationship to Bindings
+## Relationship to bindings
 
 Tools follow the same policy-vs-implementation separation as all other AIEOS concepts:
 
@@ -113,7 +113,7 @@ Tool specs follow the same versioning protocol as artifact specs, defined in `ai
 - Changes follow Minor / Significant / Breaking categories
 - Validator and prompt references to the spec should be validated against the current spec version
 
-## Validator Output Format
+## Validator output format
 
 Tool validators produce JSON in the same schema as artifact validators (governance-model.md §5):
 
@@ -130,7 +130,7 @@ Tool validators produce JSON in the same schema as artifact validators (governan
 
 This ensures existing test infrastructure and tooling works for tools without modification.
 
-## Hard Gates for Tool Spec Compliance
+## Hard gates for tool spec compliance
 
 Every tool spec must satisfy the following hard gates:
 

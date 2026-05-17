@@ -1,6 +1,6 @@
 # Briefing: {SOURCE-ARTIFACT-ID}
 
-## Briefing Header
+## Briefing header
 
 | Field | Value |
 |-------|-------|
@@ -12,13 +12,13 @@
 
 ---
 
-## Executive Summary
+## Executive summary
 
 {2-3 sentences: what this artifact decided/defined and why it matters for downstream work.}
 
 ---
 
-## Key Decisions
+## Key decisions
 
 | # | Decision | Rationale (from source) | Downstream Impact |
 |---|----------|------------------------|-------------------|
@@ -26,7 +26,7 @@
 
 ---
 
-## Scope Boundaries
+## Scope boundaries
 
 **In Scope:**
 - {bulleted list from source}
@@ -36,7 +36,7 @@
 
 ---
 
-## Constraints & Risks
+## Constraints & risks
 
 | # | Type | Description | Mitigation (from source) |
 |---|------|-------------|-------------------------|
@@ -44,7 +44,7 @@
 
 ---
 
-## Interfaces & Dependencies
+## Interfaces & dependencies
 
 | # | Interface/Dependency | Direction | Contract Summary |
 |---|---------------------|-----------|-----------------|
@@ -52,6 +52,6 @@
 
 ---
 
-## Open Items
+## Open items
 
 {Deferred decisions, known gaps, items requiring downstream resolution. If none: "No open items."}

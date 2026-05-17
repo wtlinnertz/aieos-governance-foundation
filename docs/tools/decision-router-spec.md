@@ -45,7 +45,7 @@ The tool produces structured output conforming to `decision-router-template.md`.
 - The tool does not generate artifacts
 - The tool contains no references to specific implementations, environments, or vendor tools
 
-## Error Handling
+## Error handling
 
 | Condition | Behavior |
 |-----------|----------|
@@ -54,7 +54,7 @@ The tool produces structured output conforming to `decision-router-template.md`.
 | None of the decision table conditions match | Report: no match — recommend invoking position-check to re-establish position. This is the escape hatch. |
 | Multiple options equally valid | Present all matching options with rationale; human chooses |
 
-## Hard Gates
+## Hard gates
 
 | Gate | Rule |
 |------|------|

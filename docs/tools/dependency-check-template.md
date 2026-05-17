@@ -1,6 +1,6 @@
 # Dependency Check Output
 
-## Report Header
+## Report header
 
 | Field | Value |
 |-------|-------|
@@ -10,7 +10,7 @@
 | Artifact Directory | {path} |
 | Timestamp | {ISO 8601} |
 
-## Dependency Status
+## Dependency status
 
 | Upstream Artifact | Artifact ID | File | Freeze Status | Notes |
 |-------------------|-------------|------|---------------|-------|

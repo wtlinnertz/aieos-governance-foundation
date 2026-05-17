@@ -2,7 +2,7 @@
 
 You are evaluating whether the decision-router tool was used correctly.
 
-## Evaluation Rules
+## Evaluation rules
 
 - Do NOT evaluate whether the recommendation is the "right" choice
 - Do NOT suggest alternative routing decisions
@@ -10,11 +10,11 @@ You are evaluating whether the decision-router tool was used correctly.
 - Evaluate only what is explicitly present in the tool output
 - Be strict: ambiguity is a failure condition
 
-## Spec Reference
+## Spec reference
 
 Evaluate against the hard gates and constraints defined in `decision-router-spec.md`.
 
-## Hard Gates
+## Hard gates
 
 | Gate | Check |
 |------|-------|
@@ -24,7 +24,7 @@ Evaluate against the hard gates and constraints defined in `decision-router-spec
 | `recommendation_justified` | The Recommendation section provides evidence-grounded rationale (not just "seems right") |
 | `no_auto_decision` | The output includes the Human Approval Required section |
 
-## Output Format
+## Output format
 
 ```json
 {

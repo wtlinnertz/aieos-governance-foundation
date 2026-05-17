@@ -1,6 +1,6 @@
 # AIEOS Roadmap
 
-Single-source tracking for completed work, active initiatives, and planned items across the AIEOS governance framework and ecosystem.
+Single-source tracking for completed work, active initiatives, and planned items across the AIEOS governance framework and system.
 
 **Last updated:** 2026-03-25 (ECO-009 Agent Harness added; AI-Native SDLC v3.1 alignment items)
 
@@ -8,7 +8,7 @@ Single-source tracking for completed work, active initiatives, and planned items
 
 ## Completed
 
-### Framework Foundation (pre-March 2026)
+### Framework foundation (pre-March 2026)
 
 - [x] **FW-001** Core governance model with four-file invariant (spec, template, prompt, validator)
 - [x] **FW-002** Layer 2: Product Intelligence Kit (PIK) — WCR, Discovery Intake, PFD, VH, AR, EL, DPRD
@@ -19,7 +19,7 @@ Single-source tracking for completed work, active initiatives, and planned items
 - [x] **FW-007** Layer 8: Operational Diagnostics Kit (ODK) — DCR, INR, PMR, RB
 - [x] **FW-008** Freeze-before-promote enforcement, artifact provenance tracking, deprecation lifecycle
 
-### 2026-03-04 to 2026-03-06: Governance Hardening
+### 2026-03-04 to 2026-03-06: governance hardening
 
 - [x] **FW-009** Amendment model, Freeze Pending status, principle versioning
 - [x] **FW-010** Cross-kit escalation protocols
@@ -29,7 +29,7 @@ Single-source tracking for completed work, active initiatives, and planned items
 - [x] **FW-014** Initiative presets (P1–P5 golden paths)
 - [x] **FW-015** Repo renamed `aieos-spec` → `aieos-governance-foundation`; open-sourced (MIT)
 
-### 2026-03-08 to 2026-03-09: Standards & Cross-Cutting Kits
+### 2026-03-08 to 2026-03-09: standards & cross-Cutting kits
 
 - [x] **FW-016** AI Transparency Principles (v1.0)
 - [x] **FW-017** Spec file versioning standard — all 33 specs at v1.0, all 30 templates with provenance fields
@@ -38,7 +38,7 @@ Single-source tracking for completed work, active initiatives, and planned items
 - [x] **FW-020** Layer 11: Data & Configuration Kit (DCK) — CSPEC, FFLR, DSR
 - [x] **FW-021** Layer 12: Platform & Infrastructure Kit (PINFK) — PDR, ISPEC, EM
 
-### 2026-03-10: Documentation Kit & Code Quality
+### 2026-03-10: documentation kit & code quality
 
 - [x] **FW-022** Layer 13: Documentation & Knowledge Kit (DKK) — UDR, ARR, SKA, DHR
 - [x] **FW-023** BAT four-file gap closure (spec, template, validator, escalation template)
@@ -47,7 +47,7 @@ Single-source tracking for completed work, active initiatives, and planned items
 - [x] **FW-026** Flow Reference document (entry points, exit conditions, parallelism rules, escalation paths)
 - [x] **FW-027** QAK-SCK integration fix (VP accepts frozen TM + SAR)
 
-### 2026-03-11: Testing, Tools, Navigation & Remaining Kits
+### 2026-03-11: testing, tools, navigation & remaining kits
 
 - [x] **FW-028** Three-tier automated testing (Tier 1 lint, Tier 2 pytest 69 tests, Integration drivers)
 - [x] **FW-029** Tool governance infrastructure (meta-spec v1.0, 7 hard gates, four-file system for tools)
@@ -56,13 +56,13 @@ Single-source tracking for completed work, active initiatives, and planned items
 - [x] **FW-032** Layer 3: Solution Sourcing Kit (SSK) — SOER, VER, SDR (16 hard gates)
 - [x] **FW-033** Healthcheck playbook (4 framework checks, 7 initiative checks)
 
-### 2026-03-13: Final Kits
+### 2026-03-13: final kits
 
 - [x] **FW-034** Layer 1: Strategic Direction Kit (SDK) — SBR, PPR
 - [x] **FW-035** Layer 15: Business Process Kit (BPK) — PIA, TP, RC
 - [x] **FW-036** Adapter conformance spec and integration tool governance
 
-### 2026-03-14 to 2026-03-16: Sherpa & Governance Enhancements
+### 2026-03-14 to 2026-03-16: sherpa & governance enhancements
 
 - [x] **SH-001** Sherpa bootstrap prompt and skill definition
 - [x] **SH-002** Sherpa integration test suite (9 drivers: P1–P5, ambiguous, convergence, resumption, negative)
@@ -70,9 +70,9 @@ Single-source tracking for completed work, active initiatives, and planned items
 - [x] **FW-037** Decision Outcome Taxonomy (6 outcomes in flow-reference.md §11)
 - [x] **FW-038** PRK expanded to 12 lenses (+ observability, resilience)
 - [x] **FW-039** SMR in PINFK, RSA in REK
-- [x] **FW-040** Ecosystem roadmap documented (7 adjacent projects identified)
+- [x] **FW-040** system roadmap documented (7 adjacent projects identified)
 
-### 2026-03-17: Sherpa 14-Feature Enhancement Program
+### 2026-03-17: sherpa 14-Feature enhancement program
 
 - [x] **SH-004** Sherpa Journal — append-only operational log with 7 entry types
 - [x] **SH-005** Decision Rationale Replay — "why did we decide X?" with journal citations
@@ -92,7 +92,7 @@ Single-source tracking for completed work, active initiatives, and planned items
 - [x] **SH-019** Elicitation Protocol — 6 named reasoning techniques for pre-generation
 - [x] **SH-020** Briefing Distillation tool — compressed frozen artifact summaries for downstream
 
-### 2026-03-18: Sherpa Rubric Hardening
+### 2026-03-18: sherpa rubric hardening
 
 - [x] **SH-021** 3 live rubric tests (P5/PM x2, P2/TechLead) — score 54/65 → 68/70 (avg 4.9)
 - [x] **SH-022** 15 issues fixed: intake probing, freeze counter, permission-seeking, structured output emission
@@ -109,7 +109,7 @@ Single-source tracking for completed work, active initiatives, and planned items
 
 ---
 
-## In Progress
+## In progress
 
 ### Initiative: aieos-search (ER-SEARCH-001)
 
@@ -133,7 +133,7 @@ Single-source tracking for completed work, active initiatives, and planned items
 
 ---
 
-### 2026-03-19: Kit Audit — 12 Findings Fixed
+### 2026-03-19: kit audit — 12 findings fixed
 
 - [x] **FW-041** H-1: PIK DPRD spec — added gate 9 `principles_coverage` to match validator
 - [x] **FW-042** H-2: PIK DPRD prompt — removed cross-kit dependency on EEK `product-craftsmanship.md`; references PIK `product-discovery-principles.md` only
@@ -151,7 +151,7 @@ Single-source tracking for completed work, active initiatives, and planned items
 - [x] **SH-026** Sherpa Ideation Mode — structured brainstorming when user doesn't have a concrete idea
 - [x] **FW-053** PIK Ideation Workshop utility prompt — 7 named techniques, technique selection guide, Ideation Workshop Record output format
 
-### 2026-03-20: SDK Roadmap Governance + Roadmap Ideation
+### 2026-03-20: SDK roadmap governance + roadmap ideation
 
 - [x] **FW-054** CLA (Capability Lifecycle Assessment) — 6 hard gates incl. `user_provided_inventory` and tightened `signal_basis`; retroactive onboarding entry point
 - [x] **FW-055** PCR (Product Capability Roadmap) — 6 hard gates incl. `capacity_realistic`; 1-3 year horizon
@@ -162,7 +162,7 @@ Single-source tracking for completed work, active initiatives, and planned items
 - [x] **FW-059** PIK entry-from-sdk.md updated with PCR as optional upstream artifact
 - [x] **ECO-003** AIEOS Artifact Store (`aieos-artifact-store`) — LanceDB vector search over frozen artifacts. Chunker, metadata extractor, embedding wrapper, ingest pipeline, query interface. 23 tests, 44 artifacts ingested from aieos-console (431 chunks). 3 sherpa integration points documented.
 
-### 2026-03-25 to 2026-03-27: AI-Native SDLC Alignment, New Projects, Governance Enhancements
+### 2026-03-25 to 2026-03-27: AI-Native SDLC alignment, new projects, governance enhancements
 
 - [x] **FW-060** AI-Native SDLC v3.1 alignment assessment — 328 items scored (92% FE+PA), 21 gaps, 8 PA thickening packages
 - [x] **FW-061** TOOL-DIAGRAM-EXPORT — Mermaid extraction with 3 bindings (drawio, SVG, PNG) + Python CLI implementation (33 tests)
@@ -172,7 +172,7 @@ Single-source tracking for completed work, active initiatives, and planned items
 - [x] **ECO-009** Agent Harness (`aieos-agent-harness`) — 16 source files, 166 tests, 5 components, 4 routing strategies, 7 invariants. Retroactively governed (ER-HARNESS-001, 8 artifacts frozen). AI SDLC Governance Level 2. GitHub: wtlinnertz/aieos-agent-harness.
 - [x] **NEW** AI SDLC Governance (`ai-sdlc-governance`) — Standalone practice governance framework. 38 files, 30 Foundation gates, 94 Standards checklist items, 4 Guidance playbooks, 3 assessment tools. GitHub: wtlinnertz/ai-sdlc-governance.
 
-### 2026-04-10: Kit Sync Agent System
+### 2026-04-10: kit sync agent system
 
 - [x] **FW-065** Kit Manifest (`kit-manifest.yml`) — machine-readable single source of truth for all kit metadata: 15 kits, 63 artifacts, 80 dependency edges, 6 entry points, 5 presets, 21 boundary contracts, cross-cutting triggers with feeds-into model
 - [x] **FW-066** TOOL-KIT-SYNC-AUDIT — cross-kit consistency audit tool (four-file set). 3 CRITICAL checks (manifest version pinning, synchronized file identity, kit registry consistency), 5 HIGH checks (boundary contracts, artifact flow, cross-cutting triggers, dependency edges), 3 MEDIUM checks (artifact inventory, layer descriptions, navigation map). Claude Code binding.
@@ -182,7 +182,7 @@ Single-source tracking for completed work, active initiatives, and planned items
 
 ---
 
-## Planned — Framework Refinement
+## Planned — framework refinement
 
 | ID | Item | Priority | Dependencies | Notes |
 |----|------|----------|-------------|-------|
@@ -200,7 +200,7 @@ Single-source tracking for completed work, active initiatives, and planned items
 | **FR-012** | Verification tier classification — classify validator gates as Structural/Referential/Semantic/Human | Low | — | Inspired by GSD. Tells you which tier caught an issue. Run cheap tiers frequently, reserve expensive tiers for milestones. |
 | **FR-013** | Process forensics template — lightweight root cause analysis when the governance pipeline stalls | Low | — | Inspired by GSD. Distinct from ODK (production incidents). Covers: scope creep, ambiguous spec, wrong preset, missing context. Referenced from healthcheck-playbook.md. |
 
-### AI-Native SDLC Alignment — Gap Closure (2026-03-25)
+### AI-Native SDLC alignment — gap closure (2026-03-25)
 
 Items proposed by the AI-Native SDLC v3.1 alignment assessment (`docs/ai-native-sdlc-alignment.md`). AG items close outright gaps; AL items thicken partial alignment.
 
@@ -213,7 +213,7 @@ Items proposed by the AI-Native SDLC v3.1 alignment assessment (`docs/ai-native-
 | **FR-018** | Review capacity estimation in WDD/PRK | Low | — | Source: AG-008 (P156, PR85, PR86). Add review capacity as optional WDD consideration. Document review rotation guidance in PRK playbook. |
 | **FR-019** | Bootstrap file token budget recommendation | Low | — | Source: AG-009 (PR35). Add token budget recommendation to kit-structure-standard.md (advisory, not hard gate). |
 
-### AI-Native SDLC Alignment — PA Thickening (2026-03-25)
+### AI-Native SDLC alignment — PA thickening (2026-03-25)
 
 Thickening work packages that strengthen existing partial alignment. Each bundles multiple PA items into a coherent deliverable. Full analysis in `docs/ai-native-sdlc-alignment.md` §PA Thickening Analysis.
 
@@ -239,7 +239,7 @@ Thickening work packages that strengthen existing partial alignment. Each bundle
 | INT-002 | AL-006 | First executable adapter proves integration architecture |
 | UX-001 | AL-005 (P129) | Onboarding guide supports staged adoption |
 
-### User Experience Improvements (2026-03-21)
+### User experience improvements (2026-03-21)
 
 | ID | Item | Priority | Dependencies | Notes |
 |----|------|----------|-------------|-------|
@@ -249,7 +249,7 @@ Thickening work packages that strengthen existing partial alignment. Each bundle
 | **UX-004** | Convergence loop refinement — targeted correction instead of full re-generation | Medium | — | Current behavior: validation FAIL triggers full artifact re-generation. Improvement: identify the specific failing gate(s), generate a targeted patch addressing only those gates, re-validate. Reduces token cost and preserves content that already passes. Also: graduate the 3-attempt hard limit to a configurable ceiling with sponsor re-auth at threshold (relates to FR-011 effort ceiling governance). |
 | **UX-005** | Progressive disclosure in sherpa — adapt detail level to user expertise | Low | UX-003 | P2/TechLead rubric test showed slight over-probing for expert users. Sherpa could detect expertise signals (technical vocabulary, direct answers, "skip the explanation" cues) and adjust: fewer analogies, terser explanations, faster artifact transitions. Risk: over-engineering. Only pursue if rubric tests consistently show calibration as a gap across multiple expert-persona sessions. |
 
-### External Tool Integration (2026-03-21)
+### External tool integration (2026-03-21)
 
 The integration architecture is defined (adapter-conformance-spec v1.0, 13 tool specs, 9 bindings) but no executable adapters exist. This section tracks the path from static documentation to working integrations.
 
@@ -266,18 +266,18 @@ The integration architecture is defined (adapter-conformance-spec v1.0, 13 tool 
 | **INT-004** | Sherpa adapter integration — offer sync at freeze points | Medium | INT-002 | After WDD freeze, sherpa checks for configured adapters and offers: "I can sync these work items to GitHub Issues now. Want me to?" After RR freeze: "I can create a GitHub Release for this." Adds adapter awareness to sherpa-skill.md Phase 3 post-freeze sequence (new Step F after Step E). Respects the existing "never ask permission between sequential artifacts" rule — sync is offered as a utility, not a gate. |
 | **INT-005** | Adapter test harness and CI | Low | INT-002 | Automated tests for adapter conformance: mock external APIs, verify idempotency, test circuit breaker, validate audit log format. Reusable across all future adapters. |
 
-### Organizational Readiness Gaps
+### Organizational readiness gaps
 
 | ID | Item | Priority | Kit | Dependencies | Notes |
 |----|------|----------|-----|-------------|-------|
 | **ORG-001** | Skills Gap Assessment — pre-execution check in EEK | High | EEK | — | Before WDD, assess team capabilities vs. required skills (languages, frameworks, domain expertise, ops skills). Identifies training needs or hiring/contracting dependencies. Blocks execution planning if critical gaps unresolved. |
-| **ORG-002** | Service Ownership Record — comprehensive ownership matrix | High | REK or RRK | — | Who owns: code, on-call, L1/L2/L3 support, product decisions, documentation, dependency updates. Frozen before Layer 6 entry. Extends beyond SRER's reliability-only ownership. |
+| **ORG-002** | Service Ownership Record — complete ownership matrix | High | REK or RRK | — | Who owns: code, on-call, L1/L2/L3 support, product decisions, documentation, dependency updates. Frozen before Layer 6 entry. Extends beyond SRER's reliability-only ownership. |
 | **ORG-003** | Extend RRK SRP with support tier definitions | Medium | RRK | ORG-002 | Add L1/L2/L3 support routing, escalation paths, support hours, handoff triggers to SRP spec. Currently SRP covers SLOs but not the human support model. |
 | **ORG-004** | Launch Communications Plan — internal + external messaging | Medium | REK | — | New artifact in REK between RP and RR. Internal: org announcement, stakeholder briefing, support team enablement. External: customer comms, changelog, migration guide (if applicable). |
 | **ORG-005** | Adoption Plan — strategy, metrics, feedback loops | Medium | REK | ORG-004 | Extend RP or add new artifact. Covers: rollout strategy (big bang vs. phased), adoption success metrics, feedback channels, time-to-value targets, what "adopted" means. Goes beyond BPK's process training. |
 | **ORG-006** | Update initiative presets with new artifacts | Low | Governance Foundation | ORG-001 through ORG-005 | Add skills assessment, ownership record, launch comms, adoption plan to P1/P2/P3 preset artifact sequences. Update ER spec with new layer sections. |
 
-### Cross-AI Compatibility (2026-03-19) — Complete
+### Cross-AI compatibility (2026-03-19) — complete
 
 - [x] **FR-008** Machine-readable State Block (§1b) in ER spec — 7-field structured position snapshot
 - [x] **XAI-001** Copilot CLI adapter — loading guide, limitations, workarounds
@@ -287,7 +287,7 @@ The integration architecture is defined (adapter-conformance-spec v1.0, 13 tool 
 - [x] **XAI-005** Validator consistency testing methodology
 - [x] **XAI-006** Smoke test extended to 49 checks (adapter dirs, compact parity, state block)
 
-### Agent Harness Integrations (2026-03-27)
+### Agent harness integrations (2026-03-27)
 
 High-value integrations that mix deterministic tool checks with AI reasoning via the harness pipeline routing strategy.
 
@@ -308,39 +308,39 @@ High-value integrations that mix deterministic tool checks with AI reasoning via
 
 ---
 
-## Planned — Ecosystem Projects
+## Planned — system projects
 
 Documented in detail at `docs/ecosystem-roadmap.md`. These are real software projects that operationalize the governance framework.
 
-### Phase 1: Critical Path
+### Phase 1: critical path
 
 | ID | Project | Repository | Purpose | Status | Dependencies |
 |----|---------|-----------|---------|--------|-------------|
-| **ECO-001** | AIEOS Schema | `aieos-schema` | Machine-readable spec contracts (YAML/JSON). Strengthens framework Tier 2 tests (spec-template drift, gate enumeration, prompt checklist alignment) AND unlocks all downstream ecosystem projects. | Not started | None — this is the keystone |
+| **ECO-001** | AIEOS Schema | `aieos-schema` | Machine-readable spec contracts (YAML/JSON). Strengthens framework Tier 2 tests (spec-template drift, gate enumeration, prompt checklist alignment) AND unlocks all downstream system projects. | Not started | None — this is the keystone |
 | **ECO-002** | Evaluation Engine | `aieos-evaluation-engine` | Runtime governance enforcement. Consumes schema to validate artifacts programmatically instead of relying solely on AI judgment. | Not started | ECO-001 |
 | **ECO-003** | Artifact Store | `aieos-artifact-store` | Cross-initiative artifact indexing. Query "show me all frozen SADs across all initiatives" or "which initiatives touched the auth module." | **Complete** (v1.0.0) | — (built without Schema dependency) |
 
-### Phase 2: Observe & Integrate
+### Phase 2: observe & integrate
 
 | ID | Project | Repository | Purpose | Status | Dependencies |
 |----|---------|-----------|---------|--------|-------------|
 | **ECO-004** | System Twin | `aieos-system-twin` | Live system topology graph. Maps what's running in production to what's governed in AIEOS. | Not started | ECO-001, ECO-003 |
 | **ECO-005** | Playground | `aieos-playground` | Interactive learning environment. Guided walkthrough of AIEOS with sandbox initiatives. | Not started | ECO-001 |
 
-### Phase 3: Measure & Report
+### Phase 3: measure & report
 
 | ID | Project | Repository | Purpose | Status | Dependencies |
 |----|---------|-----------|---------|--------|-------------|
 | **ECO-006** | Governance Analytics | `aieos-governance-analytics` | Cross-initiative intelligence. Quality trends, cycle time, finding patterns, adoption rates. | Not started | ECO-001, ECO-003 |
 | **ECO-007** | Compliance Reporter | `aieos-compliance-reporter` | Automated audit packages. Generate compliance evidence from frozen artifacts + ER history. | Not started | ECO-001, ECO-003 |
 
-### Phase 4: People & Impact
+### Phase 4: people & impact
 
 | ID | Project | Repository | Purpose | Status | Dependencies |
 |----|---------|-----------|---------|--------|-------------|
 | **ECO-008** | Engineer Impact Framework | `aieos-engineer-impact` | Quarterly engineer impact assessment. Two tiers (Starter ~2hrs, Advanced ~8hrs), four dimensions, calibration process, gaming detection. Optional ER §16 integration and IEK consumption. | Complete | None |
 
-### Phase 5: Orchestrate & Execute
+### Phase 5: orchestrate & execute
 
 | ID | Project | Repository | Purpose | Status | Dependencies |
 |----|---------|-----------|---------|--------|-------------|
@@ -348,9 +348,9 @@ Documented in detail at `docs/ecosystem-roadmap.md`. These are real software pro
 
 ---
 
-## Planned — Gap Closure (from 2026-03-21 gap analysis)
+## Planned — gap closure (from 2026-03-21 gap analysis)
 
-### Tier 1: Will come up in first real initiative at work
+### Tier 1: will come up in first real initiative at work
 
 Build these when you hit them during a real initiative — don't build speculatively.
 
@@ -362,7 +362,7 @@ Build these when you hit them during a real initiative — don't build speculati
 | **GAP-004** | Operational maintenance governance | Extend RRK (Layer 6), not a new kit. Add **Operational Maintenance Plan (OMP)** artifact to RRK — covers: dependency update cadence, patch policy, secret rotation schedule, backup/DR drill schedule, data retention enforcement. Frozen after first SRP, revised at each RHR. | High | RRK already owns production. OMP is the "steady-state care plan" that SRP doesn't cover. |
 | **GAP-005** | Cost governance | Extend SDK. Add cost fields to PCR (budget per capability) and SBR (investment envelope already exists but no tracking). Add **Cost Tracking Record (CTR)** as an optional cross-cutting artifact — actual spend vs. budget at each layer transition. | Medium | Start light: add fields to existing artifacts first. CTR as a full artifact only if cost tracking proves essential. |
 
-### Tier 2: Causes friction at scale
+### Tier 2: causes friction at scale
 
 Address when scaling beyond solo/small team use.
 
@@ -370,10 +370,10 @@ Address when scaling beyond solo/small team use.
 |----|-----|----------|----------|-------|
 | **GAP-006** | Deprecation/sunset lifecycle | Extend REK (Layer 5). CLA already marks capabilities for sunset. Add **Deprecation Execution Plan (DEP)** to REK — covers: migration path execution, communication timeline, dependency notification, data archival, monitoring teardown. Uses RP/RR patterns but for removal instead of deployment. | Medium | Don't create a new kit. REK already handles release mechanics; deprecation is "release in reverse." |
 | **GAP-007** | Customer/support feedback loop | Extend IEK (Layer 7). Add **Feedback Synthesis Record (FSR)** — aggregates support ticket themes, customer feedback, NPS signals into structured input for next ES. Triggered periodically (quarterly) or when support volume spikes. | Medium | IEK's ES is too high-level for granular feedback. FSR is the mid-layer synthesis that's missing. DKK SKA captures individual articles; FSR captures patterns. |
-| **GAP-008** | Cross-team coordination | Extend ER spec with a **Cross-Initiative Dependency Map** section. When multiple initiatives share systems/teams, each ER §Dependencies lists the other ERs it depends on or conflicts with. Sherpa cross-initiative scan (already built) detects these; this formalizes the tracking. | Medium | Don't create a new kit. Extend ER + leverage existing cross-initiative awareness in the sherpa. Only matters at 3+ concurrent initiatives. |
+| **GAP-008** | Cross-team coordination | Extend ER spec with a **Cross-Initiative Dependency Map** section. When multiple initiatives share systems/teams, each ER §Dependencies lists the other ERs it depends on or conflicts with. Sherpa cross-initiative scan (already built) detects these; this formalizes the tracking. | Medium | Don't create a new kit. Extend ER + use existing cross-initiative awareness in the sherpa. Only matters at 3+ concurrent initiatives. |
 | **GAP-009** | Decision authority (RACI) | Add to ER §1 Document Control: a **Decision Authority Table** — lists who can approve freeze at each layer (by role, not by name). Replaces ad-hoc "who approves this?" with explicit authority. | Medium | Lightest possible touch: one new section in an existing artifact. No new kit, no new spec. Fill in at initiative start, reference at each freeze. |
 
-### Guidance: What NOT to build yet
+### Guidance: what NOT to build yet
 
 These gaps are real but should be demand-driven, not speculative:
 
@@ -394,17 +394,17 @@ Ideas not yet prioritized or scoped. Move to Planned when ready to commit.
 | **BL-001** | Multi-org governance — federated AIEOS instances sharing specs but independent initiatives | Framework | Needs org-boundary model in governance-model.md |
 | **BL-002** | Governance model versioning migration tooling — automated sync when GM version bumps | Framework | Currently manual across 15 kit copies |
 | **BL-003** | Sherpa voice/chat mode — conversational UI beyond CLI | Sherpa | Depends on Claude capabilities |
-| **BL-004** | Artifact diff visualization — show what changed between artifact versions | Ecosystem | Useful for re-entry/amendment flows |
-| **BL-005** | Initiative portfolio dashboard — active/complete/abandoned across all ERs | Ecosystem | Lightweight version of ECO-006 |
+| **BL-004** | Artifact diff visualization — show what changed between artifact versions | system | Useful for re-entry/amendment flows |
+| **BL-005** | Initiative portfolio dashboard — active/complete/abandoned across all ERs | system | Lightweight version of ECO-006 |
 | **BL-006** | Spec authoring assistant — guided creation of new artifact types with four-file scaffold | Framework | Would help external contributors extend AIEOS |
-| **BL-007** | Adapter library — pre-built adapters for GitHub Issues, Linear, Jira for tool bindings | Ecosystem | Per adapter-conformance-spec.md |
+| **BL-007** | Adapter library — pre-built adapters for GitHub Issues, Linear, Jira for tool bindings | system | Per adapter-conformance-spec.md |
 | **BL-008** | Ideation & Opportunity Kit (IOK) — pre-Layer-1 kit governing structured ideation with OLR, ISR, OB artifacts | Framework | Full four-file system for ideation. Graduate from sherpa ideation mode (SH-026/FW-053) if ideation proves valuable enough to warrant its own governance layer. Flow: Signals → OLR → ISR(s) → OB(s) → SDK or PIK |
 
 ---
 
-## How to Use This Roadmap
+## How to use this roadmap
 
-**Adding items:** Append to the appropriate section with the next available ID in that category (FW-NNN for framework, SH-NNN for sherpa, INIT-X-NNN for initiatives, ECO-NNN for ecosystem, FR-NNN for refinement, BL-NNN for backlog).
+**Adding items:** Append to the appropriate section with the next available ID in that category (FW-NNN for framework, SH-NNN for sherpa, INIT-X-NNN for initiatives, ECO-NNN for system, FR-NNN for refinement, BL-NNN for backlog).
 
 **Completing items:** Move from Planned/In Progress to Completed with a date. Change `[ ]` to `[x]`.
 
@@ -416,5 +416,5 @@ Ideas not yet prioritized or scoped. Move to Planned when ready to commit.
 - `INIT-C` — aieos-console initiative
 - `INIT-S` — aieos-search initiative
 - `FR` — Framework refinement (testing, hardening)
-- `ECO` — Ecosystem software projects
+- `ECO` — system software projects
 - `BL` — Backlog (unprioritized ideas)

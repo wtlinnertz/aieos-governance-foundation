@@ -2,7 +2,7 @@
 
 This binding maps the abstract `TOOL-KIT-SYNC-AUDIT` capability to a concrete implementation using Claude Code.
 
-## Tool Reference
+## Tool reference
 
 - **Tool Spec:** `docs/tools/kit-sync-audit-spec.md`
 - **Tool Template:** `docs/tools/kit-sync-audit-template.md`
@@ -11,14 +11,14 @@ This binding maps the abstract `TOOL-KIT-SYNC-AUDIT` capability to a concrete im
 
 In a Claude Code session, the kit-sync-audit capability is exercised as follows:
 
-### Input Mapping
+### Input mapping
 
 | Tool Input | Claude Code Action |
 |------------|-------------------|
 | `workspace_root` | The parent directory containing all `aieos-*` kit repositories (typically the project root) |
 | `scope` | Provided by the operator. Defaults to `full` if not specified |
 
-### Execution Steps
+### Execution steps
 
 1. **Load manifest.** Read `kit-manifest.yml` from the governance-foundation repository root using the Read tool. Parse the YAML content.
 
@@ -43,7 +43,7 @@ In a Claude Code session, the kit-sync-audit capability is exercised as follows:
 
 7. **Produce output.** Format results following the template. Use the Markdown table format with one row per finding.
 
-### Fan-Out for Kit Self-Checks
+### Fan-Out for kit self-Checks
 
 When running a `full` scope audit, the orchestrator may invoke TOOL-KIT-SELF-CHECK for each kit using the Agent tool with parallel sub-agents. Each sub-agent receives:
 - The manifest content (or path)
@@ -52,14 +52,14 @@ When running a `full` scope audit, the orchestrator may invoke TOOL-KIT-SELF-CHE
 
 Results are collected and aggregated into the Per-Kit Status table.
 
-### Environment Notes
+### Environment notes
 
 - Claude Code reads files directly via the Read tool
 - File comparisons use the Bash tool (`diff`) for byte-identical checks
 - YAML parsing is performed by Claude Code's language understanding (no external YAML parser required in the session, though `python3 -c "import yaml"` can be used for validation)
 - All kit repositories must be cloned locally under the workspace root
 
-## What This Binding Does Not Define
+## What this binding does not define
 
 This binding does not define policy. The rules for what constitutes a valid sync audit (checks, severity tiers, hard gates) are defined in `kit-sync-audit-spec.md`. This file only describes how those rules are implemented in the Claude Code environment.
 

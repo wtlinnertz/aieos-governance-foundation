@@ -44,7 +44,7 @@ The tool produces structured output conforming to `diagram-export-template.md`.
 - Mermaid blocks only — the tool does not process other diagram formats (PlantUML, ASCII art, etc.) from source artifacts
 - The tool contains no references to specific platforms, rendering engines, or environments
 
-## Error Handling
+## Error handling
 
 | Condition | Behavior |
 |-----------|----------|
@@ -55,7 +55,7 @@ The tool produces structured output conforming to `diagram-export-template.md`.
 | Mermaid block has syntax error | Warning per-block: "Block {N} has syntax error: {detail}" — skip block, continue others |
 | diagram_filter matches no block | Warning: "Filter '{filter}' matched no blocks" — empty export record |
 
-## Hard Gates
+## Hard gates
 
 | Gate | Rule |
 |------|------|

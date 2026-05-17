@@ -10,9 +10,9 @@ Each check is annotated as:
 
 ---
 
-## Part 1: Repository Structure
+## Part 1: repository structure
 
-### Required Files
+### Required files
 
 Every AIEOS kit must contain:
 
@@ -24,7 +24,7 @@ Every AIEOS kit must contain:
 - [ ] `docs/how-to-use-with-ai.md` — artifact-by-artifact AI usage guide `[auto]`
 - [ ] `docs/governance-model.md` — synchronized copy of the canonical governance model `[auto]`
 
-### Required Directories
+### Required directories
 
 - [ ] `docs/specs/` — content rules and quality criteria `[auto]`
 - [ ] `docs/artifacts/` — structural templates and intake forms `[auto]`
@@ -33,30 +33,30 @@ Every AIEOS kit must contain:
 - [ ] `examples/` — at least one worked example demonstrating the full artifact flow `[auto]`
 - [ ] `tests/` — structural integrity checks and/or flow scenario tests `[auto]`
 
-### Optional Directories
+### Optional directories
 
 - [ ] `docs/tools/` — tool capability definitions (four-file sets) `[auto]` *(only required if the kit defines tools)*
 - [ ] `docs/bindings/` — implementation mappings `[auto]` *(only required if the kit maps abstract concepts to specific tools)*
 
 ---
 
-## Part 2: Artifact Type Compliance
+## Part 2: artifact type compliance
 
 For each artifact type the kit produces:
 
-### Four-File Completeness
+### Four-File completeness
 
 - [ ] `docs/specs/{type}-spec.md` exists `[auto]`
 - [ ] `docs/artifacts/{type}-template.md` exists `[auto]`
 - [ ] `docs/prompts/{type}-prompt.md` exists `[auto]`
 - [ ] `docs/validators/{type}-validator.md` exists `[auto]`
 
-### Naming Convention
+### Naming convention
 
 - [ ] File names follow `{type}-{role}.md` pattern with no deviations `[auto]`
 - [ ] No artifact type has more than four governing files (extras must be utility prompts or intake forms, not additional specs/validators) `[ai]`
 
-### Separation of Concerns
+### Separation of concerns
 
 - [ ] Spec contains all hard gates and content rules — nothing is defined only in a prompt or validator `[ai]`
 - [ ] Template contains only structure (section headings, placeholders) — no content rules `[ai]`
@@ -66,23 +66,23 @@ For each artifact type the kit produces:
 
 ---
 
-## Part 2b: Tool Type Compliance
+## Part 2b: tool type compliance
 
 For each tool type the kit defines (if `docs/tools/` exists):
 
-### Four-File Completeness
+### Four-File completeness
 
 - [ ] `docs/tools/{tool-name}-spec.md` exists `[auto]`
 - [ ] `docs/tools/{tool-name}-template.md` exists `[auto]`
 - [ ] `docs/tools/{tool-name}-prompt.md` exists `[auto]`
 - [ ] `docs/tools/{tool-name}-validator.md` exists `[auto]`
 
-### Naming Convention
+### Naming convention
 
 - [ ] Tool file names follow `{tool-name}-{role}.md` pattern (kebab-case, capability names) `[auto]`
 - [ ] Tool names describe capabilities (verbs/verb-noun phrases), not artifact types `[ai]`
 
-### Separation of Concerns
+### Separation of concerns
 
 - [ ] Tool spec contains all preconditions, postconditions, constraints, and hard gates — nothing is defined only in a prompt or validator `[ai]`
 - [ ] Tool template contains only output structure — no behavioral rules `[ai]`
@@ -92,7 +92,7 @@ For each tool type the kit defines (if `docs/tools/` exists):
 
 ---
 
-## Part 3: Validator Compliance
+## Part 3: validator compliance
 
 Every validator must:
 
@@ -104,7 +104,7 @@ Every validator must:
 
 ---
 
-## Part 4: Playbook Compliance
+## Part 4: playbook compliance
 
 The `docs/playbook.md` must define:
 
@@ -117,7 +117,7 @@ The `docs/playbook.md` must define:
 
 ---
 
-## Part 5: Governance Model Sync
+## Part 5: governance model sync
 
 - [ ] `docs/governance-model.md` is byte-for-byte identical to `aieos-governance-foundation/governance-model.md` `[auto]`
 - [ ] No local modifications to the governance model — all edits go through aieos-governance-foundation `[ai]`
@@ -125,7 +125,7 @@ The `docs/playbook.md` must define:
 
 ---
 
-## Part 6: CLAUDE.md Requirements
+## Part 6: cLAUDE.md requirements
 
 The kit's `CLAUDE.md` must contain:
 
@@ -141,7 +141,7 @@ The kit's `CLAUDE.md` must contain:
 
 ---
 
-## Part 7: Structural Integrity Tests
+## Part 7: structural integrity tests
 
 The `tests/` directory must include:
 
@@ -151,7 +151,7 @@ The `tests/` directory must include:
 
 ---
 
-## Audit Procedure
+## Audit procedure
 
 To audit an existing kit against this standard:
 
@@ -169,7 +169,7 @@ A kit that fails any check is not AIEOS-compatible. Fix before treating the kit 
 
 ---
 
-## Running Automated Checks
+## Running automated checks
 
 The script `aieos-governance-foundation/tests/check-structure.sh` automates all checks annotated `[auto]` above.
 

@@ -2,7 +2,7 @@
 
 You are invoking the decision-router tool capability.
 
-## When to Invoke
+## When to invoke
 
 Invoke this tool **at any junction in the AIEOS flow where the operator must choose a path**. Specific situations:
 
@@ -12,11 +12,11 @@ Invoke this tool **at any junction in the AIEOS flow where the operator must cho
 - A re-entry decision must be made (material vs non-material change)
 - The operator asks "which way should I go?"
 
-## Why to Invoke
+## Why to invoke
 
 Junctions are where mistakes happen — choosing the wrong path wastes work. This tool ensures every option is visible, criteria are applied systematically, and the decision is evidence-based rather than gut-feel.
 
-## Execution Instructions
+## Execution instructions
 
 1. Look up the junction ID in navigation-map.md Section 3 (Decision Tables)
 2. Present every option from the decision table — do not filter or hide options
@@ -31,16 +31,16 @@ Junctions are where mistakes happen — choosing the wrong path wastes work. Thi
 8. Document the downstream consequences of the recommended path
 9. Produce output conforming to `decision-router-template.md`
 
-## The Escape Hatch
+## The escape hatch
 
 Every decision table has an implicit final row: **"If none of the above conditions match, invoke position-check to re-establish position."** This prevents the AI from forcing a choice when the situation doesn't fit the expected patterns. It is always better to re-orient than to guess.
 
-## Result Interpretation
+## Result interpretation
 
-- **PASS with High Confidence**: One option clearly matches. Proceed after human confirmation.
-- **PASS with Medium Confidence**: Multiple options match or evidence is partial. Present options for human choice.
-- **FAIL**: No options match or junction ID is invalid. Invoke position-check to re-orient.
+- PASS with High Confidence: One option clearly matches. Proceed after human confirmation.
+- PASS with Medium Confidence: Multiple options match or evidence is partial. Present options for human choice.
+- FAIL: No options match or junction ID is invalid. Invoke position-check to re-orient.
 
-## Spec Reference
+## Spec reference
 
 The authoritative rules, constraints, and hard gates for this tool are defined in `decision-router-spec.md`.

@@ -70,7 +70,7 @@ The tool produces structured output conforming to `kit-sync-audit-template.md`.
 - The tool contains **no vendor or tool references** — it defines an abstract capability
 - Cross-cutting trigger condition text is validated by checking that referenced artifact IDs exist, not by interpreting natural-language conditions
 
-## Error Handling
+## Error handling
 
 | Condition | Behavior |
 |-----------|----------|
@@ -80,7 +80,7 @@ The tool produces structured output conforming to `kit-sync-audit-template.md`.
 | Governance model version field not found | Report as CRITICAL finding: version field missing from governance-model.md |
 | Scope parameter references unknown kit | Report error: unknown kit abbreviation |
 
-## Hard Gates
+## Hard gates
 
 | Gate | Rule |
 |------|------|

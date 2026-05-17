@@ -58,7 +58,7 @@ aieos-pipeline-runner run \
 
 ---
 
-## 2. Bound plan schema
+## 2. bound plan schema
 
 The bound plan is the resolver's output and the orchestrator's input. It is
 not written to the artifact store in v1 (it exists in-process), but kits that
@@ -100,7 +100,7 @@ consume runner output should model it for cross-component interoperability.
 
 ---
 
-## 3. Event stream
+## 3. event stream
 
 The runner emits one JSON object per line to stdout. Every event carries at
 least the following three fields:
@@ -185,7 +185,7 @@ Emitted once at the close of orchestration.
 
 ---
 
-## 4. Run record schema
+## 4. run record schema
 
 The run record is the orchestrator's output — a collection of facts about
 an executed plan, published to the artifact store by the run validator at

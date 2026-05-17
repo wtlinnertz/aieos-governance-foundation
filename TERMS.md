@@ -5,9 +5,9 @@ These definitions are intentionally **tool-agnostic**, **employer-neutral**, and
 
 ---
 
-## Core Concepts
+## Core concepts
 
-### AIEOS (AI-Enabled Operating System)
+### AIEOS (AI-Enabled operating system)
 A governance framework for building AI-native software organizations. AIEOS defines how kits are structured, how artifacts are produced and validated, and how kits connect across layers. It is a process operating system — not a software platform.
 
 ---
@@ -22,7 +22,7 @@ A distinct phase of the value-delivery lifecycle. AIEOS organizes software deliv
 
 ---
 
-### Governance Model
+### Governance model
 The complete set of structural rules, taxonomy, and invariants that all AIEOS kits follow. The canonical authority is `governance-model.md` in this repository. Kit copies are synchronized from this source.
 
 ---
@@ -32,7 +32,7 @@ A persisted document produced at a specific stage of the SDLC. Artifacts are pro
 
 ---
 
-### Artifact Promotion
+### Artifact promotion
 The formal progression of an artifact to the next stage after passing validation. Once promoted, an artifact is considered frozen.
 
 ---
@@ -62,22 +62,22 @@ A strict, non-prescriptive quality gate that evaluates whether an artifact satis
 
 ---
 
-### Hard Gate
+### Hard gate
 A binary pass/fail criterion in a spec that an artifact must satisfy to be promoted. Hard gates are non-negotiable.
 
 ---
 
-### Engagement Record (ER)
+### Engagement record (ER)
 A project-level artifact that spans all kit layers. It maintains an index of every artifact ID, outcome, and key decision for one initiative. ERs serve as episodic memory and portfolio synthesis inputs.
 
 ---
 
-### Portfolio Evolution Signal (PES)
+### Portfolio evolution signal (PES)
 A cross-initiative synthesis artifact produced by the Insight & Evolution Kit. Synthesizes patterns from multiple Engagement Records and generates improvement proposals for governing files.
 
 ---
 
-## Kit Layer Reference
+## Kit layer reference
 
 | Layer | Question | Kit |
 |-------|----------|-----|
@@ -92,12 +92,12 @@ A cross-initiative synthesis artifact produced by the Insight & Evolution Kit. S
 
 ---
 
-## Governance Roles
+## Governance roles
 
-### Kit Maintainer
+### Kit maintainer
 The person or team responsible for a kit repository. Responsible for keeping `governance-model.md` in sync with this repo and for validating kit compliance.
 
-### Canonical Authority
+### Canonical authority
 This repository (`aieos-governance-foundation`). When the governance model changes, this repo is updated first. Kit copies are updated to match.
 
 ---

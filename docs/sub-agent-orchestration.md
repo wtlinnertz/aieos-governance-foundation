@@ -17,7 +17,7 @@ These are workflow patterns, not tool definitions. The orchestrator follows thes
 
 ---
 
-## Core Invariants
+## Core invariants
 
 These rules apply to all three patterns:
 
@@ -30,13 +30,13 @@ These rules apply to all three patterns:
 
 ---
 
-## Pattern 1: Independent Lens Parallelism (PRK)
+## Pattern 1: independent lens parallelism (PRK)
 
 **When:** PRK Step 1 — lenses have been selected for a review point and are ready to execute.
 
 **Reference:** [`aieos-peer-review-kit/docs/playbook.md`](../../aieos-peer-review-kit/docs/playbook.md) Step 1 — Execute Lens Tools.
 
-### Context Package (per lens)
+### Context package (per lens)
 
 Each lens sub-agent receives:
 
@@ -66,7 +66,7 @@ Each lens output is validated in a **separate session** using the lens validator
 2. The orchestrator collects all validated lens outputs.
 3. The orchestrator initiates PRR generation (Step 2) by packaging all validated lens outputs into a new generation session.
 
-### Failure Handling
+### Failure handling
 
 - **Single failure:** Re-execute the failed lens with the same context package. Investigate the cause (usually missing evidence or scope violation in the lens output).
 - **Double failure (same lens):** Escalate to the review operator. The lens may require clarified context or the artifact may have gaps the lens cannot evaluate.
@@ -74,13 +74,13 @@ Each lens output is validated in a **separate session** using the lens validator
 
 ---
 
-## Pattern 2: Parallel-Safe Work Item Execution (EEK)
+## Pattern 2: parallel-Safe work item execution (EEK)
 
 **When:** The execution plan marks work items within a work group as "parallel-safe" based on file overlap analysis, and the orchestrator is ready to begin the execution loop.
 
 **Reference:** [`aieos-engineering-execution-kit/docs/playbook.md`](../../aieos-engineering-execution-kit/docs/playbook.md) Part 2 — The Execution Loop.
 
-### Context Package (per work item)
+### Context package (per work item)
 
 Each work item sub-agent receives:
 
@@ -93,9 +93,9 @@ Each work item sub-agent receives:
 
 No work item sub-agent receives another item's context file or phase outputs.
 
-### Two Execution Modes
+### Two execution modes
 
-#### Mode A: Phase-Synchronized (Safer)
+#### Mode a: phase-Synchronized (Safer)
 
 All parallel items execute the same phase together, then gate, then advance:
 
@@ -110,7 +110,7 @@ All items: Phase 4 (Review) → work group gate
 
 **When to use:** Default mode. Use when items touch related subsystems, when the team is new to parallel execution, or when human review bandwidth is limited.
 
-#### Mode B: Fully Independent (Faster)
+#### Mode b: fully independent (Faster)
 
 Each item runs all four phases autonomously without waiting for other items:
 
@@ -134,7 +134,7 @@ Item C: Phase 1 → Phase 2 → Phase 3 → Phase 4 ─┘
 3. On work group gate PASS: proceed to BAT (Business Acceptance Testing) for the work group.
 4. On work group gate FAIL: diagnose which item(s) caused the regression; fix sequentially.
 
-### Failure Handling
+### Failure handling
 
 - **File overlap discovered during execution:** Stop both conflicting items immediately. The orchestrator re-sequences them as sequential (one completes before the other begins). Do not attempt to merge concurrent changes.
 - **One item's plan rejected by human:** That item revises its plan. Other items continue unaffected. If the rejection changes scope (e.g., interface change), assess impact on other items before they proceed.
@@ -142,13 +142,13 @@ Item C: Phase 1 → Phase 2 → Phase 3 → Phase 4 ─┘
 
 ---
 
-## Pattern 3: Provider/Consumer Contract Development (EEK)
+## Pattern 3: provider/Consumer contract development (EEK)
 
 **When:** The WDD identifies a provider/consumer pair — two work items that reference the same TDD §4 interface contract, one as provider and one as consumer.
 
 **Reference:** [`aieos-engineering-execution-kit/docs/playbook.md`](../../aieos-engineering-execution-kit/docs/playbook.md) Step 6 — WDD, Interface Contract Reference.
 
-### Context Package
+### Context package
 
 **Provider sub-agent receives:**
 
@@ -174,7 +174,7 @@ Item C: Phase 1 → Phase 2 → Phase 3 → Phase 4 ─┘
 - Both work from the same TDD §4 contract as the single source of truth.
 - The provider builds the real implementation; the consumer builds against a stub derived from the contract.
 
-### Integration Point
+### Integration point
 
 After both items complete Phase 3 (Code):
 
@@ -185,7 +185,7 @@ After both items complete Phase 3 (Code):
 
 The integration step is performed by the orchestrator (or a dedicated integration session), not by either sub-agent.
 
-### Failure Handling
+### Failure handling
 
 - **Contract ambiguity discovered:** Both sub-agents pause. The ambiguity is escalated as a TDD re-entry issue. The TDD §4 contract must be clarified and the TDD re-frozen before either sub-agent resumes.
 - **Integration test failure:** Diagnose against the TDD §4 contract. If the contract is correctly implemented by both sides, the contract itself is insufficient — escalate to TDD. If one side deviates from the contract, that side fixes and re-runs Phase 3.
@@ -207,7 +207,7 @@ The integration step is performed by the orchestrator (or a dedicated integratio
 
 ---
 
-## Relationship to Other Documents
+## Relationship to other documents
 
 | Document | Relationship |
 |----------|-------------|

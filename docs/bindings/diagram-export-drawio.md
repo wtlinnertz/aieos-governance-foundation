@@ -2,12 +2,12 @@
 
 This binding maps the abstract `TOOL-DIAGRAM-EXPORT` capability to draw.io XML format.
 
-## Tool Reference
+## Tool reference
 
 - **Tool Spec:** `docs/tools/diagram-export-spec.md`
 - **Tool Template:** `docs/tools/diagram-export-template.md`
 
-## Input Mapping
+## Input mapping
 
 | Tool Input | draw.io Mapping |
 |------------|-----------------|
@@ -15,7 +15,7 @@ This binding maps the abstract `TOOL-DIAGRAM-EXPORT` capability to draw.io XML f
 | `diagram_filter` | Selects which Mermaid blocks to convert |
 | `artifact_id` | Used in output filename: `{artifact_id}-diagram-{N}.drawio` |
 
-## Mermaid-to-draw.io Mapping
+## Mermaid-to-draw.io mapping
 
 | Mermaid Construct | draw.io XML Mapping | Notes |
 |-------------------|---------------------|-------|
@@ -37,7 +37,7 @@ This binding maps the abstract `TOOL-DIAGRAM-EXPORT` capability to draw.io XML f
 | State `[*]` | Start/end circle node | State machine |
 | State `-->` | Transition arrow | State transition |
 
-## Layout Rules
+## Layout rules
 
 - Nodes positioned on a grid (120px horizontal spacing, 80px vertical spacing)
 - Subgraph containers get 20px padding around children
@@ -45,7 +45,7 @@ This binding maps the abstract `TOOL-DIAGRAM-EXPORT` capability to draw.io XML f
 - Default node size: 120x60px (rectangle), 80x80px (diamond), 60x60px (circle)
 - Font: Helvetica 12pt (draw.io default)
 
-## Styling Defaults
+## Styling defaults
 
 | Element | Fill Color | Stroke Color |
 |---------|-----------|--------------|
@@ -54,15 +54,15 @@ This binding maps the abstract `TOOL-DIAGRAM-EXPORT` capability to draw.io XML f
 | Subgraph container | `#f5f5f5` (light gray) | `#666666` |
 | Edge | — | `#333333` |
 
-## ID Derivation
+## ID derivation
 
 The output file is named `{artifact_id}-diagram-{N}.drawio` where `{N}` is the 1-based index of the diagram within the artifact. The adapter generates one `.drawio` file per Mermaid code block selected by the filter.
 
-## Adapter Environment Variables
+## Adapter environment variables
 
 None. This binding performs file generation only — no API calls are required.
 
-## Import Instructions
+## Import instructions
 
 | Tool | Steps |
 |------|-------|
@@ -70,11 +70,11 @@ None. This binding performs file generation only — no API calls are required.
 | LeanIX Free Draw | Open diagram > File > Import From > Device > select `.drawio` file |
 | VS Code | Install Draw.io Integration extension > double-click `.drawio` file |
 
-## Adapter Conformance Reference
+## Adapter conformance reference
 
 The adapter implementing this binding must satisfy all hard gates defined in `docs/adapter-conformance-spec.md`. The adapter is output-only (generates `.drawio` files; does not read or sync from draw.io).
 
-## What This Binding Does Not Define
+## What this binding does not define
 
 This binding does not define policy. The rules for when to export diagrams (preconditions, postconditions, constraints, hard gates) are defined in `diagram-export-spec.md`. Quality gates for the export are defined in the validator. LeanIX fact sheet linking is a LeanIX-specific concern outside the scope of diagram export. This file only describes how Mermaid constructs map to draw.io XML elements and configuration.
 

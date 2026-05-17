@@ -16,8 +16,8 @@ AIEOS is a structured way to move from "I have an idea" to "this is ready to bui
 
 A governed set of artifacts for adding dark mode to a web application:
 
-- **Kit Entry Record (KER)**: proves this work is real, scoped, and approved
-- **Product Requirements Document (PRD)**: defines what "dark mode" means in measurable terms
+- Kit Entry Record (KER): proves this work is real, scoped, and approved
+- Product Requirements Document (PRD): defines what "dark mode" means in measurable terms
 - **Architecture Context File (ACF)** and **Solution Architecture Document (SAD)**: define how the system implements it
 
 These are the first four artifacts in the engineering execution pipeline. The tutorial covers them in detail, then points you to the remaining steps.
@@ -32,7 +32,7 @@ These are the first four artifacts in the engineering execution pipeline. The tu
 
 2-4 hours for the full walkthrough. Each part lists its own estimate so you can take breaks.
 
-## Part 1: Routing (10 minutes)
+## Part 1: routing (10 minutes)
 
 ### Start the sherpa
 
@@ -77,7 +77,7 @@ Verify you have:
 - [ ] An Engagement Record with status "Active" and preset "P2 Enhancement"
 - [ ] A sherpa journal with the routing decision logged
 
-## Part 2: Kit entry (10 minutes)
+## Part 2: kit entry (10 minutes)
 
 ### What is KER?
 
@@ -151,13 +151,13 @@ When all 5 gates pass, the KER is frozen. Freezing means the document is now imm
 - [ ] KER-DARKMODE-001 frozen with all 5 gates passing
 - [ ] Engagement Record updated with KER artifact ID
 
-## Part 3: Product requirements (20 minutes)
+## Part 3: product requirements (20 minutes)
 
 ### What does the PRD do?
 
 The PRD turns "add dark mode" into structured, measurable requirements. It defines what to build and why, not how. Architecture and implementation decisions come later, in separate artifacts. This separation prevents solution bias from contaminating the problem definition.
 
-### Product Brief: the sherpa asks questions
+### Product brief: the sherpa asks questions
 
 For Path B, the sherpa collects your input through a **Product Brief**: an intake form that captures the raw information needed to generate a PRD. The sherpa will walk you through each section with targeted questions.
 
@@ -244,7 +244,7 @@ When all 6 gates pass, freeze the PRD. It is now the official requirements docum
 - [ ] Engagement Record updated with PRD artifact ID
 - [ ] 2 frozen artifacts total (KER + PRD)
 
-## Part 4: Architecture (20 minutes)
+## Part 4: architecture (20 minutes)
 
 ### ACF intake
 
@@ -261,17 +261,17 @@ The ACF captures these answers in a structured format and is validated and froze
 
 With the frozen PRD and ACF, the sherpa generates the Solution Architecture Document (SAD). For dark mode, this might include:
 
-- **ThemeProvider component**: React context provider managing current theme state
-- **CSS variable system**: Theme tokens as CSS custom properties, switched by a data attribute on the root element
-- **Storage adapter**: Abstraction over localStorage for persistence, enabling future server-side migration
-- **System preference listener**: `prefers-color-scheme` media query listener that updates theme on OS change
+- ThemeProvider component: React context provider managing current theme state
+- CSS variable system: Theme tokens as CSS custom properties, switched by a data attribute on the root element
+- Storage adapter: Abstraction over localStorage for persistence, enabling future server-side migration
+- System preference listener: `prefers-color-scheme` media query listener that updates theme on OS change
 
 ### Key architecture decisions
 
 The SAD documents decisions with rationale: not just what was chosen, but why alternatives were rejected:
 
-- **CSS variables vs. class toggling**: CSS variables enable runtime switching without re-rendering the component tree. Class toggling would require Tailwind's `dark:` variant on every element.
-- **localStorage vs. server-side**: localStorage chosen for simplicity and offline support. Server-side persistence listed as a future enhancement (out of scope per PRD).
+- CSS variables vs. class toggling: CSS variables enable runtime switching without re-rendering the component tree. Class toggling would require Tailwind's `dark:` variant on every element.
+- localStorage vs. server-side: localStorage chosen for simplicity and offline support. Server-side persistence listed as a future enhancement (out of scope per PRD).
 
 ### Validation
 
@@ -292,7 +292,7 @@ Per the flow reference, ACF and SAD can be frozen in parallel once both pass val
 - [ ] Engagement Record updated with ACF and SAD artifact IDs
 - [ ] 4 frozen artifacts total (KER, PRD, ACF, SAD)
 
-## Part 5: What's next (5 minutes)
+## Part 5: what's next (5 minutes)
 
 ### Remaining EEK artifacts
 
@@ -338,7 +338,7 @@ The sherpa reads your Engagement Record and artifacts to determine exactly where
 
 ---
 
-## Appendix A: Common Questions
+## Appendix a: common questions
 
 **"What if I get stuck?"**
 Ask the sherpa: `/sherpa Where am I?` The sherpa runs a position check by reading your files, not memory, and tells you exactly which artifact is next and what it needs.
@@ -358,7 +358,7 @@ For a P2 Enhancement like dark mode: 8-20 hours depending on complexity, spread 
 **"What if I'm not technical?"**
 The sherpa explains everything in plain language. You provide domain knowledge (what the problem is, who it affects, what success looks like). The AI handles structural formatting, gate checking, and artifact generation. Many artifacts (like KER, Product Brief, and PRD) are primarily product decisions.
 
-## Appendix B: All 5 presets at a glance
+## Appendix b: all 5 presets at a glance
 
 **P1: New Feature**: Use when building a capability that doesn't exist today. Starts at PIK (Layer 2) with full discovery: problem framing, value hypothesis, assumption testing, and experiment log before engineering. Produces 15-20+ artifacts across all layers. Typical time: 20-40 hours.
 
@@ -370,7 +370,7 @@ The sherpa explains everything in plain language. You provide domain knowledge (
 
 **P5: Exploratory Research**: Use when investigating whether a capability is worth building. Starts at PIK with open-ended discovery. May end at the Experiment Log with a "no build" conclusion (that's a valid outcome). Produces 5-8 PIK artifacts; downstream kits only if research leads to build decision. Typical time: 10-20 hours.
 
-## Appendix C: Glossary
+## Appendix c: glossary
 
 **Artifact**: A structured document capturing a specific decision or piece of knowledge. Examples: PRD (requirements), SAD (architecture), WDD (work breakdown). Each artifact follows a fixed template and passes through quality gates before use downstream.
 

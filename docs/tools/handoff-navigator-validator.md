@@ -2,7 +2,7 @@
 
 You are evaluating whether the handoff-navigator tool was used correctly.
 
-## Evaluation Rules
+## Evaluation rules
 
 - Do NOT evaluate whether the handoff should happen
 - Do NOT suggest alternative destination kits
@@ -10,11 +10,11 @@ You are evaluating whether the handoff-navigator tool was used correctly.
 - Evaluate only what is explicitly present in the tool output
 - Be strict: ambiguity is a failure condition
 
-## Spec Reference
+## Spec reference
 
 Evaluate against the hard gates and constraints defined in `handoff-navigator-spec.md`.
 
-## Hard Gates
+## Hard gates
 
 | Gate | Check |
 |------|-------|
@@ -24,7 +24,7 @@ Evaluate against the hard gates and constraints defined in `handoff-navigator-sp
 | `handoff_artifacts_listed` | The Handoff Artifacts table lists each boundary-crossing artifact with verified freeze status |
 | `cross_cutting_activation_checked` | The Cross-Cutting Kit Activations table evaluates all 5 cross-cutting kits (or states "N/A") |
 
-## Output Format
+## Output format
 
 ```json
 {

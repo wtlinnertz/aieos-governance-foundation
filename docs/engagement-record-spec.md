@@ -14,7 +14,7 @@ This spec is the canonical definition of the ER format. It lives in `aieos-gover
 
 ---
 
-## Location and Naming
+## Location and naming
 
 | Field | Value |
 |-------|-------|
@@ -26,9 +26,9 @@ This spec is the canonical definition of the ER format. It lives in `aieos-gover
 
 ---
 
-## ER Sections
+## ER sections
 
-### §1 Document Control
+### §1 document control
 
 | Field | Value |
 |-------|-------|
@@ -51,7 +51,7 @@ When status changes to `Deprecated` or `Abandoned`, add a `Deprecation Notice` f
 
 ---
 
-### §1b State Block
+### §1b state block
 
 The state block provides a machine-readable snapshot of initiative position. It is updated by the sherpa (or operator) after every artifact freeze, kit transition, and decision junction. Any AI session can determine exactly where the initiative stands by reading this block alone.
 
@@ -77,7 +77,7 @@ The state block provides a machine-readable snapshot of initiative position. It 
 
 ---
 
-### §1a Layer 1 — Strategic Direction (Optional)
+### §1a layer 1 — strategic direction (Optional)
 
 This section is present only when the initiative originated from a governed strategic bet or roadmap (SDK). Omit this section when SDK was not used.
 
@@ -105,7 +105,7 @@ Examples:
 
 ---
 
-### §2 Layer 2 — Product Intelligence
+### §2 layer 2 — product intelligence
 
 **Artifact table:**
 
@@ -131,7 +131,7 @@ Example: `Pivot: Assumption A-03 (users will self-configure preferences) invalid
 
 ---
 
-### §3a Layer 3 — Solution Sourcing (if engaged)
+### §3a layer 3 — solution sourcing (if engaged)
 
 **Artifact table:**
 
@@ -151,7 +151,7 @@ Format: `{decision type}: {brief description} — {artifact ID where decision is
 
 ---
 
-### §3 Layer 4 — Engineering Execution
+### §3 layer 4 — engineering execution
 
 **Artifact table:**
 
@@ -180,7 +180,7 @@ Format: `{artifact ID} / {gate name}: {brief description of failure} → {resolu
 
 ---
 
-### §4 Layer 5 — Release & Exposure
+### §4 layer 5 — release & exposure
 
 **Artifact table:**
 
@@ -204,7 +204,7 @@ Format: `{decision type}: {brief description} — {artifact ID where decision is
 
 ---
 
-### §5 Layer 6 — Reliability & Resilience
+### §5 layer 6 — reliability & resilience
 
 **Artifact table:**
 
@@ -225,7 +225,7 @@ Format: `{decision type}: {brief description} — {artifact ID where decision is
 
 ---
 
-### §6 Layer 7 — Insight & Evolution
+### §6 layer 7 — insight & evolution
 
 **Artifact table:**
 
@@ -239,7 +239,7 @@ Add a row for each ES produced for this initiative. If no ES has been produced y
 
 ---
 
-### §8 Layer 8 — Operational Diagnostics
+### §8 layer 8 — operational diagnostics
 
 **Artifact table:**
 
@@ -254,7 +254,7 @@ Add a row for each DCR engagement (an incident may produce one DCR, one or more 
 
 ---
 
-### §9 Layer 9 — Quality Assurance (if adopted)
+### §9 layer 9 — quality assurance (if adopted)
 
 **Artifact table:**
 
@@ -273,7 +273,7 @@ If Layer 9 is not adopted for this initiative, write "QAK not adopted — direct
 
 ---
 
-### §10 Layer 10 — Security & Compliance (if adopted)
+### §10 layer 10 — security & compliance (if adopted)
 
 **Artifact table:**
 
@@ -288,7 +288,7 @@ If Layer 10 is not adopted for this initiative, write "SCK not adopted for this 
 
 ---
 
-### §11 Layer 11 — Data & Configuration (if adopted)
+### §11 layer 11 — data & configuration (if adopted)
 
 **Artifact table:**
 
@@ -305,7 +305,7 @@ If Layer 11 is not adopted for this initiative, write "DCK not adopted for this 
 
 ---
 
-### §12 Layer 12 — Platform & Infrastructure (if adopted)
+### §12 layer 12 — platform & infrastructure (if adopted)
 
 **Artifact table:**
 
@@ -322,7 +322,7 @@ If Layer 12 is not adopted for this initiative, write "PINFK not adopted for thi
 
 ---
 
-### §13 Layer 13 — Documentation & Knowledge (if adopted)
+### §13 layer 13 — documentation & knowledge (if adopted)
 
 **Artifact table:**
 
@@ -339,7 +339,7 @@ If Layer 13 is not adopted for this initiative, write "DKK not adopted for this 
 
 ---
 
-### §14 Layer 14 — Peer Review (if adopted)
+### §14 layer 14 — peer review (if adopted)
 
 **Artifact table:**
 
@@ -355,7 +355,7 @@ If Layer 14 is not adopted for this initiative, write "PRK not adopted for this 
 
 ---
 
-### §15 Layer 15 — Business Process (if adopted)
+### §15 layer 15 — business process (if adopted)
 
 **Artifact table:**
 
@@ -369,7 +369,7 @@ If Layer 15 is not adopted for this initiative, write "BPK not adopted for this 
 
 ---
 
-### §16 Impact Attribution (Optional)
+### §16 impact attribution (Optional)
 
 This section records who contributed what at each layer boundary. It is observational — it captures artifact ownership and contribution levels as they occur during the initiative, not retroactively at quarter end. It is never used for performance evaluation within the ER itself.
 
@@ -398,7 +398,7 @@ This section records who contributed what at each layer boundary. It is observat
 
 ---
 
-### §7 Initiative Outcome
+### §7 initiative outcome
 
 | Field | Value |
 |-------|-------|
@@ -410,7 +410,7 @@ This section records who contributed what at each layer boundary. It is observat
 
 ---
 
-## Per-Kit Maintenance Responsibilities
+## Per-Kit maintenance responsibilities
 
 Each kit's playbook includes a "Maintaining the Engagement Record" section with kit-specific steps. Summary:
 
@@ -439,11 +439,11 @@ Each kit's playbook includes a "Maintaining the Engagement Record" section with 
 
 ---
 
-## Decision Register Governance
+## Decision register governance
 
 The "Key decisions" subsection in each ER layer section constitutes an **append-only decision register**. Decisions are the most valuable content in the ER — they explain *why* the initiative took the shape it did, not just *what* artifacts were produced.
 
-### Decision Format
+### Decision format
 
 Every decision entry follows this format:
 
@@ -466,14 +466,14 @@ Every decision entry follows this format:
 | `Operational` | SRP revision, error budget invocation, escalation trigger |
 | `Escalation` | Work escalated to upstream layer or external authority |
 
-### Append-Only Rules
+### Append-Only rules
 
 1. **Decisions are never edited.** Once recorded, a decision entry is immutable.
 2. **Superseding decisions reference the original.** If a decision is reversed or revised, add a new entry: `DEC-XXX-NNN | Scope | Revised: DEC-XXX-MMM — now includes mobile clients | SAD-XXX | 2026-04-01`
 3. **Every decision traces to an artifact.** The `artifact_id` field identifies where the decision is formally recorded or expressed.
 4. **Decision recording happens at freeze points.** The sherpa (or operator) checks at each artifact freeze whether the artifact represents or influenced a key decision. If yes, a decision entry is appended.
 
-### Minimum Entries Per Layer
+### Minimum entries per layer
 
 | Layer | Minimum Decision Entries |
 |-------|-------------------------|
@@ -487,7 +487,7 @@ Every decision entry follows this format:
 
 Layers with no decisions should state: "No key decisions at this layer."
 
-### Backward Compatibility
+### Backward compatibility
 
 Existing ERs with informal "Key decisions" entries (free-text format) remain valid. New entries should follow the standardized format. Existing entries may be backfilled to the standardized format when an ER is actively maintained.
 
@@ -495,7 +495,7 @@ The informal format `{decision type}: {brief description} — {artifact ID}` is 
 
 ---
 
-## ER Is Not Governed
+## ER is not governed
 
 The ER has no generation prompt, validator, or hard gates. It is an operational record maintained by humans following kit playbook steps. The format defined in this spec is authoritative but the ER is not validated by an AI session.
 

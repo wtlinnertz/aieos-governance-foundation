@@ -1,6 +1,6 @@
 # Initiative Router Output
 
-## Routing Record
+## Routing record
 
 | Field | Value |
 |-------|-------|
@@ -8,7 +8,7 @@
 | Initiative | {initiative name or ID} |
 | Timestamp | {ISO 8601} |
 
-## Routing Questions Evaluated
+## Routing questions evaluated
 
 | # | Question (from J-ENTRY-1) | Answer | Evidence |
 |---|--------------------------|--------|----------|
@@ -17,7 +17,7 @@
 | 3 | Is this an active production incident (SEV1/2)? | {Yes/No} | {brief evidence} |
 | 4 | Is this a technology or infrastructure decision? | {Yes/No} | {brief evidence} |
 
-## Preset Selection
+## Preset selection
 
 | # | Context Factor (from J-ENTRY-2) | Applies | Evidence |
 |---|--------------------------------|---------|----------|
@@ -27,7 +27,7 @@
 | 4 | Production incident or performance degradation | {Yes/No} | {brief evidence} |
 | 5 | Research/exploration with uncertain outcome | {Yes/No} | {brief evidence} |
 
-## Routing Decision
+## Routing decision
 
 | Field | Value |
 |-------|-------|
@@ -37,14 +37,14 @@
 | First Artifact | {artifact name} |
 | First Action | {what the operator should do next} |
 
-## Engagement Record Status
+## Engagement record status
 
 | Field | Value |
 |-------|-------|
 | ER Exists | {Yes / No / Not Checked (no project directory provided)} |
 | ER Action Required | {Create new ER / Update existing ER / None} |
 
-## Cross-Cutting Kit Advisory
+## Cross-Cutting kit advisory
 
 | Kit | Likely Relevant | Reason |
 |-----|----------------|--------|

@@ -7,7 +7,7 @@ AIEOS Version: As of 2026-03-24 (16 layers, 15 built kits, roadmap.md last updat
 
 ---
 
-## Executive Summary
+## Executive summary
 
 AIEOS demonstrates **strong structural alignment** with the AI-Native SDLC Framework v3.1. Of 328 scored items, 92% are Fully Embodied or Partially Aligned. The 21 gaps identified are concentrated in **LLMOps observability**, **AI adoption measurement**, and **operational AI practices** — areas where AIEOS governs the artifact lifecycle but doesn't yet extend to AI pipeline operations. The framework's core architecture (four-file system, freeze-before-promote, validator-as-judge, convergence loops) directly embodies the document's most foundational principles.
 
@@ -40,7 +40,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 ---
 
-## Scoring Scale
+## Scoring scale
 
 | Score | Label | Definition |
 |-------|-------|-----------|
@@ -55,9 +55,9 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 ---
 
-## Part 1: Principles
+## Part 1: principles
 
-### 1.1 — Specification & Intent (P1-P3)
+### 1.1 — specification & intent (P1-P3)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -67,7 +67,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 3 FE / 0 PA / 0 GAP / 0 N/A. AIEOS's foundational architecture directly embodies specification-first, rigorous thinking, and context engineering.
 
-### 1.2 — Simplicity & Architecture (P4-P6)
+### 1.2 — simplicity & architecture (P4-P6)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -77,7 +77,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 3 FE / 0 PA / 0 GAP / 0 N/A. AIEOS's design philosophy directly reflects simplicity, durability, and appropriate determinism.
 
-### 1.3 — Data & Environment (P7-P8)
+### 1.3 — data & environment (P7-P8)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -86,29 +86,29 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 1 FE / 1 PA / 0 GAP / 0 N/A.
 
-### 1.4 — Measurement & Uncertainty (P9-P11)
+### 1.4 — measurement & uncertainty (P9-P11)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
-| P9 | Measure Before You Optimize | **PA** | GS, WE | AIEOS governs measurement through RRK (SLOs, baselines in SRP), QAK (test coverage in TCR), and validator completeness scores. However, AIEOS doesn't explicitly require pre-optimization baselines for AI pipeline performance (latency, response quality, golden test sets for LLM behavior). It measures artifact quality, not AI tool performance. | `srer-spec.md` (SLO baselines); `tcr-spec.md` (test coverage); `qgr-spec.md` |
+| P9 | Measure Before You improve | **PA** | GS, WE | AIEOS governs measurement through RRK (SLOs, baselines in SRP), QAK (test coverage in TCR), and validator completeness scores. However, AIEOS doesn't explicitly require pre-optimization baselines for AI pipeline performance (latency, response quality, golden test sets for LLM behavior). It measures artifact quality, not AI tool performance. | `srer-spec.md` (SLO baselines); `tcr-spec.md` (test coverage); `qgr-spec.md` |
 | P10 | Bounded Uncertainty Is an Engineering Discipline | **FE** | FD, GS | AIEOS's validator design is explicitly built for bounded uncertainty: completeness scores (0-100) define acceptable ranges, not exact outputs. Hard gates define what must be true; warnings capture uncertainty. The convergence loop bounds correction attempts (max 3). | `governance-model.md` §Validator Output; `review-convergence-loop.md` §Stopping Rules |
 | P11 | AI Accelerates WIP, Not Necessarily Throughput | **PA** | GS | AIEOS governs downstream quality gates (QAK, PRK, REK) that prevent AI-generated artifacts from overwhelming validation. Freeze-before-promote ensures throughput can't outrun validation. But AIEOS doesn't explicitly track WIP metrics or address Little's Law dynamics. | `flow-reference.md` §10 Flow Validation Rules; QAK playbook |
 
 **Section Summary:** 1 FE / 2 PA / 0 GAP / 0 N/A.
 
-### 1.5 — Human Oversight & Governance (P12-P16)
+### 1.5 — human oversight & governance (P12-P16)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
 | P12 | Human-in-the-Loop Is Non-Negotiable — But It's a Spectrum | **FE** | FD, GS | AIEOS explicitly designs HITL as a spectrum: AI generates → validator judges → human freezes (approval gate). Convergence loops allow bounded autonomy (3 iterations) before human escalation. Every freeze is a human decision. The philosophy doc states "AI-Native, Not AI-Replaced." | `philosophy.md` §AI-Native, Not AI-Replaced; `review-convergence-loop.md` §Escalation |
 | P13 | Humans Contribute at Three Distinct Points | **PA** | FD | AIEOS addresses runtime oversight (freeze gates, validation) and tuning (principles files shape AI behavior). Training-time contribution is outside AIEOS scope (AIEOS doesn't govern model training). Two of three points are well-covered. | `governance-model.md` §Freeze Semantics; principles files per kit |
-| P14 | Agents Optimize Away Non-Negotiables Unless You Define Them Explicitly | **FE** | FD, GS | AIEOS's spec system explicitly defines non-negotiables as hard gates. Validators enforce them structurally (FAIL on any hard gate failure). Prompts reference specs for constraints. The four-file separation prevents prompts from quietly dropping rules. | `governance-model.md` §Kit Invariants; every `*-spec.md` with named hard gates |
+| P14 | Agents improve Away Non-Negotiables Unless You Define Them Explicitly | **FE** | FD, GS | AIEOS's spec system explicitly defines non-negotiables as hard gates. Validators enforce them structurally (FAIL on any hard gate failure). Prompts reference specs for constraints. The four-file separation prevents prompts from quietly dropping rules. | `governance-model.md` §Kit Invariants; every `*-spec.md` with named hard gates |
 | P15 | The Bottleneck Shifts from Generation to Validation | **FE** | FD, GS | AIEOS's entire architecture reflects this: generation is one step, but validation (validators), peer review (PRK 12 lenses), quality assurance (QAK), and freeze approval are the bulk of the process. The framework invests more structure in validation than generation. | QAK kit; PRK kit (12 lenses); validator pattern; `review-convergence-loop.md` |
 | P16 | Customization Over One-Size-Fits-All Agents | **FE** | FD | AIEOS's kit architecture is inherently customizable: each kit is independent, principles files are per-organization, tool bindings absorb environment specifics, initiative presets define 5 different flows. The adapter conformance spec enables different tool integrations per team. | `initiative-presets.md` (5 paths); `adapter-conformance-spec.md`; `philosophy.md` §Adapt the Edges |
 
 **Section Summary:** 4 FE / 1 PA / 0 GAP / 0 N/A. Strong alignment — AIEOS is fundamentally a human oversight and governance framework.
 
-### 1.6 — Architecture & Durability (P17-P22)
+### 1.6 — architecture & durability (P17-P22)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -121,7 +121,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 5 FE / 1 PA / 0 GAP / 0 N/A. Architecture and durability is a core AIEOS strength.
 
-### 1.7 — Change Management & Adoption (P23-P34)
+### 1.7 — change management & adoption (P23-P34)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -140,7 +140,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 2 FE / 4 PA / 0 GAP / 6 N/A. Many items in this section are strategic/workforce observations outside AIEOS's governance domain.
 
-### 1.8 — Cognitive Architecture & Builder Mindset (P35-P39)
+### 1.8 — cognitive architecture & builder mindset (P35-P39)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -152,7 +152,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 1 FE / 4 PA / 0 GAP / 0 N/A.
 
-### 1.8a — The Five Levels & The Dark Factory (P40-P43)
+### 1.8a — the five levels & the dark factory (P40-P43)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -163,7 +163,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 1 FE / 2 PA / 0 GAP / 1 N/A.
 
-### 1.8b — Agent Strategy (P44-P46)
+### 1.8b — agent strategy (P44-P46)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -173,7 +173,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 0 FE / 1 PA / 0 GAP / 2 N/A.
 
-### 1.9 — Agent Security (P47-P55)
+### 1.9 — agent security (P47-P55)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -183,13 +183,13 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 | P50 | The Agentic Supply Chain Is a Live, Continuously Exploitable Surface | **PA** | GS | SCK's DAR (Dependency Audit Record) governs dependency verification. Adapter conformance spec requires auth externalization and health checks. But AIEOS doesn't govern MCP server verification or dynamic plugin loading security specifically. | SCK `dar-spec.md`; `adapter-conformance-spec.md` |
 | P51 | Memory Persistence Makes Poisoning Attacks Durable | **PA** | GS | AIEOS's ER and sherpa journal are append-only (tamper-resistant by design). Frozen artifacts are immutable (modification detected by re-entry protocol). But AIEOS doesn't explicitly govern memory poisoning defense for AI agent memory systems. | ER append-only design; freeze immutability; `ai-transparency-principles.md` §Session State on Disk |
 | P52 | The Human Is the Final Execution Path — and the Weakest Link | **FE** | FD | AIEOS addresses this directly: every freeze is a human decision, but validators provide structured evidence (hard gates, blocking issues, completeness score) so humans review against explicit criteria, not just agent summaries. PRK provides multi-lens expert review. | Validator output format; PRK 12 lenses; freeze-as-human-decision |
-| P53 | The Paradigm Shift: Deterministic → Probabilistic, Evaluation-First | **FE** | FD | AIEOS is evaluation-first by design: validators exist before artifacts are generated (spec defines what passes, validator enforces it). The framework prioritizes measuring outcomes (hard gates, completeness scores) over implementation details. | Four-file system (validator is first-class); `philosophy.md` §Validators Are Hard Gates |
+| P53 | The model Shift: Deterministic → Probabilistic, Evaluation-First | **FE** | FD | AIEOS is evaluation-first by design: validators exist before artifacts are generated (spec defines what passes, validator enforces it). The framework prioritizes measuring outcomes (hard gates, completeness scores) over implementation details. | Four-file system (validator is first-class); `philosophy.md` §Validators Are Hard Gates |
 | P54 | Agents Need Non-Human Identities | **N/A** | NA | Runtime agent identity management is outside AIEOS governance scope. AIEOS governs what artifacts agents produce, not how they authenticate. The adapter conformance spec requires auth externalization but doesn't define identity schemes. | `adapter-conformance-spec.md` §auth_externalized (tangential) |
 | P55 | Compromised Agents Are Attack Amplifiers at Machine Speed | **PA** | GS | AIEOS's convergence loop bounds (max 3 iterations) and escalation protocols provide circuit-breaker behavior. SCK TM governs threat modeling. But AIEOS doesn't explicitly govern agent compromise detection or real-time containment at machine speed. | `review-convergence-loop.md` §Max Iterations; SCK `tm-spec.md` |
 
 **Section Summary:** 4 FE / 4 PA / 0 GAP / 1 N/A. Strong structural alignment with security principles through the governance model and SCK.
 
-### 1.10 — The Memory Wall & Contextual Stewardship (P56-P66)
+### 1.10 — the memory wall & contextual stewardship (P56-P66)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -207,7 +207,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 6 FE / 5 PA / 0 GAP / 0 N/A. Strong alignment on contextual stewardship and memory principles — this is a core AIEOS strength.
 
-### 1.11 — Agentic Code Quality & Anti-Slop (P67-P71)
+### 1.11 — agentic code quality & anti-Slop (P67-P71)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -219,7 +219,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 4 FE / 1 PA / 0 GAP / 0 N/A. Anti-slop is deeply embedded in AIEOS's convergence loop and freeze-before-promote architecture.
 
-### 1.12 — Rejection as Skill & Scaling Taste (P72-P75)
+### 1.12 — rejection as skill & scaling taste (P72-P75)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -230,18 +230,18 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 3 FE / 1 PA / 0 GAP / 0 N/A. AIEOS's validator pattern is a strong embodiment of institutionalized rejection.
 
-### 1.13 — Architecture, Community & Build Patterns (P76-P79)
+### 1.13 — architecture, community & build patterns (P76-P79)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
 | P76 | Learn the Pattern, Not the Tool | **FE** | FD | AIEOS's tool-agnostic policy, three-layer adapter model (spec → binding → adapter), and AI provider neutrality are direct implementations. AIEOS teaches architecture (four-file system, freeze-before-promote) not tool tutorials. | `adapter-conformance-spec.md`; `ai-transparency-principles.md` §Provider Neutrality |
 | P77 | Community Is a Living Pattern Library | **N/A** | NA | Community building is outside AIEOS governance scope. AIEOS is open-source (MIT) but doesn't govern community interaction patterns. | — |
-| P78 | Design for Infrastructure, Not Just Tool | **FE** | FD | AIEOS is infrastructure, not a tool: it's a governance system that other projects build on top of. The ecosystem roadmap (7 projects) treats AIEOS as the foundation that enables artifact store, evaluation engine, analytics, compliance reporting. | `ecosystem-roadmap.md`; `roadmap.md` ECO-001 through ECO-008 |
+| P78 | Design for Infrastructure, Not Just Tool | **FE** | FD | AIEOS is infrastructure, not a tool: it's a governance system that other projects build on top of. The system roadmap (7 projects) treats AIEOS as the foundation that enables artifact store, evaluation engine, analytics, compliance reporting. | `ecosystem-roadmap.md`; `roadmap.md` ECO-001 through ECO-008 |
 | P79 | The Implementation Gap Is Now AI's Problem | **PA** | WE | The aieos-console project demonstrated this: the AIEOS framework + AI (Claude Code) produced a working system from specs. But AIEOS doesn't explicitly address or govern the collapsing implementation gap. | aieos-console as demonstration |
 
 **Section Summary:** 2 FE / 1 PA / 0 GAP / 1 N/A.
 
-### 1.14 — The Four-Layer Prompting Stack (P80-P84)
+### 1.14 — the four-Layer prompting stack (P80-P84)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -253,12 +253,12 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 4 FE / 1 PA / 0 GAP / 0 N/A. The four-layer prompting stack maps remarkably well to AIEOS's architecture.
 
-### 1.15 — The Intent Gap & Organizational AI Alignment (P85-P90)
+### 1.15 — the intent gap & organizational AI alignment (P85-P90)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
 | P85 | The AI Race Is Now an Intent Race | **PA** | FD | AIEOS's principles files + spec system constitute "organizational intent infrastructure." But AIEOS doesn't frame itself in these terms or explicitly address the intelligence-vs-intent distinction. | Principles files as intent infrastructure; specs as encoded organizational knowledge |
-| P86 | The Three-Layer Intent Gap | **PA** | FD | AIEOS addresses Layer 1 (unified context infrastructure via navigation map, artifact store) and partially Layer 2 (coherent toolkit via sherpa, four-file system). Layer 3 (intent engineering) is addressed through principles files but not as a formal discipline. | Navigation map (L1); sherpa (L2); principles files (L3 partial) |
+| P86 | The Three-Layer Intent Gap | **PA** | FD | AIEOS addresses Layer 1 (unified context infrastructure via navigation map, artifact store) and partially Layer 2 (coherent set of tools via sherpa, four-file system). Layer 3 (intent engineering) is addressed through principles files but not as a formal discipline. | Navigation map (L1); sherpa (L2); principles files (L3 partial) |
 | P87 | The Shadow Agents Problem | **PA** | GS | AIEOS's adapter conformance spec and tool governance spec provide governed channels for agent integration. But AIEOS doesn't explicitly address the shadow agents problem or provide a sanctioned-vs-unsanctioned agent framework. | `adapter-conformance-spec.md`; `tool-governance-spec.md` |
 | P88 | OKRs Were Designed for Humans — They Cannot Be Directly Handed to Agents | **PA** | FD | AIEOS's spec system translates high-level intent into agent-actionable specifications (hard gates, acceptance criteria, constraint architecture). But AIEOS doesn't explicitly address OKR-to-agent translation as a discipline. | Specs as translated intent; hard gates as machine-actionable criteria |
 | P89 | The Two-Cultures Problem | **PA** | CT | AIEOS's sherpa bridges the two cultures: non-technical users navigate through conversational guidance while the framework enforces technical rigor. But AIEOS doesn't explicitly address the executive-engineer gap or propose cross-functional roles. | Sherpa as bridge; ideation mode for non-technical users |
@@ -266,7 +266,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 1 FE / 5 PA / 0 GAP / 0 N/A.
 
-### 1.16 — DORA 2025: AI as Amplifier (P91-P96)
+### 1.16 — DORA 2025: AI as amplifier (P91-P96)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -279,7 +279,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 2 FE / 4 PA / 0 GAP / 0 N/A.
 
-### 1.17 — AI Coding Workflow & Cognitive Discipline (P97-P98)
+### 1.17 — AI coding workflow & cognitive discipline (P97-P98)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -288,17 +288,17 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 1 FE / 1 PA / 0 GAP / 0 N/A.
 
-### 1.18 — Retrieval Infrastructure for Agents (P99-P101)
+### 1.18 — retrieval infrastructure for agents (P99-P101)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
-| P99 | Agents Stress-Test Retrieval Infrastructure | **N/A** | NA | Runtime retrieval infrastructure scaling is outside AIEOS governance scope. AIEOS artifact store (ECO-003) uses LanceDB but this is an ecosystem project, not governance. | ECO-003 (tangential) |
+| P99 | Agents Stress-Test Retrieval Infrastructure | **N/A** | NA | Runtime retrieval infrastructure scaling is outside AIEOS governance scope. AIEOS artifact store (ECO-003) uses LanceDB but this is an system project, not governance. | ECO-003 (tangential) |
 | P100 | Context Windows Are Not Retrieval | **PA** | FD | AIEOS distinguishes between session context (context window) and persistent state (ER, frozen artifacts). Briefing distillation manages what enters the context window. But AIEOS doesn't govern retrieval infrastructure architecture. | `briefing-distillation-spec.md`; `ai-transparency-principles.md` §Session State on Disk |
-| P101 | The Unicorn Is the Retrieval Stack — Hybrid Beats Single Tech | **N/A** | NA | Retrieval stack architecture is outside AIEOS governance scope. The artifact store uses hybrid search but this is an ecosystem implementation choice. | ECO-003 (tangential) |
+| P101 | The Unicorn Is the Retrieval Stack — Hybrid Beats Single Tech | **N/A** | NA | Retrieval stack architecture is outside AIEOS governance scope. The artifact store uses hybrid search but this is an system implementation choice. | ECO-003 (tangential) |
 
 **Section Summary:** 0 FE / 1 PA / 0 GAP / 2 N/A.
 
-### 1.19 — Cost Modeling & ROI (P102-P104)
+### 1.19 — cost modeling & ROI (P102-P104)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -308,7 +308,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 0 FE / 1 PA / 1 GAP / 1 N/A. First gap identified: AI adoption cost governance.
 
-### 1.20 — Compliance & Regulatory (P105-P107c)
+### 1.20 — compliance & regulatory (P105-P107c)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -321,7 +321,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 2 FE / 1 PA / 1 GAP / 2 N/A. Data privacy governance (GAP-002) is the key gap, already on roadmap.
 
-### 1.21 — Enterprise Tool Integration (P108-P110)
+### 1.21 — enterprise tool integration (P108-P110)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -331,7 +331,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 0 FE / 3 PA / 0 GAP / 0 N/A. Integration architecture exists but execution is in progress.
 
-### 1.22 — Testing Patterns for AI-Generated Code (P111-P113)
+### 1.22 — testing patterns for AI-Generated code (P111-P113)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -341,7 +341,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 0 FE / 2 PA / 1 GAP / 0 N/A.
 
-### 1.23 — AI Observability & LLMOps (P114-P117)
+### 1.23 — AI observability & lLMOps (P114-P117)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -352,17 +352,17 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 0 FE / 2 PA / 2 GAP / 0 N/A. LLMOps observability is a gap area.
 
-### 1.24 — Platform Engineering + AI Enablement (P118-P120)
+### 1.24 — platform engineering + AI enablement (P118-P120)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
 | P118 | Platform Team's AI Role Is Enabling Safe, Scalable Access | **PA** | FD | AIEOS provides the governance layer a platform team would use (golden paths via presets, shared standards via specs, approved tool catalog via tool governance). But AIEOS doesn't explicitly address the platform team's AI enablement role. | Initiative presets; tool governance spec; adapter conformance |
 | P119 | Golden Paths for AI Make the Safe Choice the Easy Choice | **FE** | FD | AIEOS's initiative presets are exactly golden paths: 5 pre-defined flows (New Feature, Enhancement, Compliance, Performance Fix, Exploratory) that encode the correct sequence. Sherpa guides users down these paths. Getting-started guide provides onboarding. | `initiative-presets.md` (5 golden paths); sherpa routing; `getting-started.md` |
-| P120 | Measure AI Adoption Quality, Not Just Adoption Rate | **GAP** | NA | AIEOS doesn't govern AI adoption quality metrics (activation, integration depth, output quality signal, feedback loop). This is relevant but not currently addressed. ECO-006 (Governance Analytics) on the ecosystem roadmap could address this. | `roadmap.md` ECO-006 (planned ecosystem project) |
+| P120 | Measure AI Adoption Quality, Not Just Adoption Rate | **GAP** | NA | AIEOS doesn't govern AI adoption quality metrics (activation, integration depth, output quality signal, feedback loop). This is relevant but not currently addressed. ECO-006 (Governance Analytics) on the system roadmap could address this. | `roadmap.md` ECO-006 (planned system project) |
 
 **Section Summary:** 1 FE / 1 PA / 1 GAP / 0 N/A.
 
-### 1.25 — Prompt & Agent Lifecycle Management (P121-P124)
+### 1.25 — prompt & agent lifecycle management (P121-P124)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -373,7 +373,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 1 FE / 1 PA / 0 GAP / 2 N/A.
 
-### 1.26 — AI for Incident Response & Ops (P125-P128)
+### 1.26 — AI for incident response & ops (P125-P128)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -384,7 +384,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 2 FE / 2 PA / 0 GAP / 0 N/A.
 
-### 1.27 — Platform Team AI Adoption Playbook (P129-P131)
+### 1.27 — platform team AI adoption playbook (P129-P131)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -394,18 +394,18 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 0 FE / 1 PA / 1 GAP / 1 N/A.
 
-### 1.28 — GitOps & Kubernetes Platform Engineering with AI (P132-P135)
+### 1.28 — gitOps & kubernetes platform engineering with AI (P132-P135)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
-| P132 | GitOps Reconciliation Loops Are a Natural Model for Agentic Feedback Loops | **PA** | FD | AIEOS's convergence loop (desired state in spec → agent generates → validator detects drift → correction) is structurally similar to GitOps reconciliation. But AIEOS doesn't explicitly draw this parallel or leverage GitOps patterns. | `review-convergence-loop.md` as reconciliation pattern |
+| P132 | GitOps Reconciliation Loops Are a Natural Model for Agentic Feedback Loops | **PA** | FD | AIEOS's convergence loop (desired state in spec → agent generates → validator detects drift → correction) is structurally similar to GitOps reconciliation. But AIEOS doesn't explicitly draw this parallel or use GitOps patterns. | `review-convergence-loop.md` as reconciliation pattern |
 | P133 | AI-Assisted IaC Requires Same Quality Discipline | **PA** | GS | PINFK governs infrastructure decisions (PDR, ISPEC, EM). EEK execution spec includes review checks. But AIEOS doesn't have IaC-specific quality gates (kubeval, helm lint, pinned chart versions). | PINFK specs; EEK execution-spec review checks |
 | P134 | AI Context Management for K8s Manifest Drift Detection | **N/A** | NA | Kubernetes-specific drift detection is outside AIEOS governance scope. PINFK governs infrastructure decisions but not runtime cluster state management. | — |
 | P135 | Agent-Driven Cluster State Management Requires HITL Spectrum | **N/A** | NA | Runtime cluster management is outside AIEOS governance scope. | — |
 
 **Section Summary:** 0 FE / 2 PA / 0 GAP / 2 N/A.
 
-### 1.29 — Multi-Tenant AI Platform Architecture (P140-P143)
+### 1.29 — multi-Tenant AI platform architecture (P140-P143)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -416,7 +416,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 0 FE / 1 PA / 0 GAP / 3 N/A.
 
-### 1.30 — Agent Output Provenance and Reproducibility (P144-P146)
+### 1.30 — agent output provenance and reproducibility (P144-P146)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -426,18 +426,18 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 1 FE / 2 PA / 0 GAP / 0 N/A.
 
-### 1.31 — Hallucination-Resilient System Design (P147-P150)
+### 1.31 — hallucination-Resilient system design (P147-P150)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
-| P147 | Design Systems Robust to Confident AI Incorrectness | **FE** | FD | AIEOS is designed for hallucination resilience: validators catch incorrect output regardless of AI confidence, session separation prevents self-validation bias, convergence loops bound the damage of persistent incorrectness. The system assumes AI WILL be wrong and designs for it. | Validator pattern; session separation; convergence loops; `philosophy.md` §Validators Are Hard Gates |
+| P147 | Design Systems solid to Confident AI Incorrectness | **FE** | FD | AIEOS is designed for hallucination resilience: validators catch incorrect output regardless of AI confidence, session separation prevents self-validation bias, convergence loops bound the damage of persistent incorrectness. The system assumes AI WILL be wrong and designs for it. | Validator pattern; session separation; convergence loops; `philosophy.md` §Validators Are Hard Gates |
 | P148 | Dual-Validation Architecture | **PA** | FD | AIEOS's session separation (generate in one session, validate in another) provides independent assessment. PRK adds multi-lens review. But AIEOS doesn't use two independent model calls with divergence detection — it uses structured validation against explicit criteria instead. | Session separation; PRK multi-lens; validators as structured (not model-based) check |
 | P149 | Confidence-Gated Automation | **PA** | GS | AIEOS's completeness score (0-100) provides a confidence signal. Hard gates are binary (PASS/FAIL). Convergence loop stopping rules detect when the agent can't reliably improve. But AIEOS doesn't use token-level probabilities or semantic consistency checks for confidence gating. | Completeness score; convergence stopping rules |
 | P150 | Sandboxed Execution Environments | **PA** | GS | AIEOS's convergence loop runs generation in bounded cycles before affecting downstream artifacts. QAK provides a testing gate. But AIEOS doesn't govern sandboxed execution environments for agent-generated code specifically. | Convergence loops as bounded execution; QAK as pre-release gate |
 
 **Section Summary:** 1 FE / 3 PA / 0 GAP / 0 N/A.
 
-### 1.32 — AI-Assisted Knowledge Management (P151-P153)
+### 1.32 — AI-Assisted knowledge management (P151-P153)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -447,7 +447,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 1 FE / 2 PA / 0 GAP / 0 N/A.
 
-### 1.33 — Developer Cognitive Load (P154-P156)
+### 1.33 — developer cognitive load (P154-P156)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -457,7 +457,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 0 FE / 2 PA / 1 GAP / 0 N/A.
 
-### 1.34 — The Redefined Senior Engineer Role (P157-P158)
+### 1.34 — the redefined senior engineer role (P157-P158)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -468,9 +468,9 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 ---
 
-## Part 2: Patterns
+## Part 2: patterns
 
-### 2.1 — Specification & Planning Patterns (PA1-PA3h)
+### 2.1 — specification & planning patterns (PA1-PA3h)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -489,7 +489,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 7 FE / 5 PA / 0 GAP / 0 N/A. Specification and planning patterns are AIEOS's strongest cluster.
 
-### 2.2 — Context & Memory Patterns (PA4-PA6d)
+### 2.2 — context & memory patterns (PA4-PA6d)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -504,7 +504,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 1 FE / 5 PA / 0 GAP / 2 N/A.
 
-### 2.3 — Quality & Review Patterns (PA7-PA10)
+### 2.3 — quality & review patterns (PA7-PA10)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -517,7 +517,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 4 FE / 2 PA / 0 GAP / 0 N/A.
 
-### 2.4 — Operations & Feedback Patterns (PA11-PA13)
+### 2.4 — operations & feedback patterns (PA11-PA13)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -527,7 +527,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 2 FE / 1 PA / 0 GAP / 0 N/A.
 
-### 2.5-2.6 — Agent Selection & Security Patterns (PA14-PA19c)
+### 2.5-2.6 — agent selection & security patterns (PA14-PA19c)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -547,7 +547,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 1 FE / 10 PA / 0 GAP / 2 N/A.
 
-### 2.6a — Dark Factory & Autonomous Development (PA19d-PA19f)
+### 2.6a — dark factory & autonomous development (PA19d-PA19f)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -557,7 +557,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 0 FE / 2 PA / 0 GAP / 1 N/A.
 
-### 2.7-2.9 — Evaluation, Memory Architecture, Anti-Slop (PA20-PA33)
+### 2.7-2.9 — evaluation, memory architecture, anti-Slop (PA20-PA33)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -578,7 +578,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 6 FE / 7 PA / 0 GAP / 1 N/A.
 
-### 2.10-2.14 — Architecture, DORA, Coding, Retrieval, Routing (PA34-PA48)
+### 2.10-2.14 — architecture, DORA, coding, retrieval, routing (PA34-PA48)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -597,9 +597,9 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 ---
 
-## Part 3: Practices
+## Part 3: practices
 
-### 3.1 — Specification & Setup (PR1-PR3c)
+### 3.1 — specification & setup (PR1-PR3c)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -612,7 +612,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 4 FE / 2 PA / 0 GAP / 0 N/A.
 
-### 3.2 — Measurement & Evaluation (PR4-PR6c)
+### 3.2 — measurement & evaluation (PR4-PR6c)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -621,11 +621,11 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 | PR6 | Measure Throughput, Not Just Velocity | **PA** | GS | AIEOS tracks artifact completion through ER (not just generation speed). RRK tracks operational metrics. But AIEOS doesn't explicitly track DORA metrics or distinguish velocity from throughput. | ER artifact tracking; RRK SLOs |
 | PR6a | Establish DORA Baselines Before AI Rollout | **GAP** | NA | AIEOS doesn't govern DORA metric baselining. RRK governs SLO baselines but not specifically DORA metrics pre-AI-rollout. | Not addressed specifically |
 | PR6b | Add Eval Test Case After Every Agent Failure | **FE** | FD | AIEOS's finding accumulator captures framework gaps at runtime. Sherpa behavioral checks are expanded when new failure modes are discovered (SH-024: expanded from initial set to 53 checks). | Sherpa finding accumulator; `roadmap.md` SH-024 |
-| PR6c | Track and Report AI Adoption Quality Quarterly | **GAP** | NA | AIEOS doesn't govern adoption quality reporting. ECO-006 (Governance Analytics) on ecosystem roadmap could address this. | `roadmap.md` ECO-006 (planned) |
+| PR6c | Track and Report AI Adoption Quality Quarterly | **GAP** | NA | AIEOS doesn't govern adoption quality reporting. ECO-006 (Governance Analytics) on system roadmap could address this. | `roadmap.md` ECO-006 (planned) |
 
 **Section Summary:** 2 FE / 2 PA / 2 GAP / 0 N/A.
 
-### 3.3 — Quality & Review (PR7-PR9c)
+### 3.3 — quality & review (PR7-PR9c)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -638,7 +638,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 0 FE / 6 PA / 0 GAP / 0 N/A.
 
-### 3.4-3.5 — Operations, Architecture, Agent Infra (PR10-PR17b)
+### 3.4-3.5 — operations, architecture, agent infra (PR10-PR17b)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -657,7 +657,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 5 FE / 4 PA / 0 GAP / 3 N/A.
 
-### 3.6-3.7 — Agent Selection, Security (PR18-PR25)
+### 3.6-3.7 — agent selection, security (PR18-PR25)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -681,7 +681,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 3 FE / 5 PA / 0 GAP / 8 N/A.
 
-### 3.8-3.9 — Evaluation, Stewardship, Rejection (PR26-PR34)
+### 3.8-3.9 — evaluation, stewardship, rejection (PR26-PR34)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -697,7 +697,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 4 FE / 3 PA / 2 GAP / 0 N/A.
 
-### 3.10-3.12 — Memory, Anti-Slop, Spec Engineering (PR35-PR49)
+### 3.10-3.12 — memory, anti-Slop, spec engineering (PR35-PR49)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -719,12 +719,12 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 7 FE / 5 PA / 1 GAP / 2 N/A.
 
-### 3.13-3.18 — DORA, Coding Workflow, Observability, Platform, Prompt Lifecycle, GitOps (PR50-PR73)
+### 3.13-3.18 — DORA, coding workflow, observability, platform, prompt lifecycle, gitOps (PR50-PR73)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
 | PR50 | Publish Clear AI Stance | **PA** | FD | AIEOS's governance model, philosophy, and AI transparency principles constitute a clear AI stance. But this is for framework users, not for an organization's developers broadly. | `philosophy.md`; `ai-transparency-principles.md` |
-| PR51 | Treat Internal Data as Strategic Asset | **PA** | GS | AIEOS's artifact store (ECO-003) treats frozen artifacts as strategic data. DKK governs documentation quality. But data ecosystem governance beyond AIEOS artifacts isn't addressed. | ECO-003; DKK |
+| PR51 | Treat Internal Data as Strategic Asset | **PA** | GS | AIEOS's artifact store (ECO-003) treats frozen artifacts as strategic data. DKK governs documentation quality. But data system governance beyond AIEOS artifacts isn't addressed. | ECO-003; DKK |
 | PR52 | Conduct Value Stream Map Before Scaling AI | **PA** | FD | AIEOS's layer model IS a value stream map. But AIEOS doesn't require consuming organizations to map their value streams before adopting AIEOS. | `layer-model.md` |
 | PR53 | Frequent Commits and Rollback Proficiency | **PA** | GS | AIEOS's freeze-before-promote and re-entry protocol embody version control discipline. But commit frequency and rollback proficiency aren't governed as practices. | Freeze semantics; re-entry protocol |
 | PR54 | Work in Smaller Batches | **FE** | FD | AIEOS enforces small batches: per-artifact freeze (not batch release), WDD atomic work items, convergence loops process one artifact at a time. | Per-artifact freeze; WDD atomic items |
@@ -750,7 +750,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 **Section Summary:** 2 FE / 9 PA / 5 GAP / 5 N/A.
 
-### 3.19-3.25 — Multi-Tenant, Provenance, Hallucination, Knowledge, Routing, Cognitive, Senior Role (PR74-PR98)
+### 3.19-3.25 — multi-Tenant, provenance, hallucination, knowledge, routing, cognitive, senior role (PR74-PR98)
 
 | ID | Name | Score | Ch. | Rationale | AIEOS Reference |
 |----|------|-------|-----|-----------|-----------------|
@@ -775,9 +775,9 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 ---
 
-## Gap Analysis
+## Gap analysis
 
-### High-Impact Gaps
+### High-Impact gaps
 
 | Gap ID | AI-Native Item(s) | Description | Proposed AIEOS Response | Roadmap Cross-Ref |
 |--------|-------------------|-------------|------------------------|-------------------|
@@ -786,7 +786,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 | AG-003 | P120, PR6a, PR6c, PR65 | **AI adoption quality measurement** — AIEOS doesn't govern DORA baselines, adoption quality metrics, or quarterly adoption reviews. | Define adoption maturity levels (P131 gap). Add adoption quality section to healthcheck playbook Scope B. ECO-006 addresses analytics. | ECO-006 (existing, validates priority) |
 | AG-004 | PR32, PR34 | **Constraint library as queryable asset** — AIEOS's specs serve as distributed constraints but there's no queryable constraint library for rejection patterns. | Create constraint library spec as a cross-cutting tool. Design for MCP server exposure. Feed from validator FAIL patterns and PRK findings. | New item |
 
-### Medium-Impact Gaps
+### Medium-Impact gaps
 
 | Gap ID | AI-Native Item(s) | Description | Proposed AIEOS Response | Roadmap Cross-Ref |
 |--------|-------------------|-------------|------------------------|-------------------|
@@ -797,18 +797,18 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 | AG-009 | PR35 | **Bootstrap file token budget governance** — AIEOS doesn't govern CLAUDE.md/agents.md token budgets. | Add token budget recommendation to kit-structure-standard.md (advisory, not hard gate). | New item (low urgency) |
 | AG-010 | PR61, P114-P115 | **AI pipeline observability requirements** — AIEOS doesn't govern LLM call tracing or AI-specific observability. | Extend RRK or create guidance document for AI pipeline observability standards. | New item |
 
-### Low-Impact / Deferred Gaps
+### Low-Impact / deferred gaps
 
 | Gap ID | AI-Native Item(s) | Description | Notes |
 |--------|-------------------|-------------|-------|
-| AG-011 | P145 | Model version and context snapshot in provenance | Extend artifact provenance fields when ecosystem supports it (ECO-001 schema) |
+| AG-011 | P145 | Model version and context snapshot in provenance | Extend artifact provenance fields when system supports it (ECO-001 schema) |
 | AG-012 | PA41 | Brownfield specification excavation pattern | Document as guidance when demand arises from real initiatives |
 
 ---
 
-## Roadmap Integration
+## Roadmap integration
 
-### New Roadmap Items Proposed
+### New roadmap items proposed
 
 | ID | Description | Priority | Source Gaps |
 |----|-------------|----------|-------------|
@@ -819,7 +819,7 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 | **FR-018** | Review capacity estimation in WDD/PRK | Low | AG-008 |
 | **FR-019** | Bootstrap file token budget recommendation | Low | AG-009 |
 
-### Existing Roadmap Items Validated
+### Existing roadmap items validated
 
 | Existing ID | Validated By | Notes |
 |-------------|-------------|-------|
@@ -830,11 +830,11 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 
 ---
 
-## PA Thickening Analysis
+## PA thickening analysis
 
 The 21 GAP items above identify what's **missing**. This section analyzes the 143 PA (Partially Aligned) items — areas where AIEOS has a foundation but coverage is incomplete, indirect, or structural rather than explicit. These represent "thickening" opportunities: strengthening existing capabilities rather than building from scratch.
 
-### Triage Methodology
+### Triage methodology
 
 PA items are categorized into three tiers:
 
@@ -844,7 +844,7 @@ PA items are categorized into three tiers:
 | **Advisory** | AIEOS could document as guidance without structural changes | Bundled into guidance documents |
 | **Structural** | AIEOS addresses through design; making explicit would be over-engineering | No action — note for reference only |
 
-### AL-001: Agent Security Hardening
+### AL-001: agent security hardening
 
 **Priority:** High | **Effort:** Medium | **Sources:** P49, P50, P51, P55, P87, PA16, PA18, PR20, PR21, PR22
 
@@ -861,7 +861,7 @@ AIEOS has strong structural security (SCK, adapter conformance, session separati
 | PR20 | SCK TM governs threat modeling generically | Add OWASP Agentic AI Top 10 as a recommended framework reference in TM spec |
 | PR22 | Tool governance and DAR exist | Add MCP server validation checklist to DAR spec or as new tool-governance appendix |
 
-### AL-002: AI-Generated Code Testing Standards
+### AL-002: AI-Generated code testing standards
 
 **Priority:** High | **Effort:** Medium | **Sources:** P111, P112, PA9, PR7, PR8, PR9, PR9a, PR9c, PR40
 
@@ -877,7 +877,7 @@ AIEOS governs test design (TDD spec) and code quality (code-craftsmanship.md) bu
 | PR9a | SCK SAR governs security assessment | Add SAST/DAST as a recommended SAR activity for code-producing initiatives |
 | PR40 | code-craftsmanship.md addresses testing philosophy | Add anti-mocking guidance to code-craftsmanship.md §testing — prefer real implementations for integration boundaries |
 
-### AL-003: Agent Readiness & Delegation Framework
+### AL-003: agent readiness & delegation framework
 
 **Priority:** Medium | **Effort:** Medium | **Sources:** PA3c, PA3d, PA10, PA15b, PA15d, PA19b, PR3, P148, P149, P150
 
@@ -894,7 +894,7 @@ AIEOS assigns AI/Human/Either per WDD task but doesn't have a systematic agent c
 | P149 | Completeness score provides confidence signal | Add confidence-gated automation guidance to convergence loop doc — when completeness_score < threshold, require human review even if all gates pass |
 | P150 | Convergence loops bound execution | Add sandboxed execution guidance to QAK playbook — pre-release environment verification for code-producing initiatives |
 
-### AL-004: Knowledge Currency & Documentation Lifecycle
+### AL-004: knowledge currency & documentation lifecycle
 
 **Priority:** Medium | **Effort:** Low | **Sources:** P151, P153, PA41, PR66, PR81, PR82
 
@@ -908,7 +908,7 @@ DKK governs document health but lacks specific automation and lifecycle practice
 | PR66 | Getting-started and playbooks serve partially | Add "What Works Here" living document recommendation to getting-started.md — team-maintained lessons learned per initiative |
 | PR81 | DKK DHR governs health reviews | Add freshness_owner and review_date as recommended metadata fields in UDR and ARR templates |
 
-### AL-005: Process & Workflow Hardening
+### AL-005: process & workflow hardening
 
 **Priority:** Medium | **Effort:** Medium | **Sources:** P124, P129, P133, PA12, PA35, PR10, PR13a, PR53, PR60, PR87, P43, PR80
 
@@ -927,7 +927,7 @@ AIEOS has strong process governance but gaps in specific operational practices.
 | PR87 | Freeze points are natural stopping points | Add explicit cognitive recovery guidance to EEK playbook — recommended break after complex artifact validation sequences |
 | P43 | EEK Path B handles brownfield | Add brownfield governance pattern reference to initiative-presets.md P2 (Enhancement) notes |
 
-### AL-006: Enterprise Integration Readiness
+### AL-006: enterprise integration readiness
 
 **Priority:** Medium | **Effort:** Low | **Sources:** P108, P109, P110, P139, P146, PA6a, PA6b, PA6d, PR64
 
@@ -941,7 +941,7 @@ Integration architecture is defined but lacks explicit protocol mappings and int
 | P146 | Navigation map is a directed graph | Add W3C PROV compatibility note to ER spec — entity-activity-agent mapping for audit-intensive environments |
 | PR64 | Tool governance and adapter conformance exist | Add shared tool catalog pattern to tool-governance-spec — registry of governed tools with capability descriptions, discoverable by agents |
 
-### AL-007: Memory Architecture Formalization
+### AL-007: memory architecture formalization
 
 **Priority:** Low | **Effort:** Medium | **Sources:** P8, P57, P60, P62, P64, PA4, PA24, PA25, PA27
 
@@ -956,7 +956,7 @@ AIEOS has emergent memory architecture across ER, frozen artifacts, journal, and
 | P60 | IEK feedback loop governs maintenance | Add generation-vs-maintenance quality distinction to code-craftsmanship.md — different review criteria for new code vs modifications |
 | P64 | Auto-recall is sherpa-specific | Add pre-generation context assembly as a framework-level recommendation (not just sherpa behavior) |
 
-### AL-008: Organizational AI Alignment
+### AL-008: organizational AI alignment
 
 **Priority:** Low | **Effort:** Low | **Sources:** P20, P25, P27, P33, P35, P36, P37, P38, P85, P86, P88, P89, P98, P154, P155, P157, PA15a, PA15c, PR19b, PR19d, PR19f, PR30, PR31, PR50, PR52, PR97, PR98
 
@@ -974,7 +974,7 @@ This is the largest PA cluster (27 items) but the least actionable for a governa
 | Feedback and reflection | PR19d, PR19f, PR30, PR31 | Partially addressed by finding accumulator and sherpa journal; add "share findings across initiatives" guidance to ER spec |
 | Intent alignment | P85, P86, P88, P89 | Partially addressed by principles files as intent infrastructure; add cross-reference to AI-Native SDLC intent framework in philosophy.md |
 
-### PA Items Requiring No Action (Structural)
+### PA items requiring no action (Structural)
 
 These PA items are scored PA because AIEOS addresses them through fundamental design rather than explicit governance. Making them explicit would add documentation overhead without improving outcomes:
 
@@ -985,7 +985,7 @@ These PA items are scored PA because AIEOS addresses them through fundamental de
 - **P93** (friction shifts) — architectural observation
 - **P94** (control system velocity) — healthcheck playbook addresses operationally
 - **P95** (synchronous AI use) — AIEOS supports both modes already
-- **P100** (context windows not retrieval) — ecosystem project concern (ECO-003)
+- **P100** (context windows not retrieval) — system project concern (ECO-003)
 - **P143** (centralized vs federated) — hybrid model already works
 - **PA3g** (VSM) — layer model IS a value stream map
 - **PA3h** (augment vs evolve) — both paths supported
@@ -1003,7 +1003,7 @@ These PA items are scored PA because AIEOS addresses them through fundamental de
 - **PR58** (which version?) — spec versioning addresses
 - **PR76** (kill switch) — convergence loop max iterations addresses
 
-### Summary: PA Thickening Roadmap
+### Summary: PA thickening roadmap
 
 | ID | Theme | Items | Priority | Effort | Key Deliverable |
 |----|-------|-------|----------|--------|-----------------|
@@ -1020,15 +1020,15 @@ These PA items are scored PA because AIEOS addresses them through fundamental de
 
 ---
 
-## Methodology Notes
+## Methodology notes
 
-### Assessment Parameters
+### Assessment parameters
 - **Scope:** AIEOS framework design + construction process (aieos-console as case study)
 - **Granularity:** Every individual P/PA/PR item scored
 - **Scale:** 4-point (FE / PA / GAP / N/A)
 - **Conservative scoring:** PA preferred over FE when evidence is circumstantial; GAP preferred over N/A when AIEOS could reasonably address the concern
 
-### Assessor Bias Acknowledgment
+### Assessor bias acknowledgment
 AIEOS was designed and built by the assessor. This creates inherent positive bias. Mitigations applied:
 - FE requires a citable file path — "implied by design" is insufficient
 - PA preferred over FE when evidence is indirect or structural rather than explicit
@@ -1041,5 +1041,5 @@ AIEOS was designed and built by the assessor. This creates inherent positive bia
 - Some practices sections (3.19-3.25) contain items highly specific to Kubernetes/GitOps platform engineering — scored N/A where clearly out of AIEOS governance domain
 - The document numbers P1-P158 but practices skip PR88-PR96 — total scored items may be less than 335
 
-### Source Document
+### Source document
 AI-Native SDLC: Principles, Patterns & Practices v3.1 (March 2026). 45 sources, 158 Principles, 66 Patterns, 111 Practices, 39 Clusters. Author: Todd (curated with Claude).

@@ -2,22 +2,22 @@
 
 Automated end-to-end testing of the AIEOS sherpa skill using Claude Code headless mode with pre-scripted user interactions.
 
-## How It Works
+## How it works
 
 Each test runs the sherpa skill against a **fixture** (a scenario with pre-scripted user responses), then validates the output at three levels:
 
-### Three-Layer Verification
+### Three-Layer verification
 
 1. **Existence checks** — Did the expected artifacts get created? (driver script)
 2. **Structural checks** — Are artifacts frozen/draft as expected? Do they have required fields? (driver script)
 3. **Behavioral checks** — Did the sherpa follow correct flow, offer utility prompts, avoid anti-patterns? (`validate-sherpa-run.py`)
 
-### Hard vs Soft Checks
+### Hard vs soft checks
 
 - **Hard checks** cause FAIL. These verify deterministic structural requirements: artifact existence, frozen status, provenance fields, ER completeness, routing record accuracy.
 - **Soft checks** cause WARN. These verify non-deterministic LLM behaviors: utility prompt offering, explanation quality, transition clarity. Soft check failures are logged but don't fail the test.
 
-## Directory Structure
+## Directory structure
 
 ```
 tests/integration/
@@ -57,7 +57,7 @@ tests/integration/
 └── validate-sherpa-run.py  # Sherpa-specific behavioral post-analysis
 ```
 
-## Running Tests
+## Running tests
 
 ### Single preset
 
@@ -95,7 +95,7 @@ Each test has a budget cap (set via `--max-budget-usd`). Full suite costs ~$53.
 | Session Resumption | $8 |
 | Pivot/Pause | $5 |
 
-## Adding a New Test
+## Adding a new test
 
 1. **Create a fixture** in `fixtures/<scenario-name>/scenario.md` with pre-scripted user responses
 2. **Create a config** in `configs/<preset>.json` defining expected artifacts, checks, and patterns
@@ -128,7 +128,7 @@ Fixtures are Markdown files with:
 - Ordered user responses keyed by conversation phase
 - Confirmation/clarification responses for validation gates
 
-## Findings and Relaxations
+## Findings and relaxations
 
 When a test surfaces a framework gap or sherpa behavior issue:
 
@@ -137,7 +137,7 @@ When a test surfaces a framework gap or sherpa behavior issue:
 3. If the finding is accepted behavior (LLM non-determinism), add it as a soft check relaxation in the config
 4. Re-run the test after the fix to confirm resolution
 
-## Behavioral Check Reference
+## Behavioral check reference
 
 The following checks are available in `validate-sherpa-run.py`:
 
@@ -177,7 +177,7 @@ The following checks are available in `validate-sherpa-run.py`:
 | `retrospective_generated` | Soft | Initiative retrospective generated at completion with structured sections |
 | `self_score_generated` | Soft | Sherpa self-scoring against 15 rubric criteria generated at completion |
 
-## What Requires Manual Testing
+## What requires manual testing
 
 The automated framework cannot verify:
 - Conversation tone and naturalness

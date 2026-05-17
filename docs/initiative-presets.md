@@ -4,7 +4,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 
 ---
 
-## How to Use This Guide
+## How to use this guide
 
 1. Identify which preset best describes your initiative
 2. Follow the artifact sequence for that preset
@@ -13,7 +13,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 
 ---
 
-## Preset 1: New Feature
+## Preset 1: new feature
 
 **Description:** A new capability that does not exist in the current system, identified through discovery.
 
@@ -59,7 +59,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 
 ---
 
-## Preset 2: Enhancement
+## Preset 2: enhancement
 
 **Description:** A bounded improvement to an existing capability. Scope is understood; discovery is optional.
 
@@ -98,7 +98,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 
 ---
 
-## Preset 3: Compliance and Regulatory
+## Preset 3: compliance and regulatory
 
 **Description:** Work driven by an external mandate (regulatory requirement, audit finding, legal obligation). Scope is defined by the mandate, not by user research.
 
@@ -144,7 +144,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 
 ---
 
-## Preset 4: Performance and Reliability Fix
+## Preset 4: performance and reliability fix
 
 **Description:** A targeted improvement to system performance, reliability, or operational stability, typically triggered by an SLO violation or incident pattern.
 
@@ -189,7 +189,7 @@ Five golden paths for the most common initiative types. Each preset defines the 
 
 ---
 
-## Preset 5: Exploratory Research
+## Preset 5: exploratory research
 
 **Description:** Open-ended investigation to understand a problem space, validate a market hypothesis, or determine whether a capability is worth building. No solution commitment.
 

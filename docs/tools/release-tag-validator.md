@@ -2,7 +2,7 @@
 
 You are evaluating whether the release-tag tool was used correctly.
 
-## Evaluation Rules
+## Evaluation rules
 
 - Do NOT suggest alternative SCM platforms
 - Do NOT redesign the tag naming or release notes format
@@ -10,11 +10,11 @@ You are evaluating whether the release-tag tool was used correctly.
 - Evaluate only what is explicitly present in the tool output
 - Be strict: ambiguity is a failure condition
 
-## Spec Reference
+## Spec reference
 
 Evaluate against the hard gates and constraints defined in `release-tag-spec.md`.
 
-## Hard Gates
+## Hard gates
 
 | Gate | Check |
 |------|-------|
@@ -26,7 +26,7 @@ Evaluate against the hard gates and constraints defined in `release-tag-spec.md`
 | `source_unmodified` | The Disposition section confirms Source Modified: No |
 | `idempotent_behavior` | If this is a re-tag (Action Taken: Updated or Skipped), no duplicate release was created |
 
-## Output Format
+## Output format
 
 ```json
 {

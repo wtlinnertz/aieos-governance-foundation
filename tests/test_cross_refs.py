@@ -20,6 +20,11 @@ import pytest
 from models.framework import BOUNDARY_CONTRACTS, KIT_REGISTRY
 from parsers.kit_parser import KitStructure
 
+# Every test in this module compares the foundation against sibling kit repos,
+# which are not present in a single-repo CI checkout. B1 deselects these with
+# `-m "not cross_repo"`; they run in B3 where all kits are checked out together.
+pytestmark = pytest.mark.cross_repo
+
 
 class TestBoundaryContracts:
     """Entry-from files must exist for all declared cross-kit dependencies."""

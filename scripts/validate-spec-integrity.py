@@ -50,7 +50,11 @@ def load_json(path: Path) -> Any:
 
 
 def extract_taxonomy_actions(path: Path) -> set[str]:
-    pattern = re.compile(r"^### ([a-z][a-z0-9]*\.[a-z][a-z0-9-]*)\s*$", re.MULTILINE)
+    # Parse the canonical `- **Identifier:** `<id>`` line, not the human heading
+    # (headings are Title-Cased prose per the writing guardrails).
+    pattern = re.compile(
+        r"^- \*\*Identifier:\*\*\s*`([a-z][a-z0-9]*\.[a-z][a-z0-9-]*)`", re.MULTILINE
+    )
     return set(pattern.findall(path.read_text()))
 
 

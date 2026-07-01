@@ -1,0 +1,60 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Integrity validators
+    runs-on: ubuntu-latest
+    steps:
+      # actions/checkout v6.0.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+
+      # actions/setup-python v6.2.0
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.12"
+
+      - name: Install validator dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-validate.txt
+
+      - name: Validate capability contracts
+        run: python contracts/validate.py
+
+      - name: Validate CI/CD spec integrity
+        run: python scripts/validate-spec-integrity.py
+
+      - name: Validate conformance-attestation schema
+        run: python schema/validate-conformance-attestation.py
+
+      - name: Validate findings schemas
+        run: python findings/schemas/validate.py
+
+  test:
+    name: Framework test suite (Tier 2)
+    runs-on: ubuntu-latest
+    steps:
+      # actions/checkout v6.0.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+
+      # actions/setup-python v6.2.0
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.12"
+
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r tests/requirements.txt
+
+      - name: Run pytest (self-contained suite)
+        run: python -m pytest tests -m "not cross_repo"

@@ -47,8 +47,15 @@ def load_json(path: Path) -> Any:
 
 
 def extract_taxonomy_actions(taxonomy_path: Path) -> set[str]:
-    """Parse `### <action>` headings out of taxonomy/actions-v1.md."""
-    pattern = re.compile(r"^### ([a-z][a-z0-9]*\.[a-z][a-z0-9-]*)\s*$", re.MULTILINE)
+    """Parse the canonical action IDs from taxonomy/actions-v1.md.
+
+    The machine-readable identifier is the `- **Identifier:** `<id>`` line under
+    each action heading. Headings themselves are human-facing prose (Title-Cased
+    per the writing guardrails) and must not be used for matching.
+    """
+    pattern = re.compile(
+        r"^- \*\*Identifier:\*\*\s*`([a-z][a-z0-9]*\.[a-z][a-z0-9-]*)`", re.MULTILINE
+    )
     return set(pattern.findall(taxonomy_path.read_text()))
 
 

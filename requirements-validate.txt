@@ -1,0 +1,4 @@
+# Dependencies for the integrity validators run in CI (job: validate).
+# jsonschema>=4.18 is the floor for Draft202012Validator.
+jsonschema>=4.18
+PyYAML>=6.0

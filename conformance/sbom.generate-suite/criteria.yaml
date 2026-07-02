@@ -2,6 +2,12 @@ suite: sbom.generate-suite
 contract: sbom.generate
 contract_version: "1.0.0"
 
+# v1.1 input mapping: sbom.generate requires source_path_or_image_ref;
+# map to the fixtures dir (filesystem-path mode).
+inputs:
+  source_path_or_image_ref:
+    fixture: fixtures
+
 criteria:
   - id: schema_conformance
     type: schema_conformance

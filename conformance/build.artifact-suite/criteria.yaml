@@ -2,6 +2,11 @@ suite: build.artifact-suite
 contract: build.artifact
 contract_version: "1.0.0"
 
+# v1.1 input mapping: build.artifact requires source_dir (a build context).
+inputs:
+  source_dir:
+    fixture: fixtures
+
 # build.artifact's contract declares output_schema: null — the action
 # produces no canonical findings, only evidence (oci-image-digest, build-log,
 # exit-code). This suite verifies the evidence shape; structural_match

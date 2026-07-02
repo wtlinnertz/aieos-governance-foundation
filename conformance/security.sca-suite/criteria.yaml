@@ -2,6 +2,11 @@ suite: security.sca-suite
 contract: security.sca
 contract_version: "1.0.0"
 
+# v1.1 input mapping: security.sca requires manifest_path (a lockfile).
+inputs:
+  manifest_path:
+    fixture: fixtures/requirements.txt
+
 # Adapter-agnostic shape check — any SCA tool's normalized output must
 # validate against the CycloneDX 1.6 findings schema. Whether specific
 # CVEs surface depends on the tool's vulnerability database; the structural

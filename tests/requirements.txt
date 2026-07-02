@@ -5,3 +5,5 @@ networkx>=3.0
 markdown-it-py>=3.0
 pytest-bdd>=8.0
 hypothesis>=6.0
+# test_m0_signing_identity.py validates payloads with Draft202012Validator
+jsonschema>=4.18

@@ -2,6 +2,13 @@ suite: security.sast-suite
 contract: security.sast
 contract_version: "1.0.0"
 
+# v1.1 input mapping: the harness feeds the adapter its contract inputs.
+# security.sast requires source_dir; map it to this suite's fixtures/ tree.
+# Kept tool-agnostic — no ruleset_ref here, so each adapter uses its own default.
+inputs:
+  source_dir:
+    fixture: fixtures
+
 # Adapters use different SAST tools (semgrep, CodeQL, Bandit) with different
 # rulesets, so structural_match against a fixed expected file would force a
 # specific tool. This suite asserts schema_conformance — the canonical SARIF

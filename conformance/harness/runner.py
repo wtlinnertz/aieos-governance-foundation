@@ -14,6 +14,7 @@ the pipeline runner's MockAgent (M3.7).
 from __future__ import annotations
 
 import json
+import os
 import re
 import uuid
 from dataclasses import dataclass
@@ -45,6 +46,7 @@ class SuiteSpec:
     fixtures: tuple[Path, ...]
     expected: dict[str, Any]
     criteria: list[dict[str, Any]]
+    inputs: dict[str, Any]  # v1.1: declarative adapter-input mapping (empty => legacy)
 
 
 @dataclass(frozen=True)
@@ -72,7 +74,51 @@ def load_suite(suite_dir: Path) -> SuiteSpec:
         fixtures=fixtures,
         expected=expected,
         criteria=list(criteria_doc.get("criteria", [])),
+        inputs=dict(criteria_doc.get("inputs", {})),
     )
+
+
+class ConformanceInputError(Exception):
+    """Raised when a suite's declared inputs cannot be resolved."""
+
+
+def _resolve_inputs(suite: SuiteSpec) -> dict[str, Any]:
+    """Build the adapter-input dict from the suite's declarative `inputs` block.
+
+    Each entry maps a contract input key to one resolver:
+      fixture: <relpath>  -> absolute path of suite_dir/<relpath>
+      value:   <literal>  -> passed through as-is
+      env:     <VAR>      -> value of environment variable VAR (set by the
+                             run-conformance action for image/service fixtures)
+
+    When a suite declares no `inputs` block, fall back to the v1 legacy shape
+    ({fixtures_dir, expected_dir}) so unmigrated suites keep working.
+    """
+    if not suite.inputs:
+        return {
+            "fixtures_dir": str(suite.suite_dir / "fixtures"),
+            "expected_dir": str(suite.suite_dir / "expected"),
+        }
+    resolved: dict[str, Any] = {}
+    for key, spec in suite.inputs.items():
+        if not isinstance(spec, dict):
+            raise ConformanceInputError(f"input {key!r}: expected a resolver mapping, got {spec!r}")
+        if "fixture" in spec:
+            resolved[key] = str((suite.suite_dir / spec["fixture"]).resolve())
+        elif "value" in spec:
+            resolved[key] = spec["value"]
+        elif "env" in spec:
+            var = spec["env"]
+            val = os.environ.get(var)
+            if val is None:
+                raise ConformanceInputError(
+                    f"input {key!r}: environment variable {var!r} is not set "
+                    "(the run-conformance action must export it)"
+                )
+            resolved[key] = val
+        else:
+            raise ConformanceInputError(f"input {key!r}: unknown resolver {spec!r}")
+    return resolved
 
 
 def _validator_for_schema(schema_path: Path) -> Draft202012Validator:
@@ -183,13 +229,21 @@ def run_conformance(
     """
     diagnostics: list[dict[str, Any]] = []
 
-    # For v1 the adapter runs once per suite — fixtures are a directory tree
-    # that the adapter internally enumerates. More sophisticated per-fixture
-    # invocation is a v1.1 harness feature.
-    inputs = {
-        "fixtures_dir": str(suite.suite_dir / "fixtures"),
-        "expected_dir": str(suite.suite_dir / "expected"),
-    }
+    # v1.1: build the adapter input from the suite's declarative `inputs`
+    # mapping (contract keys -> fixture paths / literals / env-injected refs).
+    # Suites with no `inputs` block fall back to the v1 {fixtures_dir,
+    # expected_dir} shape via _resolve_inputs.
+    try:
+        inputs = _resolve_inputs(suite)
+    except ConformanceInputError as exc:
+        return HarnessResult(
+            passed=False,
+            attestation=None,
+            diagnostic={
+                "suite": suite.suite_id,
+                "failures": [{"criterion": "input_resolution", "detail": str(exc)}],
+            },
+        )
     try:
         result = adapter.execute(inputs)
     except Exception as exc:  # noqa: BLE001 - become a diagnostic

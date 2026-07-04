@@ -2,6 +2,18 @@ suite: verify.health-suite
 contract: verify.health
 contract_version: "1.0.0"
 
+# v1.1 input mapping. verify.health needs a live target_url; the adapter's CI
+# job stands up a local http.server serving /healthz + /readyz and exports its
+# URL as AIEOS_FIXTURE_HEALTH_URL (env resolver). health_endpoint_configuration
+# is a literal value.
+inputs:
+  target_url:
+    env: AIEOS_FIXTURE_HEALTH_URL
+  health_endpoint_configuration:
+    value:
+      paths: ["/healthz", "/readyz"]
+      expected_status_codes: [200, 200]
+
 # verify.health's contract declares output_schema: null. Live execution
 # requires a reachable target_url with the configured paths responding.
 # The CI workflow stands up a local http.server with route -> status code

@@ -2,6 +2,13 @@ suite: security.container-scan-suite
 contract: security.container-scan
 contract_version: "1.0.0"
 
+# v1.1 input mapping: security.container-scan requires image_ref. Scanners pull
+# the image directly, so a pinned public known-vulnerable image works as the
+# fixture (no build/registry step needed). See fixtures/image-ref.txt.
+inputs:
+  image_ref:
+    value: "docker.io/library/alpine:3.4"
+
 criteria:
   - id: schema_conformance
     type: schema_conformance

@@ -2,6 +2,14 @@ suite: sign.artifact-suite
 contract: sign.artifact
 contract_version: "1.0.0"
 
+# v1.1 input mapping. The adapter signs a blob (v1: the image_ref string) via
+# keyless OIDC (ambient) in CI. image_ref is metadata; no registry/image needed.
+inputs:
+  image_ref:
+    value: "docker.io/library/alpine:3.4"
+  signing_identity_ref:
+    value: "ambient"
+
 # Sigstore bundles are non-deterministic by construction: signature bytes,
 # Rekor inclusion timestamps, and public-key hints all vary per run.
 # structural_match doesn't apply. The contract this suite verifies is the

@@ -2,6 +2,19 @@ suite: deploy.environment-suite
 contract: deploy.environment
 contract_version: "1.0.0"
 
+# v1.1 input mapping. The v1 adapter writes an env ref and commits it into a git
+# repo, then applies a default reconciler check (assumes async acceptance; no
+# live cluster). CI provisions a git-initialized target repo -> AIEOS_FIXTURE_TARGET_REPO.
+inputs:
+  environment_name:
+    value: "conformance-env"
+  manifest_ref:
+    value: "sha256:deadbeef"
+  target_repo_ref:
+    env: AIEOS_FIXTURE_TARGET_REPO
+  reconciler_readiness_criteria:
+    value: {reconciled_status: "acknowledged"}
+
 # deploy.environment's contract declares output_schema: null. Conformance is
 # evidence-only: the adapter must produce a reconciled-commit-sha and a
 # reconciler-status. Live execution requires the harness to provide a

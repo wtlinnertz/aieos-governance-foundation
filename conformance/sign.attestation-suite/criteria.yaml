@@ -2,6 +2,18 @@ suite: sign.attestation-suite
 contract: sign.attestation
 contract_version: "1.0.0"
 
+# v1.1 input mapping. Adapter wraps (subject, predicate) in an in-toto statement
+# and signs it via keyless OIDC (ambient) in CI.
+inputs:
+  subject_ref:
+    value: "sha256:deadbeef"
+  predicate_payload:
+    value: {result: "pass"}
+  predicate_type:
+    value: "https://aieos.dev/attestations/conformance/v1"
+  signing_identity_ref:
+    value: "ambient"
+
 # Same rationale as sign.artifact-suite: bundles are non-deterministic, so
 # schema_conformance is the contract. sign.attestation-specific: the
 # bundle must carry a dsseEnvelope (DSSE-wrapped in-toto Statement) rather

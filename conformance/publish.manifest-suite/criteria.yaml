@@ -2,6 +2,19 @@ suite: publish.manifest-suite
 contract: publish.manifest
 contract_version: "1.0.0"
 
+# v1.1 input mapping. manifest_source_path is the fixtures overlay; the adapter
+# commits rendered manifests into target_repo_ref, so CI provisions a fresh
+# git-initialized dir and exports AIEOS_FIXTURE_TARGET_REPO (env resolver).
+inputs:
+  manifest_source_path:
+    fixture: fixtures
+  artifact_ref_to_substitute:
+    value: "docker.io/library/alpine:3.4"
+  target_repo_ref:
+    env: AIEOS_FIXTURE_TARGET_REPO
+  target_path:
+    value: "manifests/rendered.yaml"
+
 # publish.manifest's contract declares output_schema: null. Conformance is
 # evidence-only: the adapter must emit a manifests-repo-commit-sha and a
 # manifest-bundle-ref so downstream deploy.environment can reference them.

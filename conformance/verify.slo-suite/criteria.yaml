@@ -2,6 +2,20 @@ suite: verify.slo-suite
 contract: verify.slo
 contract_version: "1.0.0"
 
+# v1.1 input mapping. CI stands up a mock Prometheus (/api/v1/query -> canned
+# success rate) and exports AIEOS_FIXTURE_PROM_URL (env resolver). slo_definitions
+# and measurement_window_seconds are literal values.
+inputs:
+  target_env_ref:
+    env: AIEOS_FIXTURE_PROM_URL
+  slo_definitions:
+    value:
+      - metric: "up"
+        threshold: 0.99
+        window: 600
+  measurement_window_seconds:
+    value: 600
+
 # verify.slo's contract declares output_schema: null. Live execution
 # requires a reachable Prometheus endpoint at target_env_ref. The CI
 # workflow stands up a local http.server impersonating /api/v1/query

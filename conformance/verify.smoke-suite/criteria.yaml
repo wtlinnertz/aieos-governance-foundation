@@ -2,6 +2,17 @@ suite: verify.smoke-suite
 contract: verify.smoke
 contract_version: "1.0.0"
 
+# v1.1 input mapping. CI stands up an http.server serving /healthz and exports
+# AIEOS_FIXTURE_SMOKE_URL (env resolver). check_configuration is a literal value.
+inputs:
+  target_url:
+    env: AIEOS_FIXTURE_SMOKE_URL
+  check_configuration:
+    value:
+      method: "GET"
+      path: "/healthz"
+      expected_status: 200
+
 # verify.smoke's contract declares output_schema: null. Live execution
 # requires a reachable target_url. The CI workflow that runs this suite
 # spins up a tiny http.server on a known port and supplies target_url

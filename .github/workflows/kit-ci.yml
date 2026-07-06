@@ -1,0 +1,51 @@
+name: kit-ci
+
+# Reusable workflow: structural + markdown validation for an AIEOS kit repo.
+# Kits call this via:
+#   jobs:
+#     kit-ci:
+#       uses: wtlinnertz/aieos-governance-foundation/.github/workflows/kit-ci.yml@main
+#
+# In a reusable workflow, github.repository is the CALLER, so the default
+# checkout pulls the kit; governance-foundation is checked out separately for
+# check-structure.sh + the canonical governance-model.md + the lint configs.
+
+on:
+  workflow_call: {}
+
+permissions:
+  contents: read
+
+jobs:
+  kit-ci:
+    name: Kit validation
+    runs-on: ubuntu-latest
+    steps:
+      # actions/checkout v6.0.2 — the caller kit repo
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          path: kit
+
+      # actions/checkout v6.0.2 — governance-foundation (scripts + canonical + configs)
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: wtlinnertz/aieos-governance-foundation
+          ref: main
+          path: gf
+
+      - name: Structural validation
+        run: bash gf/tests/check-structure.sh "$GITHUB_WORKSPACE/kit"
+
+      - name: Install markdown tools
+        run: npm install -g markdownlint-cli2 markdown-link-check
+
+      - name: Markdown lint
+        run: markdownlint-cli2 --config gf/tests/.markdownlint.yaml "kit/docs/**/*.md"
+
+      - name: Markdown link check
+        run: |
+          fail=0
+          while IFS= read -r -d '' f; do
+            markdown-link-check --quiet --config gf/tests/.markdown-link-check.json "$f" || fail=1
+          done < <(find kit/docs -name '*.md' -print0)
+          exit "$fail"

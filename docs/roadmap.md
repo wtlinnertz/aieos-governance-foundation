@@ -2,7 +2,22 @@
 
 Single-source tracking for completed work, active initiatives, and planned items across the AIEOS governance framework and system.
 
-**Last updated:** 2026-03-25 (ECO-009 Agent Harness added; AI-Native SDLC v3.1 alignment items)
+**Last updated:** 2026-07-05 (v1.2 Framework Quality Pass complete; every repo now under CI)
+
+**Framework state:** 41 repos, 15 layers. Spec-driven CI/CD live on `aieos-artifact-store`; v1.2 quality pass closed 2026-07-05.
+
+---
+
+## Current status
+
+The v1.2 Framework Quality Pass closed on 2026-07-05. What changed since the March snapshot below:
+
+- **Every repo is under CI.** `aieos-governance-foundation` (B1), `aieos-agent-harness` (B2), all 13 adapters (conformance + signing), and all 15 kit repos (B3) run automated checks on every push.
+- **The adapter layer produces real signed attestations.** All 13 adapters pass conformance and emit signed Sigstore attestations in CI, with `continue-on-error` removed so a regression can't pass silently. The earlier "no executable adapters exist" state is closed.
+- **Signing identity is verified end-to-end.** M0 chose Sigstore keyless (Fulcio + Rekor); the full build-attest-verify loop runs green (see the 2026-05-17 entry).
+- **The agent-harness orchestration core is at 100% line coverage** (routing, state, lifecycle, convergence), running under the B2 job.
+
+Full detail is in the dated Completed entries. Active work and everything still planned are unchanged from the sections further down.
 
 ---
 
@@ -180,6 +195,30 @@ Single-source tracking for completed work, active initiatives, and planned items
 - [x] **FW-068** Healthcheck A4 — cross-kit sync audit added as Tier 2 check in healthcheck-playbook.md
 - [x] **FW-069** Drift fixes — layer-model.md SDK artifact list corrected (was SBR/PPR only, now includes CLA/PCR/TIR), SDK status text updated, README.md updated to reflect all 16 built kits
 
+### 2026-04: spec-driven CI/CD and the adapter ecosystem
+
+- [x] **CI-001** Spec-driven CI/CD shipped v1.0 through v1.1.1 — declarative conformance suites, a shared conformance harness, and self-governing CI live on `aieos-artifact-store`
+- [x] **CI-002** 13 pipeline adapters implemented across build, test, scan, sign, and deploy (buildah, pytest-unit, pytest-integration, semgrep, osv, syft, trivy, cosign, http-health, http-smoke, prom-slo, kustomize, flux)
+
+### 2026-05-17: M0 signing identity
+
+- [x] **M0** Signing identity chosen and verified — Sigstore keyless (Fulcio + Rekor). Run #1 of `m0-signing-test.yml` concluded success across all 19 steps: PASS attestation, keyless verify against the Fulcio identity, Rekor transparency-log verify, and negative-payload rejections. The end-to-end build-attest-verify loop is confirmed.
+
+### 2026-07-05: v1.2 Framework Quality Pass — complete
+
+Priority sequence M0 → B1 → A1 → B2 → B3 → C1 → E → A2 → D2 → D. All ten items landed; every repo in the framework is now under CI.
+
+- [x] **B1** CI on `aieos-governance-foundation` (validate + test jobs), green on `main`
+- [x] **A1** `adapter-pytest-integration` implemented; conformance green and signed
+- [x] **B2** CI on `aieos-agent-harness` (313 tests), green on `main`
+- [x] **B3** Reusable kit CI workflow plus an 8-line caller in each of the 15 kit repos; structure, four-file, naming, validator-JSON, governance-model byte-identity, markdownlint, and internal-link checks all green on `main`
+- [x] **A2** `adapter-flux-handoff` implemented (v1 scope: git handoff + default reconciler check); conformance green and signed. Live Flux reconcile-verification is a documented adapter TODO.
+- [x] **CONF** All 13 adapters brought to real signed conformance loops via harness v1.1 input mapping (env/value/fixture resolvers), with `continue-on-error` removed. Bugs the unmask surfaced and fixed: syft (metadata.component version, specVersion, tools object-form), cosign (bundle format), pytest deps.
+- [x] **C1** `qaer-prompt.md` added to the Quality Assurance Kit, framed for QAER's human-authored entry-gate nature
+- [x] **E** `aieos-manifests` populated — each `envs/<env>/` carries a `kustomization.yaml` plus the reference consumer's rendered overlay; `kustomize build` verified for all three envs
+- [x] **D2** ADR-0001 documenting the `src/cicd/` split in `aieos-agent-harness` (already code-decoupled: a documentation gap, not an architecture problem)
+- [x] **D** Agent-harness orchestration core (routing, state, lifecycle, convergence) filled to 100% line coverage; full suite 334 passing, running under the B2 job
+
 ---
 
 ## Planned — framework refinement
@@ -251,11 +290,11 @@ Thickening work packages that strengthen existing partial alignment. Each bundle
 
 ### External tool integration (2026-03-21)
 
-The integration architecture is defined (adapter-conformance-spec v1.0, 13 tool specs, 9 bindings) but no executable adapters exist. This section tracks the path from static documentation to working integrations.
+The 13 pipeline adapters (build, test, scan, sign, deploy) are built and produce signed conformance loops in CI — see the 2026-04 and 2026-07-05 Completed entries. The items below cover a different class: platform-integration adapters that sync governance artifacts to external work-tracking tools (GitHub Issues, Releases, and so on). None of those exist yet. This section tracks the path from static binding documentation to working platform integrations.
 
 **Existing foundation:**
 - 4 tool specs with external platform bindings: work-item-sync (GitHub Issues), release-tag (GitHub Releases), validation-status (GitHub Issues), artifact-publish (Confluence)
-- Adapter conformance spec with 7 hard gates, three-layer model (spec → binding → adapter), and `push()`/`verify()`/`health()` operations
+- Adapter conformance spec with 7 hard gates, three-layer model (spec → binding → adapter), and `push()`/`verify()`/`health()` operations, proven end-to-end by the 13 pipeline adapters
 - 13 PRK review lenses (governed four-file tools, no external integration needed)
 
 | ID | Item | Priority | Dependencies | Notes |
@@ -316,7 +355,7 @@ Documented in detail at `docs/ecosystem-roadmap.md`. These are real software pro
 
 | ID | Project | Repository | Purpose | Status | Dependencies |
 |----|---------|-----------|---------|--------|-------------|
-| **ECO-001** | AIEOS Schema | `aieos-schema` | Machine-readable spec contracts (YAML/JSON). Strengthens framework Tier 2 tests (spec-template drift, gate enumeration, prompt checklist alignment) AND unlocks all downstream system projects. | Not started | None — this is the keystone |
+| **ECO-001** | AIEOS Schema | `aieos-schema` | Machine-readable spec contracts (YAML/JSON). Strengthens framework Tier 2 tests (spec-template drift, gate enumeration, prompt checklist alignment) AND unlocks all downstream system projects. | Substantially built (69 per-artifact schemas across all 15 kits, meta-schema, tests); currency/freeze audit pending | None — this is the keystone |
 | **ECO-002** | Evaluation Engine | `aieos-evaluation-engine` | Runtime governance enforcement. Consumes schema to validate artifacts programmatically instead of relying solely on AI judgment. | Not started | ECO-001 |
 | **ECO-003** | Artifact Store | `aieos-artifact-store` | Cross-initiative artifact indexing. Query "show me all frozen SADs across all initiatives" or "which initiatives touched the auth module." | **Complete** (v1.0.0) | — (built without Schema dependency) |
 

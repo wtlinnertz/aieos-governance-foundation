@@ -816,8 +816,10 @@ FE+PA combined (excl. N/A): **92%** (251 of 272 applicable items)
 | **FR-015** | AI adoption maturity model — 4 levels tied to AIEOS adoption depth | Medium | AG-003, AG-007 |
 | **FR-016** | Constraint library tool spec — queryable rejection patterns accessible via MCP | Medium | AG-004 |
 | **FR-017** | AI pipeline observability guidance — LLM call tracing standards | Medium | AG-010 |
-| **FR-018** | Review capacity estimation in WDD/PRK | Low | AG-008 |
-| **FR-019** | Bootstrap file token budget recommendation | Low | AG-009 |
+| **FR-021** | Review capacity estimation in WDD/PRK | Low | AG-008 |
+| **FR-022** | Bootstrap file token budget recommendation | Low | AG-009 |
+
+> **Numbering note (2026-07-13):** these two items were originally proposed as FR-018/FR-019. They were renumbered to **FR-021/FR-022** when v1.3 shipped the three-drivers items on FR-018/FR-019/FR-020 (freeze reconciliation, cross-driver lock, console-as-thin-front-end). See `docs/roadmap.md`. The "FR-014 through FR-019" phrasing elsewhere in this document reflects the original 2026-03-25 proposal and is left as historical record.
 
 ### Existing roadmap items validated
 

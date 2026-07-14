@@ -2,13 +2,23 @@
 
 Single-source tracking for completed work, active initiatives, and planned items across the AIEOS governance framework and system.
 
-**Last updated:** 2026-07-05 (v1.2 Framework Quality Pass complete; every repo now under CI)
+**Last updated:** 2026-07-13 (v1.3 "Three Drivers" internal release: sherpa, console, and the new dark factory now run as three drivers over one governance engine)
 
-**Framework state:** 41 repos, 15 layers. Spec-driven CI/CD live on `aieos-artifact-store`; v1.2 quality pass closed 2026-07-05.
+**Framework state:** 42 repos, 15 layers. Spec-driven CI/CD live on `aieos-artifact-store`; v1.2 quality pass closed 2026-07-05; v1.3 tagged 2026-07-13.
 
 ---
 
 ## Current status
+
+v1.3 "Three Drivers" was cut internally on 2026-07-13. The release reframes sherpa, the console, and the new dark factory as three drivers over one governance engine, all reading and writing the same on-disk state and freezing through the same single authority. What changed:
+
+- **One canonical freeze representation.** The schema-defined Document Control block in each artifact is now the single source of freeze status, read by all three drivers. The console no longer keeps its own state store. This closes the console/harness divergence (FR-018).
+- **A single freeze authority.** Only the harness `apply_freeze_decision` writes `FROZEN`, gated by a human decision with a content-hash check. The console freezes by calling the harness, not by writing status itself (FR-020).
+- **A cross-driver ownership lock.** One lease-based lock file, honored by every driver, lets a user switch between sherpa, console, and the dark factory without corrupting initiative state. A crashed unattended run expires instead of wedging the initiative (FR-019).
+- **The dark factory: autonomous conductor.** A new control plane (`aieos-dark-factory`) walks the freeze-DAG, parks at each freeze gate, escalates on non-convergence, and halts on an andon signal. It records every decision to an append-only hash-chained Decision Register (FR-007) and never freezes on its own.
+- **The three-way switch is proven end-to-end.** A live run drove the dark factory through the real harness to a converged artifact, a human freeze, and a resumed walk to completion, with the escalation path proven separately. All new repos are under CI.
+
+---
 
 The v1.2 Framework Quality Pass closed on 2026-07-05. What changed since the March snapshot below:
 
@@ -219,6 +229,19 @@ Priority sequence M0 → B1 → A1 → B2 → B3 → C1 → E → A2 → D2 → 
 - [x] **D2** ADR-0001 documenting the `src/cicd/` split in `aieos-agent-harness` (already code-decoupled: a documentation gap, not an architecture problem)
 - [x] **D** Agent-harness orchestration core (routing, state, lifecycle, convergence) filled to 100% line coverage; full suite 334 passing, running under the B2 job
 
+### 2026-07-13: v1.3 "Three Drivers" internal release
+
+Reframes sherpa, the console, and the new dark factory as three drivers over one governance engine. Three ADRs accepted (dark factory conductor and harness facade; console-to-harness freeze boundary; andon-cord intervention model). Tags pushed: `aieos-sherpa` v1.1.0, `aieos-agent-harness` v1.3.0, `aieos-console` v0.1.0, `aieos-dark-factory` v0.1.0, `aieos-schema` v1.3.0.
+
+- [x] **Canonical freeze representation.** `aieos-schema/schema/document-control.yaml` defines one Document Control block, read and written by all drivers; the harness gained the `write_artifact_status` writer it lacked; status vocabulary split into freeze status (`DRAFT`/`VALIDATED`/`FREEZE_PENDING`/`FROZEN` plus `HALTED`/`FAULTED`) and a separate last-validation outcome. Instance validator with 14 tests.
+- [x] **Single freeze authority.** New harness `apply_freeze_decision` is the only writer of `FROZEN`: it checks the human authorization invariant, the approving outcome, and the content hash against disk before writing, and writes nothing on any refusal. A `HarnessDriver` facade exposes the three operations the dark factory needs. The console freezes by calling the harness CLI (argument array, no shell), not by writing status itself.
+- [x] **Cross-driver ownership lock.** Canonical `aieos-schema/schema/lock.yaml` (session-id ownership token, 60-second heartbeat, 5-minute lease); a hostname-aware Python implementation in the harness and a matching TypeScript rewrite in the console read the same wire format. A stale takeover writes an andon sentinel. Handoffs are guaranteed clean only at frozen-artifact boundaries.
+- [x] **FR-007** Append-only Decision Register. Hash-chained JSONL in `aieos-dark-factory` records freeze requests, escalations, resumes, fault clears, and halts.
+- [x] **FR-008** Machine-readable initiative state. Met by the canonical Document Control blocks plus the ER state block; no separate cache needed.
+- [x] **Dark factory** New `aieos-dark-factory` control plane: freeze-DAG walk order from the kit manifest, a conductor that parks at freeze gates and escalates and halts and resumes, the Decision Register, and an andon-cord model (`HALTED`/`FAULTED`, resume and clear-fault routed through the Decision Register, never through freeze). It imports only the harness facade and never writes `FROZEN`.
+- [x] **Three-way switch proof** A live end-to-end run: dark factory to the real harness with an offline converging provider, a converged artifact persisted at `FREEZE_PENDING`, a human freeze through the harness authority, then a resumed walk to completion. The escalation path is proven separately (convergence driven to exhaustion surfaces an escalation entry in the Decision Register).
+- [x] **CI everywhere** `aieos-sherpa`, `aieos-console`, and `aieos-dark-factory` are now under CI, so the "every repo under CI" claim holds across sherpa and the console too.
+
 ---
 
 ## Planned — framework refinement
@@ -231,8 +254,8 @@ Priority sequence M0 → B1 → A1 → B2 → B3 → C1 → E → A2 → D2 → 
 | **FR-004** | Integration test for cross-initiative awareness | Medium | — | Needs fixture with pre-existing sibling initiative ER |
 | **FR-005** | Integration test for parallel artifact orchestration | Low | — | Verify ACF+SAD parallel generation in P1/P2 driver |
 | **FR-006** | Validate IEK entry-from alignment with retrospective format | Low | INIT-C-007 | Confirm retrospective → ES mapping works end-to-end |
-| **FR-007** | Append-only Decision Register — cross-layer `decision-log.md` alongside ER | High | — | Inspired by GSD. Decisions never edited, only superseded. Structured format: decision ID, layer, artifact context, options, rationale, date. Sherpa appends at every junction. |
-| **FR-008** | Machine-readable initiative state — structured block in ER or separate `state.md` | Medium | — | Inspired by GSD. Current layer, current artifact, blocking deps, next action, frozen count. Position-check reads this instead of reconstructing from scattered files. |
+| **FR-007** ✅ | Append-only Decision Register — cross-layer decision log alongside ER | High | — | **Shipped in v1.3 (2026-07-13)** — hash-chained JSONL Decision Register in `aieos-dark-factory`. See the 2026-07-13 entry. |
+| **FR-008** ✅ | Machine-readable initiative state — structured block in ER | Medium | — | **Shipped in v1.3 (2026-07-13)** — met by the canonical Document Control blocks plus the ER state block. See the 2026-07-13 entry. |
 | **FR-009** | Reassessment gates at layer transitions — check upstream assumptions still valid | Medium | FR-007 | Inspired by GSD. At each kit transition, compare current state against DPRD/PRD assumptions. If material divergence detected, trigger lightweight re-validation. New gate type in flow-reference.md. |
 | **FR-010** | Auto-repair healthchecks — `check-structure.sh --repair` flag | Medium | — | Inspired by GSD. Auto-fix: governance model sync, missing spec versions, broken file refs. Healthcheck playbook gains "Remediation" column (auto-remediable vs. manual). |
 | **FR-011** | Effort ceiling governance — initiative-level thresholds with graduated enforcement | Low | — | Inspired by GSD. Max convergence iterations, max PRK cycles. At 50%: flag. At 75%: sponsor re-auth. At 90%: escalate to SDK for kill/pivot. |

@@ -2,7 +2,7 @@
 
 Single-source tracking for completed work, active initiatives, and planned items across the AIEOS governance framework and system.
 
-**Last updated:** 2026-07-13 (v1.3 "Three Drivers" internal release: sherpa, console, and the new dark factory now run as three drivers over one governance engine)
+**Last updated:** 2026-07-15 (v1.3 "Three Drivers" internal release. Corrected 2026-07-15: the first validation against a real model found the three-driver claim is only partially delivered — the shared freeze/state/lock engine is real and verified, the console leg is not yet reachable on a real kit. See Known limitations.)
 
 **Framework state:** 42 repos, 15 layers. Spec-driven CI/CD live on `aieos-artifact-store`; v1.2 quality pass closed 2026-07-05; v1.3 tagged 2026-07-13.
 
@@ -10,13 +10,25 @@ Single-source tracking for completed work, active initiatives, and planned items
 
 ## Current status
 
-v1.3 "Three Drivers" was cut internally on 2026-07-13. The release reframes sherpa, the console, and the new dark factory as three drivers over one governance engine, all reading and writing the same on-disk state and freezing through the same single authority. What changed:
+v1.3 "Three Drivers" was cut internally on 2026-07-13. It delivers a shared governance engine — one freeze authority, one canonical state block, one cross-driver lock — plus a new autonomous driver, the dark factory. The goal is for sherpa, the console, and the dark factory to run as three drivers over that one engine. **That goal is partially delivered.** The engine is real and now verified against a live model; the console leg is not yet reachable on a real kit. See Known limitations below.
 
-- **One canonical freeze representation.** The schema-defined Document Control block in each artifact is now the single source of freeze status, read by all three drivers. The console no longer keeps its own state store. This closes the console/harness divergence (FR-018).
-- **A single freeze authority.** Only the harness `apply_freeze_decision` writes `FROZEN`, gated by a human decision with a content-hash check. The console freezes by calling the harness, not by writing status itself (FR-020).
-- **A cross-driver ownership lock.** One lease-based lock file, honored by every driver, lets a user switch between sherpa, console, and the dark factory without corrupting initiative state. A crashed unattended run expires instead of wedging the initiative (FR-019).
-- **The dark factory: autonomous conductor.** A new control plane (`aieos-dark-factory`) walks the freeze-DAG, parks at each freeze gate, escalates on non-convergence, and halts on an andon signal. It records every decision to an append-only hash-chained Decision Register (FR-007) and never freezes on its own.
-- **The three-way switch is proven end-to-end.** A live run drove the dark factory through the real harness to a converged artifact, a human freeze, and a resumed walk to completion, with the escalation path proven separately. All new repos are under CI.
+What shipped:
+
+- **A single freeze authority.** Only the harness `apply_freeze_decision` writes `FROZEN`, gated by a human decision and a content-hash check against exactly what the reviewer was shown. It writes nothing on any refusal. Verified against a real model on 2026-07-15, where it correctly declined to promote a failing artifact (FR-020).
+- **A canonical freeze representation.** `document-control.yaml` defines one Document Control block, with freeze status and validation outcome as orthogonal fields, plus a harness reader/writer and an instance validator. It is authoritative wherever the harness writes it (FR-018 — see limitations).
+- **A cross-driver ownership lock.** One lease-based lock file with session-id ownership and a heartbeat, implemented in both Python (harness) and TypeScript (console) against the same wire format. A crashed unattended run expires instead of wedging the initiative (FR-019).
+- **The dark factory: autonomous conductor.** A new control plane (`aieos-dark-factory`) walks the freeze-DAG from `kit-manifest.yml`, parks at each freeze gate, escalates on non-convergence, and halts on an andon signal. It records every decision to an append-only hash-chained Decision Register (FR-007) and never writes `FROZEN` itself.
+- **The dark factory to harness path runs against a real model.** On 2026-07-15 a real provider generated a full architecture document from frozen upstream artifacts, the validator returned structured JSON, and the convergence loop parsed it and escalated rather than promoting. All new repos are under CI.
+
+### Known limitations (found by real-model validation, 2026-07-15)
+
+The v1.3 switch proof used a mock provider that returns a canned pass, so it exercised the plumbing without testing any place two real components meet. The first run against a real model and the real kits found the following. All are tracked for v1.3.1 and v1.4.
+
+- **The console cannot yet load a real kit.** It requires a per-kit `flow.yaml`, which no kit repo provides. `kit-manifest.yml` is this framework's declared machine-readable source of truth, and the console does not yet consume it. The console's freeze path is implemented and calls the harness correctly, but it is not reachable on a real initiative until this closes — so the three-way switch is not yet demonstrable end to end.
+- **Kit templates do not yet emit the canonical Document Control block.** 15 of 78 templates use the canonical `Artifact ID` field; the rest carry an older shape and status vocabulary. The harness compensates by writing a canonical block when it persists an artifact, which means a generated artifact can carry two Document Control sections. Template migration, and wiring the instance validator into artifact CI, are outstanding.
+- **Five artifact types are not autonomously drivable.** The `prd`, `acf`, `dcf`, `dkr`, and `tdd` prompts require principles files as mandatory input, and the harness has no seam to supply them. Separately, entry-point artifacts such as the PRD take their input from a human brief by design and are not intended for autonomous generation.
+- **Validator calibration is unresolved.** In back-to-back runs the same validator prompt and model returned opposite verdicts on one hard gate, and in one case failed an artifact for a requirement the spec explicitly exempts. FR-014 covers this, and it is a prerequisite for trusting autonomous promotion.
+- **The harness needs explicit UTF-8 file I/O to run on Windows.** CI currently covers Linux only. Tracked for v1.3.1 with a Windows CI job.
 
 ---
 

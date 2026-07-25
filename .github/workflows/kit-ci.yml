@@ -82,6 +82,16 @@ jobs:
               echo "MISSING canonical Document Control ('| Artifact ID |' row): $base"
               fail=1
             fi
+            # Ordering guard: every reader (validator, read_frozen_artifacts)
+            # is first-match over the whole file, so the Document Control
+            # table must be the FIRST place a | Status | <value> | row
+            # appears. A Status-bearing table added above it would silently
+            # shadow the freeze status for every reader.
+            first_status=$(grep -m1 -E '\|[[:space:]]*Status[[:space:]]*\|[[:space:]]*[^|]+\|' "$f" || true)
+            if [ -n "$first_status" ] && ! printf '%s' "$first_status" | grep -q 'DRAFT'; then
+              echo "FIRST '| Status |' row is not the Document Control '| Status | DRAFT |' row: $base -> $first_status"
+              fail=1
+            fi
           done
           exit "$fail"
 

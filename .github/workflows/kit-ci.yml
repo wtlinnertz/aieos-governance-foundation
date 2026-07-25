@@ -33,8 +33,57 @@ jobs:
           ref: main
           path: gf
 
+      # actions/checkout v6.0.2 — aieos-schema (canonical Document Control
+      # schema + instance validator, FR-018)
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: wtlinnertz/aieos-schema
+          ref: main
+          path: schema
+
       - name: Structural validation
         run: bash gf/tests/check-structure.sh "$GITHUB_WORKSPACE/kit"
+
+      - name: Install Document Control validator dependency
+        run: pip install pyyaml
+
+      # G-2 (FR-018): every template's Document Control block must conform to
+      # schema/document-control.yaml. The validator skips files without an
+      # `| Artifact ID |` row, so on its own it would pass unmigrated templates
+      # vacuously — exactly how G-2 stayed hidden. The completeness assertion
+      # below closes that hole: every *-template.md NOT on the documented
+      # exemption list (D4) must carry the row, so "skipped" fails loudly.
+      - name: Document Control validation (FR-018 / G-2)
+        run: python3 schema/scripts/validate-document-control.py kit/docs/artifacts/
+
+      - name: Document Control completeness assertion (D5)
+        run: |
+          # D4 documented exemptions — templates that are NOT manifest nodes
+          # (intake/context inputs + adr, whose Status is the ADR lifecycle,
+          # not freeze status). product-brief is an input (role: brief), never
+          # a governed artifact. Everything else must carry the canonical block.
+          exempt="adr-template.md
+          architecture-context-template.md
+          design-context-template.md
+          incident-intake-template.md
+          pivot-decision-template.md
+          product-brief-template.md
+          release-context-intake-template.md
+          service-reliability-intake-template.md
+          system-context-template.md"
+          fail=0
+          for f in kit/docs/artifacts/*-template.md; do
+            [ -e "$f" ] || continue
+            base=$(basename "$f")
+            if printf '%s\n' $exempt | grep -qx "$base"; then
+              continue
+            fi
+            if ! grep -q '| Artifact ID |' "$f"; then
+              echo "MISSING canonical Document Control ('| Artifact ID |' row): $base"
+              fail=1
+            fi
+          done
+          exit "$fail"
 
       - name: Install markdown tools
         run: npm install -g markdownlint-cli2 markdown-link-check

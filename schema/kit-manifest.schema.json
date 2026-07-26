@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aieos.dev/schema/kit-manifest.schema.json",
+  "title": "AIEOS Kit Manifest",
+  "description": "Single declared schema for kit-manifest.yml (M2, FR-023). Both the dark-factory (Python) and console (TypeScript) parsers validate against this, so schema evolution (e.g. the future inputs: field) has one authoritative definition and a lagging consumer fails loudly.",
+  "type": "object",
+  "required": ["manifest_version", "kits", "dependency_edges"],
+  "properties": {
+    "manifest_version": {
+      "type": "string",
+      "pattern": "^1\\.[0-9]+$",
+      "description": "Major version 1 is what current consumers support (O2 gate)."
+    },
+    "governance_model_version": { "type": "string" },
+    "kits": {
+      "type": "object",
+      "minProperties": 1,
+      "patternProperties": {
+        "^[A-Z]{2,6}$": { "$ref": "#/$defs/kit" }
+      },
+      "additionalProperties": false
+    },
+    "dependency_edges": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/edge" }
+    },
+    "entry_points": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["artifact"],
+        "properties": {
+          "artifact": { "$ref": "#/$defs/kitArtifactRef" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "synchronized_files": { "type": "array" },
+    "presets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "entry_point", "required_kits"],
+        "properties": {
+          "name": { "type": "string" },
+          "entry_point": { "$ref": "#/$defs/kitArtifactRef" },
+          "required_kits": { "type": "array", "items": { "type": "string" } },
+          "optional_kits": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "kit": {
+      "type": "object",
+      "required": ["layer", "full_name", "repository", "category", "status", "artifacts", "artifact_flow"],
+      "properties": {
+        "layer": { "type": "integer", "minimum": 1, "maximum": 15 },
+        "full_name": { "type": "string" },
+        "repository": { "type": "string", "minLength": 1 },
+        "category": { "enum": ["pipeline", "operational", "cross-cutting"] },
+        "status": { "enum": ["built", "planned", "deprecated"] },
+        "optional": { "type": "boolean" },
+        "question": { "type": "string" },
+        "artifacts": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/artifact" }
+        },
+        "artifact_flow": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "entry_points": { "type": "array", "items": { "type": "string" } },
+        "entry_from": { "type": "object" },
+        "triggers": { "type": "array" },
+        "feeds_into": { "type": "array" },
+        "parallel_groups": { "type": "array" },
+        "internal_dependencies": { "type": "array" }
+      },
+      "additionalProperties": true
+    },
+    "artifact": {
+      "type": "object",
+      "required": ["id", "full_name", "spec_file"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Z][A-Z0-9]*$" },
+        "full_name": { "type": "string" },
+        "spec_file": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+-spec\\.md$",
+          "description": "The file token every deriver keys off is spec_file minus '-spec.md' (artifact-file-convention v1.0) - NOT id.toLowerCase()."
+        },
+        "human_authored": { "type": "boolean" },
+        "optional": { "type": "boolean" }
+      },
+      "additionalProperties": true
+    },
+    "edge": {
+      "type": "object",
+      "required": ["from", "to", "type"],
+      "properties": {
+        "from": { "$ref": "#/$defs/kitArtifactRef" },
+        "to": { "$ref": "#/$defs/kitArtifactRef" },
+        "type": { "enum": ["freeze", "trigger", "escalation"] }
+      },
+      "additionalProperties": false
+    },
+    "kitArtifactRef": {
+      "type": "string",
+      "pattern": "^[A-Z]{2,6}:[A-Z][A-Z0-9]*$"
+    }
+  }
+}

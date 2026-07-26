@@ -1,0 +1,829 @@
+{
+  "convention_version": "1.0",
+  "kits": {
+    "BPK": {
+      "artifacts": [
+        {
+          "files": {
+            "prompt": "docs/prompts/pia-prompt.md",
+            "spec": "docs/specs/pia-spec.md",
+            "template": "docs/artifacts/pia-template.md",
+            "validator": "docs/validators/pia-validator.md"
+          },
+          "human_authored": false,
+          "id": "PIA",
+          "output": "docs/sdlc/pia.md",
+          "token": "pia"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/tp-prompt.md",
+            "spec": "docs/specs/tp-spec.md",
+            "template": "docs/artifacts/tp-template.md",
+            "validator": "docs/validators/tp-validator.md"
+          },
+          "human_authored": false,
+          "id": "TP",
+          "output": "docs/sdlc/tp.md",
+          "token": "tp"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/rc-prompt.md",
+            "spec": "docs/specs/rc-spec.md",
+            "template": "docs/artifacts/rc-template.md",
+            "validator": "docs/validators/rc-validator.md"
+          },
+          "human_authored": false,
+          "id": "RC",
+          "output": "docs/sdlc/rc.md",
+          "token": "rc"
+        }
+      ],
+      "repository": "aieos-business-process-kit"
+    },
+    "DCK": {
+      "artifacts": [
+        {
+          "files": {
+            "prompt": "docs/prompts/cspec-prompt.md",
+            "spec": "docs/specs/cspec-spec.md",
+            "template": "docs/artifacts/cspec-template.md",
+            "validator": "docs/validators/cspec-validator.md"
+          },
+          "human_authored": false,
+          "id": "CSPEC",
+          "output": "docs/sdlc/cspec.md",
+          "token": "cspec"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/dsr-prompt.md",
+            "spec": "docs/specs/dsr-spec.md",
+            "template": "docs/artifacts/dsr-template.md",
+            "validator": "docs/validators/dsr-validator.md"
+          },
+          "human_authored": false,
+          "id": "DSR",
+          "output": "docs/sdlc/dsr.md",
+          "token": "dsr"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/dmr-prompt.md",
+            "spec": "docs/specs/dmr-spec.md",
+            "template": "docs/artifacts/dmr-template.md",
+            "validator": "docs/validators/dmr-validator.md"
+          },
+          "human_authored": false,
+          "id": "DMR",
+          "output": "docs/sdlc/dmr.md",
+          "token": "dmr"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/fflr-prompt.md",
+            "spec": "docs/specs/fflr-spec.md",
+            "template": "docs/artifacts/fflr-template.md",
+            "validator": "docs/validators/fflr-validator.md"
+          },
+          "human_authored": false,
+          "id": "FFLR",
+          "output": "docs/sdlc/fflr.md",
+          "token": "fflr"
+        }
+      ],
+      "repository": "aieos-data-configuration-kit"
+    },
+    "DKK": {
+      "artifacts": [
+        {
+          "files": {
+            "prompt": "docs/prompts/udr-prompt.md",
+            "spec": "docs/specs/udr-spec.md",
+            "template": "docs/artifacts/udr-template.md",
+            "validator": "docs/validators/udr-validator.md"
+          },
+          "human_authored": false,
+          "id": "UDR",
+          "output": "docs/sdlc/udr.md",
+          "token": "udr"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/arr-prompt.md",
+            "spec": "docs/specs/arr-spec.md",
+            "template": "docs/artifacts/arr-template.md",
+            "validator": "docs/validators/arr-validator.md"
+          },
+          "human_authored": false,
+          "id": "ARR",
+          "output": "docs/sdlc/arr.md",
+          "token": "arr"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/ska-prompt.md",
+            "spec": "docs/specs/ska-spec.md",
+            "template": "docs/artifacts/ska-template.md",
+            "validator": "docs/validators/ska-validator.md"
+          },
+          "human_authored": false,
+          "id": "SKA",
+          "output": "docs/sdlc/ska.md",
+          "token": "ska"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/dhr-prompt.md",
+            "spec": "docs/specs/dhr-spec.md",
+            "template": "docs/artifacts/dhr-template.md",
+            "validator": "docs/validators/dhr-validator.md"
+          },
+          "human_authored": false,
+          "id": "DHR",
+          "output": "docs/sdlc/dhr.md",
+          "token": "dhr"
+        }
+      ],
+      "repository": "aieos-documentation-knowledge-kit"
+    },
+    "EEK": {
+      "artifacts": [
+        {
+          "files": {
+            "spec": "docs/specs/kit-entry-spec.md",
+            "template": "docs/artifacts/kit-entry-template.md",
+            "validator": "docs/validators/kit-entry-validator.md"
+          },
+          "human_authored": true,
+          "id": "KER",
+          "output": "docs/sdlc/kit-entry.md",
+          "token": "kit-entry"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/prd-prompt.md",
+            "spec": "docs/specs/prd-spec.md",
+            "template": "docs/artifacts/prd-template.md",
+            "validator": "docs/validators/prd-validator.md"
+          },
+          "human_authored": false,
+          "id": "PRD",
+          "output": "docs/sdlc/prd.md",
+          "token": "prd"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/acf-prompt.md",
+            "spec": "docs/specs/acf-spec.md",
+            "template": "docs/artifacts/acf-template.md",
+            "validator": "docs/validators/acf-validator.md"
+          },
+          "human_authored": false,
+          "id": "ACF",
+          "output": "docs/sdlc/acf.md",
+          "token": "acf"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/dkr-prompt.md",
+            "spec": "docs/specs/dkr-spec.md",
+            "template": "docs/artifacts/dkr-template.md",
+            "validator": "docs/validators/dkr-validator.md"
+          },
+          "human_authored": false,
+          "id": "DKR",
+          "output": "docs/sdlc/dkr.md",
+          "token": "dkr"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/sad-prompt.md",
+            "spec": "docs/specs/sad-spec.md",
+            "template": "docs/artifacts/sad-template.md",
+            "validator": "docs/validators/sad-validator.md"
+          },
+          "human_authored": false,
+          "id": "SAD",
+          "output": "docs/sdlc/sad.md",
+          "token": "sad"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/dcf-prompt.md",
+            "spec": "docs/specs/dcf-spec.md",
+            "template": "docs/artifacts/dcf-template.md",
+            "validator": "docs/validators/dcf-validator.md"
+          },
+          "human_authored": false,
+          "id": "DCF",
+          "output": "docs/sdlc/dcf.md",
+          "token": "dcf"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/tdd-prompt.md",
+            "spec": "docs/specs/tdd-spec.md",
+            "template": "docs/artifacts/tdd-template.md",
+            "validator": "docs/validators/tdd-validator.md"
+          },
+          "human_authored": false,
+          "id": "TDD",
+          "output": "docs/sdlc/tdd.md",
+          "token": "tdd"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/wdd-prompt.md",
+            "spec": "docs/specs/wdd-spec.md",
+            "template": "docs/artifacts/wdd-template.md",
+            "validator": "docs/validators/wdd-validator.md"
+          },
+          "human_authored": false,
+          "id": "WDD",
+          "output": "docs/sdlc/wdd.md",
+          "token": "wdd"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/ord-prompt.md",
+            "spec": "docs/specs/ord-spec.md",
+            "template": "docs/artifacts/ord-template.md",
+            "validator": "docs/validators/ord-validator.md"
+          },
+          "human_authored": false,
+          "id": "ORD",
+          "output": "docs/sdlc/ord.md",
+          "token": "ord"
+        }
+      ],
+      "repository": "aieos-engineering-execution"
+    },
+    "IEK": {
+      "artifacts": [
+        {
+          "files": {
+            "prompt": "docs/prompts/es-prompt.md",
+            "spec": "docs/specs/es-spec.md",
+            "template": "docs/artifacts/es-template.md",
+            "validator": "docs/validators/es-validator.md"
+          },
+          "human_authored": false,
+          "id": "ES",
+          "output": "docs/sdlc/es.md",
+          "token": "es"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/pes-prompt.md",
+            "spec": "docs/specs/pes-spec.md",
+            "template": "docs/artifacts/pes-template.md",
+            "validator": "docs/validators/pes-validator.md"
+          },
+          "human_authored": false,
+          "id": "PES",
+          "output": "docs/sdlc/pes.md",
+          "token": "pes"
+        }
+      ],
+      "repository": "aieos-insight-evolution-kit"
+    },
+    "ODK": {
+      "artifacts": [
+        {
+          "files": {
+            "spec": "docs/specs/dcr-spec.md",
+            "template": "docs/artifacts/dcr-template.md",
+            "validator": "docs/validators/dcr-validator.md"
+          },
+          "human_authored": true,
+          "id": "DCR",
+          "output": "docs/sdlc/dcr.md",
+          "token": "dcr"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/inr-prompt.md",
+            "spec": "docs/specs/inr-spec.md",
+            "template": "docs/artifacts/inr-template.md",
+            "validator": "docs/validators/inr-validator.md"
+          },
+          "human_authored": false,
+          "id": "INR",
+          "output": "docs/sdlc/inr.md",
+          "token": "inr"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/pmr-prompt.md",
+            "spec": "docs/specs/pmr-spec.md",
+            "template": "docs/artifacts/pmr-template.md",
+            "validator": "docs/validators/pmr-validator.md"
+          },
+          "human_authored": false,
+          "id": "PMR",
+          "output": "docs/sdlc/pmr.md",
+          "token": "pmr"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/rb-prompt.md",
+            "spec": "docs/specs/rb-spec.md",
+            "template": "docs/artifacts/rb-template.md",
+            "validator": "docs/validators/rb-validator.md"
+          },
+          "human_authored": false,
+          "id": "RB",
+          "output": "docs/sdlc/rb.md",
+          "token": "rb"
+        }
+      ],
+      "repository": "aieos-operational-diagnostics-kit"
+    },
+    "PIK": {
+      "artifacts": [
+        {
+          "files": {
+            "spec": "docs/specs/work-classification-spec.md",
+            "template": "docs/artifacts/work-classification-template.md",
+            "validator": "docs/validators/work-classification-validator.md"
+          },
+          "human_authored": true,
+          "id": "WCR",
+          "output": "docs/sdlc/work-classification.md",
+          "token": "work-classification"
+        },
+        {
+          "files": {
+            "spec": "docs/specs/discovery-intake-spec.md",
+            "template": "docs/artifacts/discovery-intake-template.md",
+            "validator": "docs/validators/discovery-intake-validator.md"
+          },
+          "human_authored": true,
+          "id": "DI",
+          "output": "docs/sdlc/discovery-intake.md",
+          "token": "discovery-intake"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/problem-framing-prompt.md",
+            "spec": "docs/specs/problem-framing-spec.md",
+            "template": "docs/artifacts/problem-framing-template.md",
+            "validator": "docs/validators/problem-framing-validator.md"
+          },
+          "human_authored": false,
+          "id": "PFD",
+          "output": "docs/sdlc/problem-framing.md",
+          "token": "problem-framing"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/value-hypothesis-prompt.md",
+            "spec": "docs/specs/value-hypothesis-spec.md",
+            "template": "docs/artifacts/value-hypothesis-template.md",
+            "validator": "docs/validators/value-hypothesis-validator.md"
+          },
+          "human_authored": false,
+          "id": "VH",
+          "output": "docs/sdlc/value-hypothesis.md",
+          "token": "value-hypothesis"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/assumption-register-prompt.md",
+            "spec": "docs/specs/assumption-register-spec.md",
+            "template": "docs/artifacts/assumption-register-template.md",
+            "validator": "docs/validators/assumption-register-validator.md"
+          },
+          "human_authored": false,
+          "id": "AR",
+          "output": "docs/sdlc/assumption-register.md",
+          "token": "assumption-register"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/experiment-log-prompt.md",
+            "spec": "docs/specs/experiment-log-spec.md",
+            "template": "docs/artifacts/experiment-log-template.md",
+            "validator": "docs/validators/experiment-log-validator.md"
+          },
+          "human_authored": false,
+          "id": "EL",
+          "output": "docs/sdlc/experiment-log.md",
+          "token": "experiment-log"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/discovery-prd-prompt.md",
+            "spec": "docs/specs/discovery-prd-spec.md",
+            "template": "docs/artifacts/discovery-prd-template.md",
+            "validator": "docs/validators/discovery-prd-validator.md"
+          },
+          "human_authored": false,
+          "id": "DPRD",
+          "output": "docs/sdlc/discovery-prd.md",
+          "token": "discovery-prd"
+        }
+      ],
+      "repository": "aieos-product-intelligence-kit"
+    },
+    "PINFK": {
+      "artifacts": [
+        {
+          "files": {
+            "prompt": "docs/prompts/pdr-prompt.md",
+            "spec": "docs/specs/pdr-spec.md",
+            "template": "docs/artifacts/pdr-template.md",
+            "validator": "docs/validators/pdr-validator.md"
+          },
+          "human_authored": false,
+          "id": "PDR",
+          "output": "docs/sdlc/pdr.md",
+          "token": "pdr"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/ispec-prompt.md",
+            "spec": "docs/specs/ispec-spec.md",
+            "template": "docs/artifacts/ispec-template.md",
+            "validator": "docs/validators/ispec-validator.md"
+          },
+          "human_authored": false,
+          "id": "ISPEC",
+          "output": "docs/sdlc/ispec.md",
+          "token": "ispec"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/em-prompt.md",
+            "spec": "docs/specs/em-spec.md",
+            "template": "docs/artifacts/em-template.md",
+            "validator": "docs/validators/em-validator.md"
+          },
+          "human_authored": false,
+          "id": "EM",
+          "output": "docs/sdlc/em.md",
+          "token": "em"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/smr-prompt.md",
+            "spec": "docs/specs/smr-spec.md",
+            "template": "docs/artifacts/smr-template.md",
+            "validator": "docs/validators/smr-validator.md"
+          },
+          "human_authored": false,
+          "id": "SMR",
+          "output": "docs/sdlc/smr.md",
+          "token": "smr"
+        }
+      ],
+      "repository": "aieos-platform-infrastructure-kit"
+    },
+    "PRK": {
+      "artifacts": [
+        {
+          "files": {
+            "prompt": "docs/prompts/prr-prompt.md",
+            "spec": "docs/specs/prr-spec.md",
+            "template": "docs/artifacts/prr-template.md",
+            "validator": "docs/validators/prr-validator.md"
+          },
+          "human_authored": false,
+          "id": "PRR",
+          "output": "docs/sdlc/prr.md",
+          "token": "prr"
+        }
+      ],
+      "repository": "aieos-peer-review-kit"
+    },
+    "QAK": {
+      "artifacts": [
+        {
+          "files": {
+            "spec": "docs/specs/qaer-spec.md",
+            "template": "docs/artifacts/qaer-template.md",
+            "validator": "docs/validators/qaer-validator.md"
+          },
+          "human_authored": true,
+          "id": "QAER",
+          "output": "docs/sdlc/qaer.md",
+          "token": "qaer"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/vp-prompt.md",
+            "spec": "docs/specs/vp-spec.md",
+            "template": "docs/artifacts/vp-template.md",
+            "validator": "docs/validators/vp-validator.md"
+          },
+          "human_authored": false,
+          "id": "VP",
+          "output": "docs/sdlc/vp.md",
+          "token": "vp"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/tcr-prompt.md",
+            "spec": "docs/specs/tcr-spec.md",
+            "template": "docs/artifacts/tcr-template.md",
+            "validator": "docs/validators/tcr-validator.md"
+          },
+          "human_authored": false,
+          "id": "TCR",
+          "output": "docs/sdlc/tcr.md",
+          "token": "tcr"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/qgr-prompt.md",
+            "spec": "docs/specs/qgr-spec.md",
+            "template": "docs/artifacts/qgr-template.md",
+            "validator": "docs/validators/qgr-validator.md"
+          },
+          "human_authored": false,
+          "id": "QGR",
+          "output": "docs/sdlc/qgr.md",
+          "token": "qgr"
+        }
+      ],
+      "repository": "aieos-quality-assurance-kit"
+    },
+    "REK": {
+      "artifacts": [
+        {
+          "files": {
+            "spec": "docs/specs/release-entry-spec.md",
+            "template": "docs/artifacts/release-entry-template.md",
+            "validator": "docs/validators/release-entry-validator.md"
+          },
+          "human_authored": true,
+          "id": "RER",
+          "output": "docs/sdlc/release-entry.md",
+          "token": "release-entry"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/rcf-prompt.md",
+            "spec": "docs/specs/rcf-spec.md",
+            "template": "docs/artifacts/rcf-template.md",
+            "validator": "docs/validators/rcf-validator.md"
+          },
+          "human_authored": false,
+          "id": "RCF",
+          "output": "docs/sdlc/rcf.md",
+          "token": "rcf"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/rsa-prompt.md",
+            "spec": "docs/specs/rsa-spec.md",
+            "template": "docs/artifacts/rsa-template.md",
+            "validator": "docs/validators/rsa-validator.md"
+          },
+          "human_authored": false,
+          "id": "RSA",
+          "output": "docs/sdlc/rsa.md",
+          "token": "rsa"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/rp-prompt.md",
+            "spec": "docs/specs/rp-spec.md",
+            "template": "docs/artifacts/rp-template.md",
+            "validator": "docs/validators/rp-validator.md"
+          },
+          "human_authored": false,
+          "id": "RP",
+          "output": "docs/sdlc/rp.md",
+          "token": "rp"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/rr-prompt.md",
+            "spec": "docs/specs/rr-spec.md",
+            "template": "docs/artifacts/rr-template.md",
+            "validator": "docs/validators/rr-validator.md"
+          },
+          "human_authored": false,
+          "id": "RR",
+          "output": "docs/sdlc/rr.md",
+          "token": "rr"
+        }
+      ],
+      "repository": "aieos-release-exposure-kit"
+    },
+    "RRK": {
+      "artifacts": [
+        {
+          "files": {
+            "spec": "docs/specs/srer-spec.md",
+            "template": "docs/artifacts/srer-template.md",
+            "validator": "docs/validators/srer-validator.md"
+          },
+          "human_authored": true,
+          "id": "SRER",
+          "output": "docs/sdlc/srer.md",
+          "token": "srer"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/srp-prompt.md",
+            "spec": "docs/specs/srp-spec.md",
+            "template": "docs/artifacts/srp-template.md",
+            "validator": "docs/validators/srp-validator.md"
+          },
+          "human_authored": false,
+          "id": "SRP",
+          "output": "docs/sdlc/srp.md",
+          "token": "srp"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/ir-prompt.md",
+            "spec": "docs/specs/ir-spec.md",
+            "template": "docs/artifacts/ir-template.md",
+            "validator": "docs/validators/ir-validator.md"
+          },
+          "human_authored": false,
+          "id": "IR",
+          "output": "docs/sdlc/ir.md",
+          "token": "ir"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/rhr-prompt.md",
+            "spec": "docs/specs/rhr-spec.md",
+            "template": "docs/artifacts/rhr-template.md",
+            "validator": "docs/validators/rhr-validator.md"
+          },
+          "human_authored": false,
+          "id": "RHR",
+          "output": "docs/sdlc/rhr.md",
+          "token": "rhr"
+        }
+      ],
+      "repository": "aieos-reliability-resilience-kit"
+    },
+    "SCK": {
+      "artifacts": [
+        {
+          "files": {
+            "prompt": "docs/prompts/tm-prompt.md",
+            "spec": "docs/specs/tm-spec.md",
+            "template": "docs/artifacts/tm-template.md",
+            "validator": "docs/validators/tm-validator.md"
+          },
+          "human_authored": false,
+          "id": "TM",
+          "output": "docs/sdlc/tm.md",
+          "token": "tm"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/sar-prompt.md",
+            "spec": "docs/specs/sar-spec.md",
+            "template": "docs/artifacts/sar-template.md",
+            "validator": "docs/validators/sar-validator.md"
+          },
+          "human_authored": false,
+          "id": "SAR",
+          "output": "docs/sdlc/sar.md",
+          "token": "sar"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/cer-prompt.md",
+            "spec": "docs/specs/cer-spec.md",
+            "template": "docs/artifacts/cer-template.md",
+            "validator": "docs/validators/cer-validator.md"
+          },
+          "human_authored": false,
+          "id": "CER",
+          "output": "docs/sdlc/cer.md",
+          "token": "cer"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/dar-prompt.md",
+            "spec": "docs/specs/dar-spec.md",
+            "template": "docs/artifacts/dar-template.md",
+            "validator": "docs/validators/dar-validator.md"
+          },
+          "human_authored": false,
+          "id": "DAR",
+          "output": "docs/sdlc/dar.md",
+          "token": "dar"
+        }
+      ],
+      "repository": "aieos-security-compliance-kit"
+    },
+    "SDK": {
+      "artifacts": [
+        {
+          "files": {
+            "prompt": "docs/prompts/cla-prompt.md",
+            "spec": "docs/specs/cla-spec.md",
+            "template": "docs/artifacts/cla-template.md",
+            "validator": "docs/validators/cla-validator.md"
+          },
+          "human_authored": false,
+          "id": "CLA",
+          "output": "docs/sdlc/cla.md",
+          "token": "cla"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/pcr-prompt.md",
+            "spec": "docs/specs/pcr-spec.md",
+            "template": "docs/artifacts/pcr-template.md",
+            "validator": "docs/validators/pcr-validator.md"
+          },
+          "human_authored": false,
+          "id": "PCR",
+          "output": "docs/sdlc/pcr.md",
+          "token": "pcr"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/tir-prompt.md",
+            "spec": "docs/specs/tir-spec.md",
+            "template": "docs/artifacts/tir-template.md",
+            "validator": "docs/validators/tir-validator.md"
+          },
+          "human_authored": false,
+          "id": "TIR",
+          "output": "docs/sdlc/tir.md",
+          "token": "tir"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/sbr-prompt.md",
+            "spec": "docs/specs/sbr-spec.md",
+            "template": "docs/artifacts/sbr-template.md",
+            "validator": "docs/validators/sbr-validator.md"
+          },
+          "human_authored": false,
+          "id": "SBR",
+          "output": "docs/sdlc/sbr.md",
+          "token": "sbr"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/ppr-prompt.md",
+            "spec": "docs/specs/ppr-spec.md",
+            "template": "docs/artifacts/ppr-template.md",
+            "validator": "docs/validators/ppr-validator.md"
+          },
+          "human_authored": false,
+          "id": "PPR",
+          "output": "docs/sdlc/ppr.md",
+          "token": "ppr"
+        }
+      ],
+      "repository": "aieos-strategic-direction-kit"
+    },
+    "SSK": {
+      "artifacts": [
+        {
+          "files": {
+            "spec": "docs/specs/soer-spec.md",
+            "template": "docs/artifacts/soer-template.md",
+            "validator": "docs/validators/soer-validator.md"
+          },
+          "human_authored": true,
+          "id": "SOER",
+          "output": "docs/sdlc/soer.md",
+          "token": "soer"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/ver-prompt.md",
+            "spec": "docs/specs/ver-spec.md",
+            "template": "docs/artifacts/ver-template.md",
+            "validator": "docs/validators/ver-validator.md"
+          },
+          "human_authored": false,
+          "id": "VER",
+          "output": "docs/sdlc/ver.md",
+          "token": "ver"
+        },
+        {
+          "files": {
+            "prompt": "docs/prompts/sdr-prompt.md",
+            "spec": "docs/specs/sdr-spec.md",
+            "template": "docs/artifacts/sdr-template.md",
+            "validator": "docs/validators/sdr-validator.md"
+          },
+          "human_authored": false,
+          "id": "SDR",
+          "output": "docs/sdlc/sdr.md",
+          "token": "sdr"
+        }
+      ],
+      "repository": "aieos-solution-sourcing-kit"
+    }
+  },
+  "manifest_version": "1.0"
+}

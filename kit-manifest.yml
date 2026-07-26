@@ -20,7 +20,7 @@
 #   1.0  — Initial manifest (2026-04-10)
 # ─────────────────────────────────────────────────────────────────────────────
 
-manifest_version: "1.0"
+manifest_version: "1.1"
 governance_model_version: "1.6"
 
 
@@ -72,26 +72,36 @@ kits:
         spec_file: "cla-spec.md"
         human_authored: false
         optional: true   # entry point for retroactive onboarding only
+        inputs:
+          - { ref: "docs/principles/strategic-direction-principles.md", role: "principles", source: "framework" }
       - id: PCR
         full_name: "Product Capability Roadmap"
         spec_file: "pcr-spec.md"
         human_authored: false
         optional: true   # roadmap phase is optional
+        inputs:
+          - { ref: "docs/principles/strategic-direction-principles.md", role: "principles", source: "framework" }
       - id: TIR
         full_name: "Technology Investment Roadmap"
         spec_file: "tir-spec.md"
         human_authored: false
         optional: true   # roadmap phase is optional
+        inputs:
+          - { ref: "docs/principles/strategic-direction-principles.md", role: "principles", source: "framework" }
       - id: SBR
         full_name: "Strategic Bet Record"
         spec_file: "sbr-spec.md"
         human_authored: false
         optional: false
+        inputs:
+          - { ref: "docs/principles/strategic-direction-principles.md", role: "principles", source: "framework" }
       - id: PPR
         full_name: "Portfolio Prioritization Record"
         spec_file: "ppr-spec.md"
         human_authored: false
         optional: false
+        inputs:
+          - { ref: "docs/principles/strategic-direction-principles.md", role: "principles", source: "framework" }
 
     artifact_flow:
       - CLA    # optional: catalog existing capabilities
@@ -137,11 +147,15 @@ kits:
         spec_file: "problem-framing-spec.md"
         human_authored: false
         optional: false
+        inputs:
+          - { ref: "docs/principles/product-discovery-principles.md", role: "principles", source: "framework" }
       - id: VH
         full_name: "Value Hypothesis"
         spec_file: "value-hypothesis-spec.md"
         human_authored: false
         optional: false
+        inputs:
+          - { ref: "docs/principles/hypothesis-driven-development.md", role: "principles", source: "framework" }
       - id: AR
         full_name: "Assumption Register"
         spec_file: "assumption-register-spec.md"
@@ -157,6 +171,8 @@ kits:
         spec_file: "discovery-prd-spec.md"
         human_authored: false
         optional: false
+        inputs:
+          - { ref: "docs/principles/product-discovery-principles.md", role: "principles", source: "framework" }
 
     artifact_flow:
       - WCR
@@ -197,16 +213,22 @@ kits:
         spec_file: "soer-spec.md"
         human_authored: true
         optional: false
+        inputs:
+          - { ref: "docs/principles/sourcing-principles.md", role: "principles", source: "framework" }
       - id: VER
         full_name: "Vendor/Solution Evaluation Record"
         spec_file: "ver-spec.md"
         human_authored: false
         optional: false
+        inputs:
+          - { ref: "docs/principles/sourcing-principles.md", role: "principles", source: "framework" }
       - id: SDR
         full_name: "Sourcing Decision Record"
         spec_file: "sdr-spec.md"
         human_authored: false   # AI-generated, human provides the decision
         optional: false
+        inputs:
+          - { ref: "docs/principles/sourcing-principles.md", role: "principles", source: "framework" }
 
     artifact_flow:
       - SOER
@@ -243,16 +265,25 @@ kits:
         spec_file: "prd-spec.md"
         human_authored: false
         optional: false
+        inputs:
+          - { ref: "docs/brief.md", role: "brief", source: "human" }
+          - { ref: "docs/principles/product-craftsmanship.md", role: "principles", source: "framework" }
       - id: ACF
         full_name: "Architecture Context File"
         spec_file: "acf-spec.md"
         human_authored: false
         optional: false
+        inputs:
+          - { ref: "docs/principles/code-craftsmanship.md", role: "principles", source: "framework" }
+          - { ref: "docs/principles/security-principles.md", role: "principles", source: "framework" }
       - id: DKR
         full_name: "Design Knowledge Record"
         spec_file: "dkr-spec.md"
         human_authored: false
         optional: true   # optional between ACF and SAD
+        inputs:
+          - { ref: "docs/principles/code-craftsmanship.md", role: "principles", source: "framework" }
+          - { ref: "docs/principles/security-principles.md", role: "principles", source: "framework" }
       - id: SAD
         full_name: "Solution Architecture Document"
         spec_file: "sad-spec.md"
@@ -263,11 +294,17 @@ kits:
         spec_file: "dcf-spec.md"
         human_authored: false
         optional: false
+        inputs:
+          - { ref: "docs/principles/code-craftsmanship.md", role: "principles", source: "framework" }
+          - { ref: "docs/principles/security-principles.md", role: "principles", source: "framework" }
       - id: TDD
         full_name: "Technical Design Document"
         spec_file: "tdd-spec.md"
         human_authored: false
         optional: false
+        inputs:
+          - { ref: "docs/principles/code-craftsmanship.md", role: "principles", source: "framework" }
+          - { ref: "docs/principles/security-principles.md", role: "principles", source: "framework" }
       - id: WDD
         full_name: "Work Decomposition Document"
         spec_file: "wdd-spec.md"
@@ -330,6 +367,9 @@ kits:
         spec_file: "rcf-spec.md"
         human_authored: false
         optional: false
+        inputs:
+          - { ref: "docs/principles/progressive-delivery-principles.md", role: "principles", source: "framework" }
+          - { ref: "docs/principles/release-safety-principles.md", role: "principles", source: "framework" }
       - id: RSA
         full_name: "Release Safety Assessment"
         spec_file: "rsa-spec.md"
@@ -391,11 +431,15 @@ kits:
         spec_file: "srp-spec.md"
         human_authored: false
         optional: false
+        inputs:
+          - { ref: "docs/principles/service-reliability-principles.md", role: "principles", source: "framework" }
       - id: IR
         full_name: "Incident Record"
         spec_file: "ir-spec.md"
         human_authored: false
         optional: true   # per-incident, may not occur
+        inputs:
+          - { ref: "docs/principles/incident-management-principles.md", role: "principles", source: "framework" }
       - id: RHR
         full_name: "Reliability Health Report"
         spec_file: "rhr-spec.md"
@@ -478,6 +522,8 @@ kits:
         spec_file: "pmr-spec.md"
         human_authored: false
         optional: false
+        inputs:
+          - { ref: "docs/principles/diagnostic-principles.md", role: "principles", source: "framework" }
       - id: RB
         full_name: "Runbook"
         spec_file: "rb-spec.md"
@@ -595,21 +641,29 @@ kits:
         spec_file: "tm-spec.md"
         human_authored: false
         optional: false
+        inputs:
+          - { ref: "docs/principles/security-principles.md", role: "principles", source: "framework" }
       - id: SAR
         full_name: "Security Assessment Record"
         spec_file: "sar-spec.md"
         human_authored: false
         optional: false
+        inputs:
+          - { ref: "docs/principles/security-principles.md", role: "principles", source: "framework" }
       - id: CER
         full_name: "Compliance Evidence Record"
         spec_file: "cer-spec.md"
         human_authored: false
         optional: true   # only when compliance mandate exists
+        inputs:
+          - { ref: "docs/principles/compliance-principles.md", role: "principles", source: "framework" }
       - id: DAR
         full_name: "Dependency Audit Record"
         spec_file: "dar-spec.md"
         human_authored: false
         optional: false
+        inputs:
+          - { ref: "docs/principles/compliance-principles.md", role: "principles", source: "framework" }
 
     # No single linear flow — trigger-based activation
     artifact_flow:
@@ -844,21 +898,29 @@ kits:
         spec_file: "udr-spec.md"
         human_authored: false
         optional: false
+        inputs:
+          - { ref: "docs/principles/documentation-principles.md", role: "principles", source: "framework" }
       - id: ARR
         full_name: "API Reference Record"
         spec_file: "arr-spec.md"
         human_authored: false
         optional: false
+        inputs:
+          - { ref: "docs/principles/documentation-principles.md", role: "principles", source: "framework" }
       - id: SKA
         full_name: "Support Knowledge Article"
         spec_file: "ska-spec.md"
         human_authored: false
         optional: true   # trigger-dependent
+        inputs:
+          - { ref: "docs/principles/documentation-principles.md", role: "principles", source: "framework" }
       - id: DHR
         full_name: "Documentation Health Review"
         spec_file: "dhr-spec.md"
         human_authored: false
         optional: true   # periodic
+        inputs:
+          - { ref: "docs/principles/documentation-principles.md", role: "principles", source: "framework" }
 
     artifact_flow:
       - ARR     # early: triggered by TDD frozen

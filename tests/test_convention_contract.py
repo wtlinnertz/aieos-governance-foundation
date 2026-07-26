@@ -97,6 +97,40 @@ def test_human_authored_artifacts_have_no_prompt(fixture, manifest):
             assert "validator" in entry["files"], f"{abbr}/{art['id']}: validator is always required"
 
 
+def test_g3_principles_inputs_declared(manifest):
+    """G-3 lock: the five EEK artifact types whose prompts declare mandatory
+    principles carry framework inputs in the manifest (manifest 1.1)."""
+    eek = {a["id"]: a for a in manifest["kits"]["EEK"]["artifacts"]}
+    for art_id in ("PRD", "ACF", "DCF", "DKR", "TDD"):
+        inputs = eek[art_id].get("inputs", [])
+        assert any(
+            i["source"] == "framework" and i["role"] == "principles"
+            for i in inputs
+        ), f"EEK/{art_id} missing framework principles input"
+    # G-5: PRD's Path B human brief rides the same mechanism.
+    assert any(
+        i["source"] == "human" and i["role"] == "brief"
+        for i in eek["PRD"]["inputs"]
+    )
+
+
+@pytest.mark.cross_repo
+def test_framework_input_refs_resolve_on_disk(manifest):
+    """Every source=framework input ref (kit-relative) must exist — a
+    declared principles file that is missing would fail generation."""
+    kits_root = ROOT.parent
+    missing = []
+    for abbr, kit in manifest["kits"].items():
+        repo = kits_root / kit["repository"]
+        if not repo.is_dir():
+            pytest.skip(f"sibling checkout missing: {kit['repository']}")
+        for art in kit["artifacts"]:
+            for inp in art.get("inputs", []):
+                if inp["source"] == "framework" and not (repo / inp["ref"]).is_file():
+                    missing.append(f"{abbr}/{art['id']}: {inp['ref']}")
+    assert not missing, "\n".join(missing)
+
+
 @pytest.mark.cross_repo
 def test_every_expected_file_resolves_on_disk(fixture):
     """The R2 gating scan, permanent: 244/244 under the corrected token rule."""

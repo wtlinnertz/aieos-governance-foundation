@@ -92,7 +92,21 @@
           "description": "The file token every deriver keys off is spec_file minus '-spec.md' (artifact-file-convention v1.0) - NOT id.toLowerCase()."
         },
         "human_authored": { "type": "boolean" },
-        "optional": { "type": "boolean" }
+        "optional": { "type": "boolean" },
+        "inputs": {
+          "type": "array",
+          "description": "G-3/G-5 (manifest 1.1): declared non-upstream inputs the artifact needs before generation. source=framework refs are kit-relative (docs/principles/...); source=human refs are initiative-relative (the entry brief); upstream inputs stay modeled by dependency_edges.",
+          "items": {
+            "type": "object",
+            "required": ["ref", "role", "source"],
+            "properties": {
+              "ref": { "type": "string", "minLength": 1 },
+              "role": { "type": "string", "minLength": 1 },
+              "source": { "enum": ["human", "framework", "upstream"] }
+            },
+            "additionalProperties": false
+          }
+        }
       },
       "additionalProperties": true
     },

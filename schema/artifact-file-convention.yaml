@@ -1,0 +1,43 @@
+# AIEOS Artifact File Convention — machine-readable form (v1.0)
+#
+# Source of truth for PHYSICAL FILE RESOLUTION across every deriver
+# (harness, dark factory, console, sherpa). Topology lives in
+# kit-manifest.yml; this file owns where an artifact's files are on disk.
+# Human-readable rationale: docs/artifact-file-convention.md.
+#
+# token rule: token = artifacts[].spec_file minus the trailing "-spec.md".
+# NEVER derive the token from artifacts[].id — nine artifacts diverge
+# (PIK x7, EEK/KER, REK/RER); spec_file is authoritative.
+
+convention_version: "1.0"
+
+token:
+  source: spec_file
+  strip_suffix: "-spec.md"
+
+# Paths are relative to the kit repository root. {token} substitutes the
+# token above.
+files:
+  spec:
+    path: "docs/specs/{token}-spec.md"
+    required: always
+  template:
+    path: "docs/artifacts/{token}-template.md"
+    required: always
+  prompt:
+    path: "docs/prompts/{token}-prompt.md"
+    # Human-authored entry gates carry no prompt file (manifest header).
+    required: unless_human_authored
+  validator:
+    path: "docs/validators/{token}-validator.md"
+    # A missing validator is a HARD resolution error, never "no validator
+    # to run" — validators judge; silent skipping is forbidden (R2).
+    required: always
+
+# Generated artifact instance, relative to the initiative root.
+output:
+  path: "docs/sdlc/{token}.md"
+
+# Artifact identity: {ID} is manifest artifacts[].id uppercase.
+artifact_id:
+  pattern: "{ID}-{INITIATIVE_SLUG}-{NNN}"

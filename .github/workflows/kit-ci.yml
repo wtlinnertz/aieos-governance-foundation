@@ -56,6 +56,14 @@ jobs:
       - name: Document Control validation (FR-018 / G-2)
         run: python3 schema/scripts/validate-document-control.py kit/docs/artifacts/
 
+      # FR-014 slice 3: deterministic judge-calibration staleness check.
+      # Hash compare ONLY (prompt half) -- no LLM call on any CI path; the
+      # model half is checked harness-side (--check-only) and by the
+      # dark-factory conductor. Kits without a calibration.lock no-op:
+      # calibration adoption is per-validator, per kit.
+      - name: Calibration lock staleness (FR-014)
+        run: python3 gf/scripts/check-calibration-lock.py kit
+
       - name: Document Control completeness assertion (D5)
         run: |
           # D4 documented exemptions — templates that are NOT manifest nodes

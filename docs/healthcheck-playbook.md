@@ -173,6 +173,36 @@ aieos-governance-foundation/tests/run-all.sh --with-integration
 
 ---
 
+### A6. judge calibration currency (Tier 3)
+
+**What it checks:**
+- Every LLM-backed validator with calibration coverage has a fresh `calibration.lock` entry (prompt sha and judge model match the live pair)
+- Calibration results still meet the role's thresholds (freeze-gate: zero false-PASS + agreement >= 0.9; advisory: >= 0.75) -- thresholds are defined once in `aieos-schema/schema/calibration-report.yaml`
+
+**When to run:** On the three recalibration triggers -- **judge model change** (this is the healthcheck trigger: any provider/model update in harness config invalidates every lock entry pinning the old model), **validator prompt change** (kit CI catches this automatically per push), and **schedule** (with each framework release, alongside A5). Never per push -- the per-push path is the deterministic hash compare only.
+
+**Command:**
+```bash
+# deterministic staleness check (no LLM call):
+python3 aieos-governance-foundation/scripts/check-calibration-lock.py <kit-root>
+# full recalibration (paid gold-set run, writes report + lock on PASS):
+harness calibrate --gold-dir <kit-root>/tests/gold/<artifact-type> --lock <kit-root>/calibration.lock
+```
+
+**Prerequisites:** Gold set at or above the activation floor (12 human-labeled cases, >= 2 spec-exemption cases -- `aieos-schema/schema/gold-case.yaml`). Harness installed with a configured validate-role provider.
+
+**Remediation:**
+| Failure | Fix |
+|---------|-----|
+| Lock stale (prompt changed) | Whoever changed the validator prompt relabels affected gold cases in the same PR, then reruns `harness calibrate` |
+| Lock stale (model changed) | Rerun `harness calibrate` under the new judge model; compare kappa trend against the prior report |
+| Calibration FAIL: false-PASS | Do not ship the judge for freeze gating; tighten the validator prompt against the failing gold-FAIL cases |
+| Calibration FAIL: stability flip | Judge is non-deterministic on identical input (G-9 class); this gate cannot gate promotion until stable |
+
+Pattern detail: `docs/judge-calibration.md`.
+
+---
+
 ## Scope b: initiative healthchecks
 
 Initiative healthchecks validate a consuming project's SDLC directory and Engagement Record. They answer: "Is this initiative following the AIEOS process correctly?"

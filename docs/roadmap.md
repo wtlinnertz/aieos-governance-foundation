@@ -148,20 +148,22 @@ Full detail is in the dated Completed entries. Active work and everything still 
 
 ## In progress
 
-### Initiative: aieos-search (ER-SEARCH-001)
+### Initiative: aieos-search (ER-SEARCH-001) — RETRACTED 2026-08-31
 
-- [x] **INIT-S-001** Layer 4 entry (Path B): KER-SEARCH-001 frozen — 2026-03-18
-- [x] **INIT-S-002** PRD-SEARCH-001 frozen (from Product Brief) — 2026-03-18
-- [x] **INIT-S-003** ACF-SEARCH-001 frozen — 2026-03-18
-- [x] **INIT-S-004** SAD-SEARCH-001 frozen (5 components, async index sync, circuit breaker) — 2026-03-18
-- [ ] **INIT-S-005** DCF-SEARCH-001 — in progress
-- [ ] **INIT-S-006** TDD-SEARCH-001
-- [ ] **INIT-S-007** WDD-SEARCH-001
-- [ ] **INIT-S-008** Execution Plan + code execution
-- [ ] **INIT-S-009** ORD-SEARCH-001
-- [ ] **INIT-S-010** Cross-cutting kit adoption decisions (QAK, SCK, DCK, DKK, PRK)
-- [ ] **INIT-S-011** Layer 5 (REK): RER through RR
-- [ ] **INIT-S-012** Layer 6 (RRK): SRER, SRP, RHR
+**This initiative never happened.** The completions below stood in this document from March 2026 until this correction. Verified 2026-08-30, confirmed by the maintainer: no repository, no artifacts, no work done. The four "frozen" artifacts (KER/PRD/ACF/SAD-SEARCH-001) cannot be located anywhere and are presumed never to have existed — repository-wide hits for `SEARCH-001` are test fixtures, a docstring example, or cross-references to these claims. **INIT-S-005 through INIT-S-012 are withdrawn, not deferred.** The erroneous entries are kept struck through as a record rather than deleted.
+
+- ~~**INIT-S-001** Layer 4 entry (Path B): KER-SEARCH-001 frozen — 2026-03-18~~ — retracted, artifact never existed
+- ~~**INIT-S-002** PRD-SEARCH-001 frozen (from Product Brief) — 2026-03-18~~ — retracted, artifact never existed
+- ~~**INIT-S-003** ACF-SEARCH-001 frozen — 2026-03-18~~ — retracted, artifact never existed
+- ~~**INIT-S-004** SAD-SEARCH-001 frozen (5 components, async index sync, circuit breaker) — 2026-03-18~~ — retracted, artifact never existed
+- ~~**INIT-S-005** DCF-SEARCH-001 — in progress~~ — withdrawn
+- ~~**INIT-S-006** TDD-SEARCH-001~~ — withdrawn
+- ~~**INIT-S-007** WDD-SEARCH-001~~ — withdrawn
+- ~~**INIT-S-008** Execution Plan + code execution~~ — withdrawn
+- ~~**INIT-S-009** ORD-SEARCH-001~~ — withdrawn
+- ~~**INIT-S-010** Cross-cutting kit adoption decisions (QAK, SCK, DCK, DKK, PRK)~~ — withdrawn
+- ~~**INIT-S-011** Layer 5 (REK): RER through RR~~ — withdrawn
+- ~~**INIT-S-012** Layer 6 (RRK): SRER, SRP, RHR~~ — withdrawn
 
 ### Initiative: aieos-console (remaining layers)
 
@@ -344,7 +346,7 @@ The 13 pipeline adapters (build, test, scan, sign, deploy) are built and produce
 | ID | Item | Priority | Dependencies | Notes |
 |----|------|----------|-------------|-------|
 | **INT-001** | Expand platform bindings — Linear, Jira, Slack, GitLab | Medium | — | Static field-mapping documents (no code). Add bindings for: **Linear** (work-item-sync, validation-status), **Jira** (work-item-sync, validation-status), **Slack** (validation-status as channel notifications, health-check summaries), **GitLab** (work-item-sync to GitLab Issues, release-tag to GitLab Releases). Each binding follows the existing pattern in `docs/bindings/`. Low effort per binding (~1 hour each). Extends coverage without requiring executable code. |
-| **INT-002** | First executable adapter — GitHub Issues (work-item-sync) | High | — | Prove the adapter architecture works end-to-end. Build `aieos-adapter-github` implementing `push()`, `verify()`, `health()` per adapter-conformance-spec. Scope: sync WDD work items to GitHub Issues using the existing `work-item-sync-github-issues.md` binding. Idempotent (search-then-upsert), structured audit logging, circuit breaker on API failures. Test with aieos-search WDD items. Success: sherpa can say "I've synced 8 work items to GitHub Issues" after WDD freeze. |
+| **INT-002** | First executable adapter — GitHub Issues (work-item-sync) | High | — | Prove the adapter architecture works end-to-end. Build `aieos-adapter-github` implementing `push()`, `verify()`, `health()` per adapter-conformance-spec. Scope: sync WDD work items to GitHub Issues using the existing `work-item-sync-github-issues.md` binding. Idempotent (search-then-upsert), structured audit logging, circuit breaker on API failures. Test target: ~~aieos-search WDD items~~ (initiative retracted 2026-08-31 — use the next real initiative's WDD). Success: sherpa can say "I've synced 8 work items to GitHub Issues" after WDD freeze. |
 | **INT-003** | Second executable adapter — GitHub Releases (release-tag) | Medium | INT-002 | Reuses the `aieos-adapter-github` package. Creates a GitHub Release from a frozen RR artifact using the `release-tag-github.md` binding. Validates that the adapter pattern generalizes beyond a single tool spec. Test with aieos-console RR-CONSOLE-001. |
 | **INT-004** | Sherpa adapter integration — offer sync at freeze points | Medium | INT-002 | After WDD freeze, sherpa checks for configured adapters and offers: "I can sync these work items to GitHub Issues now. Want me to?" After RR freeze: "I can create a GitHub Release for this." Adds adapter awareness to sherpa-skill.md Phase 3 post-freeze sequence (new Step F after Step E). Respects the existing "never ask permission between sequential artifacts" rule — sync is offered as a utility, not a gate. |
 | **INT-005** | Adapter test harness and CI | Low | INT-002 | Automated tests for adapter conformance: mock external APIs, verify idempotency, test circuit breaker, validate audit log format. Reusable across all future adapters. |
@@ -497,7 +499,7 @@ Ideas not yet prioritized or scoped. Move to Planned when ready to commit.
 - `FW` — Framework core (kits, governance, testing)
 - `SH` — Sherpa capabilities
 - `INIT-C` — aieos-console initiative
-- `INIT-S` — aieos-search initiative
+- `INIT-S` — aieos-search initiative (retracted 2026-08-31 — see In progress section)
 - `FR` — Framework refinement (testing, hardening)
 - `ECO` — system software projects
 - `BL` — Backlog (unprioritized ideas)
